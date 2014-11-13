@@ -90,8 +90,7 @@ class AuthenticationToken {
       throw new \Exception("New MPX authentication token {$this->token} for {$this->account->getUsername()} is already invalid.");
     }
     else {
-      $duration = $this->expires - $time;
-      $this->account->getLogger()->info("New MPX authentication token {$this->token} fetched for {$this->account->getUsername()}, valid for $duration seconds.");
+      $this->account->getLogger()->info("New MPX authentication token {token} fetched for {username}, valid for {duration} seconds.", array('token' => $this->token, 'username' => $this->account->getUsername(), 'duration' => $this->expires - $time));
     }
 
     return $this;

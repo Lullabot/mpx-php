@@ -2,14 +2,11 @@
 
 namespace Mpx;
 
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 
 class Account {
-
-  /**
-   * @var \Psr\Log\LoggerInterface
-   */
-  private $logger;
+  use LoggerAwareTrait;
 
   /**
    * @var string
@@ -26,8 +23,7 @@ class Account {
    */
   private $token;
 
-  public function __construct(LoggerInterface $logger, $username, $password) {
-    $this->logger = $logger;
+  public function __construct($username, $password) {
     $this->username = $username;
     $this->password = $password;
   }
@@ -60,6 +56,9 @@ class Account {
    * @return \Psr\Log\LoggerInterface
    */
   public function getLogger() {
+    if (!isset($this->logger)) {
+      $this->logger = new NullLogger();
+    }
     return $this->logger;
   }
 
@@ -81,7 +80,7 @@ class Account {
       $this->token->fetch($duration, $idleTimeout);
     }
     if (!$this->token->isValid()) {
-      $this->logger->info("Expired or invalid MPX token {$this->token} for {$this->username}. Fetching new token.");
+      $this->logger->info("Expired or invalid MPX token {token} for {username}. Fetching new token.", array('token' => $this->token, 'username' => $this->username));
       $this->token->fetch($duration, $idleTimeout);
     }
     return $this->token;
