@@ -3,13 +3,19 @@
 namespace Mpx;
 
 use GuzzleHttp\Client;
+use Psr\Log\LoggerInterface;
 
 class AuthenticationToken {
 
   /**
-   * @var MPX/AccountInterface
+   * @var \Mpx/Account
    */
   private $account;
+
+  /**
+   * @var \Psr\Log\LoggerInterface
+   */
+  private $logger;
 
   /**
    * @var string
@@ -19,17 +25,14 @@ class AuthenticationToken {
   /**
    * @var int
    */
-  private $timeout;
+  private $expires;
 
-  public function __construct(Account $account, $token = NULL, $timeout = 3000) {
+  public function __construct(LoggerInterface $logger, Account $account, $token = NULL, $expires = NULL) {
+    $this->logger = $logger;
     $this->account = $account;
-
-    if (empty($token)) {
-      $this->fetch();
-    }
-    else {
+    if (!empty($token) && !empty($expires)) {
       $this->token = $token;
-      $this->timeout = $timeout;
+      $this->expires = $expires;
     }
   }
 
@@ -37,23 +40,56 @@ class AuthenticationToken {
     return $this->token;
   }
 
-  public function isValid() {
-    return !empty($this->token) && time() < $this->timeout;
+  public function setToken($token) {
+    $this->token = $token;
   }
 
-  public function fetch($timeout = NULL) {
-    if (!isset($timeout)) {
-      $timeout = $this->timeout;
-    }
+  public function setExpires($expires) {
+    $this->expires = $expires;
+  }
 
+  public function isValid() {
+    return !empty($this->token) && time() < $this->expires;
+  }
+
+  /**
+   * Fetchs the authentication token.
+   *
+   * @param int $duration
+   *   The duration of the token, in milliseconds.
+   * @param int $idleTimeout
+   *   The idle timeout for the token, in milliseconds.
+   *
+   * @return $this
+   *
+   * @throws \Exception
+   */
+  public function fetch($duration = NULL, $idleTimeout = NULL) {
     $client = new Client();
     $options = array();
-    $options['body'] = array('username' => $this->account->username, 'password' => $this->account->password);
-    $options['query'] = array('schema' => '1.0', 'form' => 'json', '_idleTimeout' => $timeout);
+    $options['body'] = array('username' => $this->account->getUsername(), 'password' => $this->account->getPassword());
+    $options['query'] = array('schema' => '1.0', 'form' => 'json', 'httpError' => 'true');
+    if (isset($duration)) {
+      $options['query']['_duration'] = $duration;
+    }
+    if (isset($idleTimeout)) {
+      $options['query']['_idleTimeout'] = $idleTimeout;
+    }
+    $time = time();
     $response = $client->post('https://identity.auth.theplatform.com/idm/web/Authentication/signIn', $options);
     $json = $response->json();
     $this->token = $json['signInResponse']['token'];
-    $this->timeout = $json['signInResponse']['idleTimeout'];
+    $this->expires = $time + ($json['signInResponse']['duration'] / 1000);
+
+    if (!$this->isValid()) {
+      throw new \Exception("New MPX authentication token for {$this->account->getUsername()} is already invalid.");
+    }
+    else {
+      $duration = $this->expires - $time;
+      $this->logger->info("New MPX authentication token fetched for {$this->account->getUsername()}, valid for $duration seconds.");
+    }
+
+    return $this;
   }
 
 }
