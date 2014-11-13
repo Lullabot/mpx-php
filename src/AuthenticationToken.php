@@ -8,14 +8,9 @@ use Psr\Log\LoggerInterface;
 class AuthenticationToken {
 
   /**
-   * @var \Mpx/Account
+   * @var \Mpx\Account
    */
   private $account;
-
-  /**
-   * @var \Psr\Log\LoggerInterface
-   */
-  private $logger;
 
   /**
    * @var string
@@ -27,9 +22,9 @@ class AuthenticationToken {
    */
   private $expires;
 
-  public function __construct(LoggerInterface $logger, Account $account, $token = NULL, $expires = NULL) {
-    $this->logger = $logger;
+  public function __construct(Account $account, $token = NULL, $expires = NULL) {
     $this->account = $account;
+
     if (!empty($token) && !empty($expires)) {
       $this->token = $token;
       $this->expires = $expires;
@@ -53,7 +48,7 @@ class AuthenticationToken {
   }
 
   /**
-   * Fetchs the authentication token.
+   * Fetches the authentication token.
    *
    * @param int $duration
    *   The duration of the token, in milliseconds.
@@ -82,11 +77,11 @@ class AuthenticationToken {
     $this->expires = $time + ($json['signInResponse']['duration'] / 1000);
 
     if (!$this->isValid()) {
-      throw new \Exception("New MPX authentication token for {$this->account->getUsername()} is already invalid.");
+      throw new \Exception("New MPX authentication token {$this->token} for {$this->account->getUsername()} is already invalid.");
     }
     else {
       $duration = $this->expires - $time;
-      $this->logger->info("New MPX authentication token fetched for {$this->account->getUsername()}, valid for $duration seconds.");
+      $this->account->getLogger()->info("New MPX authentication token {$this->token} fetched for {$this->account->getUsername()}, valid for $duration seconds.");
     }
 
     return $this;

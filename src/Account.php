@@ -32,21 +32,52 @@ class Account {
     $this->password = $password;
   }
 
+  /**
+   * @param \Mpx\AuthenticationToken $token
+   *
+   * @return $this
+   */
   public function setToken(AuthenticationToken $token) {
     $this->token = $token;
+    return $this;
   }
 
+  /**
+   * @return string
+   */
   public function getUsername() {
     return $this->username;
   }
 
+  /**
+   * @return string
+   */
   public function getPassword() {
     return $this->password;
   }
 
+  /**
+   * @return \Psr\Log\LoggerInterface
+   */
+  public function getLogger() {
+    return $this->logger;
+  }
+
+  /**
+   * Gets a current authentication token for the account.
+   *
+   * @param int $duration
+   *   The duration of the token, in milliseconds.
+   * @param int $idleTimeout
+   *   The idle timeout for the token, in milliseconds.
+   *
+   * @return \Mpx\AuthenticationToken
+   *
+   * @throws \Exception
+   */
   public function getToken($duration = NULL, $idleTimeout = NULL) {
     if (empty($this->token)) {
-      $this->token = new AuthenticationToken($this->logger, $this);
+      $this->token = new AuthenticationToken($this);
     }
     if (!$this->token->isValid()) {
       $this->token->fetch($duration, $idleTimeout);
