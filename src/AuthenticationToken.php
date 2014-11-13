@@ -3,7 +3,6 @@
 namespace Mpx;
 
 use GuzzleHttp\Client;
-use Psr\Log\LoggerInterface;
 
 class AuthenticationToken {
 
@@ -31,12 +30,23 @@ class AuthenticationToken {
     }
   }
 
+  /**
+   * @return string
+   */
   public function __toString() {
+    return (string) $this->token;
+  }
+
+  public function getToken() {
     return $this->token;
   }
 
   public function setToken($token) {
     $this->token = $token;
+  }
+
+  public function getExpires() {
+    return $this->expires;
   }
 
   public function setExpires($expires) {
@@ -73,8 +83,8 @@ class AuthenticationToken {
     $time = time();
     $response = $client->post('https://identity.auth.theplatform.com/idm/web/Authentication/signIn', $options);
     $json = $response->json();
-    $this->token = $json['signInResponse']['token'];
-    $this->expires = $time + ($json['signInResponse']['duration'] / 1000);
+    $this->token = (string) $json['signInResponse']['token'];
+    $this->expires = $time + (min($json['signInResponse']['duration'], $json['signInResponse']['idleTimeout']) / 1000);
 
     if (!$this->isValid()) {
       throw new \Exception("New MPX authentication token {$this->token} for {$this->account->getUsername()} is already invalid.");

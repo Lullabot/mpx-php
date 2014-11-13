@@ -78,8 +78,10 @@ class Account {
   public function getToken($duration = NULL, $idleTimeout = NULL) {
     if (empty($this->token)) {
       $this->token = new AuthenticationToken($this);
+      $this->token->fetch($duration, $idleTimeout);
     }
     if (!$this->token->isValid()) {
+      $this->logger->info("Expired or invalid MPX token {$this->token} for {$this->username}. Fetching new token.");
       $this->token->fetch($duration, $idleTimeout);
     }
     return $this->token;
