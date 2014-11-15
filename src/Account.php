@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains Mpx\Account.
+ */
+
 namespace Mpx;
 
 use GuzzleHttp\Client;
@@ -54,7 +59,7 @@ class Account {
    *
    * @return $this
    *
-   * @throws \Exception
+   * @throws Exception
    */
   public function setToken($token, $expires = NULL) {
     $this->token = $token;
@@ -62,7 +67,7 @@ class Account {
       $this->expires = $expires;
     }
     if (!$this->isTokenValid()) {
-      throw new \Exception("Invalid MPX authentication token {$token} for {$this->getUsername()}.");
+      throw new Exception("Invalid MPX authentication token {$token} for {$this->getUsername()}.");
     }
     return $this;
   }
@@ -120,7 +125,7 @@ class Account {
    *
    * @return $this
    *
-   * @throws \Exception
+   * @throws Exception
    */
   public function signIn($duration = NULL, $idleTimeout = NULL) {
     $client = new Client();
