@@ -3,7 +3,6 @@
 namespace Mpx;
 
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\NullLogger;
 use Pimple\Container;
 
 class Account {
