@@ -2,9 +2,8 @@
 
 namespace Mpx;
 
-use GuzzleHttp\Client;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\NullLogger;
+use Pimple\Container;
 
 class Account {
   use LoggerAwareTrait;
@@ -29,9 +28,22 @@ class Account {
    */
   private $expires;
 
-  public function __construct($username, $password) {
+  /**
+   * @var Container
+   */
+  private $container;
+
+  /**
+   * @param $username
+   * @param $password
+   * @param \Pimple\Container $container
+   */
+  public function __construct($username, $password, Container $container) {
     $this->username = $username;
     $this->password = $password;
+    // The dependency injection container contains a logger instance and an HTTP
+    // client factory.
+    $this->container = $container;
   }
 
   /**
@@ -105,7 +117,7 @@ class Account {
    */
   public function getLogger() {
     if (!isset($this->logger)) {
-      $this->logger = new NullLogger();
+      $this->logger = $this->container['logger'];
     }
     return $this->logger;
   }
@@ -123,7 +135,7 @@ class Account {
    * @throws \Exception
    */
   public function signIn($duration = NULL, $idleTimeout = NULL) {
-    $client = new Client();
+    $client = $this->container['client'];
     $options = array();
     $options['body'] = array('username' => $this->getUsername(), 'password' => $this->getPassword());
     $options['query'] = array('schema' => '1.0', 'form' => 'json', 'httpError' => 'true');
@@ -148,7 +160,7 @@ class Account {
    */
   public function signOut() {
     if ($token = $this->getToken()) {
-      $client = new Client();
+      $client = $this->container['client'];
       $options = array();
       $options['query'] = array('schema' => '1.0', 'form' => 'json', 'httpError' => 'true', '_token' => $token);
       $client->get('https://identity.auth.theplatform.com/idm/web/Authentication/signOut', $options);
