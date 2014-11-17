@@ -7,10 +7,13 @@
 
 namespace Mpx;
 
-use Psr\Log\LoggerAwareTrait;
 use Pimple\Container;
+use GuzzleHttp\ClientInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
 
 class Account {
+  use ClientTrait;
   use LoggerAwareTrait;
 
   /**
@@ -34,21 +37,31 @@ class Account {
   private $expires;
 
   /**
-   * @var Container
+   * @param string $username
+   * @param string $password
+   * @param \GuzzleHttp\ClientInterface $client
+   * @param \Psr\Log\LoggerInterface $logger
    */
-  private $container;
-
-  /**
-   * @param $username
-   * @param $password
-   * @param \Pimple\Container $container
-   */
-  public function __construct($username, $password, Container $container) {
+  public function __construct($username, $password, ClientInterface $client, LoggerInterface $logger) {
     $this->username = $username;
     $this->password = $password;
-    // The dependency injection container contains a logger instance and an HTTP
-    // client factory.
-    $this->container = $container;
+    $this->setClient($client);
+    $this->setLogger($logger);
+  }
+
+  /**
+   * @param string $username
+   * @param string $password
+   * @param \Pimple\Container $container
+   * @return $this
+   */
+  public static function create($username, $password, Container $container) {
+    return new static(
+      $username,
+      $password,
+      $container['client'],
+      $container['logger']
+    );
   }
 
   /**
@@ -118,16 +131,6 @@ class Account {
   }
 
   /**
-   * @return \Psr\Log\LoggerInterface
-   */
-  public function getLogger() {
-    if (!isset($this->logger)) {
-      $this->logger = $this->container['logger'];
-    }
-    return $this->logger;
-  }
-
-  /**
    * Signs in the user.
    *
    * @param int $duration
@@ -140,10 +143,8 @@ class Account {
    * @throws Exception
    */
   public function signIn($duration = NULL, $idleTimeout = NULL) {
-    $client = $this->container['client'];
     $options = array();
     $options['body'] = array('username' => $this->getUsername(), 'password' => $this->getPassword());
-    $options['query'] = array('schema' => '1.0', 'form' => 'json', 'httpError' => 'true');
     if (!empty($duration)) {
       $options['query']['_duration'] = $duration;
     }
@@ -151,7 +152,7 @@ class Account {
       $options['query']['_idleTimeout'] = $idleTimeout;
     }
     $time = time();
-    $response = $client->post('https://identity.auth.theplatform.com/idm/web/Authentication/signIn', $options);
+    $response = $this->client->post('https://identity.auth.theplatform.com/idm/web/Authentication/signIn', $options);
     $json = $response->json();
 
     $token = $json['signInResponse']['token'];
@@ -165,10 +166,9 @@ class Account {
    */
   public function signOut() {
     if ($token = $this->getToken()) {
-      $client = $this->container['client'];
       $options = array();
-      $options['query'] = array('schema' => '1.0', 'form' => 'json', 'httpError' => 'true', '_token' => $token);
-      $client->get('https://identity.auth.theplatform.com/idm/web/Authentication/signOut', $options);
+      $options['query'] = array('_token' => $token);
+      $this->client->get('https://identity.auth.theplatform.com/idm/web/Authentication/signOut', $options);
       $this->token = NULL;
       $this->expires = NULL;
       $this->logger->info("Expired MPX token {token} for {username}.", array('token' => $token, 'username' => $this->getUsername()));
