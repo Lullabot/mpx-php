@@ -90,11 +90,7 @@ class Account {
    * @return string
    */
   public function getToken() {
-    return $this->token;
-  }
-
-  public function checkToken() {
-    if (!$this->getToken()) {
+    if (!$this->token) {
       $this->signIn();
     }
     elseif (!$this->isTokenValid()) {
@@ -102,7 +98,7 @@ class Account {
       $this->signOut();
       $this->signIn();
     }
-    return $this->getToken();
+    return $this->token;
   }
 
   public function isTokenValid() {
