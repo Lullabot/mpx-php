@@ -100,22 +100,23 @@ class Account {
   /**
    * Gets a current authentication token for the account.
    *
+   * @param bool $fetch
+   *   TRUE if a new token should be fetched if one is not available.
+   *
    * @return string
    */
-  public function getToken() {
+  public function getToken($fetch = TRUE) {
+    if ($fetch) {
+      if (!$this->token) {
+        $this->signIn();
+      }
+      elseif (!$this->isTokenValid()) {
+        $this->logger->info("Invalid MPX authentication token {token} for {username}. Fetching new token.", array('token' => $this->token, 'username' => $this->getUsername()));
+        $this->signOut();
+        $this->signIn();
+      }
+    }
     return $this->token;
-  }
-
-  public function checkToken() {
-    if (!$this->getToken()) {
-      $this->signIn();
-    }
-    elseif (!$this->isTokenValid()) {
-      $this->logger->info("Invalid MPX authentication token {token} for {username}. Fetching new token.", array('token' => $this->token, 'username' => $this->getUsername()));
-      $this->signOut();
-      $this->signIn();
-    }
-    return $this->getToken();
   }
 
   public function isTokenValid() {
@@ -165,7 +166,7 @@ class Account {
    * Signs out the user.
    */
   public function signOut() {
-    if ($token = $this->getToken()) {
+    if ($token = $this->getToken(FALSE)) {
       $options = array();
       $options['query'] = array('_token' => $token);
       $this->client->get('https://identity.auth.theplatform.com/idm/web/Authentication/signOut', $options);
