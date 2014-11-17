@@ -16,6 +16,7 @@ class Client extends GuzzleClient {
   use LoggerAwareTrait;
 
   public function __construct(array $config = [], LoggerInterface $logger) {
+    // @todo Figure out what query strings we can actually hard-code here.
     $config['defaults']['query']['schema'] = '1.0';
     $config['defaults']['query']['httpError'] = 'true';
     $config['defaults']['query']['form'] = 'json';
