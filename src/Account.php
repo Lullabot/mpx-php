@@ -16,6 +16,9 @@ class Account {
   use ClientTrait;
   use LoggerAwareTrait;
 
+  const SIGNIN_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signIn';
+  const SIGNOUT_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut';
+
   /**
    * @var string
    */
@@ -153,7 +156,7 @@ class Account {
       $options['query']['_idleTimeout'] = $idleTimeout;
     }
     $time = time();
-    $response = $this->client->post('https://identity.auth.theplatform.com/idm/web/Authentication/signIn', $options);
+    $response = $this->client->post(static::SIGNIN_URL, $options);
     $json = $response->json();
 
     $token = $json['signInResponse']['token'];
@@ -169,11 +172,10 @@ class Account {
     if ($token = $this->getToken(FALSE)) {
       $options = array();
       $options['query'] = array('_token' => $token);
-      $this->client->get('https://identity.auth.theplatform.com/idm/web/Authentication/signOut', $options);
+      $this->client->get(static::SIGNOUT_URL, $options);
       $this->token = NULL;
       $this->expires = NULL;
       $this->logger->info("Expired MPX token {token} for {username}.", array('token' => $token, 'username' => $this->getUsername()));
     }
   }
-
 }
