@@ -7,8 +7,9 @@
 
 namespace Mpx;
 
-use Pimple\Container;
+use Mpx\Exception\InvalidTokenException;
 use GuzzleHttp\ClientInterface;
+use Pimple\Container;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
@@ -85,9 +86,7 @@ class Account {
    * @param string $token
    * @param int $expires
    *
-   * @return $this
-   *
-   * @throws Exception
+   * @throws \Mpx\Exception\InvalidTokenException
    */
   public function setToken($token, $expires = NULL) {
     $this->token = $token;
@@ -95,9 +94,8 @@ class Account {
       $this->expires = $expires;
     }
     if (!$this->isTokenValid()) {
-      throw new Exception("Invalid MPX authentication token {$token} for {$this->getUsername()}.");
+      throw new InvalidTokenException("Invalid MPX authentication token {$token} for {$this->getUsername()}.");
     }
-    return $this;
   }
 
   /**
@@ -144,7 +142,9 @@ class Account {
    *
    * @return $this
    *
-   * @throws Exception
+   * @throws \GuzzleHttp\Exception\RequestException
+   * @throws \RuntimeException
+   * @throws \Mpx\Exception\InvalidTokenException
    */
   public function signIn($duration = NULL, $idleTimeout = NULL) {
     $options = array();
@@ -167,6 +167,8 @@ class Account {
 
   /**
    * Signs out the user.
+   *
+   * @throws \GuzzleHttp\Exception\RequestException
    */
   public function signOut() {
     if ($token = $this->getToken(FALSE)) {

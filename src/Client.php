@@ -9,8 +9,8 @@ namespace Mpx;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Message\RequestInterface;
-use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
 
 class Client extends GuzzleClient {
   use LoggerAwareTrait;
