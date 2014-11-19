@@ -80,10 +80,6 @@ class Account implements AccountInterface {
    * {@inheritdoc}
    */
   public function setToken($token, $expires) {
-    if (!static::isTokenValid($token, $expires)) {
-      throw new InvalidTokenException("Invalid MPX authentication token {$token} for {$this->getUsername()}.");
-    }
-
     $this->token = $token;
     $this->expires = $expires;
   }
@@ -144,6 +140,11 @@ class Account implements AccountInterface {
 
     $token = $json['signInResponse']['token'];
     $expires = $time + (min($json['signInResponse']['duration'], $json['signInResponse']['idleTimeout']) / 1000);
+
+    if (!static::isTokenValid($token, $expires)) {
+      throw new InvalidTokenException("New MPX authentication token {$token} requested for {$this->getUsername()} is already invalid.");
+    }
+
     $this->setToken($token, $expires);
     $this->logger->info("New MPX authentication token {token} fetched for {username}, valid for {duration} seconds.", array('token' => $token, 'username' => $this->getUsername(), 'duration' => $expires - $time));
   }
