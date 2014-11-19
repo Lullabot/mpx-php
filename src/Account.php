@@ -13,7 +13,7 @@ use Pimple\Container;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
-class Account {
+class Account implements AccountInterface {
   use ClientTrait;
   use LoggerAwareTrait;
 
@@ -41,10 +41,7 @@ class Account {
   private $expires;
 
   /**
-   * @param string $username
-   * @param string $password
-   * @param \GuzzleHttp\ClientInterface $client
-   * @param \Psr\Log\LoggerInterface $logger
+   * {@inheritdoc}
    */
   public function __construct($username, $password, ClientInterface $client, LoggerInterface $logger) {
     $this->username = $username;
@@ -54,10 +51,7 @@ class Account {
   }
 
   /**
-   * @param string $username
-   * @param string $password
-   * @param \Pimple\Container $container
-   * @return $this
+   * {@inheritdoc}
    */
   public static function create($username, $password, Container $container) {
     return new static(
@@ -69,49 +63,40 @@ class Account {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getUsername() {
     return $this->username;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function getPassword() {
     return $this->password;
   }
 
   /**
-   * @param string $token
-   * @param int $expires
-   *
-   * @throws \Mpx\Exception\InvalidTokenException
+   * {@inheritdoc}
    */
-  public function setToken($token, $expires = NULL) {
-    $this->token = $token;
-    if (isset($expires)) {
-      $this->expires = $expires;
-    }
-    if (!$this->isTokenValid()) {
+  public function setToken($token, $expires) {
+    if (!static::isTokenValid($token, $expires)) {
       throw new InvalidTokenException("Invalid MPX authentication token {$token} for {$this->getUsername()}.");
     }
+
+    $this->token = $token;
+    $this->expires = $expires;
   }
 
   /**
-   * Gets a current authentication token for the account.
-   *
-   * @param bool $fetch
-   *   TRUE if a new token should be fetched if one is not available.
-   *
-   * @return string
+   * {@inheritdoc}
    */
   public function getToken($fetch = TRUE) {
     if ($fetch) {
       if (!$this->token) {
         $this->signIn();
       }
-      elseif (!$this->isTokenValid()) {
+      elseif (!static::isTokenValid($this->token, $this->expires)) {
         $this->logger->info("Invalid MPX authentication token {token} for {username}. Fetching new token.", array('token' => $this->token, 'username' => $this->getUsername()));
         $this->signOut();
         $this->signIn();
@@ -120,31 +105,29 @@ class Account {
     return $this->token;
   }
 
-  public function isTokenValid() {
-    return !empty($this->token) && !empty($this->expires) && time() < $this->expires;
+  /**
+   * {@inheritdoc}
+   */
+  public static function isTokenValid($token, $expires) {
+    return !empty($token) && !empty($expires) && is_numeric($expires) && time() < $expires;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function setExpires($expires) {
     $this->expires = $expires;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getExpires() {
     return $this->expires;
   }
 
   /**
-   * Signs in the user.
-   *
-   * @param int $duration
-   *   The duration of the token, in milliseconds.
-   * @param int $idleTimeout
-   *   The idle timeout for the token, in milliseconds.
-   *
-   * @return $this
-   *
-   * @throws \GuzzleHttp\Exception\RequestException
-   * @throws \RuntimeException
-   * @throws \Mpx\Exception\InvalidTokenException
+   * {@inheritdoc}
    */
   public function signIn($duration = NULL, $idleTimeout = NULL) {
     $options = array();
@@ -166,9 +149,7 @@ class Account {
   }
 
   /**
-   * Signs out the user.
-   *
-   * @throws \GuzzleHttp\Exception\RequestException
+   * {@inheritdoc}
    */
   public function signOut() {
     if ($token = $this->getToken(FALSE)) {
