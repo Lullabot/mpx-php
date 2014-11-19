@@ -25,7 +25,7 @@ class Client extends GuzzleClient {
   }
 
   /**
-   * @{inheritdoc}
+   * {@inheritdoc}
    */
   public function send(RequestInterface $request) {
     $this->logger->debug($request->getUrl());
