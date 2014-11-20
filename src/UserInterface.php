@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Mpx\AccountInterface.
+ * Contains Mpx\UserInterface.
  */
 
 namespace Mpx;
@@ -11,7 +11,7 @@ use GuzzleHttp\ClientInterface;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 
-interface AccountInterface {
+interface UserInterface {
 
   /**
    * @param string $username
@@ -25,7 +25,7 @@ interface AccountInterface {
    * @param string $username
    * @param string $password
    * @param \Pimple\Container $container
-   * @return $this
+   * @return \Mpx\UserInterface
    */
   public static function create($username, $password, Container $container);
 
