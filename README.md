@@ -32,7 +32,7 @@ $subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($logger);
 $client->getEmitter()->attach($subscriber);
 
 $user = new Mpx\User('mpx/user@example.com', 'password', $client, $logger);
-$token = $user->getToken();
+$token = $user->getValidToken();
 
 // Container usage:
 $container = new Pimple\Container();
@@ -47,5 +47,5 @@ $container['client'] = $container->factory(function ($c) {
 });
 
 $user = Mpx\User::create('mpx/user@example.com', 'password'', $container);
-$token = $user->getToken();
+$token = $user->getValidToken();
 ```
