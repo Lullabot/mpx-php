@@ -143,6 +143,11 @@ class Account implements AccountInterface {
    */
   public function signIn($duration = NULL, $idleTimeout = NULL) {
     $options = array();
+    $options['query'] = array(
+      'schema' => '1.0',
+      'httpError' => 'true',
+      'form' => 'json',
+    );
     $options['body'] = array('username' => $this->getUsername(), 'password' => $this->getPassword());
     if (!empty($duration)) {
       $options['query']['_duration'] = $duration;
@@ -171,7 +176,12 @@ class Account implements AccountInterface {
   public function signOut() {
     if ($token = $this->getToken(FALSE)) {
       $options = array();
-      $options['query'] = array('_token' => $token);
+      $options['query'] = array(
+        'schema' => '1.0',
+        'httpError' => 'true',
+        'form' => 'json',
+        '_token' => $token,
+      );
       $this->client->get(static::SIGNOUT_URL, $options);
       $this->token = NULL;
       $this->expires = NULL;
