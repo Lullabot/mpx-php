@@ -11,6 +11,12 @@ use GuzzleHttp\ClientInterface;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Defines an interface for interacting with MPX users.
+ *
+ * @see http://help.theplatform.com/display/wsf2/Identity+management+service+API+reference
+ * @see http://help.theplatform.com/display/wsf2/User+operations
+ */
 interface UserInterface {
 
   /**
@@ -109,6 +115,8 @@ interface UserInterface {
    * @throws \GuzzleHttp\Exception\RequestException
    * @throws \RuntimeException
    * @throws \Mpx\Exception\InvalidTokenException
+   *
+   * @see http://help.theplatform.com/display/wsf2/signIn+method
    */
   public function signIn($duration = NULL, $idleTimeout = NULL);
 
@@ -116,6 +124,8 @@ interface UserInterface {
    * Signs out the user.
    *
    * @throws \GuzzleHttp\Exception\RequestException
+   *
+   * @see http://help.theplatform.com/display/wsf2/signOut+method
    */
   public function signOut();
 
