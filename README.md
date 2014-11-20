@@ -26,8 +26,11 @@ $ composer update
 require 'vendor/autoload.php';
 
 // Native usage:
-$logger = new Psr\Log\NullLogger();
+$logger = new GuzzleHttp\Subscriber\Log\SimpleLogger();
 $client = new GuzzleHttp\Client();
+$subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($logger);
+$client->getEmitter()->attach($subscriber);
+
 $user = new Mpx\User('mpx/user@example.com', 'password', $client, $logger);
 $token = $user->getToken();
 
@@ -38,11 +41,11 @@ $container['logger'] = function ($c) {
 };
 $container['client'] = $container->factory(function ($c) {
   $client = new GuzzleHttp\Client();
-  $formatter = new GuzzleHttp\Subscriber\Log\Formatter(GuzzleHttp\Subscriber\Log\Formatter::DEBUG);
-  $subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($c['logger'], $formatter);
+  $subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($c['logger']);
   $client->getEmitter()->attach($subscriber);
   return $client;
 });
+
 $user = Mpx\User::create('mpx/user@example.com', 'password'', $container);
 $token = $user->getToken();
 ```
