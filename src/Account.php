@@ -87,24 +87,20 @@ class Account implements AccountInterface {
   /**
    * {@inheritdoc}
    */
-  public function getToken($fetch = TRUE) {
-    if ($fetch) {
-      if (!$this->token) {
-        $this->signIn();
-      }
-      elseif (!static::isTokenValid($this->token, $this->expires)) {
-        $this->logger->info("Invalid MPX authentication token {token} for {username}. Fetching new token.", array('token' => $this->token, 'username' => $this->getUsername()));
-        $this->signOut();
-        $this->signIn();
-      }
-    }
+  public function getToken() {
     return $this->token;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function hasValidToken() {
-    return static::isTokenValid($this->getToken(), $this->getExpires());
+    return static::isValidToken($this->getToken(), $this->getExpires());
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getValidToken() {
     if (!$this->getToken()) {
       $this->signIn();
@@ -174,7 +170,7 @@ class Account implements AccountInterface {
    * {@inheritdoc}
    */
   public function signOut() {
-    if ($token = $this->getToken(FALSE)) {
+    if ($token = $this->getToken()) {
       $options = array();
       $options['query'] = array(
         'schema' => '1.0',
@@ -183,8 +179,7 @@ class Account implements AccountInterface {
         '_token' => $token,
       );
       $this->client->get(static::SIGNOUT_URL, $options);
-      $this->token = NULL;
-      $this->expires = NULL;
+      $this->setToken(NULL, NULL);
       $this->logger->info("Expired MPX token {token} for {username}.", array('token' => $token, 'username' => $this->getUsername()));
     }
   }

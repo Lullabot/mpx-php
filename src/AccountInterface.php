@@ -54,12 +54,19 @@ interface AccountInterface {
   /**
    * Gets a current authentication token for the account.
    *
-   * @param bool $fetch
-   *   TRUE if a new token should be fetched if one is not available.
+   * @return string
+   */
+  public function getToken();
+
+  /**
+   * Gets a valid authentication token for the account.
+   *
+   * If the current token from getToken() is not valid,
+   * a new token will be fetched using signIn().
    *
    * @return string
    */
-  public function getToken($fetch = TRUE);
+  public function getValidToken();
 
   public function setExpires($expires);
 
