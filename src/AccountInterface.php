@@ -71,6 +71,14 @@ interface AccountInterface {
   /**
    * Checks if the user's current token is valid.
    *
+   * @return bool
+   *   TRUE if the current token is valid, or FALSE if the token is not valid.
+   */
+  public function hasValidToken();
+
+  /**
+   * Checks if a token is valid.
+   *
    * @param string $token
    *   The token string.
    * @param int $expires
@@ -79,7 +87,7 @@ interface AccountInterface {
    * @return bool
    *   TRUE if the token is valid, or FALSE if the token is not valid.
    */
-  public static function isTokenValid($token, $expires);
+  public static function isValidToken($token, $expires);
 
   /**
    * Signs in the user.
