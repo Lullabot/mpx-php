@@ -10,7 +10,7 @@ namespace Mpx;
 class TokenMemoryService extends TokenServiceBase {
 
   /** @var array */
-  static $tokens = array();
+  protected static $tokens = array();
 
   /**
    * {@inheritdoc}
