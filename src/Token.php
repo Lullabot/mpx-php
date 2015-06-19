@@ -9,7 +9,7 @@ class Token implements TokenInterface {
    *
    * @var string
    */
-  public $username;
+  protected $username;
 
   /**
    * The token string.

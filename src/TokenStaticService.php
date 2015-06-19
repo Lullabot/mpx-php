@@ -31,6 +31,14 @@ class TokenStaticService extends TokenServiceBase {
    */
   public function delete(TokenInterface $token) {
     unset(static::$tokens[$token->getUsername()]);
+    parent::delete($token);
+  }
+
+  public function __destruct() {
+    // Ensure all tokens are expired.
+    foreach (static::$tokens as $token) {
+      $this->delete($token);
+    }
   }
 
 }

@@ -33,6 +33,16 @@ abstract class TokenServiceBase implements TokenServiceInterface {
   /**
    * {@inheritdoc}
    */
+  public function delete(TokenInterface $token) {
+    // If the token is still valid, expire it using the API.
+    if ($token->isValid()) {
+      $this->expire($token);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function fetch($username, $password, $duration = NULL) {
     $options['auth'] = array($username, $password);
     $options['query'] = array(
@@ -92,7 +102,8 @@ abstract class TokenServiceBase implements TokenServiceInterface {
       )
     );
 
-    $this->delete($token);
+    $token->value = NULL;
+    $token->expire = NULL;
   }
 
 }
