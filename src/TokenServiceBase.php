@@ -94,7 +94,7 @@ abstract class TokenServiceBase implements TokenServiceInterface {
       )
     );
 
-    $this->logger()->notice(
+    $this->logger()->info(
       'Expired mpx authentication token {token} for {username}.',
       array(
         'token' => $token->getValue(),
@@ -102,8 +102,7 @@ abstract class TokenServiceBase implements TokenServiceInterface {
       )
     );
 
-    $token->value = NULL;
-    $token->expire = NULL;
+    unset($token);
   }
 
 }

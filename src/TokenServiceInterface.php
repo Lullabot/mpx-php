@@ -16,7 +16,13 @@ interface TokenServiceInterface {
    * @return \Mpx\TokenInterface
    *   The token object if available.
    */
-  public static function load($username);
+  public function load($username);
+
+
+  /**
+   * @return \Mpx\TokenInterface[]
+   */
+  public function loadAll();
 
   /**
    * Save the token.

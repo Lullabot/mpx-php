@@ -42,7 +42,7 @@ class User implements UserInterface {
     $this->client = $client;
     $this->logger = $logger;
     if (!isset($tokenService)) {
-      $tokenService = new TokenStaticService($client, $logger);
+      $tokenService = new TokenMemoryService($client, $logger);
     }
     $this->tokenService = $tokenService;
   }

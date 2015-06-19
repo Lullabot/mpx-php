@@ -2,7 +2,7 @@
 
 namespace Mpx;
 
-class TokenStaticService extends TokenServiceBase {
+class TokenMemoryService extends TokenServiceBase {
 
   /** @var array */
   static $tokens = array();
@@ -10,13 +10,20 @@ class TokenStaticService extends TokenServiceBase {
   /**
    * {@inheritdoc}
    */
-  public static function load($username) {
+  public function load($username) {
     if (isset(static::$tokens[$username])) {
       return static::$tokens[$username];
     }
     else {
       return FALSE;
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function loadAll() {
+    return static::$tokens;
   }
 
   /**
@@ -35,7 +42,7 @@ class TokenStaticService extends TokenServiceBase {
   }
 
   public function __destruct() {
-    // Ensure all tokens are expired.
+    // Since these tokens will not persist, ensure they are expired.
     foreach (static::$tokens as $token) {
       $this->delete($token);
     }

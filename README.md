@@ -47,7 +47,7 @@ $container['client'] = $container->factory(function ($c) {
   return $client;
 });
 $container['token.service'] = function ($c) {
-  return new Mpx\TokenStaticService($c['client'], $c['logger']);
+  return new Mpx\TokenMemoryService($c['client'], $c['logger']);
 }
 
 $user = Mpx\User::create('mpx/user@example.com', 'password'', $container);
