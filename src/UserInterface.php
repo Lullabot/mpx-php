@@ -7,9 +7,6 @@
 
 namespace Mpx;
 
-use Pimple\Container;
-use Psr\Log\LoggerInterface;
-
 /**
  * Defines an interface for interacting with MPX users.
  *
@@ -17,14 +14,6 @@ use Psr\Log\LoggerInterface;
  * @see http://help.theplatform.com/display/wsf2/User+operations
  */
 interface UserInterface {
-
-  /**
-   * @param string $username
-   * @param string $password
-   * @param \Mpx\ClientInterface $client
-   * @param \Psr\Log\LoggerInterface $logger
-   */
-  public function __construct($username, $password, ClientInterface $client = NULL, LoggerInterface $logger = NULL);
 
   /**
    * @return string
@@ -37,87 +26,21 @@ interface UserInterface {
   public function getPassword();
 
   /**
-   * Set the current authentication token for the account
-   *
-   * @param string $token
-   *   The token string.
-   * @param int $expires
-   *   A UNIX timestamp of when the token is set to expire.
-   *
-   * @throws \Mpx\Exception\InvalidTokenException
-   */
-  public function setToken($token, $expires);
-
-  /**
-   * Gets a current authentication token for the account.
-   *
-   * @return string
-   */
-  public function getToken();
-
-  /**
-   * Gets a valid authentication token for the account.
-   *
-   * If the current token from getToken() is not valid,
-   * a new token will be fetched using signIn().
-   *
-   * @return string
-   */
-  public function getValidToken();
-
-  public function setExpires($expires);
-
-  /**
-   * @return int
-   */
-  public function getExpires();
-
-  /**
-   * Checks if the user's current token is valid.
-   *
-   * @return bool
-   *   TRUE if the current token is valid, or FALSE if the token is not valid.
-   */
-  public function hasValidToken();
-
-  /**
-   * Checks if a token is valid.
-   *
-   * @param string $token
-   *   The token string.
-   * @param int $expires
-   *   A UNIX timestamp of when the token is set to expire.
-   *
-   * @return bool
-   *   TRUE if the token is valid, or FALSE if the token is not valid.
-   */
-  public static function isValidToken($token, $expires);
-
-  /**
-   * Signs in the user.
+   * Get a current authentication token for the account.
    *
    * @param int $duration
-   *   The duration of the token, in milliseconds.
-   * @param int $idleTimeout
-   *   The idle timeout for the token, in milliseconds.
+   *   The number of seconds for which the token should be valid.
+   * @param bool $force
+   *   Set to TRUE if a fresh authentication token should always be fetched.
    *
-   * @return $this
-   *
-   * @throws \GuzzleHttp\Exception\RequestException
-   * @throws \RuntimeException
-   * @throws \Mpx\Exception\InvalidTokenException
-   *
-   * @see http://help.theplatform.com/display/wsf2/signIn+method
+   * @return \Mpx\TokenInterface
+   *   A valid MPX token object.
    */
-  public function signIn($duration = NULL, $idleTimeout = NULL);
+  public function acquireToken($duration = NULL, $force = FALSE);
 
   /**
-   * Signs out the user.
-   *
-   * @throws \GuzzleHttp\Exception\RequestException
-   *
-   * @see http://help.theplatform.com/display/wsf2/signOut+method
+   * Release the user's token if it has one.
    */
-  public function signOut();
+  public function releaseToken();
 
 }
