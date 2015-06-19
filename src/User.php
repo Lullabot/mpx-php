@@ -13,6 +13,7 @@ use Psr\Log\LoggerInterface;
 class User implements UserInterface {
   use ClientTrait;
   use LoggerTrait;
+  use TokenServiceTrait;
 
   /**
    * @var string
@@ -41,9 +42,6 @@ class User implements UserInterface {
     $this->password = $password;
     $this->client = $client;
     $this->logger = $logger;
-    if (!isset($tokenService)) {
-      $tokenService = new TokenMemoryService($client, $logger);
-    }
     $this->tokenService = $tokenService;
   }
 
@@ -82,18 +80,18 @@ class User implements UserInterface {
    * {@inheritdoc}
    */
   public function acquireToken($duration = NULL, $force = FALSE) {
-    $token = $this->tokenService->load($this->username);
+    $token = $this->tokenService()->load($this->username);
 
     if ($force || !$token || !$token->isValid($duration)) {
       // Delete the token from the cache first in case there is a failure in
       // MpxToken::fetch() below.
       if ($token) {
-        $this->tokenService->delete($token);
+        $this->tokenService()->delete($token);
       }
 
       // @todo Validate if the new token also valid for $duration.
-      $token = $this->tokenService->fetch($this->username, $this->password);
-      $this->tokenService->save($token);
+      $token = $this->tokenService()->fetch($this->username, $this->password);
+      $this->tokenService()->save($token);
     }
 
     return $token;
@@ -103,8 +101,8 @@ class User implements UserInterface {
    * {@inheritdoc}
    */
   public function releaseToken() {
-    if ($token = $this->tokenService->load($this->username)) {
-      $this->tokenService->delete($token);
+    if ($token = $this->tokenService()->load($this->username)) {
+      $this->tokenService()->delete($token);
     }
   }
 

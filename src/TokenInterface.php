@@ -41,6 +41,11 @@ interface TokenInterface {
   public function isValid($duration = NULL);
 
   /**
+   * Invalidate the token by setting $expire to 0.
+   */
+  public function invalidate();
+
+  /**
    * @return string
    */
   public function __toString();

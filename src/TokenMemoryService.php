@@ -42,6 +42,14 @@ class TokenMemoryService extends TokenServiceBase {
   }
 
   public function __destruct() {
+    $this->logger()->info(
+      "Expiring {count} tokens in {method}.",
+      array(
+        'count' => count(static::$tokens),
+        'method' => __METHOD__,
+      )
+    );
+
     // Since these tokens will not persist, ensure they are expired.
     foreach (static::$tokens as $token) {
       $this->delete($token);

@@ -72,6 +72,13 @@ class Token implements TokenInterface {
   /**
    * {@inheritdoc}
    */
+  public function invalidate() {
+    $this->expire = 0;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function __toString() {
     return $this->value;
   }
