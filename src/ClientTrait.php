@@ -18,9 +18,12 @@ trait ClientTrait {
    * Sets a HTTP client.
    *
    * @param \Mpx\ClientInterface $client
+   *
+   * @return static
    */
   public function setClient(ClientInterface $client) {
     $this->client = $client;
+    return $this;
   }
 
   /**

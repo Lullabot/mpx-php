@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains Mpx\LoggerTrait.
+ */
+
 namespace Mpx;
 
 use Psr\Log\LoggerInterface;
@@ -17,9 +22,12 @@ trait LoggerTrait {
    * Sets a logger.
    *
    * @param \Psr\Log\LoggerInterface $logger
+   *
+   * @return static
    */
   public function setLogger(LoggerInterface $logger) {
     $this->logger = $logger;
+    return $this;
   }
 
   /**
