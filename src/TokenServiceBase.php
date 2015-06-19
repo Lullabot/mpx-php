@@ -1,10 +1,18 @@
 <?php
 
+/**
+ * @file
+ * Contains Mpx\TokenServiceBase.
+ */
+
 namespace Mpx;
 
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Provides a base class for all TokenServiceInterface classes.
+ */
 abstract class TokenServiceBase implements TokenServiceInterface {
   use ClientTrait;
   use LoggerTrait;

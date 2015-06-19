@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains Mpx\TokenMemoryService.
+ */
+
 namespace Mpx;
 
 class TokenMemoryService extends TokenServiceBase {

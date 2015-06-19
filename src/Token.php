@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains Mpx\Token.
+ */
+
 namespace Mpx;
 
 class Token implements TokenInterface {
