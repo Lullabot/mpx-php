@@ -22,6 +22,8 @@ abstract class TokenServiceBase implements TokenServiceInterface {
    * @param \Pimple\Container $container
    *
    * @return static
+   *
+   * @todo How can we ensure this always returns the same instance?
    */
   public static function create(Container $container) {
     return new static(

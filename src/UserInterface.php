@@ -16,11 +16,15 @@ namespace Mpx;
 interface UserInterface {
 
   /**
+   * Get the username of the mpx user.
+   *
    * @return string
    */
   public function getUsername();
 
   /**
+   * Get the password of the mpx user.
+   *
    * @return string
    */
   public function getPassword();

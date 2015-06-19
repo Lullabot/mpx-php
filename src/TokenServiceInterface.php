@@ -18,21 +18,22 @@ interface TokenServiceInterface {
    */
   public function load($username);
 
-
   /**
+   * Load all saved tokens.
+   *
    * @return \Mpx\TokenInterface[]
    */
   public function loadAll();
 
   /**
-   * Save the token.
+   * Save a token.
    *
    * @param \Mpx\TokenInterface $token
    */
   public function save(TokenInterface $token);
 
   /**
-   * Delete the token.
+   * Delete a saved token.
    *
    * @param \Mpx\TokenInterface $token
    */
