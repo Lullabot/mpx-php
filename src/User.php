@@ -143,10 +143,9 @@ class User implements UserInterface {
     $options = array();
     $options['query'] = array(
       'schema' => '1.0',
-      'httpError' => 'true',
       'form' => 'json',
     );
-    $options['body'] = array('username' => $this->getUsername(), 'password' => $this->getPassword());
+    $options['auth'] = array($this->getUsername(), $this->getPassword());
     if (!empty($duration)) {
       $options['query']['_duration'] = $duration;
     }
@@ -154,7 +153,7 @@ class User implements UserInterface {
       $options['query']['_idleTimeout'] = $idleTimeout;
     }
     $time = time();
-    $response = $this->client->post(static::SIGNIN_URL, $options);
+    $response = $this->client()->get(static::SIGNIN_URL, $options);
     $json = $response->json();
 
     $token = $json['signInResponse']['token'];
