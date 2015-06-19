@@ -30,7 +30,7 @@ $logger = new GuzzleHttp\Subscriber\Log\SimpleLogger();
 $client = new Mpx\Client();
 $subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($logger);
 $client->getEmitter()->attach($subscriber);
-$tokenService = new Mpx\TokenStaticService($client, $logger);
+$tokenService = new Mpx\TokenMemoryService($client, $logger);
 
 $user = new Mpx\User('mpx/user@example.com', 'password', $client, $logger, $tokenService);
 $token = $user->acquireToken();
