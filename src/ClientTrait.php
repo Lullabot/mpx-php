@@ -28,7 +28,7 @@ trait ClientTrait {
    */
   public function client() {
     if (!isset($this->client)) {
-      $this->setClient(new Client());
+      $this->client = new Client();
     }
     return $this->client;
   }
