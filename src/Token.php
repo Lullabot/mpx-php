@@ -16,14 +16,14 @@ class Token implements TokenInterface {
    *
    * @var string
    */
-  public $value;
+  protected $value;
 
   /**
    * The UNIX timestamp of when the token expires.
    *
    * @var int
    */
-  public $expire;
+  protected $expire;
 
   /**
    * Construct an MPX token object.
