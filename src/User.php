@@ -7,16 +7,12 @@
 
 namespace Mpx;
 
-use Mpx\Exception\InvalidTokenException;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 
 class User implements UserInterface {
   use ClientTrait;
   use LoggerTrait;
-
-  const SIGNIN_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signIn';
-  const SIGNOUT_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut';
 
   /**
    * @var string
@@ -29,23 +25,26 @@ class User implements UserInterface {
   private $password;
 
   /**
-   * @var string
+   * @var TokenServiceInterface
    */
-  private $token;
+  protected $tokenService;
 
   /**
-   * @var int
+   * @param string $username
+   * @param string $password
+   * @param \Mpx\ClientInterface $client
+   * @param \Psr\Log\LoggerInterface $logger
+   * @param \Mpx\TokenServiceInterface $tokenService
    */
-  private $expires;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct($username, $password, ClientInterface $client = NULL, LoggerInterface $logger = NULL) {
+  public function __construct($username, $password, ClientInterface $client = NULL, LoggerInterface $logger = NULL, TokenServiceInterface $tokenService = NULL) {
     $this->username = $username;
     $this->password = $password;
-    $this->setClient($client);
-    $this->setLogger($logger);
+    $this->client = $client;
+    $this->logger = $logger;
+    if (!isset($tokenService)) {
+      $tokenService = new TokenMemoryService($client, $logger);
+    }
+    $this->tokenService = $tokenService;
   }
 
   /**
@@ -60,7 +59,8 @@ class User implements UserInterface {
       $username,
       $password,
       $container['client'],
-      $container['logger']
+      $container['logger'],
+      $container['token.service']
     );
   }
 
@@ -81,106 +81,30 @@ class User implements UserInterface {
   /**
    * {@inheritdoc}
    */
-  public function setToken($token, $expires) {
-    $this->token = $token;
-    $this->expires = $expires;
-  }
+  public function acquireToken($duration = NULL, $force = FALSE) {
+    $token = $this->tokenService->load($this->username);
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getToken() {
-    return $this->token;
-  }
+    if ($force || !$token || !$token->isValid($duration)) {
+      // Delete the token from the cache first in case there is a failure in
+      // MpxToken::fetch() below.
+      if ($token) {
+        $this->tokenService->delete($token);
+      }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function hasValidToken() {
-    return static::isValidToken($this->getToken(), $this->getExpires());
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getValidToken() {
-    if (!$this->getToken()) {
-      $this->signIn();
-    }
-    elseif (!$this->hasValidToken()) {
-      $this->logger()->notice("Invalid MPX authentication token {token} for {username}. Fetching new token.", array('token' => $this->getToken(), 'username' => $this->getUsername()));
-      $this->signOut();
-      $this->signIn();
-    }
-    return $this->getToken();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function isValidToken($token, $expires) {
-    return !empty($token) && !empty($expires) && is_numeric($expires) && time() < $expires;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setExpires($expires) {
-    $this->expires = $expires;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getExpires() {
-    return $this->expires;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function signIn($duration = NULL, $idleTimeout = NULL) {
-    $options = array();
-    $options['query'] = array(
-      'schema' => '1.0',
-      'form' => 'json',
-    );
-    $options['auth'] = array($this->getUsername(), $this->getPassword());
-    if (!empty($duration)) {
-      $options['query']['_duration'] = $duration;
-    }
-    if (!empty($idleTimeout)) {
-      $options['query']['_idleTimeout'] = $idleTimeout;
-    }
-    $time = time();
-    $response = $this->client()->get(static::SIGNIN_URL, $options);
-    $json = $response->json();
-
-    $token = $json['signInResponse']['token'];
-    $expires = $time + (min($json['signInResponse']['duration'], $json['signInResponse']['idleTimeout']) / 1000);
-
-    if (!static::isValidToken($token, $expires)) {
-      throw new InvalidTokenException("New MPX authentication token {$token} requested for {$this->getUsername()} is already invalid.");
+      // @todo Validate if the new token also valid for $duration.
+      $token = $this->tokenService->fetch($this->username, $this->password);
+      $this->tokenService->save($token);
     }
 
-    $this->setToken($token, $expires);
-    $this->logger()->info("New MPX authentication token {token} fetched for {username}, valid for {duration} seconds.", array('token' => $token, 'username' => $this->getUsername(), 'duration' => $expires - $time));
+    return $token;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function signOut() {
-    if ($token = $this->getToken()) {
-      $options = array();
-      $options['query'] = array(
-        'schema' => '1.0',
-        'form' => 'json',
-        '_token' => $token,
-      );
-      $this->client()->get(static::SIGNOUT_URL, $options);
-      $this->setToken(NULL, NULL);
-      $this->logger()->info("Expired MPX token {token} for {username}.", array('token' => $token, 'username' => $this->getUsername()));
+  public function releaseToken() {
+    if ($token = $this->tokenService->load($this->username)) {
+      $this->tokenService->delete($token);
     }
   }
 

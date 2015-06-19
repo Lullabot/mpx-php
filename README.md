@@ -30,9 +30,10 @@ $logger = new GuzzleHttp\Subscriber\Log\SimpleLogger();
 $client = new Mpx\Client();
 $subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($logger);
 $client->getEmitter()->attach($subscriber);
+$tokenService = new Mpx\TokenMemoryService($client, $logger);
 
-$user = new Mpx\User('mpx/user@example.com', 'password', $client, $logger);
-$token = $user->getValidToken();
+$user = new Mpx\User('mpx/user@example.com', 'password', $client, $logger, $tokenService);
+$token = $user->acquireToken();
 
 // Container usage:
 $container = new Pimple\Container();
@@ -45,7 +46,10 @@ $container['client'] = $container->factory(function ($c) {
   $client->getEmitter()->attach($subscriber);
   return $client;
 });
+$container['token.service'] = function ($c) {
+  return new Mpx\TokenMemoryService($c['client'], $c['logger']);
+}
 
 $user = Mpx\User::create('mpx/user@example.com', 'password'', $container);
-$token = $user->getValidToken();
+$token = $user->acquireToken();
 ```
