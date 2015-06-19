@@ -7,7 +7,6 @@
 
 namespace Mpx;
 
-use GuzzleHttp\ClientInterface;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 
@@ -22,18 +21,10 @@ interface UserInterface {
   /**
    * @param string $username
    * @param string $password
-   * @param \GuzzleHttp\ClientInterface $client
+   * @param \Mpx\ClientInterface $client
    * @param \Psr\Log\LoggerInterface $logger
    */
-  public function __construct($username, $password, ClientInterface $client, LoggerInterface $logger);
-
-  /**
-   * @param string $username
-   * @param string $password
-   * @param \Pimple\Container $container
-   * @return \Mpx\UserInterface
-   */
-  public static function create($username, $password, Container $container);
+  public function __construct($username, $password, ClientInterface $client = NULL, LoggerInterface $logger = NULL);
 
   /**
    * @return string
