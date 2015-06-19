@@ -7,30 +7,30 @@
 
 namespace Mpx;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Client;
-
 trait ClientTrait {
 
   /**
-   * @var \GuzzleHttp\ClientInterface
+   * @var \Mpx\ClientInterface
    */
   protected $client;
 
   /**
    * Sets a HTTP client.
    *
-   * @param \GuzzleHttp\ClientInterface $client
+   * @param \Mpx\ClientInterface $client
    */
   public function setClient(ClientInterface $client) {
     $this->client = $client;
   }
 
   /**
-   * @return \GuzzleHttp\ClientInterface $client
+   * @return \Mpx\ClientInterface $client
    */
-  public function getClient() {
-    $this->setClient(new Client());
+  public function client() {
+    if (!isset($this->client)) {
+      $this->client = new Client();
+    }
     return $this->client;
   }
+
 }

@@ -8,14 +8,12 @@
 namespace Mpx;
 
 use Mpx\Exception\InvalidTokenException;
-use GuzzleHttp\ClientInterface;
 use Pimple\Container;
-use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
 class User implements UserInterface {
   use ClientTrait;
-  use LoggerAwareTrait;
+  use LoggerTrait;
 
   const SIGNIN_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signIn';
   const SIGNOUT_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut';
@@ -43,7 +41,7 @@ class User implements UserInterface {
   /**
    * {@inheritdoc}
    */
-  public function __construct($username, $password, ClientInterface $client, LoggerInterface $logger) {
+  public function __construct($username, $password, ClientInterface $client = NULL, LoggerInterface $logger = NULL) {
     $this->username = $username;
     $this->password = $password;
     $this->setClient($client);
@@ -51,7 +49,11 @@ class User implements UserInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * @param string $username
+   * @param string $password
+   * @param \Pimple\Container $container
+   *
+   * @return static
    */
   public static function create($username, $password, Container $container) {
     return new static(
@@ -106,7 +108,7 @@ class User implements UserInterface {
       $this->signIn();
     }
     elseif (!$this->hasValidToken()) {
-      $this->logger->info("Invalid MPX authentication token {token} for {username}. Fetching new token.", array('token' => $this->getToken(), 'username' => $this->getUsername()));
+      $this->logger()->notice("Invalid MPX authentication token {token} for {username}. Fetching new token.", array('token' => $this->getToken(), 'username' => $this->getUsername()));
       $this->signOut();
       $this->signIn();
     }
@@ -141,10 +143,9 @@ class User implements UserInterface {
     $options = array();
     $options['query'] = array(
       'schema' => '1.0',
-      'httpError' => 'true',
       'form' => 'json',
     );
-    $options['body'] = array('username' => $this->getUsername(), 'password' => $this->getPassword());
+    $options['auth'] = array($this->getUsername(), $this->getPassword());
     if (!empty($duration)) {
       $options['query']['_duration'] = $duration;
     }
@@ -152,7 +153,7 @@ class User implements UserInterface {
       $options['query']['_idleTimeout'] = $idleTimeout;
     }
     $time = time();
-    $response = $this->client->post(static::SIGNIN_URL, $options);
+    $response = $this->client()->get(static::SIGNIN_URL, $options);
     $json = $response->json();
 
     $token = $json['signInResponse']['token'];
@@ -163,7 +164,7 @@ class User implements UserInterface {
     }
 
     $this->setToken($token, $expires);
-    $this->logger->info("New MPX authentication token {token} fetched for {username}, valid for {duration} seconds.", array('token' => $token, 'username' => $this->getUsername(), 'duration' => $expires - $time));
+    $this->logger()->info("New MPX authentication token {token} fetched for {username}, valid for {duration} seconds.", array('token' => $token, 'username' => $this->getUsername(), 'duration' => $expires - $time));
   }
 
   /**
@@ -174,13 +175,13 @@ class User implements UserInterface {
       $options = array();
       $options['query'] = array(
         'schema' => '1.0',
-        'httpError' => 'true',
         'form' => 'json',
         '_token' => $token,
       );
-      $this->client->get(static::SIGNOUT_URL, $options);
+      $this->client()->get(static::SIGNOUT_URL, $options);
       $this->setToken(NULL, NULL);
-      $this->logger->info("Expired MPX token {token} for {username}.", array('token' => $token, 'username' => $this->getUsername()));
+      $this->logger()->info("Expired MPX token {token} for {username}.", array('token' => $token, 'username' => $this->getUsername()));
     }
   }
+
 }

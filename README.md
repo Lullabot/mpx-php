@@ -27,7 +27,7 @@ require 'vendor/autoload.php';
 
 // Native usage:
 $logger = new GuzzleHttp\Subscriber\Log\SimpleLogger();
-$client = new GuzzleHttp\Client();
+$client = new Mpx\Client();
 $subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($logger);
 $client->getEmitter()->attach($subscriber);
 
@@ -40,7 +40,7 @@ $container['logger'] = function ($c) {
   return new GuzzleHttp\Subscriber\Log\SimpleLogger();
 };
 $container['client'] = $container->factory(function ($c) {
-  $client = new GuzzleHttp\Client();
+  $client = new Mpx\Client();
   $subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($c['logger']);
   $client->getEmitter()->attach($subscriber);
   return $client;
