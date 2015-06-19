@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Mpx\AccountInterface.
+ * Contains Mpx\UserInterface.
  */
 
 namespace Mpx;
@@ -11,7 +11,13 @@ use GuzzleHttp\ClientInterface;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 
-interface AccountInterface {
+/**
+ * Defines an interface for interacting with MPX users.
+ *
+ * @see http://help.theplatform.com/display/wsf2/Identity+management+service+API+reference
+ * @see http://help.theplatform.com/display/wsf2/User+operations
+ */
+interface UserInterface {
 
   /**
    * @param string $username
@@ -25,7 +31,7 @@ interface AccountInterface {
    * @param string $username
    * @param string $password
    * @param \Pimple\Container $container
-   * @return $this
+   * @return \Mpx\UserInterface
    */
   public static function create($username, $password, Container $container);
 
@@ -109,6 +115,8 @@ interface AccountInterface {
    * @throws \GuzzleHttp\Exception\RequestException
    * @throws \RuntimeException
    * @throws \Mpx\Exception\InvalidTokenException
+   *
+   * @see http://help.theplatform.com/display/wsf2/signIn+method
    */
   public function signIn($duration = NULL, $idleTimeout = NULL);
 
@@ -116,6 +124,8 @@ interface AccountInterface {
    * Signs out the user.
    *
    * @throws \GuzzleHttp\Exception\RequestException
+   *
+   * @see http://help.theplatform.com/display/wsf2/signOut+method
    */
   public function signOut();
 

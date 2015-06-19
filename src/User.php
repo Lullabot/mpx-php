@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Mpx\Account.
+ * Contains Mpx\User.
  */
 
 namespace Mpx;
@@ -13,7 +13,7 @@ use Pimple\Container;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
-class Account implements AccountInterface {
+class User implements UserInterface {
   use ClientTrait;
   use LoggerAwareTrait;
 
