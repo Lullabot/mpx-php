@@ -19,7 +19,7 @@ class Client extends GuzzleClient implements ClientInterface {
   public function authenticatedGet(UserInterface $user, $url = null, $options = []) {
     try {
       $duration = isset($options['timeout']) ? $options['timeout'] : NULL;
-      $options['query']['token'] = $account->acquireToken($duration);
+      $options['query']['token'] = $user->acquireToken($duration);
       $response = $this->get($url, $options);
       return $response;
     }
