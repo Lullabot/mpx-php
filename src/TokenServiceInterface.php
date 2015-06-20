@@ -18,7 +18,7 @@ interface TokenServiceInterface {
    * @param string $username
    *   The mpx account username.
    *
-   * @return \Mpx\TokenInterface
+   * @return \Mpx\Token
    *   The token object if available.
    */
   public function load($username);
@@ -26,23 +26,23 @@ interface TokenServiceInterface {
   /**
    * Load all saved tokens.
    *
-   * @return \Mpx\TokenInterface[]
+   * @return \Mpx\Token[]
    */
   public function loadAll();
 
   /**
    * Save a token.
    *
-   * @param \Mpx\TokenInterface $token
+   * @param \Mpx\Token $token
    */
-  public function save(TokenInterface $token);
+  public function save(Token $token);
 
   /**
    * Delete a saved token.
    *
-   * @param \Mpx\TokenInterface $token
+   * @param \Mpx\Token $token
    */
-  public function delete(TokenInterface $token);
+  public function delete(Token $token);
 
   /**
    * Fetch a fresh authentication token using thePlatform API.
@@ -56,7 +56,7 @@ interface TokenServiceInterface {
    * @param int $duration
    *   The number of seconds for which the token should be valid.
    *
-   * @return \Mpx\TokenInterface
+   * @return \Mpx\Token
    *   The token object if a token was fetched.
    *
    * @throws \Mpx\Exception\ApiException
@@ -70,10 +70,10 @@ interface TokenServiceInterface {
    * This method only interacts with the thePlatform API and does not delete
    * the token from the cache.
    *
-   * @param \Mpx\TokenInterface $token
+   * @param \Mpx\Token $token
    *
    * @throws \Mpx\Exception\ApiException
    */
-  public function expire(TokenInterface $token);
+  public function expire(Token $token);
 
 }

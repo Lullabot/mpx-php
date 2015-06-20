@@ -7,7 +7,16 @@
 
 namespace Mpx;
 
-class Token implements TokenInterface {
+class Token {
+
+  /**
+   * Maximum possible token TTL is one week, expressed in seconds.
+   *
+   * @todo Should this value be lower?
+   *
+   * @var int
+   */
+  const MAX_TTL = 604800;
 
   /**
    * The account username linked to the token.
@@ -47,42 +56,49 @@ class Token implements TokenInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * @return string
    */
   public function getUsername() {
     return $this->username;
   }
 
   /**
-   * {@inheritdoc}
+   * @return string
    */
   public function getValue() {
     return $this->value;
   }
 
   /**
-   * {@inheritdoc}
+   * @return int
    */
   public function getExpire() {
     return $this->expire;
   }
 
   /**
-   * {@inheritdoc}
+   * Checks if a token is valid.
+   *
+   * @param int $duration
+   *   The number of seconds for which the token should be valid. Otherwise
+   *   this will just check if the token is still valid for the current time.
+   *
+   * @return bool
+   *   TRUE if the token is valid, or FALSE otherwise.
    */
   public function isValid($duration = NULL) {
     return $this->value && $this->expire > (time() + $duration);
   }
 
   /**
-   * {@inheritdoc}
+   * Invalidate the token by setting $expire to 0.
    */
   public function invalidate() {
     $this->expire = 0;
   }
 
   /**
-   * {@inheritdoc}
+   * @return string
    */
   public function __toString() {
     return $this->value;

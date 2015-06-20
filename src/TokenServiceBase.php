@@ -43,7 +43,7 @@ abstract class TokenServiceBase implements TokenServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function delete(TokenInterface $token) {
+  public function delete(Token $token) {
     // If the token is still valid, expire it using the API.
     if ($token->isValid()) {
       $this->expire($token);
@@ -92,7 +92,7 @@ abstract class TokenServiceBase implements TokenServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function expire(TokenInterface $token) {
+  public function expire(Token $token) {
     $this->client()->get(
       'https://identity.auth.theplatform.com/idm/web/Authentication/signOut',
       array(

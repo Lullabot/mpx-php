@@ -34,14 +34,14 @@ class TokenMemoryService extends TokenServiceBase {
   /**
    * {@inheritdoc}
    */
-  public function save(TokenInterface $token) {
+  public function save(Token $token) {
     static::$tokens[$token->getUsername()] = $token;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function delete(TokenInterface $token) {
+  public function delete(Token $token) {
     unset(static::$tokens[$token->getUsername()]);
     parent::delete($token);
   }

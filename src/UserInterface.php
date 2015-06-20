@@ -37,7 +37,7 @@ interface UserInterface {
    * @param bool $force
    *   Set to TRUE if a fresh authentication token should always be fetched.
    *
-   * @return \Mpx\TokenInterface
+   * @return \Mpx\Token
    *   A valid MPX token object.
    */
   public function acquireToken($duration = NULL, $force = FALSE);
