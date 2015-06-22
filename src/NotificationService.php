@@ -87,6 +87,7 @@ class NotificationService implements NotificationServiceInterface {
    * {@inheritdoc}
    */
   public function fetchLatestId(array $options = []) {
+    $options['query']['since'] = '-1';
     $response = $this->client()->authenticatedGet($this->user, $this->uri, $options);
     $data = $response->json();
 
