@@ -26,11 +26,6 @@ class User implements UserInterface {
   private $password;
 
   /**
-   * @var TokenServiceInterface
-   */
-  protected $tokenService;
-
-  /**
    * @param string $username
    * @param string $password
    * @param \Mpx\ClientInterface $client
