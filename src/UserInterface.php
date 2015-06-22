@@ -37,14 +37,24 @@ interface UserInterface {
    * @param bool $force
    *   Set to TRUE if a fresh authentication token should always be fetched.
    *
-   * @return \Mpx\Token
-   *   A valid MPX token object.
+   * @return string
+   *   A valid MPX authentication token.
    */
   public function acquireToken($duration = NULL, $force = FALSE);
 
   /**
-   * Release the user's token if it has one.
+   * Invalidate the current authentication token for the account.
    */
-  public function releaseToken();
+  public function invalidateToken();
+
+  /**
+   * Sign in the user and return the current token.
+   */
+  public function signIn();
+
+  /**
+   * Sign out the user.
+   */
+  public function signOut();
 
 }

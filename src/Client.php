@@ -18,8 +18,7 @@ class Client extends GuzzleClient implements ClientInterface {
    */
   public function authenticatedGet(UserInterface $user, $url = null, $options = []) {
     $duration = isset($options['timeout']) ? $options['timeout'] : NULL;
-    $token = $user->acquireToken($duration);
-    $options['query']['token'] = $token->getValue();
+    $options['query']['token'] = $user->acquireToken($duration);
 
     try {
       $response = $this->get($url, $options);
@@ -29,10 +28,8 @@ class Client extends GuzzleClient implements ClientInterface {
       // If the token is invalid, we should delete it from storage so that a
       // fresh token is fetched on the next request.
       if ($exception->getCode() == 401) {
-        // Flag the token as expired so it will not be reused.
-        $token->invalidate();
         // Ensure the token will be deleted.
-        //register_shutdown_function(array($user->tokenService(), 'delete'), $options['query']['token']);
+        $user->invalidateToken();
       }
       throw $exception;
     }

@@ -20,34 +20,38 @@ Then run:
 $ composer update
 ```
 
-## Usage
+## Simple Usage
 
 ```php
 require 'vendor/autoload.php';
 
-// Native usage:
-$logger = new GuzzleHttp\Subscriber\Log\SimpleLogger();
-$client = new Mpx\Client();
-$subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($logger);
-$client->getEmitter()->attach($subscriber);
-$tokenService = new Mpx\TokenMemoryService($client, $logger);
-
-$user = new Mpx\User('mpx/user@example.com', 'password', $client, $logger, $tokenService);
+$user = new Mpx\User('mpx/user@example.com', 'password');
 $token = $user->acquireToken();
+```
 
-// Container usage:
+## Container Usage
+
+```php
+require 'vendor/autoload.php';
+
 $container = new Pimple\Container();
 $container['logger'] = function ($c) {
   return new GuzzleHttp\Subscriber\Log\SimpleLogger();
 };
-$container['client'] = $container->factory(function ($c) {
+$container['client'] = function ($c) {
   $client = new Mpx\Client();
   $subscriber = new GuzzleHttp\Subscriber\Log\LogSubscriber($c['logger']);
   $client->getEmitter()->attach($subscriber);
   return $client;
-});
-$container['token.service'] = function ($c) {
-  return new Mpx\TokenMemoryService($c['client'], $c['logger']);
+};
+$container['cache'] = function ($c) {
+  $driver = new Stash\Driver\Sqlite();
+  // Calling setOptions() is required until https://github.com/tedious/Stash/pull/234 is fixed.
+  $driver->setOptions();
+  $pool = new Stash\Pool($driver);
+  $pool->setLogger($c['logger']);
+  $pool->setNamespace('mpx');
+  return $pool;
 }
 
 $user = Mpx\User::create('mpx/user@example.com', 'password'', $container);
