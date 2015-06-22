@@ -122,7 +122,6 @@ class NotificationService implements NotificationServiceInterface {
 
     $options += array(
       'query' => array(),
-      'timeout' => 180,
     );
     $options['query'] += array(
       'block' => 'false',
