@@ -9,11 +9,12 @@ namespace Mpx;
 
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
+use Stash\Interfaces\PoolInterface;
 
 class User implements UserInterface {
   use ClientTrait;
   use LoggerTrait;
-  use TokenServiceTrait;
+  use CacheTrait;
 
   /**
    * @var string
@@ -25,19 +26,23 @@ class User implements UserInterface {
    */
   private $password;
 
+  /** @var \Stash\Interfaces\ItemInterface */
+  private $tokenCache;
+
   /**
    * @param string $username
    * @param string $password
    * @param \Mpx\ClientInterface $client
    * @param \Psr\Log\LoggerInterface $logger
-   * @param \Mpx\TokenServiceInterface $tokenService
+   * @param \Stash\Interfaces\PoolInterface $cache
    */
-  public function __construct($username, $password, ClientInterface $client = NULL, LoggerInterface $logger = NULL, TokenServiceInterface $tokenService = NULL) {
+  public function __construct($username, $password, ClientInterface $client = NULL, LoggerInterface $logger = NULL, PoolInterface $cache = NULL) {
     $this->username = $username;
     $this->password = $password;
     $this->client = $client;
     $this->logger = $logger;
-    $this->tokenService = $tokenService;
+    $this->cachePool = $cache;
+    $this->tokenCache = $this->cache()->getItem('token:' . $this->getUsername());
   }
 
   /**
@@ -53,7 +58,7 @@ class User implements UserInterface {
       $password,
       $container['client'],
       $container['logger'],
-      $container['token.service']
+      $container['cache']
     );
   }
 
@@ -75,18 +80,13 @@ class User implements UserInterface {
    * {@inheritdoc}
    */
   public function acquireToken($duration = NULL, $force = FALSE) {
-    $token = $this->tokenService()->load($this->username);
+    $token = $this->tokenCache->get();
 
-    if ($force || !$token || !$token->isValid($duration)) {
-      // Delete the token from the cache first in case there is a failure in
-      // MpxToken::fetch() below.
+    if ($force || !$token || $this->tokenCache->isMiss() || $this->tokenCache->getExpiration()->getTimestamp() <= (time() + $duration)) {
       if ($token) {
-        $this->tokenService()->delete($token);
+        $this->signOut();
       }
-
-      // @todo Validate if the new token also valid for $duration.
-      $token = $this->tokenService()->fetch($this->username, $this->password);
-      $this->tokenService()->save($token);
+      $token = $this->signIn();
     }
 
     return $token;
@@ -95,10 +95,80 @@ class User implements UserInterface {
   /**
    * {@inheritdoc}
    */
-  public function releaseToken() {
-    if ($token = $this->tokenService()->load($this->username)) {
-      $this->tokenService()->delete($token);
+  public function invalidateToken() {
+    $this->tokenCache->clear();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function signIn($duration = NULL) {
+    // @todo Do we need to lock $this->tokenCache?
+
+    $options['auth'] = array($this->getUsername(), $this->getPassword());
+    $options['query'] = array(
+      'schema' => '1.0',
+      'form' => 'json',
+    );
+
+    if (!empty($duration)) {
+      // API expects this value in milliseconds, not seconds.
+      $options['query']['_duration'] = $duration * 1000;
+      $options['query']['_idleTimeout'] = $duration * 1000;
     }
+
+    $time = time();
+    $response = $this->client()->get(
+      'https://identity.auth.theplatform.com/idm/web/Authentication/signIn',
+      $options
+    );
+    $data = $response->json();
+    $token = $data['signInResponse']['token'];
+    $lifetime = floor(min($data['signInResponse']['duration'], $data['signInResponse']['idleTimeout']) / 1000);
+
+    $this->logger()->info(
+      'Fetched new mpx token {token} for user {username} that expires on {date}.',
+      array(
+        'token' => $token,
+        'username' => $this->getUsername(),
+        'date' => date(DATE_ISO8601, $time + $lifetime),
+      )
+    );
+
+    // Save the token to the cache and return it.
+    $this->tokenCache->set($token, $lifetime);
+
+    return $token;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function signOut() {
+    $token = $this->tokenCache->get();
+
+    if ($token && !$this->tokenCache->isMiss()) {
+      $this->client()->get(
+        'https://identity.auth.theplatform.com/idm/web/Authentication/signOut',
+        array(
+          'query' => array(
+            'schema' => '1.0',
+            'form' => 'json',
+            '_token' => $token,
+          ),
+        )
+      );
+
+      $this->logger()->info(
+        'Expired mpx authentication token {token} for {username}.',
+        array(
+          'token' => $token,
+          'username' => $this->getUsername(),
+        )
+      );
+    }
+
+    $this->tokenCache->clear();
   }
 
 }
