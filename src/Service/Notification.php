@@ -94,11 +94,11 @@ class Notification implements NotificationInterface {
     $options['query']['since'] = '-1';
     $data = $this->client()->authenticatedGet($this->user, $this->uri, $options);
 
-    if (!isset($data[0]['id'])) {
+    $last_id = NULL;
+    $this->processNotifications($data, $last_id);
+
+    if (empty($last_id)) {
       throw new \Exception("Unable to fetch the latest notification sequence ID from {$this->uri} for {$this->user}.");
-    }
-    elseif (!is_numeric($data[0]['id'])) {
-      throw new \UnexpectedValueException("The latest notification sequence ID {$data[0]['id']} from {$this->uri} for {$this->user} was not a numeric value.");
     }
 
     $this->logger()->info(
@@ -109,9 +109,9 @@ class Notification implements NotificationInterface {
       )
     );
 
-    $this->setLastId($data[0]['id']);
+    $this->setLastId($last_id);
 
-    return $data[0]['id'];
+    return $last_id;
   }
 
   /**
