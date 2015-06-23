@@ -25,8 +25,18 @@ $ composer update
 ```php
 require 'vendor/autoload.php';
 
+// Create the user object.
 $user = new Mpx\User('mpx/user@example.com', 'password');
-$token = $user->acquireToken();
+
+// Create the media notification service.
+$mediaNotifications = new Mpx\Service\Notification('https://read.data.media.theplatform.com/media/notify?account=Import%20account&filter=Media', $user);
+
+// Fetch the last notification ID from the media notification service.
+$last_id = $mediaNotifications->fetchLatestId();
+
+// Read if any new notifications came in since we fetched the last ID.
+$notifications = $mediaNotifications->fetchNotifications();
+
 ```
 
 ## Container Usage
@@ -54,6 +64,20 @@ $container['cache'] = function ($c) {
   return $pool;
 }
 
-$user = Mpx\User::create('mpx/user@example.com', 'password'', $container);
-$token = $user->acquireToken();
+// Create the user.
+$user = Mpx\User::create('mpx/user@example.com', 'password', $container);
+
+// Create the media notification service.
+$url = GuzzleHttp\Url::fromString('https://read.data.media.theplatform.com/media/notify');
+$url->getQuery()->set('account', 'Import account');
+$url->getQuery()->set('filter', 'Media');
+$url->getQuery()->set('clientId', 'README.md');
+$mediaNotifications = Mpx\Service\Notification::create($url, $user, NULL, $container);
+
+// Fetch the last notification ID from the media notification service.
+$last_id = $mediaNotifications->fetchLatestId();
+
+// Read if any new notifications came in since we fetched the last ID.
+$notifications = $mediaNotifications->fetchNotifications();
+
 ```
