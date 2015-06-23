@@ -117,7 +117,7 @@ class Notification implements NotificationInterface {
   /**
    * {@inheritdoc}
    */
-  public function fetchNotifications($limit = 500, array $options = []) {
+  public function fetch($limit = 500, array $options = []) {
     $last_id = $this->getLastId();
     if (!$last_id) {
       throw new \LogicException("Cannot call " . __METHOD__ . " when the last notification ID is empty.");

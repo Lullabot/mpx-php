@@ -32,10 +32,10 @@ $user = new Mpx\User('mpx/user@example.com', 'password');
 $mediaNotifications = new Mpx\Service\Notification('https://read.data.media.theplatform.com/media/notify?account=Import%20account&filter=Media', $user);
 
 // Fetch the last notification ID from the media notification service.
-$last_id = $mediaNotifications->fetchLatestId();
+$mediaNotifications->fetchLatestId();
 
-// Read if any new notifications came in since we fetched the last ID.
-$notifications = $mediaNotifications->fetchNotifications();
+// Wait and listen for any media notifications.
+$notifications = $mediaNotifications->listen();
 
 ```
 
@@ -75,9 +75,9 @@ $url->getQuery()->set('clientId', 'README.md');
 $mediaNotifications = Mpx\Service\Notification::create($url, $user, NULL, $container);
 
 // Fetch the last notification ID from the media notification service.
-$last_id = $mediaNotifications->fetchLatestId();
+$mediaNotifications->fetchLatestId();
 
-// Read if any new notifications came in since we fetched the last ID.
-$notifications = $mediaNotifications->fetchNotifications();
+// Wait and listen for any media notifications.
+$notifications = $mediaNotifications->listen();
 
 ```

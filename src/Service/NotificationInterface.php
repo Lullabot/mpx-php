@@ -50,7 +50,7 @@ interface NotificationInterface {
    * @throws \Mpx\Exception\ApiException
    * @throws \Mpx\Exception\NotificationExpiredException
    */
-  public function fetchNotifications($limit = 500, array $options = []);
+  public function fetch($limit = 500, array $options = []);
 
   /**
    * Perform a comet long-poll request for notifications.
