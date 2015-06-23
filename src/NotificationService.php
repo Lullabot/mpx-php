@@ -111,7 +111,7 @@ class NotificationService implements NotificationServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function request($run_until_empty = FALSE, array $options = []) {
+  public function fetchNotifications($limit = 500, array $options = []) {
     $last_id = $this->getLastId();
     if (!$last_id) {
       throw new \LogicException("Cannot call " . __METHOD__ . " when the last notification ID is empty.");
@@ -127,8 +127,18 @@ class NotificationService implements NotificationServiceInterface {
       'size' => 500,
     );
 
+    // If $limit === 0, set it to NULL.
+    if (!$limit) {
+      $limit = NULL;
+    }
+
     do {
       try {
+        if ($limit) {
+          // Don't request more than we need.
+          $options['query']['size'] = min($options['query']['size'], $limit);
+        }
+
         $options['query']['since'] = $last_id;
         $data = $this->client()->authenticatedGet(
           $this->user,
@@ -154,6 +164,15 @@ class NotificationService implements NotificationServiceInterface {
               'updated' => $notification['entry']['updated']
             );
           }
+
+          if ($limit) {
+            $limit--;
+            if (!$limit) {
+              // Break out of the do/while loop since we have fetched the
+              // desired number of notifications.
+              break 2;
+            }
+          }
         }
       }
       catch (ApiException $exception) {
@@ -167,7 +186,7 @@ class NotificationService implements NotificationServiceInterface {
           throw $exception;
         }
       }
-    } while ($run_until_empty && count($data) == $options['query']['size']);
+    } while (count($data) == $options['query']['size']);
 
     $this->logger()->info(
       'Fetched {count} notifications from {url} for {account}.',

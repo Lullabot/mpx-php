@@ -36,12 +36,13 @@ interface NotificationServiceInterface {
   /**
    * Perform a notification service request.
    *
-   * @param bool $run_until_empty
-   *   If TRUE will keep making requests to the notification URL until it
-   *   returns no results.
+   * @param int $limit
+   *   The number of notifications to request. If this value is greater than
+   *   500, this will create multiple HTTP requests. If this value is NULL,
+   *   this will run until no more notifications can possibly be retrieved.
    * @param array $options
    *
-   * @return array()
+   * @return array
    *   An array of notifications.
    *
    * @return \GuzzleHttp\Message\ResponseInterface
@@ -50,5 +51,5 @@ interface NotificationServiceInterface {
    * @throws \Mpx\Exception\ApiException
    * @throws \Mpx\Exception\NotificationExpiredException
    */
-  public function request($run_until_empty = FALSE, array $options = []);
+  public function fetchNotifications($limit = 500, array $options = []);
 }
