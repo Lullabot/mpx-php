@@ -127,7 +127,6 @@ class Notification implements NotificationInterface {
       'query' => array(),
     );
     $options['query'] += array(
-      'block' => 'false',
       'size' => 500,
     );
 
