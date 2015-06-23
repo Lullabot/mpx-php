@@ -18,7 +18,7 @@ interface ClientInterface extends GuzzleClientInterface {
    * @param string|\GuzzleHttp\Url|null $url
    * @param array $options
    *
-   * @return \GuzzleHttp\Message\ResponseInterface
+   * @return array
    * @throws \GuzzleHttp\Exception\RequestException
    * @throws \Mpx\Exception\ApiException
    */

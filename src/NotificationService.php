@@ -88,8 +88,7 @@ class NotificationService implements NotificationServiceInterface {
    */
   public function fetchLatestId(array $options = []) {
     $options['query']['since'] = '-1';
-    $response = $this->client()->authenticatedGet($this->user, $this->uri, $options);
-    $data = $response->json();
+    $data = $this->client()->authenticatedGet($this->user, $this->uri, $options);
 
     if (!isset($data[0]['id'])) {
       throw new \Exception("Unable to fetch the latest notification sequence ID from {$this->uri} for {$this->user}.");
@@ -102,7 +101,7 @@ class NotificationService implements NotificationServiceInterface {
       "Fetched the latest notification sequence ID from {url}: {value}",
       array(
         'value' => var_export($data[0]['id'], TRUE),
-        'url' => $response->getEffectiveUrl(),
+        'url' => $this->uri,
       )
     );
 
@@ -131,12 +130,11 @@ class NotificationService implements NotificationServiceInterface {
     do {
       try {
         $options['query']['since'] = $last_id;
-        $response = $this->client()->authenticatedGet(
+        $data = $this->client()->authenticatedGet(
           $this->user,
           $this->uri,
           $options
         );
-        $data = $response->json();
 
         // Process the notifications.
         foreach ($data as $notification) {

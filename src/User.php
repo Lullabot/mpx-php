@@ -118,11 +118,10 @@ class User implements UserInterface {
     }
 
     $time = time();
-    $response = $this->client()->get(
+    $data = $this->client()->get(
       'https://identity.auth.theplatform.com/idm/web/Authentication/signIn',
       $options
     );
-    $data = $response->json();
     $token = $data['signInResponse']['token'];
     $lifetime = floor(min($data['signInResponse']['duration'], $data['signInResponse']['idleTimeout']) / 1000);
 
