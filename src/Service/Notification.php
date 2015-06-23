@@ -91,7 +91,6 @@ class Notification implements NotificationInterface {
    * {@inheritdoc}
    */
   public function fetchLatestId(array $options = []) {
-    $options['query']['since'] = '-1';
     $data = $this->client()->authenticatedGet($this->user, $this->uri, $options);
 
     $last_id = NULL;
