@@ -109,6 +109,8 @@ class Notification implements NotificationInterface {
       )
     );
 
+    $this->setLastId($data[0]['id']);
+
     return $data[0]['id'];
   }
 
@@ -150,31 +152,14 @@ class Notification implements NotificationInterface {
         );
 
         // Process the notifications.
-        foreach ($data as $notification) {
-          // Update the most recently seen notification ID.
-          if (!empty($notification['id'])) {
-            $last_id = $notification['id'];
-          }
+        $notifications = $this->processNotifications($data, $last_id, $notifications);
 
-          if (!empty($notification['entry'])) {
-            // @todo Convert these to a notification class?
-            $notifications[] = array(
-              'type' => $notification['type'],
-              // The ID is always a fully qualified URI, and we only care about the
-              // actual ID value, which is at the end.
-              'id' => basename($notification['entry']['id']),
-              'method' => $notification['method'],
-              'updated' => $notification['entry']['updated']
-            );
-          }
-
-          if ($limit) {
-            $limit--;
-            if (!$limit) {
-              // Break out of the do/while loop since we have fetched the
-              // desired number of notifications.
-              break 2;
-            }
+        if ($limit) {
+          $limit -= count($data);
+          if ($limit <= 0) {
+            // Break out of the do/while loop since we have fetched the
+            // desired number of notifications.
+            break;
           }
         }
       }
@@ -209,6 +194,106 @@ class Notification implements NotificationInterface {
         'data' => print_r($notifications, TRUE),
       )
     );
+
+    return $notifications;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function listen(array $options = []) {
+    $last_id = $this->getLastId();
+    if (!$last_id) {
+      throw new \LogicException("Cannot call " . __METHOD__ . " when the last notification ID is empty.");
+    }
+
+    $options['query']['since'] = $last_id;
+    $options['query']['block'] = 'true';
+
+    $this->logger()->info(
+      'Listening for notifications from {url} for {account}.',
+      array(
+        'url' => $this->uri,
+        'account' => $this->user->getUsername(),
+      )
+    );
+
+    try {
+      $data = $this->client()->authenticatedGet(
+        $this->user,
+        $this->uri,
+        $options
+      );
+    }
+    catch (ApiException $exception) {
+      // A 404 response means the notification ID that we have is now older than
+      // 7 days, and now we have to start ingesting from the beginning again.
+      if ($exception->getCode() == 404) {
+        $this->setLastId(NULL);
+        throw new NotificationExpiredException("The notification sequence ID {$last_id} is older than 7 days and is too old to fetch notifications.");
+      }
+      else {
+        throw $exception;
+      }
+    }
+
+    // Process the notifications.
+    $notifications = $this->processNotifications($data, $last_id);
+
+    $this->logger()->info(
+      'Fetched {count} notifications from {url} for {account}.',
+      array(
+        'count' => count($notifications),
+        'url' => $this->uri,
+        'account' => $this->user->getUsername(),
+      )
+    );
+
+    // Set the last notification ID once all the requests have completed.
+    $this->setLastId($last_id);
+
+    $this->logger()->debug(
+      "Notification data: {data}",
+      array(
+        'data' => print_r($notifications, TRUE),
+      )
+    );
+
+    return $notifications;
+  }
+
+  /**
+   * Process notification data from the API.
+   *
+   * @param array $data
+   *   The raw data from the API.
+   * @param int &$last_id
+   *   The current last ID, to be updated from the notification data.
+   * @param array $notifications
+   *   An optional array to which to add the existing notifications.
+   *
+   * @return array
+   *   An array of notifications.
+   */
+  private function processNotifications(array $data, &$last_id, array $notifications = array()) {
+    foreach ($data as $notification) {
+      // Update the most recently seen notification ID.
+      if (!empty($notification['id'])) {
+        $last_id = $notification['id'];
+      }
+
+      if (!empty($notification['entry'])) {
+        // @todo Convert these to a notification class?
+        $notifications[] = array(
+          'type' => $notification['type'],
+          // The ID is always a fully qualified URI, and we only care about the
+          // actual ID value, which is at the end.
+          'id' => basename($notification['entry']['id']),
+          'method' => $notification['method'],
+          'updated' => $notification['entry']['updated']
+        );
+      }
+    }
 
     return $notifications;
   }

@@ -45,11 +45,25 @@ interface NotificationInterface {
    * @return array
    *   An array of notifications.
    *
-   * @return \GuzzleHttp\Message\ResponseInterface
    * @throws \GuzzleHttp\Exception\RequestException
    * @throws \LogicException
    * @throws \Mpx\Exception\ApiException
    * @throws \Mpx\Exception\NotificationExpiredException
    */
   public function fetchNotifications($limit = 500, array $options = []);
+
+  /**
+   * Perform a comet long-poll request for notifications.
+   *
+   * @param array $options
+   *
+   * @return array
+   *   An array of notifications.
+   *
+   * @throws \GuzzleHttp\Exception\RequestException
+   * @throws \LogicException
+   * @throws \Mpx\Exception\ApiException
+   * @throws \Mpx\Exception\NotificationExpiredException
+   */
+  public function listen(array $options = []);
 }
