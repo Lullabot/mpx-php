@@ -90,11 +90,12 @@ class Notification implements NotificationInterface {
   /**
    * {@inheritdoc}
    */
-  public function fetchLatestId(array $options = []) {
+  public function syncLatestId(array $options = []) {
     $data = $this->client()->authenticatedGet($this->user, $this->uri, $options);
 
     $last_id = NULL;
-    $this->processNotifications($data, $last_id);
+    // Only care about the first notification in the data.
+    $this->processNotifications(array_slice($data, 0, 1), $last_id);
 
     if (empty($last_id)) {
       throw new \Exception("Unable to fetch the latest notification sequence ID from {$this->uri} for {$this->user}.");

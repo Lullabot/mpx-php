@@ -23,6 +23,8 @@ interface NotificationInterface {
   /**
    * Retrieve the latest notification sequence ID for an account.
    *
+   * @see http://help.theplatform.com/display/wsf2/Subscribing+to+change+notifications#Subscribingtochangenotifications-Synchronizingwiththenotificationssystem
+   *
    * @param array $options
    *
    * @return string
@@ -31,10 +33,12 @@ interface NotificationInterface {
    * @throws \Exception
    * @throws \UnexpectedValueException
    */
-  public function fetchLatestId(array $options = []);
+  public function syncLatestId(array $options = []);
 
   /**
-   * Perform a notification service request.
+   * Perform a periodic polling request for notifications.
+   *
+   * @see http://help.theplatform.com/display/wsf2/Subscribing+to+change+notifications#Subscribingtochangenotifications-Listeningfornotifications
    *
    * @param int $limit
    *   The number of notifications to request. If this value is greater than
@@ -54,6 +58,8 @@ interface NotificationInterface {
 
   /**
    * Perform a comet long-poll request for notifications.
+   *
+   * @see http://help.theplatform.com/display/wsf2/Subscribing+to+change+notifications#Subscribingtochangenotifications-Listeningfornotifications
    *
    * @param array $options
    *
