@@ -1,8 +1,8 @@
 <?php
 
-namespace Mpx;
+namespace Mpx\Service;
 
-interface NotificationServiceInterface {
+interface NotificationInterface {
 
   /**
    * Get the last seen sequence ID for this notification service.

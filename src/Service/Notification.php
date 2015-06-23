@@ -5,15 +5,19 @@
  * Contains Mpx\NotificationService.
  */
 
-namespace Mpx;
+namespace Mpx\Service;
 
 use GuzzleHttp\Url;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 use Mpx\Exception\ApiException;
 use Mpx\Exception\NotificationExpiredException;
+use Mpx\ClientTrait;
+use Mpx\ClientInterface;
+use Mpx\LoggerTrait;
+use Mpx\UserInterface;
 
-class NotificationService implements NotificationServiceInterface {
+class Notification implements NotificationInterface {
   use ClientTrait;
   use LoggerTrait;
 
