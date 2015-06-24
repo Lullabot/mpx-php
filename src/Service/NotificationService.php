@@ -44,21 +44,15 @@ class NotificationService implements NotificationServiceInterface {
    */
   public function __construct($uri, UserInterface $user, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
     $this->uri = is_string($uri) ? Url::fromString($uri) : $uri;
+    if (!$this->uri->getQuery()->hasKey('clientId')) {
+      $this->uri->getQuery()->set('clientId', 'mpx-php');
+    }
     $this->user = $user;
     $this->client = $client;
     $this->cachePool = $cache;
     $this->logger = $logger;
 
     $this->idCache = $this->cache()->getItem($this->getCacheKey());
-  }
-
-  private function getCacheKey() {
-    $cache_uri = clone $this->getUri();
-    // Filter out query parameters that should not affect the cache key.
-    $cache_uri->setQuery($cache_uri->getQuery()->filter(function($key, $value) {
-      return in_array($key, array('filter', 'account'));
-    }));
-    return 'notification:' . md5($this->getUser()->getUsername() . ':' . $cache_uri);
   }
 
   /**
@@ -80,12 +74,34 @@ class NotificationService implements NotificationServiceInterface {
     );
   }
 
+  private function getCacheKey() {
+    $cache_uri = clone $this->getUri();
+    // Filter out query parameters that should not affect the cache key.
+    $cache_uri->setQuery($cache_uri->getQuery()->filter(function($key, $value) {
+      return in_array($key, array('filter', 'account'));
+    }));
+    return 'notification:' . md5($this->getUser()->getUsername() . ':' . $cache_uri);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getUser() {
     return $this->user;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getUri() {
     return $this->uri;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLastId() {
+    return $this->idCache->get();
   }
 
   /**
@@ -99,13 +115,6 @@ class NotificationService implements NotificationServiceInterface {
         'value' => var_export($value, TRUE),
       )
     );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getLastId() {
-    return $this->idCache->get();
   }
 
   /**
@@ -309,10 +318,7 @@ class NotificationService implements NotificationServiceInterface {
   }
 
   /**
-   * Skip to the most recent notification sequence ID.
-   *
-   * @param array $options
-   *   An additional array of options to pass to \Mpx\ClientInterface.
+   * {@inheritdoc}
    */
   public function syncLatestId($options = []) {
     $latest = $this->fetchLatestId($options);
@@ -322,14 +328,7 @@ class NotificationService implements NotificationServiceInterface {
   }
 
   /**
-   * Read the most recent notifications.
-   *
-   * @param int $limit
-   *   The maximum number of notifications to read.
-   * @param array $options
-   *   An additional array of options to pass to \Mpx\ClientInterface.
-   *
-   * @throws \Mpx\Exception\NotificationExpiredException
+   * {@inheritdoc}
    */
   public function readNotifications($limit = 500, $options = []) {
     if (!$this->getLastId()) {
@@ -358,7 +357,7 @@ class NotificationService implements NotificationServiceInterface {
    * @param array $notifications
    *   The array of notifications keyed by notification ID.
    */
-  public function processNotifications(array $notifications) {
+  protected function processNotifications(array $notifications) {
     $this->setLastId(max(array_keys($notifications)));
   }
 
@@ -368,7 +367,7 @@ class NotificationService implements NotificationServiceInterface {
    * @param string $id
    *   The reset notification ID value.
    */
-  public function processNotificationReset($id) {
+  protected function processNotificationReset($id) {
     $this->setLastId($id);
   }
 }

@@ -4,6 +4,10 @@ namespace Mpx\Service;
 
 interface NotificationServiceInterface {
 
+  public function getUser();
+
+  public function getUri();
+
   /**
    * Get the last seen sequence ID for this notification service.
    *
@@ -73,4 +77,25 @@ interface NotificationServiceInterface {
    * @throws \Mpx\Exception\NotificationExpiredException
    */
   public function listen(array $options = []);
+
+  /**
+   * Skip to the most recent notification sequence ID.
+   *
+   * @param array $options
+   *   An additional array of options to pass to \Mpx\ClientInterface.
+   */
+  public function syncLatestId($options = []);
+
+  /**
+   * Read the most recent notifications.
+   *
+   * @param int $limit
+   *   The maximum number of notifications to read.
+   * @param array $options
+   *   An additional array of options to pass to \Mpx\ClientInterface.
+   *
+   * @throws \Mpx\Exception\NotificationExpiredException
+   */
+  public function readNotifications($limit = 500, $options = []);
+
 }
