@@ -6,14 +6,21 @@ use GuzzleHttp\Event\AbstractEvent;
 
 class ObjectLoadEvent extends AbstractEvent {
 
-  /** @var array */
+  /** @var \Mpx\Object\ObjectInterface[] */
   protected $objects;
 
   /**
-   * @param array $objects
+   * @param \Mpx\Object\ObjectInterface[] $objects
    */
   public function __construct(array $objects) {
     $this->objects = $objects;
+  }
+
+  /**
+   * @return \Mpx\Object\ObjectInterface[]
+   */
+  public function getObjects() {
+    return $this->objects;
   }
 
 }

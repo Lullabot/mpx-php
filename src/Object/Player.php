@@ -2,8 +2,6 @@
 
 namespace Mpx\Object;
 
-use GuzzleHttp\Url;
-
 class Player extends AbstractObject {
 
   /**

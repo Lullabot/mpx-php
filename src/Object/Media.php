@@ -2,8 +2,6 @@
 
 namespace Mpx\Object;
 
-use GuzzleHttp\Url;
-
 class Media extends AbstractObject {
 
   /**

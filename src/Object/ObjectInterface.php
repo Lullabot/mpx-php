@@ -24,16 +24,6 @@ interface ObjectInterface {
   public static function getNotificationUri();
 
   /**
-   * Constructs a new mpx object, without saving it.
-   *
-   * @param array $values
-   *   (optional) An array of values to set, keyed by property name.
-   *
-   * @return static
-   */
-  public static function create(array $values = array());
-
-  /**
    * @return string
    */
   public function getId();
@@ -47,6 +37,16 @@ interface ObjectInterface {
    * @return string
    */
   public function __toString();
+
+  /**
+   * Constructs a new mpx object, without saving it.
+   *
+   * @param array $values
+   *   (optional) An array of values to set, keyed by property name.
+   *
+   * @return static
+   */
+  public static function create(array $values = array());
 
   /**
    * @param \Mpx\UserInterface $user

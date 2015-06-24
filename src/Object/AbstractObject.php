@@ -24,19 +24,14 @@ abstract class AbstractObject implements ObjectInterface {
   /**
    * {@inheritdoc}
    */
-  public static function create(array $values = array()) {
-    $instance = new static();
-    foreach ($values as $key => $value) {
-      $instance->{$key} = $value;
-    }
-    return $instance;
-  }
-
   public function getId() {
     // Normalize the ID value to just the actual ID and not the full URL.
     return basename($this->id);
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getTitle() {
     return $this->title;
   }
@@ -46,6 +41,17 @@ abstract class AbstractObject implements ObjectInterface {
    */
   public function __toString() {
     return $this->getTitle() . ' (id: ' . $this->getId() . ')';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(array $values = array()) {
+    $instance = new static();
+    foreach ($values as $key => $value) {
+      $instance->{$key} = $value;
+    }
+    return $instance;
   }
 
   /**
@@ -66,7 +72,7 @@ abstract class AbstractObject implements ObjectInterface {
 
     // Allow some query parameters to be reused from the object service's URI.
     $uri = is_string($uri) ? Url::fromString($uri) : $uri;
-    $uri->getQuery()->merge($objectService->getUri()->getQuery()->filter(function($key, $value) {
+    $uri->getQuery()->merge($objectService->getUri()->getQuery()->filter(function($key) {
       return in_array($key, array('account'));
     }));
 
