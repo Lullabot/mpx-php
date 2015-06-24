@@ -24,7 +24,7 @@ class Player extends AbstractObject {
    * {@inheritdoc}
    */
   public static function getUri() {
-    return Url::fromString('https://data.player.theplatform.com/player');
+    return Url::fromString('https://data.player.theplatform.com/player/data/Player');
   }
 
 }

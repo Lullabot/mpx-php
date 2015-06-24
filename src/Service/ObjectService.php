@@ -58,8 +58,7 @@ class ObjectService implements ObjectServiceInterface {
 
     $this->objectClass = $objectClass;
     $this->objectType = call_user_func(array($objectClass, 'getType'));
-    $uri = call_user_func(array($objectClass, 'getUri'));
-    $this->uri = is_string($uri) ? Url::fromString($uri) : $uri;
+    $this->uri = call_user_func(array($objectClass, 'getUri'));
     $this->schema = call_user_func(array($objectClass, 'getSchema'));
 
     $this->user = $user;
@@ -159,7 +158,7 @@ class ObjectService implements ObjectServiceInterface {
         // Ensure we are not trying to fetch too many items at once.
         $batches = array_chunk($ids_to_load, 50);
         foreach ($batches as $batch) {
-          $data = $this->request('GET', '/data/' . $this->objectType . '/' . implode(',', $batch));
+          $data = $this->request('GET', implode(',', $batch));
           // Normalize the data structure if only one result was returned.
           $data = isset($data['entries']) ? $data['entries'] : array($data);
 
@@ -247,6 +246,12 @@ class ObjectService implements ObjectServiceInterface {
       $objects[$object->getId()] = $object;
     }
     return $objects;
+  }
+
+  public function callObjectClass() {
+    $args = func_get_args();
+    $method = array_shift($args);
+    return call_user_func_array(array($this->objectClass, $method), $args);
   }
 
 }

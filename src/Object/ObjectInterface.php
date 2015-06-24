@@ -45,4 +45,9 @@ interface ObjectInterface {
    * @return string
    */
   public function __toString();
+
+  /**
+   * @return \GuzzleHttp\Url
+   */
+  public static function getNotificationUri();
 }

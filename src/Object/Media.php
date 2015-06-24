@@ -24,6 +24,7 @@ class Media extends AbstractObject {
    * {@inheritdoc}
    */
   public static function getUri() {
-    return Url::fromString('http://data.media.theplatform.com/media');
+    return Url::fromString('http://data.media.theplatform.com/media/data/Media');
   }
+
 }

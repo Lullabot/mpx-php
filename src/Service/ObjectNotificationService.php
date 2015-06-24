@@ -19,11 +19,15 @@ class ObjectNotificationService extends NotificationService {
    * @param \Mpx\ClientInterface $client
    * @param \Stash\Interfaces\PoolInterface $cache
    * @param \Psr\Log\LoggerInterface $logger
+   *
+   * @throws \Exception
    */
   public function __construct(ObjectServiceInterface $objectService, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
-    $uri = $objectService->generateUri('/notify', TRUE);
-    // Ensure we only filter to objects of this type.
-    $uri->getQuery()->set('filter', $objectService->getObjectType());
+    $uri = $objectService->callObjectClass('getNotificationUri');
+    if (!$uri) {
+      throw new \Exception("The {$objectService->getObjectType()} object does not support notifications.");
+    }
+
     parent::__construct(
       $uri,
       $objectService->getUser(),

@@ -40,4 +40,16 @@ abstract class AbstractObject implements ObjectInterface {
     return $this->getTitle() . ' (id: ' . $this->getId() . ')';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function getNotificationUri() {
+    $uri = static::getUri();
+    $uri->setHost('read.' . $uri->getHost());
+    $uri->setPath(str_replace('/data/' . static::getType(), '', $uri->getPath()) . '/notify');
+    // Ensure we only filter to objects of this type.
+    $uri->getQuery()->set('filter', static::getType());
+    return $uri;
+  }
+
 }

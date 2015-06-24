@@ -51,5 +51,7 @@ interface ObjectServiceInterface {
    * @param array $data
    * @return \Mpx\Object\ObjectInterface[]
    */
-  //public function createObjects(array $data);
+  public function createObjects(array $data);
+
+  public function callObjectClass();
 }
