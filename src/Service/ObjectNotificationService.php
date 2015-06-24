@@ -2,7 +2,6 @@
 
 namespace Mpx\Service;
 
-use GuzzleHttp\Url;
 use Mpx\ClientInterface;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
@@ -16,7 +15,7 @@ class ObjectNotificationService extends NotificationService {
   /**
    * Construct an mpx object notification service.
    *
-   * @param \GuzzleHttp\Url $uri
+   * @param \GuzzleHttp\Url|string $uri
    * @param \Mpx\Service\ObjectServiceInterface $objectService
    * @param \Mpx\ClientInterface $client
    * @param \Stash\Interfaces\PoolInterface $cache
@@ -24,7 +23,7 @@ class ObjectNotificationService extends NotificationService {
    *
    * @throws \Exception
    */
-  public function __construct(Url $uri, ObjectServiceInterface $objectService, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
+  public function __construct($uri, ObjectServiceInterface $objectService, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
     parent::__construct(
       $uri,
       $objectService->getUser(),
@@ -40,7 +39,7 @@ class ObjectNotificationService extends NotificationService {
    *
    * @return static
    */
-  public static function create(Url $uri, ObjectServiceInterface $objectService, Container $container) {
+  public static function create($uri, ObjectServiceInterface $objectService, Container $container) {
     return new static(
       $uri,
       $objectService,

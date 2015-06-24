@@ -36,14 +36,14 @@ class NotificationService implements NotificationServiceInterface {
   /**
    * Construct an mpx notification service.
    *
-   * @param \GuzzleHttp\Url $uri
+   * @param \GuzzleHttp\Url|string $uri
    * @param \Mpx\UserInterface $user
    * @param \Mpx\ClientInterface $client
    * @param \Stash\Interfaces\PoolInterface $cache
    * @param \Psr\Log\LoggerInterface $logger
    */
-  public function __construct(Url $uri, UserInterface $user, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
-    $this->uri = $uri;
+  public function __construct($uri, UserInterface $user, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
+    $this->uri = is_string($uri) ? Url::fromString($uri) : $uri;
     if (!$this->uri->getQuery()->hasKey('clientId')) {
       $this->uri->getQuery()->set('clientId', 'mpx-php');
     }
@@ -58,13 +58,13 @@ class NotificationService implements NotificationServiceInterface {
   /**
    * Create a new instance of a notification service class.
    *
-   * @param \GuzzleHttp\Url $uri
+   * @param \GuzzleHttp\Url|string $uri
    * @param \Mpx\UserInterface $user
    * @param \Pimple\Container $container
    *
    * @return static
    */
-  public static function create(Url $uri, UserInterface $user, Container $container) {
+  public static function create($uri, UserInterface $user, Container $container) {
     return new static(
       $uri,
       $user,
