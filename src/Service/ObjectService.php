@@ -127,11 +127,8 @@ class ObjectService implements ObjectServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateUri($path = '', $readOnly = TRUE) {
+  public function generateUri($path = '') {
     $uri = clone $this->uri;
-    if ($readOnly && strpos($uri->getHost(), 'read.') !== 0) {
-      $uri->setHost('read.' . $uri->getHost());
-    }
     if ($path) {
       $uri->addPath($path);
     }
@@ -195,7 +192,7 @@ class ObjectService implements ObjectServiceInterface {
    * {@inheritdoc}
    */
   public function request($method = 'GET', $path, array $options = []) {
-    $uri = is_string($path) ? $this->generateUri($path, $method == 'GET') : $path;
+    $uri = is_string($path) ? $this->generateUri($path) : $path;
 
     $options += array('query' => array());
     $options['query'] += array(

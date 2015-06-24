@@ -17,10 +17,9 @@ interface ObjectServiceInterface {
 
   /**
    * @param string $path
-   * @param bool $readOnly
    * @return \GuzzleHttp\Url
    */
-  public function generateUri($path = '', $readOnly = FALSE);
+  public function generateUri($path = '');
 
   public function request($method = 'GET', $path, array $options = []);
 
