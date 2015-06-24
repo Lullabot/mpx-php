@@ -27,4 +27,11 @@ class Player extends AbstractObject {
     return Url::fromString('https://data.player.theplatform.com/player/data/Player');
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function getNotificationUri() {
+    return Url::fromString('http://read.data.player.theplatform.com/player/notify?filter=Player');
+  }
+
 }
