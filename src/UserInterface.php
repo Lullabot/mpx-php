@@ -57,4 +57,8 @@ interface UserInterface {
    */
   public function signOut();
 
+  public function getSelfId();
+
+  public function getId();
+
 }

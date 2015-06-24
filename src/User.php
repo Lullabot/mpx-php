@@ -171,4 +171,35 @@ class User implements UserInterface {
     $this->tokenCache->clear();
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getSelfId() {
+    $item = $this->cache()->getItem('user:' . $this->getUsername());
+    $data = $item->get();
+    if ($item->isMiss()) {
+      $data = $this->client()->authenticatedRequest(
+        'GET',
+        'https://identity.auth.theplatform.com/idm/web/Self/getSelfId',
+        $this,
+        array(
+          'query' => array(
+            'schema' => '1.0',
+            'form' => 'json',
+          ),
+        )
+      );
+      $item->set($data['getSelfIdResponse']);
+    }
+    return $data;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getId() {
+    $data = $this->getSelfId();
+    return basename($data['userId']);
+  }
+
 }
