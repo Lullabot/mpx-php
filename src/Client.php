@@ -53,6 +53,8 @@ class Client extends GuzzleClient implements ClientInterface {
     // Parse out exceptions from the response body.
     $contentType = $response->getHeader('Content-Type');
     if (preg_match('~^(application|text)/json~', $contentType)) {
+      // @todo Figure out how we can support the big_int_string option here.
+      // @see http://stackoverflow.com/questions/19520487/json-bigint-as-string-removed-in-php-5-5
       $data = $response->json();
       if (!empty($data['responseCode']) && !empty($data['isException'])) {
         throw new ApiException("Error {$data['title']} on request to {$request->getUrl()}: {$data['description']}", (int) $data['responseCode']);
