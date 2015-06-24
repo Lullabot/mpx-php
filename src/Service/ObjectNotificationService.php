@@ -2,6 +2,7 @@
 
 namespace Mpx\Service;
 
+use GuzzleHttp\Url;
 use Mpx\ClientInterface;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
@@ -15,6 +16,7 @@ class ObjectNotificationService extends NotificationService {
   /**
    * Construct an mpx object notification service.
    *
+   * @param \GuzzleHttp\Url $uri
    * @param \Mpx\Service\ObjectServiceInterface $objectService
    * @param \Mpx\ClientInterface $client
    * @param \Stash\Interfaces\PoolInterface $cache
@@ -22,12 +24,7 @@ class ObjectNotificationService extends NotificationService {
    *
    * @throws \Exception
    */
-  public function __construct(ObjectServiceInterface $objectService, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
-    $uri = $objectService->getNotificationUri();
-    if (!$uri) {
-      throw new \Exception("The {$objectService->getObjectType()} object does not support notifications.");
-    }
-
+  public function __construct(Url $uri, ObjectServiceInterface $objectService, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
     parent::__construct(
       $uri,
       $objectService->getUser(),
@@ -43,8 +40,9 @@ class ObjectNotificationService extends NotificationService {
    *
    * @return static
    */
-  public static function create(ObjectServiceInterface $objectService, Container $container) {
+  public static function create(Url $uri, ObjectServiceInterface $objectService, Container $container) {
     return new static(
+      $uri,
       $objectService,
       $container['client'],
       $container['cache'],
@@ -55,7 +53,7 @@ class ObjectNotificationService extends NotificationService {
   /**
    * {@inheritdoc}
    */
-  public function processNotifications(array $notifications) {
+  protected function processNotifications(array $notifications) {
     $ids = array();
     foreach ($notifications as $notification_id => $notification) {
       if (!empty($notification['id'])) {
@@ -78,7 +76,7 @@ class ObjectNotificationService extends NotificationService {
   /**
    * {@inheritdoc}
    */
-  public function processNotificationReset($id) {
+  protected function processNotificationReset($id) {
     $this->objectService->resetCache();
 
     parent::processNotificationReset($id);

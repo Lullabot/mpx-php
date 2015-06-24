@@ -36,14 +36,14 @@ class NotificationService implements NotificationServiceInterface {
   /**
    * Construct an mpx notification service.
    *
-   * @param \GuzzleHttp\Url|string $uri
+   * @param \GuzzleHttp\Url $uri
    * @param \Mpx\UserInterface $user
    * @param \Mpx\ClientInterface $client
    * @param \Stash\Interfaces\PoolInterface $cache
    * @param \Psr\Log\LoggerInterface $logger
    */
-  public function __construct($uri, UserInterface $user, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
-    $this->uri = is_string($uri) ? Url::fromString($uri) : $uri;
+  public function __construct(Url $uri, UserInterface $user, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
+    $this->uri = $uri;
     if (!$this->uri->getQuery()->hasKey('clientId')) {
       $this->uri->getQuery()->set('clientId', 'mpx-php');
     }
@@ -53,6 +53,25 @@ class NotificationService implements NotificationServiceInterface {
     $this->logger = $logger;
 
     $this->idCache = $this->cache()->getItem($this->getCacheKey());
+  }
+
+  /**
+   * Create a new instance of a notification service class.
+   *
+   * @param \GuzzleHttp\Url $uri
+   * @param \Mpx\UserInterface $user
+   * @param \Pimple\Container $container
+   *
+   * @return static
+   */
+  public static function create(Url $uri, UserInterface $user, Container $container) {
+    return new static(
+      $uri,
+      $user,
+      $container['client'],
+      $container['cache'],
+      $container['logger']
+    );
   }
 
   private function getCacheKey() {
@@ -65,30 +84,24 @@ class NotificationService implements NotificationServiceInterface {
   }
 
   /**
-   * Create a new instance of a notification service class.
-   *
-   * @param \GuzzleHttp\Url|string $uri
-   * @param \Mpx\UserInterface $user
-   * @param \Pimple\Container $container
-   *
-   * @return static
+   * {@inheritdoc}
    */
-  public static function create($uri, UserInterface $user, Container $container) {
-    return new static(
-      $uri,
-      $user,
-      $container['client'],
-      $container['cache'],
-      $container['logger']
-    );
-  }
-
   public function getUser() {
     return $this->user;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getUri() {
     return $this->uri;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLastId() {
+    return $this->idCache->get();
   }
 
   /**
@@ -102,13 +115,6 @@ class NotificationService implements NotificationServiceInterface {
         'value' => var_export($value, TRUE),
       )
     );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getLastId() {
-    return $this->idCache->get();
   }
 
   /**
@@ -312,10 +318,7 @@ class NotificationService implements NotificationServiceInterface {
   }
 
   /**
-   * Skip to the most recent notification sequence ID.
-   *
-   * @param array $options
-   *   An additional array of options to pass to \Mpx\ClientInterface.
+   * {@inheritdoc}
    */
   public function syncLatestId($options = []) {
     $latest = $this->fetchLatestId($options);
@@ -325,14 +328,7 @@ class NotificationService implements NotificationServiceInterface {
   }
 
   /**
-   * Read the most recent notifications.
-   *
-   * @param int $limit
-   *   The maximum number of notifications to read.
-   * @param array $options
-   *   An additional array of options to pass to \Mpx\ClientInterface.
-   *
-   * @throws \Mpx\Exception\NotificationExpiredException
+   * {@inheritdoc}
    */
   public function readNotifications($limit = 500, $options = []) {
     if (!$this->getLastId()) {
@@ -361,7 +357,7 @@ class NotificationService implements NotificationServiceInterface {
    * @param array $notifications
    *   The array of notifications keyed by notification ID.
    */
-  public function processNotifications(array $notifications) {
+  protected function processNotifications(array $notifications) {
     $this->setLastId(max(array_keys($notifications)));
   }
 
@@ -371,7 +367,7 @@ class NotificationService implements NotificationServiceInterface {
    * @param string $id
    *   The reset notification ID value.
    */
-  public function processNotificationReset($id) {
+  protected function processNotificationReset($id) {
     $this->setLastId($id);
   }
 }

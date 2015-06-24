@@ -2,6 +2,10 @@
 
 namespace Mpx\Object;
 
+use Mpx\UserInterface;
+use Pimple\Container;
+use Mpx\Service\ObjectServiceInterface;
+
 interface ObjectInterface {
 
   /**
@@ -50,4 +54,20 @@ interface ObjectInterface {
    * @return \GuzzleHttp\Url
    */
   public static function getNotificationUri();
+
+  /**
+   * @param \Mpx\UserInterface $user
+   * @param \Pimple\Container $container
+   *
+   * @return \Mpx\Service\ObjectServiceInterface
+   */
+  public static function createService(UserInterface $user, Container $container);
+
+  /**
+   * @return \Mpx\Service\NotificationServiceInterface
+   *
+   * @throws \Mpx\Exception\NotificationsUnsupportedException
+   */
+  public static function createNotificationService(ObjectServiceInterface $objectService, Container $container);
+
 }

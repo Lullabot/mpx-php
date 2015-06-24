@@ -2,6 +2,8 @@
 
 namespace Mpx\Service;
 
+use Pimple\Container;
+
 interface ObjectServiceInterface {
 
   public function getSchema();
@@ -13,6 +15,9 @@ interface ObjectServiceInterface {
    */
   public function getUser();
 
+  /**
+   * @return \GuzzleHttp\Url
+   */
   public function getUri();
 
   /**
@@ -54,9 +59,4 @@ interface ObjectServiceInterface {
   public function createObjects(array $data);
 
   public function callObjectClass();
-
-  /**
-   * @return \GuzzleHttp\Url
-   */
-  public function getNotificationUri();
 }

@@ -254,16 +254,4 @@ class ObjectService implements ObjectServiceInterface {
     return call_user_func_array(array($this->objectClass, $method), $args);
   }
 
-  public function getNotificationUri() {
-    /** @var \GuzzleHttp\Url $uri */
-    if ($uri = call_user_func(array($this->objectClass, 'getNotificationUri'))) {
-      $query = $this->getUri()->getQuery();
-      // Re-use the account object if set on this object's URI.
-      if ($query->hasKey('account')) {
-        $uri->getQuery()->set('account', $query->get('account'));
-      }
-    }
-    return $uri;
-  }
-
 }
