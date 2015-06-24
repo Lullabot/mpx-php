@@ -59,15 +59,8 @@ class ObjectNotificationService extends NotificationService {
       }
     }
 
-    if ($object_ids = array_unique($object_ids)) {
-      foreach ($object_ids as $object_id) {
-        $this->objectService->cache()->getItem($object_id)->clear();
-      }
-      $this->logger()->info("Cleared cache for {type} {ids}.", array(
-        'type' => $this->objectService->getObjectType(),
-        'ids' => implode(', ', $object_ids)
-      ));
-    }
+    $object_ids = array_unique($object_ids);
+    $this->objectService->resetCache($object_ids);
 
     parent::processNotifications($notifications);
   }
@@ -76,8 +69,7 @@ class ObjectNotificationService extends NotificationService {
    * {@inheritdoc}
    */
   public function processNotificationReset($id) {
-    $this->objectService->cache()->flush();
-    $this->logger()->info("Cleared cache for all {type}.", array('type' => $this->objectService->getObjectType()));
+    $this->objectService->resetCache();
 
     parent::processNotificationReset($id);
   }

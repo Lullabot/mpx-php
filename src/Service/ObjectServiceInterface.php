@@ -21,8 +21,9 @@ interface ObjectServiceInterface {
 
   public function load($id);
 
-  /**
-   * @return \Stash\Interfaces\PoolInterface
-   */
-  public function cache();
+  public function loadMultiple(array $ids);
+
+  public function resetCache(array $ids = NULL);
+
+  public function createObjects(array $data);
 }
