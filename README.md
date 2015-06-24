@@ -71,8 +71,7 @@ $user = Mpx\User::create('mpx/user@example.com', 'password', $container);
 $url = GuzzleHttp\Url::fromString('https://read.data.media.theplatform.com/media/notify');
 $url->getQuery()->set('account', 'Import account');
 $url->getQuery()->set('filter', 'Media');
-$url->getQuery()->set('clientId', 'README.md');
-$mediaNotifications = Mpx\Service\Notification::create($url, $user, NULL, $container);
+$mediaNotifications = Mpx\Service\NotificationService::create($url, $user, $container);
 
 // Fetch the last notification ID from the media notification service.
 $mediaNotifications->syncLatestId();

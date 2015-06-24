@@ -8,16 +8,19 @@
 namespace Mpx\Service;
 
 use GuzzleHttp\Url;
-use Pimple\Container;
-use Psr\Log\LoggerInterface;
 use Mpx\Exception\ApiException;
 use Mpx\Exception\NotificationExpiredException;
+use Mpx\CacheTrait;
 use Mpx\ClientTrait;
 use Mpx\ClientInterface;
 use Mpx\LoggerTrait;
 use Mpx\UserInterface;
+use Pimple\Container;
+use Psr\Log\LoggerInterface;
+use Stash\Interfaces\PoolInterface;
 
-class Notification implements NotificationInterface {
+class NotificationService implements NotificationServiceInterface {
+  use CacheTrait;
   use ClientTrait;
   use LoggerTrait;
 
@@ -27,24 +30,28 @@ class Notification implements NotificationInterface {
   /** @var \GuzzleHttp\Url */
   protected $uri;
 
-  /** @var string */
-  protected $lastId;
+  /** @var \Stash\Interfaces\ItemInterface */
+  private $idCache;
 
   /**
    * Construct an mpx notification service.
    *
    * @param \GuzzleHttp\Url|string $uri
    * @param \Mpx\UserInterface $user
-   * @param string $lastId
    * @param \Mpx\ClientInterface $client
+   * @param \Stash\Interfaces\PoolInterface $cache
    * @param \Psr\Log\LoggerInterface $logger
    */
-  public function __construct($uri, UserInterface $user, $lastId = NULL, ClientInterface $client = NULL, LoggerInterface $logger = NULL) {
+  public function __construct($uri, UserInterface $user, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
     $this->uri = is_string($uri) ? Url::fromString($uri) : $uri;
     $this->user = $user;
-    $this->lastId = $lastId;
     $this->client = $client;
+    $this->cachePool = $cache;
     $this->logger = $logger;
+
+    $id_key = 'notification:' . md5($this->uri . ':' . $user->getUsername());
+    echo "ID KEY: $id_key\n";
+    $this->idCache = $this->cache()->getItem($id_key);
   }
 
   /**
@@ -52,26 +59,33 @@ class Notification implements NotificationInterface {
    *
    * @param \GuzzleHttp\Url|string $uri
    * @param \Mpx\UserInterface $user
-   * @param string $lastId
    * @param \Pimple\Container $container
    *
    * @return static
    */
-  public static function create($uri, UserInterface $user, $lastId, Container $container) {
+  public static function create($uri, UserInterface $user, Container $container) {
     return new static(
       $uri,
       $user,
-      $lastId,
       $container['client'],
+      $container['cache'],
       $container['logger']
     );
+  }
+
+  public function getUser() {
+    return $this->user;
+  }
+
+  public function getUri() {
+    return $this->uri;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setLastId($value) {
-    $this->lastId = $value;
+    $this->idCache->set($value);
     $this->logger()->info(
       'Set the last notification sequence ID: {value}',
       array(
@@ -84,22 +98,19 @@ class Notification implements NotificationInterface {
    * {@inheritdoc}
    */
   public function getLastId() {
-    return $this->lastId;
+    return $this->idCache->get();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function syncLatestId(array $options = []) {
+  public function fetchLatestId(array $options = []) {
     // Only care about the first notification in the data.
     $options['query']['size'] = 1;
 
     $data = $this->client()->authenticatedGet($this->user, $this->uri, $options);
 
-    $last_id = NULL;
-    $this->processNotifications($data, $last_id);
-
-    if (empty($last_id)) {
+    if (empty($data[0]['id'])) {
       throw new \Exception("Unable to fetch the latest notification sequence ID from {$this->uri} for {$this->user}.");
     }
 
@@ -111,17 +122,15 @@ class Notification implements NotificationInterface {
       )
     );
 
-    $this->setLastId($last_id);
-
-    return $last_id;
+    return $data[0]['id'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function fetch($limit = 500, array $options = []) {
-    $last_id = $this->getLastId();
-    if (!$last_id) {
+    $lastId = $this->getLastId();
+    if (!$lastId) {
       throw new \LogicException("Cannot call " . __METHOD__ . " when the last notification ID is empty.");
     }
 
@@ -146,15 +155,15 @@ class Notification implements NotificationInterface {
           $options['query']['size'] = min($options['query']['size'], $limit);
         }
 
-        $options['query']['since'] = $last_id;
+        $options['query']['since'] = $lastId;
         $data = $this->client()->authenticatedGet(
           $this->user,
           $this->uri,
           $options
         );
 
-        // Process the notifications.
-        $notifications = $this->processNotifications($data, $last_id, $notifications);
+        // Process the notification data.
+        $notifications += $this->processNotificationData($data);
 
         if ($limit) {
           $limit -= count($data);
@@ -169,8 +178,7 @@ class Notification implements NotificationInterface {
         // A 404 response means the notification ID that we have is now older than
         // 7 days, and now we have to start ingesting from the beginning again.
         if ($exception->getCode() == 404) {
-          $this->setLastId(NULL);
-          throw new NotificationExpiredException("The notification sequence ID {$last_id} is older than 7 days and is too old to fetch notifications.");
+          throw new NotificationExpiredException("The notification sequence ID {$lastId} is older than 7 days and is too old to fetch notifications.");
         }
         else {
           throw $exception;
@@ -187,9 +195,6 @@ class Notification implements NotificationInterface {
       )
     );
 
-    // Set the last notification ID once all the requests have completed.
-    $this->setLastId($last_id);
-
     $this->logger()->debug(
       "Notification data: {data}",
       array(
@@ -204,12 +209,12 @@ class Notification implements NotificationInterface {
    * {@inheritdoc}
    */
   public function listen(array $options = []) {
-    $last_id = $this->getLastId();
-    if (!$last_id) {
+    $lastId = $this->getLastId();
+    if (!$lastId) {
       throw new \LogicException("Cannot call " . __METHOD__ . " when the last notification ID is empty.");
     }
 
-    $options['query']['since'] = $last_id;
+    $options['query']['since'] = $lastId;
     $options['query']['block'] = 'true';
 
     $this->logger()->info(
@@ -231,16 +236,15 @@ class Notification implements NotificationInterface {
       // A 404 response means the notification ID that we have is now older than
       // 7 days, and now we have to start ingesting from the beginning again.
       if ($exception->getCode() == 404) {
-        $this->setLastId(NULL);
-        throw new NotificationExpiredException("The notification sequence ID {$last_id} is older than 7 days and is too old to fetch notifications.");
+        throw new NotificationExpiredException("The notification sequence ID {$lastId} is older than 7 days and is too old to fetch notifications.");
       }
       else {
         throw $exception;
       }
     }
 
-    // Process the notifications.
-    $notifications = $this->processNotifications($data, $last_id);
+    // Process the notification data.
+    $notifications = $this->processNotificationData($data);
 
     $this->logger()->info(
       'Fetched {count} notifications from {url} for {account}.',
@@ -250,9 +254,6 @@ class Notification implements NotificationInterface {
         'account' => $this->user->getUsername(),
       )
     );
-
-    // Set the last notification ID once all the requests have completed.
-    $this->setLastId($last_id);
 
     $this->logger()->debug(
       "Notification data: {data}",
@@ -269,24 +270,21 @@ class Notification implements NotificationInterface {
    *
    * @param array $data
    *   The raw data from the API.
-   * @param int &$last_id
-   *   The current last ID, to be updated from the notification data.
-   * @param array $notifications
-   *   An optional array to which to add the existing notifications.
    *
    * @return array
    *   An array of notifications.
    */
-  private function processNotifications(array $data, &$last_id, array $notifications = array()) {
+  protected function processNotificationData(array $data) {
+    $notifications = array();
+
     foreach ($data as $notification) {
-      // Update the most recently seen notification ID.
       if (!empty($notification['id'])) {
-        $last_id = $notification['id'];
+        $notifications[$notification['id']] = array();
       }
 
       if (!empty($notification['entry'])) {
         // @todo Convert these to a notification class?
-        $notifications[] = array(
+        $notifications[$notification['id']] = array(
           'type' => $notification['type'],
           // The ID is always a fully qualified URI, and we only care about the
           // actual ID value, which is at the end.
@@ -298,5 +296,70 @@ class Notification implements NotificationInterface {
     }
 
     return $notifications;
+  }
+
+  /**
+   * Skip to the most recent notification sequence ID.
+   *
+   * @param array $options
+   *   An additional array of options to pass to \Mpx\ClientInterface.
+   */
+  public function syncLatestId($options = []) {
+    $current = $this->getLastId();
+    $latest = $this->fetchLatestId($options);
+    if ($current != $latest) {
+      $this->processNotificationReset($latest);
+    }
+  }
+
+  /**
+   * Read the most recent notifications.
+   *
+   * @param int $limit
+   *   The maximum number of notifications to read.
+   * @param array $options
+   *   An additional array of options to pass to \Mpx\ClientInterface.
+   *
+   * @throws \Mpx\Exception\NotificationExpiredException
+   */
+  public function readNotifications($limit = 500, $options = []) {
+    if (!$this->getLastId()) {
+      $latest = $this->fetchLatestId();
+      $this->processNotificationReset($latest);
+    }
+    else {
+      try {
+        if ($notifications = $this->fetch($limit, $options)) {
+          $this->processNotifications($notifications);
+        }
+      }
+      catch (NotificationExpiredException $exception) {
+        $this->processNotificationReset(NULL);
+        // In case this might be wrapped in a database transaction, use
+        // shutdown functions in addition to the above calls.
+        //register_shutdown_function(array($this, 'processNotificationReset'), NULL);
+        throw $exception;
+      }
+    }
+  }
+
+  /**
+   * Process the most recent notifications.
+   *
+   * @param array $notifications
+   *   The array of notifications keyed by notification ID.
+   */
+  public function processNotifications(array $notifications) {
+    $this->setLastId(max(array_keys($notifications)));
+  }
+
+  /**
+   * Process the notification ID being reset due to missing notifications.
+   *
+   * @param string $id
+   *   The reset notification ID value.
+   */
+  public function processNotificationReset($id) {
+    $this->setLastId($id);
   }
 }

@@ -33,15 +33,16 @@ class User implements UserInterface {
    * @param string $username
    * @param string $password
    * @param \Mpx\ClientInterface $client
-   * @param \Psr\Log\LoggerInterface $logger
    * @param \Stash\Interfaces\PoolInterface $cache
+   * @param \Psr\Log\LoggerInterface $logger
    */
-  public function __construct($username, $password, ClientInterface $client = NULL, LoggerInterface $logger = NULL, PoolInterface $cache = NULL) {
+  public function __construct($username, $password, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
     $this->username = $username;
     $this->password = $password;
     $this->client = $client;
-    $this->logger = $logger;
     $this->cachePool = $cache;
+    $this->logger = $logger;
+
     $this->tokenCache = $this->cache()->getItem('token:' . $this->getUsername());
   }
 
@@ -57,8 +58,8 @@ class User implements UserInterface {
       $username,
       $password,
       $container['client'],
-      $container['logger'],
-      $container['cache']
+      $container['cache'],
+      $container['logger']
     );
   }
 

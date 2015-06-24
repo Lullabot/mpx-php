@@ -2,7 +2,7 @@
 
 namespace Mpx\Service;
 
-interface NotificationInterface {
+interface NotificationServiceInterface {
 
   /**
    * Get the last seen sequence ID for this notification service.
@@ -11,12 +11,13 @@ interface NotificationInterface {
    */
   public function getLastId();
 
-
   /**
    * Set the last seen sequence ID for the notification service.
    *
    * @param string $value
    *   The sequence ID to save.
+   *
+   * @return static
    */
   public function setLastId($value);
 
@@ -33,7 +34,7 @@ interface NotificationInterface {
    * @throws \Exception
    * @throws \UnexpectedValueException
    */
-  public function syncLatestId(array $options = []);
+  public function fetchLatestId(array $options = []);
 
   /**
    * Perform a periodic polling request for notifications.
