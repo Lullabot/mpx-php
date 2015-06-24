@@ -11,6 +11,8 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 
 interface ClientInterface extends GuzzleClientInterface {
 
+  public function authenticatedRequest($method = 'GET', $url = null, UserInterface $user, $options = []);
+
   /**
    * Perform an authenticated HTTP GET request on behalf of $user.
    *

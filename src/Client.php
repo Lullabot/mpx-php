@@ -17,12 +17,12 @@ class Client extends GuzzleClient implements ClientInterface {
   /**
    * {@inheritdoc}
    */
-  public function authenticatedGet(UserInterface $user, $url = null, $options = []) {
+  public function authenticatedRequest($method = 'GET', $url = null, UserInterface $user, $options = []) {
     $duration = isset($options['timeout']) ? $options['timeout'] : NULL;
     $options['query']['token'] = $user->acquireToken($duration);
 
     try {
-      $response = $this->get($url, $options);
+      $response = $this->send($this->createRequest($method, $url, $options));
       return $response;
     }
     catch (ApiException $exception) {
@@ -34,6 +34,13 @@ class Client extends GuzzleClient implements ClientInterface {
       }
       throw $exception;
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function authenticatedGet(UserInterface $user, $url = null, $options = []) {
+    return $this->authenticatedRequest('GET', $url, $user, $options);
   }
 
   /**
