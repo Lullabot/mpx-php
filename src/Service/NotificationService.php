@@ -49,8 +49,16 @@ class NotificationService implements NotificationServiceInterface {
     $this->cachePool = $cache;
     $this->logger = $logger;
 
-    $id_key = 'notification:' . md5($this->uri . ':' . $user->getUsername());
-    $this->idCache = $this->cache()->getItem($id_key);
+    $this->idCache = $this->cache()->getItem($this->getCacheKey());
+  }
+
+  private function getCacheKey() {
+    $cache_uri = clone $this->getUri();
+    // Filter out query parameters that should not affect the cache key.
+    $cache_uri->setQuery($cache_uri->getQuery()->filter(function($key, $value) {
+      return in_array($key, array('filter', 'account'));
+    }));
+    return 'notification:' . md5($this->getUser()->getUsername() . ':' . $cache_uri);
   }
 
   /**
@@ -304,9 +312,8 @@ class NotificationService implements NotificationServiceInterface {
    *   An additional array of options to pass to \Mpx\ClientInterface.
    */
   public function syncLatestId($options = []) {
-    $current = $this->getLastId();
     $latest = $this->fetchLatestId($options);
-    if ($current != $latest) {
+    if ($latest != $this->getLastId()) {
       $this->processNotificationReset($latest);
     }
   }
