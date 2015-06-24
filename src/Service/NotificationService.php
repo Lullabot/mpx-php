@@ -44,6 +44,9 @@ class NotificationService implements NotificationServiceInterface {
    */
   public function __construct($uri, UserInterface $user, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
     $this->uri = is_string($uri) ? Url::fromString($uri) : $uri;
+    if (!$this->uri->getQuery()->hasKey('clientId')) {
+      $this->uri->getQuery()->set('clientId', 'mpx-php');
+    }
     $this->user = $user;
     $this->client = $client;
     $this->cachePool = $cache;

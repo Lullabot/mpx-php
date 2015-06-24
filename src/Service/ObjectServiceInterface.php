@@ -54,4 +54,9 @@ interface ObjectServiceInterface {
   public function createObjects(array $data);
 
   public function callObjectClass();
+
+  /**
+   * @return \GuzzleHttp\Url
+   */
+  public function getNotificationUri();
 }

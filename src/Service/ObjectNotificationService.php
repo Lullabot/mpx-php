@@ -23,7 +23,7 @@ class ObjectNotificationService extends NotificationService {
    * @throws \Exception
    */
   public function __construct(ObjectServiceInterface $objectService, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
-    $uri = $objectService->callObjectClass('getNotificationUri');
+    $uri = $objectService->getNotificationUri();
     if (!$uri) {
       throw new \Exception("The {$objectService->getObjectType()} object does not support notifications.");
     }
