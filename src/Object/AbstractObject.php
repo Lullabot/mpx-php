@@ -8,6 +8,7 @@ use Pimple\Container;
 use Mpx\UserInterface;
 use Mpx\Service\ObjectServiceInterface;
 use Mpx\Exception\NotificationsUnsupportedException;
+use GuzzleHttp\Url;
 
 abstract class AbstractObject implements ObjectInterface {
 
@@ -64,6 +65,7 @@ abstract class AbstractObject implements ObjectInterface {
     }
 
     // Allow some query parameters to be reused from the object service's URI.
+    $uri = is_string($uri) ? Url::fromString($uri) : $uri;
     $uri->getQuery()->merge($objectService->getUri()->getQuery()->filter(function($key, $value) {
       return in_array($key, array('account'));
     }));

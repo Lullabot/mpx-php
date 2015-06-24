@@ -6,6 +6,7 @@ use Mpx\CacheTrait;
 use Mpx\ClientTrait;
 use Mpx\ClientInterface;
 use Mpx\Event\ObjectLoadEvent;
+use Mpx\Exception\ObjectNotFoundException;
 use Mpx\LoggerTrait;
 use Mpx\Object;
 use Mpx\UserInterface;
@@ -58,7 +59,8 @@ class ObjectService implements ObjectServiceInterface {
 
     $this->objectClass = $objectClass;
     $this->objectType = call_user_func(array($objectClass, 'getType'));
-    $this->uri = call_user_func(array($objectClass, 'getUri'));
+    $uri = call_user_func(array($objectClass, 'getUri'));
+    $this->uri = is_string($uri) ? Url::fromString($uri) : $uri;
 
     $this->user = $user;
     $this->client = $client;
@@ -118,10 +120,42 @@ class ObjectService implements ObjectServiceInterface {
   /**
    * {@inheritdoc}
    */
+  public function fetch($id, array $options = []) {
+    $objects = $this->fetchMultiple(array($id), $options);
+    if (!isset($objects[$id])) {
+      throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} {$id} for {$this->getUser()->getUsername()}.");
+    }
+    return $objects[$id];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fetchMultiple(array $ids, array $options = []) {
+    $uri = clone $this->uri;
+    if (!empty($ids)) {
+      $uri->addPath('/' . implode(',', $ids));
+    }
+    // Use a read-only URL which is faster.
+    if (strpos($uri->getHost(), 'data.') === 0) {
+      $uri->setHost('read.' . $uri->getHost());
+    }
+    $data = $this->client()->authenticatedRequest('GET', $uri, $this->getUser(), $options);
+
+    // Normalize the data structure if only one result was returned.
+    $data = isset($data['entries']) ? $data['entries'] : array($data);
+
+    // Convert the data to objects.
+    return $this->createObjects($data);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function load($id) {
     $objects = $this->loadMultiple(array($id));
     if (!isset($objects[$id])) {
-      throw new \Exception("Cannot load mpx {$this->objectType} {$id} for {$this->getUser()->getUsername()}.");
+      throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} {$id} for {$this->getUser()->getUsername()}.");
     }
     return $objects[$id];
   }
@@ -139,15 +173,7 @@ class ObjectService implements ObjectServiceInterface {
         // Ensure we are not trying to fetch too many items at once.
         $batches = array_chunk($ids_to_load, 50);
         foreach ($batches as $batch) {
-          $uri = clone $this->uri;
-          $uri->addPath('/' . implode(',', $batch));
-          $data = $this->client()->authenticatedRequest('GET', $uri, $this->getUser());
-
-          // Normalize the data structure if only one result was returned.
-          $data = isset($data['entries']) ? $data['entries'] : array($data);
-
-          // Convert the data to objects.
-          $objects = $this->createObjects($data);
+          $objects = $this->fetchMultiple($batch);
 
           // Allow subscribers to be able to alter the objects before saving
           // them to the cache.

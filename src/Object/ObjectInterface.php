@@ -19,7 +19,7 @@ interface ObjectInterface {
   public static function getUri();
 
   /**
-   * @return \GuzzleHttp\Url
+   * @return \GuzzleHttp\Url|string
    */
   public static function getNotificationUri();
 
@@ -57,6 +57,9 @@ interface ObjectInterface {
   public static function createService(UserInterface $user, Container $container);
 
   /**
+   * @param \Mpx\Service\ObjectServiceInterface $objectService
+   * @param \Pimple\Container $container
+   *
    * @return \Mpx\Service\NotificationServiceInterface
    *
    * @throws \Mpx\Exception\NotificationsUnsupportedException

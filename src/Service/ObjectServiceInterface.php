@@ -22,8 +22,36 @@ interface ObjectServiceInterface {
   public function getUri();
 
   /**
+   * Fetch an mpx object from the API.
+   *
+   * @param $id
+   *   An array of IDs to fetch.
+   * @param array $options
+   *
+   * @return \Mpx\Object\ObjectInterface[]
+   *   An array of mpx objects, indexed by ID.
+   *
+   * @throws \Mpx\Exception\ObjectNotFoundException
+   */
+  public function fetch($id, array $options = []);
+
+  /**
+   * Fetch multiple mpx objects from the API.
+   *
+   * @param array $ids
+   *   An array of IDs to fetch.
+   * @param array $options
+   *
+   * @return \Mpx\Object\ObjectInterface[]
+   *   An array of mpx objects, indexed by ID.
+   */
+  public function fetchMultiple(array $ids, array $options = []);
+
+  /**
    * @param $id
    * @return \Mpx\Object\ObjectInterface
+   *
+   * @throws \Mpx\Exception\ObjectNotFoundException
    */
   public function load($id);
 
@@ -35,8 +63,6 @@ interface ObjectServiceInterface {
    *
    * @return \Mpx\Object\ObjectInterface[]
    *   An array of mpx objects, indexed by ID.
-   *
-   * @throws \Exception
    */
   public function loadMultiple(array $ids);
 
