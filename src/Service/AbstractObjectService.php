@@ -109,23 +109,27 @@ abstract class AbstractObjectService implements ObjectServiceInterface {
       }
       $ids_to_load = array_diff($ids_to_load, array_keys(array_filter($this->staticCache)));
       if ($ids_to_load) {
-        $data = $this->client()->authenticatedGet(
-          $this->getUser(),
-          $this->generateUri('/data/' . $this->getObjectType() . '/' . implode(',', $ids_to_load), TRUE),
-          [
-            'query' => [
-              'form' => 'cjson',
-              'schema' => $this->getSchema(),
+        // Ensure we are not trying to fetch too many items at once.
+        $batches = array_chunk($ids_to_load, 50);
+        foreach ($batches as $batch) {
+          $data = $this->client()->authenticatedGet(
+            $this->getUser(),
+            $this->generateUri('/data/' . $this->getObjectType() . '/' . implode(',', $batch), TRUE),
+            [
+              'query' => [
+                'form' => 'cjson',
+                'schema' => $this->getSchema(),
+              ]
             ]
-          ]
-        );
+          );
 
-        $data = isset($data['entries']) ? $data['entries'] : array($data);
+          $data = isset($data['entries']) ? $data['entries'] : array($data);
 
-        $objects = $this->createObjects($data);
-        foreach ($objects as $id => $object) {
-          $this->staticCache[$id] = $object;
-          $this->cache()->getItem($id)->set($object);
+          $objects = $this->createObjects($data);
+          foreach ($objects as $id => $object) {
+            $this->staticCache[$id] = $object;
+            $this->cache()->getItem($id)->set($object);
+          }
         }
       }
     }
