@@ -62,11 +62,12 @@ abstract class AbstractObject implements ObjectInterface {
     if (!$uri) {
       throw new NotificationsUnsupportedException("The " . static::getType() . " object does not support notifications.");
     }
-    $query = $objectService->getUri()->getQuery();
-    // Re-use the account object if set on the object service's URI.
-    if ($query->hasKey('account')) {
-      $uri->getQuery()->set('account', $query->get('account'));
-    }
+
+    // Allow some query parameters to be reused from the object service's URI.
+    $uri->getQuery()->merge($objectService->getUri()->getQuery()->filter(function($key, $value) {
+      return in_array($key, array('account'));
+    }));
+
     return ObjectNotificationService::create($uri, $objectService, $container);
   }
 
