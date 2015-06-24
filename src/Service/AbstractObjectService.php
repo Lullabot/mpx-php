@@ -7,15 +7,18 @@ use Mpx\ClientTrait;
 use Mpx\ClientInterface;
 use Mpx\LoggerTrait;
 use Mpx\Object;
+use Mpx\ObjectLoadEvent;
 use Mpx\UserInterface;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 use Stash\Interfaces\PoolInterface;
+use GuzzleHttp\Event\HasEmitterTrait;
 
 abstract class AbstractObjectService implements ObjectServiceInterface {
   use CacheTrait;
   use ClientTrait;
   use LoggerTrait;
+  use HasEmitterTrait;
 
   /** @var \Mpx\UserInterface */
   protected $user;
@@ -126,6 +129,11 @@ abstract class AbstractObjectService implements ObjectServiceInterface {
           $data = isset($data['entries']) ? $data['entries'] : array($data);
 
           $objects = $this->createObjects($data);
+
+          // Allow subscribers to be able to alter the objects before saving
+          // them to the cache.
+          $this->getEmitter()->emit('load', new ObjectLoadEvent($objects));
+
           foreach ($objects as $id => $object) {
             $this->staticCache[$id] = $object;
             $this->cache()->getItem($id)->set($object);
@@ -168,7 +176,6 @@ abstract class AbstractObjectService implements ObjectServiceInterface {
       // Normalize the ID value to just the actual ID and not the full URL.
       $objects[basename($object->id)] = $object;
     }
-    //module_invoke_all('mpx_' . $this->type . '_load', $objects);
     return $objects;
   }
 
