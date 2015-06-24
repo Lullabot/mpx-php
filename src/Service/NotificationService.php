@@ -50,7 +50,6 @@ class NotificationService implements NotificationServiceInterface {
     $this->logger = $logger;
 
     $id_key = 'notification:' . md5($this->uri . ':' . $user->getUsername());
-    echo "ID KEY: $id_key\n";
     $this->idCache = $this->cache()->getItem($id_key);
   }
 
