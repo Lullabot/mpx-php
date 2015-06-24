@@ -118,7 +118,7 @@ class NotificationService implements NotificationServiceInterface {
     $data = $this->client()->authenticatedGet($this->user, $this->uri, $options);
 
     if (empty($data[0]['id'])) {
-      throw new \Exception("Unable to fetch the latest notification sequence ID from {$this->uri} for {$this->user}.");
+      throw new \Exception("Unable to fetch the latest notification sequence ID from {$this->uri} for {$this->getUser()->getUsername()}.");
     }
 
     $this->logger()->info(
