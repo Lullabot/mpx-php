@@ -67,9 +67,14 @@ class Client extends GuzzleClient implements ClientInterface {
       }
       return $data;
     }
-    elseif (preg_match('~^(application|text)/xml~', $contentType)) {
-      if (preg_match('~<e:exception xmlns:e="http://xml.theplatform.com/exception"><e:title>(.+)</e:title><e:description>(.+)</e:description><e:responseCode>(.+)</e:responseCode>~', $response->getBody(), $matches)) {
-        throw new ApiException("Error {$matches[1]} on request to {$request->getUrl()}: {$matches[2]}", (int) $matches[3]);
+    elseif (preg_match('~^(application|text)/(atom\+)?xml~', $contentType)) {
+      if (strpos((string) $response->getBody(), 'xmlns:e="http://xml.theplatform.com/exception"') !== FALSE) {
+        if (preg_match('~<e:title>(.+)</e:title><e:description>(.+)</e:description><e:responseCode>(.+)</e:responseCode>~', (string) $response->getBody(), $matches)) {
+          throw new ApiException("Error {$matches[1]} on request to {$request->getUrl()}: {$matches[2]}", (int) $matches[3]);
+        }
+        elseif (preg_match('~<title>(.+)</title><summary>(.+)</summary><e:responseCode>(.+)</e:responseCode>~', (string) $response->getBody(), $matches)) {
+          throw new ApiException("Error {$matches[1]} on request to {$request->getUrl()}: {$matches[2]}", (int) $matches[3]);
+        }
       }
       $data = $response->xml();
       $data = array($data->getName() => static::convertXmlToArray($data));
