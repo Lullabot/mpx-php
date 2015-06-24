@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
 use Stash\Interfaces\PoolInterface;
 
 class User implements UserInterface {
-  use ClientTrait;
+  use HasClientTrait;
   use LoggerTrait;
   use CacheTrait;
 
@@ -119,7 +119,7 @@ class User implements UserInterface {
     }
 
     $time = time();
-    $data = $this->client()->get(
+    $data = $this->getClient()->get(
       'https://identity.auth.theplatform.com/idm/web/Authentication/signIn',
       $options
     );
@@ -148,7 +148,7 @@ class User implements UserInterface {
     $token = $this->tokenCache->get();
 
     if ($token && !$this->tokenCache->isMiss()) {
-      $this->client()->get(
+      $this->getClient()->get(
         'https://identity.auth.theplatform.com/idm/web/Authentication/signOut',
         array(
           'query' => array(
@@ -178,7 +178,7 @@ class User implements UserInterface {
     $item = $this->cache()->getItem('user:' . $this->getUsername());
     $data = $item->get();
     if ($item->isMiss()) {
-      $data = $this->client()->authenticatedRequest(
+      $data = $this->getClient()->authenticatedRequest(
         'GET',
         'https://identity.auth.theplatform.com/idm/web/Self/getSelfId',
         $this,

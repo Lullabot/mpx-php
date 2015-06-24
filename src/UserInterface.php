@@ -13,7 +13,7 @@ namespace Mpx;
  * @see http://help.theplatform.com/display/wsf2/Identity+management+service+API+reference
  * @see http://help.theplatform.com/display/wsf2/User+operations
  */
-interface UserInterface {
+interface UserInterface extends HasClientInterface {
 
   /**
    * Get the username of the mpx user.

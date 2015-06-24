@@ -3,8 +3,9 @@
 namespace Mpx\Service;
 
 use GuzzleHttp\Event\HasEmitterInterface;
+use Mpx\HasClientInterface;
 
-interface NotificationServiceInterface extends HasEmitterInterface {
+interface NotificationServiceInterface extends HasClientInterface, HasEmitterInterface {
 
   public function getUser();
 

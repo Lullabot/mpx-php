@@ -2,12 +2,12 @@
 
 /**
  * @file
- * Contains Mpx\ClientTrait.
+ * Contains Mpx\HasClientTrait.
  */
 
 namespace Mpx;
 
-trait ClientTrait {
+trait HasClientTrait {
 
   /**
    * @var \Mpx\ClientInterface
@@ -29,7 +29,7 @@ trait ClientTrait {
   /**
    * @return \Mpx\ClientInterface $client
    */
-  public function client() {
+  public function getClient() {
     if (!isset($this->client)) {
       $this->client = new Client();
     }

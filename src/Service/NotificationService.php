@@ -11,7 +11,7 @@ use GuzzleHttp\Url;
 use Mpx\Exception\ApiException;
 use Mpx\Exception\NotificationExpiredException;
 use Mpx\CacheTrait;
-use Mpx\ClientTrait;
+use Mpx\HasClientTrait;
 use Mpx\ClientInterface;
 use Mpx\LoggerTrait;
 use Mpx\UserInterface;
@@ -23,8 +23,8 @@ use Mpx\Event\NotificationEvent;
 
 class NotificationService implements NotificationServiceInterface {
   use CacheTrait;
-  use ClientTrait;
   use LoggerTrait;
+  use HasClientTrait;
   use HasEmitterTrait;
 
   /** @var \Mpx\UserInterface */
@@ -127,7 +127,7 @@ class NotificationService implements NotificationServiceInterface {
     // Only care about the first notification in the data.
     $options['query']['size'] = 1;
 
-    $data = $this->client()->authenticatedGet($this->user, $this->uri, $options);
+    $data = $this->getClient()->authenticatedGet($this->user, $this->uri, $options);
 
     if (empty($data[0]['id'])) {
       throw new \Exception("Unable to fetch the latest notification sequence ID from {$this->uri} for {$this->getUser()->getUsername()}.");
@@ -186,7 +186,7 @@ class NotificationService implements NotificationServiceInterface {
         }
 
         $options['query']['since'] = $lastId;
-        $data = $this->client()->authenticatedGet(
+        $data = $this->getClient()->authenticatedGet(
           $this->user,
           $this->uri,
           $options

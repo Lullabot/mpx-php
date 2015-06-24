@@ -3,7 +3,7 @@
 namespace Mpx\Service;
 
 use Mpx\CacheTrait;
-use Mpx\ClientTrait;
+use Mpx\HasClientTrait;
 use Mpx\ClientInterface;
 use Mpx\Event\ObjectLoadEvent;
 use Mpx\Exception\ObjectNotFoundException;
@@ -18,8 +18,8 @@ use GuzzleHttp\Url;
 
 class ObjectService implements ObjectServiceInterface {
   use CacheTrait;
-  use ClientTrait;
   use LoggerTrait;
+  use HasClientTrait;
   use HasEmitterTrait;
 
   /** @var \Mpx\UserInterface */
@@ -140,7 +140,7 @@ class ObjectService implements ObjectServiceInterface {
     if (strpos($uri->getHost(), 'data.') === 0) {
       $uri->setHost('read.' . $uri->getHost());
     }
-    $data = $this->client()->authenticatedRequest('GET', $uri, $this->getUser(), $options);
+    $data = $this->getClient()->authenticatedRequest('GET', $uri, $this->getUser(), $options);
 
     // Normalize the data structure if only one result was returned.
     $data = isset($data['entries']) ? $data['entries'] : array($data);

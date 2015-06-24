@@ -3,8 +3,9 @@
 namespace Mpx\Service;
 
 use GuzzleHttp\Event\HasEmitterInterface;
+use Mpx\HasClientInterface;
 
-interface ObjectServiceInterface extends HasEmitterInterface {
+interface ObjectServiceInterface extends HasClientInterface, HasEmitterInterface {
 
   /**
    * @return string
