@@ -61,6 +61,11 @@ class ObjectNotificationService extends NotificationService {
 
     if ($ids = array_unique($ids)) {
       $this->objectService->resetCache($ids);
+
+      $objects = $this->objectService->loadMultiple($ids);
+      foreach ($objects as $object) {
+        $this->logger()->info($object);
+      }
     }
 
     parent::processNotifications($notifications);

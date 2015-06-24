@@ -1,8 +1,8 @@
 <?php
 
-namespace Mpx;
+namespace Mpx\Object;
 
-class Object {
+abstract class AbstractObject implements ObjectInterface {
 
   /** @var string */
   public $id;
@@ -14,12 +14,7 @@ class Object {
   public $guid;
 
   /**
-   * Constructs a new mpx object, without saving it.
-   *
-   * @param array $values
-   *   (optional) An array of values to set, keyed by property name.
-   *
-   * @return static
+   * {@inheritdoc}
    */
   public static function create(array $values = array()) {
     $instance = new static();
@@ -29,11 +24,20 @@ class Object {
     return $instance;
   }
 
+  public function getId() {
+    // Normalize the ID value to just the actual ID and not the full URL.
+    return basename($this->id);
+  }
+
+  public function getTitle() {
+    return $this->title;
+  }
+
   /**
-   * @return string
+   * {@inheritdoc}
    */
   public function __toString() {
-    return $this->title . ' (id: ' . basename($this->id) . ')';
+    return $this->getTitle() . ' (id: ' . $this->getId() . ')';
   }
 
 }

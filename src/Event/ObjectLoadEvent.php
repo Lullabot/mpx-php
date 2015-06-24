@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpx;
+namespace Mpx\Event;
 
 use GuzzleHttp\Event\AbstractEvent;
 
