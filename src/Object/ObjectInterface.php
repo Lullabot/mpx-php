@@ -14,16 +14,14 @@ interface ObjectInterface {
   public static function getType();
 
   /**
-   * @return string
-   */
-  public static function getSchema();
-
-  /**
    * @return \GuzzleHttp\Url|string
-   *
-   * @todo Could the schema and default form be merged into this URI?
    */
   public static function getUri();
+
+  /**
+   * @return \GuzzleHttp\Url
+   */
+  public static function getNotificationUri();
 
   /**
    * Constructs a new mpx object, without saving it.
@@ -49,11 +47,6 @@ interface ObjectInterface {
    * @return string
    */
   public function __toString();
-
-  /**
-   * @return \GuzzleHttp\Url
-   */
-  public static function getNotificationUri();
 
   /**
    * @param \Mpx\UserInterface $user

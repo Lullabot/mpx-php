@@ -16,15 +16,8 @@ class Player extends AbstractObject {
   /**
    * {@inheritdoc}
    */
-  public static function getSchema() {
-    return '1.2';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function getUri() {
-    return Url::fromString('https://data.player.theplatform.com/player/data/Player');
+    return Url::fromString('https://data.player.theplatform.com/player/data/Player?scheme=1.2&form=cjson');
   }
 
   /**

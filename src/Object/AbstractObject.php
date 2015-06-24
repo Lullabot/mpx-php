@@ -50,13 +50,6 @@ abstract class AbstractObject implements ObjectInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getNotificationUri() {
-    return FALSE;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function createService(UserInterface $user, Container $container) {
     return ObjectService::create(get_called_class(), $user, $container);
   }

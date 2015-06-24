@@ -59,7 +59,6 @@ class ObjectService implements ObjectServiceInterface {
     $this->objectClass = $objectClass;
     $this->objectType = call_user_func(array($objectClass, 'getType'));
     $this->uri = call_user_func(array($objectClass, 'getUri'));
-    $this->schema = call_user_func(array($objectClass, 'getSchema'));
 
     $this->user = $user;
     $this->client = $client;
@@ -105,13 +104,6 @@ class ObjectService implements ObjectServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getSchema() {
-    return $this->schema;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getUser() {
     return $this->user;
   }
@@ -121,17 +113,6 @@ class ObjectService implements ObjectServiceInterface {
    */
   public function getUri() {
     return $this->uri;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function generateUri($path = '') {
-    $uri = clone $this->uri;
-    if ($path) {
-      $uri->addPath($path);
-    }
-    return $uri;
   }
 
   /**
@@ -158,7 +139,10 @@ class ObjectService implements ObjectServiceInterface {
         // Ensure we are not trying to fetch too many items at once.
         $batches = array_chunk($ids_to_load, 50);
         foreach ($batches as $batch) {
-          $data = $this->request('GET', implode(',', $batch));
+          $uri = clone $this->uri;
+          $uri->addPath('/' . implode(',', $batch));
+          $data = $this->client()->authenticatedRequest('GET', $uri, $this->getUser());
+
           // Normalize the data structure if only one result was returned.
           $data = isset($data['entries']) ? $data['entries'] : array($data);
 
@@ -185,26 +169,6 @@ class ObjectService implements ObjectServiceInterface {
       }
     }
     return $return;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function request($method = 'GET', $path, array $options = []) {
-    $uri = is_string($path) ? $this->generateUri($path) : $path;
-
-    $options += array('query' => array());
-    $options['query'] += array(
-      'form' => 'cjson',
-      'schema' => $this->schema,
-    );
-
-    return $this->client()->authenticatedRequest(
-      $method,
-      $uri,
-      $this->getUser(),
-      $options
-    );
   }
 
   /**
@@ -246,12 +210,6 @@ class ObjectService implements ObjectServiceInterface {
       $objects[$object->getId()] = $object;
     }
     return $objects;
-  }
-
-  public function callObjectClass() {
-    $args = func_get_args();
-    $method = array_shift($args);
-    return call_user_func_array(array($this->objectClass, $method), $args);
   }
 
 }

@@ -6,8 +6,9 @@ use Pimple\Container;
 
 interface ObjectServiceInterface {
 
-  public function getSchema();
-
+  /**
+   * @return string
+   */
   public function getObjectType();
 
   /**
@@ -21,13 +22,9 @@ interface ObjectServiceInterface {
   public function getUri();
 
   /**
-   * @param string $path
-   * @return \GuzzleHttp\Url
+   * @param $id
+   * @return \Mpx\Object\ObjectInterface
    */
-  public function generateUri($path = '');
-
-  public function request($method = 'GET', $path, array $options = []);
-
   public function load($id);
 
   /**
@@ -36,7 +33,7 @@ interface ObjectServiceInterface {
    * @param array $ids
    *   An array of IDs to load.
    *
-   * @return array
+   * @return \Mpx\Object\ObjectInterface[]
    *   An array of mpx objects, indexed by ID.
    *
    * @throws \Exception
@@ -57,6 +54,4 @@ interface ObjectServiceInterface {
    * @return \Mpx\Object\ObjectInterface[]
    */
   public function createObjects(array $data);
-
-  public function callObjectClass();
 }
