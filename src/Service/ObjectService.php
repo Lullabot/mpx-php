@@ -177,7 +177,7 @@ class ObjectService implements ObjectServiceInterface {
 
           // Allow subscribers to be able to alter the objects before saving
           // them to the cache.
-          $this->getEmitter()->emit('load', new ObjectLoadEvent($objects));
+          $this->getEmitter()->emit('load', new ObjectLoadEvent($this, $objects));
 
           // Save the objects in the static and regular cache.
           foreach ($objects as $id => $object) {

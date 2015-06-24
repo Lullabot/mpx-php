@@ -2,9 +2,9 @@
 
 namespace Mpx\Service;
 
-use Pimple\Container;
+use GuzzleHttp\Event\HasEmitterInterface;
 
-interface ObjectServiceInterface {
+interface ObjectServiceInterface extends HasEmitterInterface {
 
   /**
    * @return string
@@ -80,4 +80,5 @@ interface ObjectServiceInterface {
    * @return \Mpx\Object\ObjectInterface[]
    */
   public function createObjects(array $data);
+
 }

@@ -18,11 +18,14 @@ use Mpx\UserInterface;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 use Stash\Interfaces\PoolInterface;
+use GuzzleHttp\Event\HasEmitterTrait;
+use Mpx\Event\NotificationEvent;
 
 class NotificationService implements NotificationServiceInterface {
   use CacheTrait;
   use ClientTrait;
   use LoggerTrait;
+  use HasEmitterTrait;
 
   /** @var \Mpx\UserInterface */
   protected $user;
@@ -155,6 +158,17 @@ class NotificationService implements NotificationServiceInterface {
     $options += array(
       'query' => array(),
     );
+
+    $real_uri = clone $this->uri;
+    $real_uri->getQuery()->merge($options['query']);
+    $this->logger()->info(
+      'Starting to request notifications from {url} for {account}.',
+      array(
+        'url' => $real_uri,
+        'account' => $this->user->getUsername(),
+      )
+    );
+
     $options['query'] += array(
       'size' => 500,
     );
@@ -209,67 +223,7 @@ class NotificationService implements NotificationServiceInterface {
       'Fetched {count} notifications from {url} for {account}.',
       array(
         'count' => count($notifications),
-        'url' => $this->uri,
-        'account' => $this->user->getUsername(),
-      )
-    );
-
-    $this->logger()->debug(
-      "Notification data: {data}",
-      array(
-        'data' => print_r($notifications, TRUE),
-      )
-    );
-
-    return $notifications;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function listen(array $options = []) {
-    $lastId = $this->getLastId();
-    if (!$lastId) {
-      throw new \LogicException("Cannot call " . __METHOD__ . " when the last notification ID is empty.");
-    }
-
-    $options['query']['since'] = $lastId;
-    $options['query']['block'] = 'true';
-
-    $this->logger()->info(
-      'Listening for notifications from {url} for {account}.',
-      array(
-        'url' => $this->uri,
-        'account' => $this->user->getUsername(),
-      )
-    );
-
-    try {
-      $data = $this->client()->authenticatedGet(
-        $this->user,
-        $this->uri,
-        $options
-      );
-    }
-    catch (ApiException $exception) {
-      // A 404 response means the notification ID that we have is now older than
-      // 7 days, and now we have to start ingesting from the beginning again.
-      if ($exception->getCode() == 404) {
-        throw new NotificationExpiredException("The notification sequence ID {$lastId} is older than 7 days and is too old to fetch notifications.");
-      }
-      else {
-        throw $exception;
-      }
-    }
-
-    // Process the notification data.
-    $notifications = $this->processNotificationData($data);
-
-    $this->logger()->info(
-      'Fetched {count} notifications from {url} for {account}.',
-      array(
-        'count' => count($notifications),
-        'url' => $this->uri,
+        'url' => $real_uri,
         'account' => $this->user->getUsername(),
       )
     );
@@ -338,6 +292,7 @@ class NotificationService implements NotificationServiceInterface {
     else {
       try {
         if ($notifications = $this->fetch($limit, $options)) {
+          $this->getEmitter()->emit('notify', new NotificationEvent($notifications));
           $this->processNotifications($notifications);
         }
       }

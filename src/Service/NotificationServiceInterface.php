@@ -2,7 +2,9 @@
 
 namespace Mpx\Service;
 
-interface NotificationServiceInterface {
+use GuzzleHttp\Event\HasEmitterInterface;
+
+interface NotificationServiceInterface extends HasEmitterInterface {
 
   public function getUser();
 
@@ -41,7 +43,7 @@ interface NotificationServiceInterface {
   public function fetchLatestId(array $options = []);
 
   /**
-   * Perform a periodic polling request for notifications.
+   * Perform a polling request for notifications.
    *
    * @see http://help.theplatform.com/display/wsf2/Subscribing+to+change+notifications#Subscribingtochangenotifications-Listeningfornotifications
    *
@@ -60,23 +62,6 @@ interface NotificationServiceInterface {
    * @throws \Mpx\Exception\NotificationExpiredException
    */
   public function fetch($limit = 500, array $options = []);
-
-  /**
-   * Perform a comet long-poll request for notifications.
-   *
-   * @see http://help.theplatform.com/display/wsf2/Subscribing+to+change+notifications#Subscribingtochangenotifications-Listeningfornotifications
-   *
-   * @param array $options
-   *
-   * @return array
-   *   An array of notifications.
-   *
-   * @throws \GuzzleHttp\Exception\RequestException
-   * @throws \LogicException
-   * @throws \Mpx\Exception\ApiException
-   * @throws \Mpx\Exception\NotificationExpiredException
-   */
-  public function listen(array $options = []);
 
   /**
    * Skip to the most recent notification sequence ID.

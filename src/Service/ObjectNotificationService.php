@@ -7,7 +7,7 @@ use Pimple\Container;
 use Psr\Log\LoggerInterface;
 use Stash\Interfaces\PoolInterface;
 
-class ObjectNotificationService extends NotificationService {
+class ObjectNotificationService extends NotificationService implements ObjectNotificationServiceInterface {
 
   /** @var \Mpx\Service\ObjectServiceInterface */
   protected $objectService;
@@ -52,15 +52,15 @@ class ObjectNotificationService extends NotificationService {
   /**
    * {@inheritdoc}
    */
-  protected function processNotifications(array $notifications) {
-    $ids = array();
-    foreach ($notifications as $notification_id => $notification) {
-      if (!empty($notification['id'])) {
-        $ids[] = $notification['id'];
-      }
-    }
+  public function getObjectService() {
+    return $this->objectService;
+  }
 
-    if ($ids = array_unique($ids)) {
+  /**
+   * {@inheritdoc}
+   */
+  protected function processNotifications(array $notifications) {
+    if ($ids = static::extractIdsFromNotifications($notifications)) {
       $this->objectService->resetCache($ids);
     }
 
@@ -72,8 +72,20 @@ class ObjectNotificationService extends NotificationService {
    */
   protected function processNotificationReset($id) {
     $this->objectService->resetCache();
-
     parent::processNotificationReset($id);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function extractIdsFromNotifications(array $notifications) {
+    $ids = array();
+    foreach ($notifications as $notification) {
+      if (!empty($notification['id'])) {
+        $ids[] = $notification['id'];
+      }
+    }
+    return array_unique($ids);
   }
 
 }

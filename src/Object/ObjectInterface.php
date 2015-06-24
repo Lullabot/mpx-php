@@ -60,7 +60,7 @@ interface ObjectInterface {
    * @param \Mpx\Service\ObjectServiceInterface $objectService
    * @param \Pimple\Container $container
    *
-   * @return \Mpx\Service\NotificationServiceInterface
+   * @return \Mpx\Service\ObjectNotificationServiceInterface
    *
    * @throws \Mpx\Exception\NotificationsUnsupportedException
    */
