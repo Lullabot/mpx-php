@@ -52,15 +52,16 @@ class ObjectNotificationService extends NotificationService {
    * {@inheritdoc}
    */
   public function processNotifications(array $notifications) {
-    $object_ids = array();
+    $ids = array();
     foreach ($notifications as $notification_id => $notification) {
       if (!empty($notification['id'])) {
-        $object_ids[] = $notification['id'];
+        $ids[] = $notification['id'];
       }
     }
 
-    $object_ids = array_unique($object_ids);
-    $this->objectService->resetCache($object_ids);
+    if ($ids = array_unique($ids)) {
+      $this->objectService->resetCache($ids);
+    }
 
     parent::processNotifications($notifications);
   }
