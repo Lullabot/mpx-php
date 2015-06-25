@@ -206,7 +206,7 @@ class ObjectService implements ObjectServiceInterface {
       foreach ($ids as $id) {
         $this->cache()->getItem($id)->clear();
       }
-      $this->logger()->info("Cleared cache for {count} {type} items ({ids}).", array(
+      $this->logger()->notice("Cleared cache for {count} {type} items ({ids}).", array(
         'count' => count($ids),
         'type' => $this->objectType,
         'ids' => implode(', ', $ids)
@@ -215,7 +215,7 @@ class ObjectService implements ObjectServiceInterface {
     elseif (!isset($ids)) {
       $this->staticCache = array();
       $this->cache()->flush();
-      $this->logger()->info("Cleared cache for all {type} items.", array('type' => $this->objectType));
+      $this->logger()->notice("Cleared cache for all {type} items.", array('type' => $this->objectType));
     }
   }
 

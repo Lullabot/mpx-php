@@ -112,7 +112,7 @@ class NotificationService implements NotificationServiceInterface {
    */
   public function setLastId($value) {
     $this->idCache->set($value);
-    $this->logger()->info(
+    $this->logger()->notice(
       'Set the last notification sequence ID: {value}',
       array(
         'value' => var_export($value, TRUE),
