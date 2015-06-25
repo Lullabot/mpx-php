@@ -3,16 +3,22 @@
 namespace Mpx\Event;
 
 use GuzzleHttp\Event\AbstractEvent;
+use Mpx\Service\NotificationServiceInterface;
 
 class NotificationEvent extends AbstractEvent {
+
+  /** @var \Mpx\Service\NotificationServiceInterface */
+  protected $notificationService;
 
   /** @var array */
   protected $notifications;
 
   /**
+   * @param \Mpx\Service\NotificationServiceInterface $notificationService
    * @param array $notifications
    */
-  public function __construct(array &$notifications) {
+  public function __construct(NotificationServiceInterface $notificationService, array &$notifications) {
+    $this->notificationSerivce = $notificationService;
     $this->notifications = &$notifications;
   }
 
@@ -23,8 +29,11 @@ class NotificationEvent extends AbstractEvent {
     return $this->notifications;
   }
 
-  public function setNotifications(array $notifications) {
-    $this->notifications = $notifications;
+  /**
+   * @return \Mpx\Service\NotificationServiceInterface
+   */
+  public function getNotificationService() {
+    return $this->notificationSerivce;
   }
 
 }

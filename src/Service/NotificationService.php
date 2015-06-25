@@ -292,7 +292,7 @@ class NotificationService implements NotificationServiceInterface {
     else {
       try {
         if ($notifications = $this->fetch($limit, $options)) {
-          $this->getEmitter()->emit('notify', new NotificationEvent($notifications));
+          $this->getEmitter()->emit('notify', new NotificationEvent($this, $notifications));
           $this->processNotifications($notifications);
         }
       }

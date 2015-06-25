@@ -7,8 +7,14 @@ use Mpx\HasClientInterface;
 
 interface NotificationServiceInterface extends HasClientInterface, HasEmitterInterface {
 
+  /**
+   * @return \Mpx\UserInterface
+   */
   public function getUser();
 
+  /**
+   * @return \GuzzleHttp\Url
+   */
   public function getUri();
 
   /**
