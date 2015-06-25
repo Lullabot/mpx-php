@@ -4,8 +4,9 @@ namespace Mpx\Service;
 
 use GuzzleHttp\Event\HasEmitterInterface;
 use Mpx\HasClientInterface;
+use Mpx\HasLoggerInterface;
 
-interface NotificationServiceInterface extends HasClientInterface, HasEmitterInterface {
+interface NotificationServiceInterface extends HasClientInterface, HasEmitterInterface, HasLoggerInterface {
 
   /**
    * @return \Mpx\UserInterface

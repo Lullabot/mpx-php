@@ -13,7 +13,7 @@ use Psr\Log\NullLogger;
 /**
  * Basic Implementation of LoggerAwareInterface.
  */
-trait LoggerTrait {
+trait HasLoggerTrait {
 
   /** @var \Psr\Log\LoggerInterface */
   protected $logger;
@@ -33,7 +33,7 @@ trait LoggerTrait {
   /**
    * @return \Psr\Log\LoggerInterface $logger
    */
-  public function logger() {
+  public function getLogger() {
     if (!isset($this->logger)) {
       $this->logger = new NullLogger();
     }

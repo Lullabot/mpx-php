@@ -13,7 +13,7 @@ use Stash\Interfaces\PoolInterface;
 
 class User implements UserInterface {
   use HasClientTrait;
-  use LoggerTrait;
+  use HasLoggerTrait;
   use CacheTrait;
 
   /**
@@ -126,7 +126,7 @@ class User implements UserInterface {
     $token = $data['signInResponse']['token'];
     $lifetime = floor(min($data['signInResponse']['duration'], $data['signInResponse']['idleTimeout']) / 1000);
 
-    $this->logger()->info(
+    $this->getLogger()->info(
       'Fetched new mpx token {token} for user {username} that expires on {date}.',
       array(
         'token' => $token,
@@ -159,7 +159,7 @@ class User implements UserInterface {
         )
       );
 
-      $this->logger()->info(
+      $this->getLogger()->info(
         'Expired mpx authentication token {token} for {username}.',
         array(
           'token' => $token,

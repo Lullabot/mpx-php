@@ -11,9 +11,9 @@ use GuzzleHttp\Url;
 use Mpx\Exception\ApiException;
 use Mpx\Exception\NotificationExpiredException;
 use Mpx\CacheTrait;
-use Mpx\HasClientTrait;
 use Mpx\ClientInterface;
-use Mpx\LoggerTrait;
+use Mpx\HasClientTrait;
+use Mpx\HasLoggerTrait;
 use Mpx\UserInterface;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
@@ -23,9 +23,9 @@ use Mpx\Event\NotificationEvent;
 
 class NotificationService implements NotificationServiceInterface {
   use CacheTrait;
-  use LoggerTrait;
   use HasClientTrait;
   use HasEmitterTrait;
+  use HasLoggerTrait;
 
   /** @var \Mpx\UserInterface */
   protected $user;
@@ -112,7 +112,7 @@ class NotificationService implements NotificationServiceInterface {
    */
   public function setLastId($value) {
     $this->idCache->set($value);
-    $this->logger()->notice(
+    $this->getLogger()->notice(
       'Set the last notification sequence ID: {value}',
       array(
         'value' => var_export($value, TRUE),
@@ -133,7 +133,7 @@ class NotificationService implements NotificationServiceInterface {
       throw new \Exception("Unable to fetch the latest notification sequence ID from {$this->uri} for {$this->getUser()->getUsername()}.");
     }
 
-    $this->logger()->info(
+    $this->getLogger()->info(
       "Fetched the latest notification sequence ID from {url}: {value}",
       array(
         'value' => var_export($data[0]['id'], TRUE),
@@ -161,7 +161,7 @@ class NotificationService implements NotificationServiceInterface {
 
     $real_uri = clone $this->uri;
     $real_uri->getQuery()->merge($options['query']);
-    $this->logger()->info(
+    $this->getLogger()->info(
       'Starting to request notifications from {url} for {account}.',
       array(
         'url' => $real_uri,
@@ -219,7 +219,7 @@ class NotificationService implements NotificationServiceInterface {
       }
     } while (count($data) == $options['query']['size']);
 
-    $this->logger()->info(
+    $this->getLogger()->info(
       'Fetched {count} notifications from {url} for {account}.',
       array(
         'count' => count($notifications),
@@ -228,7 +228,7 @@ class NotificationService implements NotificationServiceInterface {
       )
     );
 
-    $this->logger()->debug(
+    $this->getLogger()->debug(
       "Notification data: {data}",
       array(
         'data' => print_r($notifications, TRUE),

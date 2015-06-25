@@ -2,25 +2,25 @@
 
 namespace Mpx\Service;
 
+use GuzzleHttp\Event\HasEmitterTrait;
+use GuzzleHttp\Url;
 use Mpx\CacheTrait;
-use Mpx\HasClientTrait;
 use Mpx\ClientInterface;
-use Mpx\Event\ObjectLoadEvent;
-use Mpx\Exception\ObjectNotFoundException;
-use Mpx\LoggerTrait;
+use Mpx\HasClientTrait;
+use Mpx\HasLoggerTrait;
 use Mpx\Object;
 use Mpx\UserInterface;
+use Mpx\Event\ObjectLoadEvent;
+use Mpx\Exception\ObjectNotFoundException;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
 use Stash\Interfaces\PoolInterface;
-use GuzzleHttp\Event\HasEmitterTrait;
-use GuzzleHttp\Url;
 
 class ObjectService implements ObjectServiceInterface {
   use CacheTrait;
-  use LoggerTrait;
   use HasClientTrait;
   use HasEmitterTrait;
+  use HasLoggerTrait;
 
   /** @var \Mpx\UserInterface */
   protected $user;
@@ -206,7 +206,7 @@ class ObjectService implements ObjectServiceInterface {
       foreach ($ids as $id) {
         $this->cache()->getItem($id)->clear();
       }
-      $this->logger()->notice("Cleared cache for {count} {type} items ({ids}).", array(
+      $this->getLogger()->notice("Cleared cache for {count} {type} items ({ids}).", array(
         'count' => count($ids),
         'type' => $this->objectType,
         'ids' => implode(', ', $ids)
@@ -215,7 +215,7 @@ class ObjectService implements ObjectServiceInterface {
     elseif (!isset($ids)) {
       $this->staticCache = array();
       $this->cache()->flush();
-      $this->logger()->notice("Cleared cache for all {type} items.", array('type' => $this->objectType));
+      $this->getLogger()->notice("Cleared cache for all {type} items.", array('type' => $this->objectType));
     }
   }
 
