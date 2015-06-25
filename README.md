@@ -58,7 +58,10 @@ $mediaNotificationService->getUri()->getQuery()->set('account', 'Import account'
 // Fetch the last notification ID from the media notification service.
 $mediaNotificationService->syncLatestId();
 
+// Fetch up to 500 notifications.
+$mediaNotificationService = $mediaNotifications->readNotifications();
+
 // Wait and listen for any media notifications.
-$mediaNotificationService = $mediaNotifications->listen();
+$mediaNotificationService = $mediaNotifications->readNotifications(0, ['query' => ['block' => true]]);
 
 ```
