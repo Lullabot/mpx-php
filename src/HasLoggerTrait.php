@@ -10,9 +10,6 @@ namespace Mpx;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-/**
- * Basic Implementation of LoggerAwareInterface.
- */
 trait HasLoggerTrait {
 
   /** @var \Psr\Log\LoggerInterface */

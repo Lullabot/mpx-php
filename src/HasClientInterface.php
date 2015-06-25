@@ -3,12 +3,21 @@
 namespace Mpx;
 
 /**
- * Holds an mpx client.
+ * Holds an mpx HTTP client.
  */
 interface HasClientInterface {
 
   /**
-   * Get the mpx client of the object.
+   * Sets the mpx HTTP client for the object.
+   *
+   * @param \Mpx\ClientInterface $client
+   *
+   * @return static
+   */
+  public function setClient(ClientInterface $client);
+
+  /**
+   * Get the mpx HTTP client of the object.
    *
    * @return \Mpx\ClientInterface
    */
