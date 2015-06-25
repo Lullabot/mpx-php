@@ -12,9 +12,9 @@ use Psr\Log\LoggerInterface;
 use Stash\Interfaces\PoolInterface;
 
 class User implements UserInterface {
+  use HasCachePoolTrait;
   use HasClientTrait;
   use HasLoggerTrait;
-  use CacheTrait;
 
   /**
    * @var string
@@ -43,7 +43,7 @@ class User implements UserInterface {
     $this->cachePool = $cache;
     $this->logger = $logger;
 
-    $this->tokenCache = $this->cache()->getItem('token:' . $this->getUsername());
+    $this->tokenCache = $this->getCachePool()->getItem('token:' . $this->getUsername());
   }
 
   /**
@@ -175,7 +175,7 @@ class User implements UserInterface {
    * {@inheritdoc}
    */
   public function getSelfId() {
-    $item = $this->cache()->getItem('user:' . $this->getUsername());
+    $item = $this->getCachePool()->getItem('user:' . $this->getUsername());
     $data = $item->get();
     if ($item->isMiss()) {
       $data = $this->getClient()->authenticatedRequest(

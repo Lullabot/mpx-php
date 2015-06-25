@@ -4,8 +4,8 @@ namespace Mpx\Service;
 
 use GuzzleHttp\Event\HasEmitterTrait;
 use GuzzleHttp\Url;
-use Mpx\CacheTrait;
 use Mpx\ClientInterface;
+use Mpx\HasCachePoolTrait;
 use Mpx\HasClientTrait;
 use Mpx\HasLoggerTrait;
 use Mpx\Object;
@@ -17,7 +17,7 @@ use Psr\Log\LoggerInterface;
 use Stash\Interfaces\PoolInterface;
 
 class ObjectService implements ObjectServiceInterface {
-  use CacheTrait;
+  use HasCachePoolTrait;
   use HasClientTrait;
   use HasEmitterTrait;
   use HasLoggerTrait;
@@ -166,7 +166,7 @@ class ObjectService implements ObjectServiceInterface {
   public function loadMultiple(array $ids) {
     if ($ids_to_load = array_diff($ids, array_keys($this->staticCache))) {
       foreach ($ids_to_load as $id) {
-        $this->staticCache[$id] = $this->cache()->getItem($id)->get();
+        $this->staticCache[$id] = $this->getCachePool()->getItem($id)->get();
       }
       $ids_to_load = array_diff($ids_to_load, array_keys(array_filter($this->staticCache)));
       if ($ids_to_load) {
@@ -182,7 +182,7 @@ class ObjectService implements ObjectServiceInterface {
           // Save the objects in the static and regular cache.
           foreach ($objects as $id => $object) {
             $this->staticCache[$id] = $object;
-            $this->cache()->getItem($id)->set($object);
+            $this->getCachePool()->getItem($id)->set($object);
           }
         }
       }
@@ -204,7 +204,7 @@ class ObjectService implements ObjectServiceInterface {
     if (!empty($ids)) {
       $this->staticCache = array_diff_key($this->staticCache, array_flip($ids));
       foreach ($ids as $id) {
-        $this->cache()->getItem($id)->clear();
+        $this->getCachePool()->getItem($id)->clear();
       }
       $this->getLogger()->notice("Cleared cache for {count} {type} items ({ids}).", array(
         'count' => count($ids),
@@ -214,7 +214,7 @@ class ObjectService implements ObjectServiceInterface {
     }
     elseif (!isset($ids)) {
       $this->staticCache = array();
-      $this->cache()->flush();
+      $this->getCachePool()->flush();
       $this->getLogger()->notice("Cleared cache for all {type} items.", array('type' => $this->objectType));
     }
   }

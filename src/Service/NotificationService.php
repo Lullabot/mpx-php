@@ -10,8 +10,8 @@ namespace Mpx\Service;
 use GuzzleHttp\Url;
 use Mpx\Exception\ApiException;
 use Mpx\Exception\NotificationExpiredException;
-use Mpx\CacheTrait;
 use Mpx\ClientInterface;
+use Mpx\HasCachePoolTrait;
 use Mpx\HasClientTrait;
 use Mpx\HasLoggerTrait;
 use Mpx\UserInterface;
@@ -22,7 +22,7 @@ use GuzzleHttp\Event\HasEmitterTrait;
 use Mpx\Event\NotificationEvent;
 
 class NotificationService implements NotificationServiceInterface {
-  use CacheTrait;
+  use HasCachePoolTrait;
   use HasClientTrait;
   use HasEmitterTrait;
   use HasLoggerTrait;
@@ -55,7 +55,7 @@ class NotificationService implements NotificationServiceInterface {
     $this->cachePool = $cache;
     $this->logger = $logger;
 
-    $this->idCache = $this->cache()->getItem($this->getCacheKey());
+    $this->idCache = $this->getCachePool()->getItem($this->getCacheKey());
   }
 
   /**

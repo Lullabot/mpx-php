@@ -8,7 +8,7 @@ use Stash\Driver\Apc;
 use Stash\Driver\Ephemeral;
 use Stash\Pool;
 
-trait CacheTrait {
+trait HasCachePoolTrait {
 
   /**
    * @var \Stash\Interfaces\PoolInterface
@@ -32,7 +32,7 @@ trait CacheTrait {
    *
    * @return \Stash\Interfaces\PoolInterface
    */
-  public function cache() {
+  public function getCachePool() {
     if (!isset($this->cachePool)) {
       $driver = Apc::isAvailable() ? new Apc() : new Ephemeral();
       $this->cachePool = new Pool($driver);
