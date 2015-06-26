@@ -11,6 +11,7 @@ use Mpx\HasLoggerTrait;
 use Mpx\Object;
 use Mpx\UserInterface;
 use Mpx\Event\ObjectLoadEvent;
+use Mpx\Exception\NotificationsUnsupportedException;
 use Mpx\Exception\ObjectNotFoundException;
 use Pimple\Container;
 use Psr\Log\LoggerInterface;
@@ -39,6 +40,9 @@ class ObjectService implements ObjectServiceInterface {
 
   /** @var string */
   protected $schema;
+
+  /** @var \Mpx\Service\ObjectNotificationService */
+  protected $notificationService;
 
   /**
    * Construct an mpx object service.
@@ -236,6 +240,29 @@ class ObjectService implements ObjectServiceInterface {
       $objects[$object->getId()] = $object;
     }
     return $objects;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getNotificationService() {
+    if (!isset($this->notificationService)) {
+      $uri = call_user_func(array($this->objectClass, 'getNotificationUri'));
+      if (!$uri) {
+        throw new NotificationsUnsupportedException("The " . $this->getObjectType() . " object does not support notifications.");
+      }
+
+      // Allow some query parameters to be reused from the object service's URI.
+      $uri = is_string($uri) ? Url::fromString($uri) : $uri;
+      $uri->getQuery()->merge($this->getUri()
+        ->getQuery()
+        ->filter(function ($key) {
+          return in_array($key, array('account'));
+        }));
+
+      $this->notificationService = new ObjectNotificationService($uri, $this, $this->client, $this->cachePool, $this->logger);
+    }
+    return $this->notificationService;
   }
 
 }

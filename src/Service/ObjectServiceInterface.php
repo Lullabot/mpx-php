@@ -84,4 +84,11 @@ interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterfa
    */
   public function createObjects(array $data);
 
+  /**
+   * @return \Mpx\Service\ObjectServiceInterface
+   *
+   * @throws \Mpx\Exception\NotificationsUnsupportedException
+   */
+  public function getNotificationService();
+
 }

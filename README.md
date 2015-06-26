@@ -52,7 +52,7 @@ $user = Mpx\User::create('mpx/user@example.com', 'password', $container);
 $mediaService = Mpx\Object\Media::createService($user, $container);
 
 // Create the media notification service.
-$mediaNotificationService = Mpx\Object\Media::createNotificationService($mediaService, $container);
+$mediaNotificationService = $mediaService->getNotificationService();
 $mediaNotificationService->getUri()->getQuery()->set('account', 'Import account');
 
 // Fetch the last notification ID from the media notification service.

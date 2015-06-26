@@ -35,21 +35,6 @@ class ObjectNotificationService extends NotificationService implements ObjectNot
   }
 
   /**
-   * Create a new instance of a notification service class.
-   *
-   * @return static
-   */
-  public static function create($uri, ObjectServiceInterface $objectService, Container $container) {
-    return new static(
-      $uri,
-      $objectService,
-      $container['client'],
-      $container['cache'],
-      $container['logger']
-    );
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function getObjectService() {

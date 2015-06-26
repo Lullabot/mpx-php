@@ -61,22 +61,4 @@ abstract class AbstractObject implements ObjectInterface {
     return ObjectService::create(get_called_class(), $user, $container);
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public static function createNotificationService(ObjectServiceInterface $objectService, Container $container) {
-    $uri = static::getNotificationUri();
-    if (!$uri) {
-      throw new NotificationsUnsupportedException("The " . static::getType() . " object does not support notifications.");
-    }
-
-    // Allow some query parameters to be reused from the object service's URI.
-    $uri = is_string($uri) ? Url::fromString($uri) : $uri;
-    $uri->getQuery()->merge($objectService->getUri()->getQuery()->filter(function($key) {
-      return in_array($key, array('account'));
-    }));
-
-    return ObjectNotificationService::create($uri, $objectService, $container);
-  }
-
 }
