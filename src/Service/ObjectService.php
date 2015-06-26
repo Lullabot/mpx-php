@@ -269,11 +269,22 @@ class ObjectService implements ObjectServiceInterface {
    * @param \Mpx\Object\ObjectInterface[] $objects
    */
   private function setCache(array $objects) {
+    $pidMapping = $this->getPidMapping();
+    $pidMappingUpdated = FALSE;
+
     foreach ($objects as $object) {
       $id = $object->getId();
       // Save the objects in the static and regular cache.
       $this->staticCache[$id] = $object;
       $this->getCachePool()->getItem($id)->set($object);
+      if (!empty($object->pid)) {
+        $pidMapping[$object->pid] = $id;
+        $pidMappingUpdated = TRUE;
+      }
+    }
+
+    if ($pidMappingUpdated) {
+      $this->setPidMapping($pidMapping);
     }
   }
 
