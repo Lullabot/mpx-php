@@ -43,7 +43,7 @@ $container['cache'] = function ($c) {
   $pool->setLogger($c['logger']);
   $pool->setNamespace('mpx');
   return $pool;
-}
+};
 
 // Create the user.
 $user = Mpx\User::create('mpx/user@example.com', 'password', $container);
