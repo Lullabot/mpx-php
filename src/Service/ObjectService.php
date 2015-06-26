@@ -32,6 +32,9 @@ class ObjectService implements ObjectServiceInterface {
   /** @var array */
   protected $staticCache = array();
 
+  /** @var array */
+  protected $pidMapping;
+
   /** @var string */
   protected $objectClass;
 
@@ -126,10 +129,10 @@ class ObjectService implements ObjectServiceInterface {
    */
   public function fetch($id, array $options = []) {
     $objects = $this->fetchMultiple(array($id), $options);
-    if (!isset($objects[$id])) {
+    if (empty($objects)) {
       throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} {$id} for {$this->getUser()->getUsername()}.");
     }
-    return $objects[$id];
+    return reset($objects);
   }
 
   /**
@@ -159,7 +162,7 @@ class ObjectService implements ObjectServiceInterface {
   public function load($id) {
     $objects = $this->loadMultiple(array($id));
     if (!isset($objects[$id])) {
-      throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} {$id} for {$this->getUser()->getUsername()}.");
+      throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} with id {$id} for {$this->getUser()->getUsername()}.");
     }
     return $objects[$id];
   }
@@ -184,10 +187,7 @@ class ObjectService implements ObjectServiceInterface {
           $this->getEmitter()->emit('load', new ObjectLoadEvent($this, $objects));
 
           // Save the objects in the static and regular cache.
-          foreach ($objects as $id => $object) {
-            $this->staticCache[$id] = $object;
-            $this->getCachePool()->getItem($id)->set($object);
-          }
+          $this->setCache($objects);
         }
       }
     }
@@ -204,12 +204,93 @@ class ObjectService implements ObjectServiceInterface {
   /**
    * {@inheritdoc}
    */
+  public function fetchbyPid($pid) {
+    try {
+      $object = $this->fetch('', ['query' => ['byPid' => $pid]]);
+      return $object;
+    }
+    catch (ObjectNotFoundException $exception) {
+      $exception->setMessage("Cannot load mpx {$this->objectType} with pid {$pid} for {$this->getUser()->getUsername()}.");
+      throw $exception;
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function loadbyPid($pid) {
+    $pidMapping = $this->getPidMapping();
+
+    if (!isset($pidMapping[$pid])) {
+      try {
+        $object = $this->fetchByPid($pid);
+        $this->setCache(array($object));
+        $pidMapping[$pid] = $object->getId();
+        $this->setPidMapping($pidMapping);
+        return $object;
+      }
+      catch (ObjectNotFoundException $exception) {
+        $pidMapping[$pid] = FALSE;
+        $this->setPidMapping($pidMapping);
+        throw $exception;
+      }
+    }
+    elseif (empty($pidMapping[$pid])) {
+      throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} with public ID {$pid} for {$this->getUser()->getUsername()}.");
+    }
+    else {
+      return $this->load($pidMapping[$pid]);
+    }
+  }
+
+  /**
+   * @return array
+   */
+  private function getPidMapping() {
+    if (!isset($this->pidMapping)) {
+      $item = $this->getCachePool()->getItem('pid_mapping');
+      $this->pidMapping = $item->get();
+      if ($item->isMiss()) {
+        $this->pidMapping = array();
+      }
+    }
+    return $this->pidMapping;
+  }
+
+  /**
+   * @param array $pidMapping
+   */
+  private function setPidMapping(array $pidMapping) {
+    $this->pidMapping = $pidMapping;
+    $this->getCachePool()->getItem('pid_mapping')->set($pidMapping);
+  }
+
+  /**
+   * @param \Mpx\Object\ObjectInterface[] $objects
+   */
+  private function setCache(array $objects) {
+    foreach ($objects as $object) {
+      $id = $object->getId();
+      // Save the objects in the static and regular cache.
+      $this->staticCache[$id] = $object;
+      $this->getCachePool()->getItem($id)->set($object);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function resetCache(array $ids = NULL) {
     if (!empty($ids)) {
       $this->staticCache = array_diff_key($this->staticCache, array_flip($ids));
       foreach ($ids as $id) {
         $this->getCachePool()->getItem($id)->clear();
       }
+
+      $pidMapping = $this->getPidMapping();
+      $pidMapping = array_diff($pidMapping, $ids);
+      $this->setPidMapping($pidMapping);
+
       $this->getLogger()->notice("Cleared cache for {count} {type} items ({ids}).", array(
         'count' => count($ids),
         'type' => $this->objectType,
@@ -219,6 +300,7 @@ class ObjectService implements ObjectServiceInterface {
     elseif (!isset($ids)) {
       $this->staticCache = array();
       $this->getCachePool()->flush();
+      $this->setPidMapping(array());
       $this->getLogger()->notice("Cleared cache for all {type} items.", array('type' => $this->objectType));
     }
   }

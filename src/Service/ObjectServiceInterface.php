@@ -25,7 +25,7 @@ interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterfa
   public function getUri();
 
   /**
-   * Fetch an mpx object from the API.
+   * Fetch an mpx object directly from the API.
    *
    * @param $id
    *   An array of IDs to fetch.
@@ -39,7 +39,7 @@ interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterfa
   public function fetch($id, array $options = []);
 
   /**
-   * Fetch multiple mpx objects from the API.
+   * Fetch multiple mpx objects directly from the API.
    *
    * @param array $ids
    *   An array of IDs to fetch.
@@ -51,7 +51,10 @@ interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterfa
   public function fetchMultiple(array $ids, array $options = []);
 
   /**
+   * Load a single mpx object.
+   *
    * @param $id
+   *
    * @return \Mpx\Object\ObjectInterface
    *
    * @throws \Mpx\Exception\ObjectNotFoundException
@@ -68,6 +71,28 @@ interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterfa
    *   An array of mpx objects, indexed by ID.
    */
   public function loadMultiple(array $ids);
+
+  /**
+   * Fetch an mpx object directly from the API by public ID.
+   *
+   * @param string $pid
+   *
+   * @return \Mpx\Object\ObjectInterface
+   *
+   * @throws \Mpx\Exception\ObjectNotFoundException
+   */
+  public function fetchbyPid($pid);
+
+  /**
+   * Load a single mpx object by public ID.
+   *
+   * @param string $pid
+   *
+   * @return \Mpx\Object\ObjectInterface
+   *
+   * @throws \Mpx\Exception\ObjectNotFoundException
+   */
+  public function loadbyPid($pid);
 
   public function resetCache(array $ids = NULL);
 
