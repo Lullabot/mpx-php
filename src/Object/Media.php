@@ -15,7 +15,7 @@ class Media extends AbstractObject {
    * {@inheritdoc}
    */
   public static function getUri() {
-    return 'http://data.media.theplatform.com/media/data/Media?schema=1.6&form=cjson';
+    return 'http://data.media.theplatform.com/media/data/Media?schema=1.7.0&form=cjson';
   }
 
   /**
