@@ -7,13 +7,6 @@ class Player extends AbstractObject {
   /**
    * {@inheritdoc}
    */
-  public static function getType() {
-    return 'Player';
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function getUri() {
     return 'https://data.player.theplatform.com/player/data/Player?schema=1.2&form=cjson';
   }

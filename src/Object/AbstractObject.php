@@ -2,13 +2,10 @@
 
 namespace Mpx\Object;
 
-use Mpx\Service\ObjectNotificationService;
 use Mpx\Service\ObjectService;
 use Pimple\Container;
 use Mpx\UserInterface;
-use Mpx\Service\ObjectServiceInterface;
-use Mpx\Exception\NotificationsUnsupportedException;
-use GuzzleHttp\Url;
+use ReflectionClass;
 
 abstract class AbstractObject implements ObjectInterface {
 
@@ -20,6 +17,14 @@ abstract class AbstractObject implements ObjectInterface {
 
   /** @var string */
   public $guid;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getType() {
+    $reflection = new ReflectionClass(get_called_class());
+    return $reflection->getShortName();
+  }
 
   /**
    * {@inheritdoc}
