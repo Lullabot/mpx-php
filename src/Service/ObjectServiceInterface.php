@@ -2,7 +2,12 @@
 
 namespace Mpx\Service;
 
-interface ObjectServiceInterface extends NotificationServiceInterface {
+use GuzzleHttp\Event\HasEmitterInterface;
+use Mpx\HasCachePoolInterface;
+use Mpx\HasClientInterface;
+use Mpx\HasLoggerInterface;
+
+interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterface, HasEmitterInterface, HasLoggerInterface {
 
   /**
    * @return string
@@ -105,7 +110,7 @@ interface ObjectServiceInterface extends NotificationServiceInterface {
   public function createObjects(array $data);
 
   /**
-   * @return \Mpx\Service\ObjectServiceInterface
+   * @return \Mpx\Service\ObjectNotificationServiceInterface
    *
    * @throws \Mpx\Exception\NotificationsUnsupportedException
    */
