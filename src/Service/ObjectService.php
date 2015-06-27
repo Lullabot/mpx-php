@@ -219,34 +219,30 @@ class ObjectService implements ObjectServiceInterface {
    * {@inheritdoc}
    */
   public function loadbyPid($pid) {
-    $pidMapping = $this->getPidMapping();
-
-    if (!isset($pidMapping[$pid])) {
+    $id = $this->getPidMappingId($pid);
+    if (!isset($id)) {
       try {
         $object = $this->fetchByPid($pid);
         $this->setCache(array($object));
-        $pidMapping[$pid] = $object->getId();
-        $this->setPidMapping($pidMapping);
         return $object;
       }
       catch (ObjectNotFoundException $exception) {
-        $pidMapping[$pid] = FALSE;
-        $this->setPidMapping($pidMapping);
+        $this->setPidMappingId($pid, FALSE);
         throw $exception;
       }
     }
-    elseif (empty($pidMapping[$pid])) {
-      throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} with public ID {$pid} for {$this->getUser()->getUsername()}.");
+    elseif ($id) {
+      return $this->load($id);
     }
     else {
-      return $this->load($pidMapping[$pid]);
+      throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} with public ID {$pid} for {$this->getUser()->getUsername()}.");
     }
   }
 
   /**
    * @return array
    */
-  private function getPidMapping() {
+  private function &getPidMapping() {
     if (!isset($this->pidMapping)) {
       $item = $this->getCachePool()->getItem('pid_mapping');
       $this->pidMapping = $item->get();
@@ -257,35 +253,52 @@ class ObjectService implements ObjectServiceInterface {
     return $this->pidMapping;
   }
 
+  public function savePidMapping(array $mapping = NULL) {
+    if (!isset($mapping)) {
+      $mapping = $this->getPidMapping();
+    }
+    else {
+      $this->pidMapping = $mapping;
+    }
+    $this->getCachePool()->getItem('pid_mapping')->set($mapping);
+  }
+
   /**
-   * @param array $pidMapping
+   * @param string $pid
+   *
+   * @return string|false|null
    */
-  private function setPidMapping(array $pidMapping) {
-    $this->pidMapping = $pidMapping;
-    $this->getCachePool()->getItem('pid_mapping')->set($pidMapping);
+  private function getPidMappingId($pid) {
+    $mapping = $this->getPidMapping();
+    return isset($mapping[$pid]) ? $mapping[$pid] : NULL;
+  }
+
+  /**
+   * @param string $pid
+   * @param string $id
+   *
+   * @return bool
+   */
+  private function setPidMappingId($pid, $id) {
+    $mapping = &$this->getPidMapping();
+    $mapping[$pid] = $id;
   }
 
   /**
    * @param \Mpx\Object\ObjectInterface[] $objects
    */
   private function setCache(array $objects) {
-    $pidMapping = $this->getPidMapping();
-    $pidMappingUpdated = FALSE;
-
     foreach ($objects as $object) {
       $id = $object->getId();
       // Save the objects in the static and regular cache.
       $this->staticCache[$id] = $object;
       $this->getCachePool()->getItem($id)->set($object);
       if (!empty($object->pid)) {
-        $pidMapping[$object->pid] = $id;
-        $pidMappingUpdated = TRUE;
+        $this->setPidMappingId($object->pid, $id);
       }
     }
 
-    if ($pidMappingUpdated) {
-      $this->setPidMapping($pidMapping);
-    }
+    $this->savePidMapping();
   }
 
   /**
@@ -298,9 +311,9 @@ class ObjectService implements ObjectServiceInterface {
         $this->getCachePool()->getItem($id)->clear();
       }
 
-      $pidMapping = $this->getPidMapping();
+      $pidMapping = &$this->getPidMapping();
       $pidMapping = array_diff($pidMapping, $ids);
-      $this->setPidMapping($pidMapping);
+      $this->savePidMapping($pidMapping);
 
       $this->getLogger()->notice("Cleared cache for {count} {type} items ({ids}).", array(
         'count' => count($ids),
@@ -311,7 +324,7 @@ class ObjectService implements ObjectServiceInterface {
     elseif (!isset($ids)) {
       $this->staticCache = array();
       $this->getCachePool()->flush();
-      $this->setPidMapping(array());
+      $this->savePidMapping(array());
       $this->getLogger()->notice("Cleared cache for all {type} items.", array('type' => $this->objectType));
     }
   }
