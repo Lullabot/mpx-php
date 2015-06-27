@@ -2,12 +2,7 @@
 
 namespace Mpx\Service;
 
-use GuzzleHttp\Event\HasEmitterInterface;
-use Mpx\HasCachePoolInterface;
-use Mpx\HasClientInterface;
-use Mpx\HasLoggerInterface;
-
-interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterface, HasEmitterInterface, HasLoggerInterface {
+interface ObjectServiceInterface extends NotificationServiceInterface {
 
   /**
    * @return string
