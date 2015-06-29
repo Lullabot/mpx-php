@@ -160,6 +160,11 @@ class ObjectService implements ObjectServiceInterface {
    * {@inheritdoc}
    */
   public function load($id) {
+    // If a full URL was provided, get the last segment which is the ID.
+    if (filter_var($id, FILTER_VALIDATE_URL)) {
+      $id = basename($id);
+    }
+
     $objects = $this->loadMultiple(array($id));
     if (!isset($objects[$id])) {
       throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} with id {$id} for {$this->getUser()->getUsername()}.");
