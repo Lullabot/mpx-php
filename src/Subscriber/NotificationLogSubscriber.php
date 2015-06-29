@@ -38,7 +38,7 @@ class NotificationLogSubscriber implements SubscriberInterface, HasLoggerInterfa
     foreach ($event->getNotifications() as $notification_id => $notification) {
       if (!empty($notification['id'])) {
         $this->getLogger()->info(
-          "NOTIFICATION {notification-id}\t{method}\t{type} {id}",
+          "NOTIFICATION {notification-id}\t{method}\t{type}\t{id}",
           array(
             'notification-id' => $notification_id,
             'method' => $notification['method'],
