@@ -7,7 +7,7 @@
 
 namespace Mpx\Service;
 
-use GuzzleHttp\Url;
+use GuzzleHttp\Psr7\Uri;
 use Mpx\Exception\ApiException;
 use Mpx\Exception\NotificationExpiredException;
 use Mpx\ClientInterface;
@@ -30,7 +30,7 @@ class NotificationService implements NotificationServiceInterface {
   /** @var \Mpx\UserInterface */
   protected $user;
 
-  /** @var \GuzzleHttp\Url */
+  /** @var \Psr\Http\Message\UriInterface */
   protected $uri;
 
   /** @var \Stash\Interfaces\ItemInterface */
@@ -39,17 +39,14 @@ class NotificationService implements NotificationServiceInterface {
   /**
    * Construct an mpx notification service.
    *
-   * @param \GuzzleHttp\Url|string $uri
+   * @param \Psr\Http\Message\UriInterface|string $uri
    * @param \Mpx\UserInterface $user
    * @param \Mpx\ClientInterface $client
    * @param \Stash\Interfaces\PoolInterface $cache
    * @param \Psr\Log\LoggerInterface $logger
    */
   public function __construct($uri, UserInterface $user, ClientInterface $client = NULL, PoolInterface $cache = NULL, LoggerInterface $logger = NULL) {
-    $this->uri = is_string($uri) ? Url::fromString($uri) : $uri;
-    if (!$this->uri->getQuery()->hasKey('clientId')) {
-      $this->uri->getQuery()->set('clientId', 'mpx-php');
-    }
+    $this->uri = is_string($uri) ? new Uri($uri) : $uri;
     $this->user = $user;
     $this->client = $client;
     $this->cachePool = $cache;
@@ -61,7 +58,7 @@ class NotificationService implements NotificationServiceInterface {
   /**
    * Create a new instance of a notification service class.
    *
-   * @param \GuzzleHttp\Url|string $uri
+   * @param \Psr\Http\Message\UriInterface|string $uri
    * @param \Mpx\UserInterface $user
    * @param \Pimple\Container $container
    *
@@ -79,10 +76,16 @@ class NotificationService implements NotificationServiceInterface {
 
   private function getCacheKey() {
     $cache_uri = clone $this->getUri();
+
     // Filter out query parameters that should not affect the cache key.
-    $cache_uri->setQuery($cache_uri->getQuery()->filter(function($key) {
-      return in_array($key, array('filter', 'account'));
-    }));
+    $query = $cache_uri->getQuery();
+    parse_str($query, $query);
+    /** @var array $query */
+    foreach (array_keys($query) as $key) {
+      if (!in_array($key, array('filter', 'account'))) {
+        $cache_uri = $cache_uri::withoutQueryValue($cache_uri, $key);
+      }
+    }
     return 'notification:' . md5($this->getUser()->getUsername() . ':' . $cache_uri);
   }
 
@@ -159,8 +162,10 @@ class NotificationService implements NotificationServiceInterface {
       'query' => array(),
     );
 
-    $real_uri = clone $this->uri;
-    $real_uri->getQuery()->merge($options['query']);
+    $real_uri = $this->uri;
+    foreach ($options['query'] as $key => $value) {
+      $real_uri = $real_uri::withQueryValue($real_uri, $key, $value);
+    }
     $this->getLogger()->info(
       'Starting to request notifications from {url} for {account}.',
       array(

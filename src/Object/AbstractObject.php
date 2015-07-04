@@ -2,9 +2,9 @@
 
 namespace Mpx\Object;
 
-use Mpx\Service\ObjectService;
 use Pimple\Container;
 use Mpx\UserInterface;
+use Mpx\Service\ObjectService;
 use ReflectionClass;
 
 abstract class AbstractObject implements ObjectInterface {
@@ -24,6 +24,13 @@ abstract class AbstractObject implements ObjectInterface {
   public static function getType() {
     $reflection = new ReflectionClass(get_called_class());
     return $reflection->getShortName();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getReadOnlyUri() {
+    return static::getUri();
   }
 
   /**

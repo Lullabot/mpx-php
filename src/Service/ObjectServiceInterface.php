@@ -20,7 +20,7 @@ interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterfa
   public function getUser();
 
   /**
-   * @return \GuzzleHttp\Url
+   * @return \Psr\Http\Message\UriInterface
    */
   public function getUri();
 

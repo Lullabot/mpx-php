@@ -15,7 +15,7 @@ interface NotificationServiceInterface extends HasCachePoolInterface, HasClientI
   public function getUser();
 
   /**
-   * @return \GuzzleHttp\Url
+   * @return \Psr\Http\Message\UriInterface
    */
   public function getUri();
 

@@ -3,7 +3,7 @@
 namespace Mpx\Service;
 
 use GuzzleHttp\Event\HasEmitterTrait;
-use GuzzleHttp\Url;
+use GuzzleHttp\Psr7\Uri;
 use Mpx\ClientInterface;
 use Mpx\HasCachePoolTrait;
 use Mpx\HasClientTrait;
@@ -26,8 +26,11 @@ class ObjectService implements ObjectServiceInterface {
   /** @var \Mpx\UserInterface */
   protected $user;
 
-  /** @var \GuzzleHttp\Url */
+  /** @var \Psr\Http\Message\UriInterface */
   protected $uri;
+
+  /** @var \Psr\Http\Message\UriInterface */
+  protected $readOnlyUri;
 
   /** @var array */
   protected $staticCache = array();
@@ -66,8 +69,8 @@ class ObjectService implements ObjectServiceInterface {
 
     $this->objectClass = $objectClass;
     $this->objectType = call_user_func(array($objectClass, 'getType'));
-    $uri = call_user_func(array($objectClass, 'getUri'));
-    $this->uri = is_string($uri) ? Url::fromString($uri) : $uri;
+    $this->uri = call_user_func(array($objectClass, 'getUri'));
+    $this->readOnlyUri = call_user_func(array($objectClass, 'getReadOnlyUri'));
 
     $this->user = $user;
     $this->client = $client;
@@ -139,14 +142,9 @@ class ObjectService implements ObjectServiceInterface {
    * {@inheritdoc}
    */
   public function fetchMultiple(array $ids, array $options = []) {
-    $uri = clone $this->uri;
-    if (!empty($ids)) {
-      $uri->addPath('/' . implode(',', $ids));
-    }
-    // Use a read-only URL which is faster.
-    if (strpos($uri->getHost(), 'data.') === 0) {
-      $uri->setHost('read.' . $uri->getHost());
-    }
+    $uri = $this->readOnlyUri;
+    $uri = $uri->withPath($uri->getPath() . '/' . implode(',', $ids));
+
     $data = $this->getClient()->authenticatedRequest('GET', $uri, $this->getUser(), $options);
 
     // Normalize the data structure if only one result was returned.
@@ -363,13 +361,16 @@ class ObjectService implements ObjectServiceInterface {
         throw new NotificationsUnsupportedException("The " . $this->getObjectType() . " object does not support notifications.");
       }
 
+      $uri = is_string($uri) ? new Uri($uri) : $uri;
       // Allow some query parameters to be reused from the object service's URI.
-      $uri = is_string($uri) ? Url::fromString($uri) : $uri;
-      $uri->getQuery()->merge($this->getUri()
-        ->getQuery()
-        ->filter(function ($key) {
-          return in_array($key, array('account'));
-        }));
+      $query = $this->getUri()->getQuery();
+      parse_str($query, $query);
+      /** @var array $query */
+      foreach (array_keys($query) as $key) {
+        if (!in_array($key, array('account'))) {
+          $uri = $uri::withoutQueryValue($uri, $key);
+        }
+      }
 
       $this->notificationService = new ObjectNotificationService($uri, $this, $this->client, $this->cachePool, $this->logger);
     }

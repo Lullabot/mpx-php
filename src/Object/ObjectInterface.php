@@ -13,12 +13,17 @@ interface ObjectInterface {
   public static function getType();
 
   /**
-   * @return \GuzzleHttp\Url|string
+   * @return \Psr\Http\Message\UriInterface
    */
   public static function getUri();
 
   /**
-   * @return \GuzzleHttp\Url|string
+   * @return \Psr\Http\Message\UriInterface
+   */
+  public static function getReadOnlyUri();
+
+  /**
+   * @return \Psr\Http\Message\UriInterface
    */
   public static function getNotificationUri();
 
