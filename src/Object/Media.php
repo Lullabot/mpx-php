@@ -10,7 +10,7 @@ class Media extends AbstractObject {
    * {@inheritdoc}
    */
   public static function getUri() {
-    return new Uri('http://data.media.theplatform.com/media/data/Media?schema=1.7&form=cjson');
+    return new Uri('https://data.media.theplatform.com/media/data/Media?schema=1.7&form=cjson');
   }
 
   /**
@@ -24,7 +24,7 @@ class Media extends AbstractObject {
    * {@inheritdoc}
    */
   public static function getNotificationUri() {
-    return new Uri('http://read.data.media.theplatform.com/media/notify?filter=Media');
+    return new Uri('https://read.data.media.theplatform.com/media/notify?filter=Media');
   }
 
 }

@@ -24,7 +24,7 @@ class Player extends AbstractObject {
    * {@inheritdoc}
    */
   public static function getNotificationUri() {
-    return new Uri('http://read.data.player.theplatform.com/player/notify?filter=Player');
+    return new Uri('https://read.data.player.theplatform.com/player/notify?filter=Player');
   }
 
 }
