@@ -189,7 +189,7 @@ class User implements UserInterface {
           ),
         )
       );
-      $data = $data['getSelfIdResposne'];
+      $data = $data['getSelfIdResponse'];
       $item->set($data);
     }
     return $data;
