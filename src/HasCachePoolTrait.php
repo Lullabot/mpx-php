@@ -34,8 +34,7 @@ trait HasCachePoolTrait {
    */
   public function getCachePool() {
     if (!isset($this->cachePool)) {
-      $driver = Apc::isAvailable() ? new Apc() : new Ephemeral();
-      $this->cachePool = new Pool($driver);
+      $this->cachePool = new Pool();
       if (isset($this->logger) && $this->logger instanceof LoggerInterface) {
         $this->cachePool->setLogger($this->logger);
       }
