@@ -131,9 +131,9 @@ class ObjectService implements ObjectServiceInterface {
    * {@inheritdoc}
    */
   public function fetch($id, array $options = []) {
-    $objects = $this->fetchMultiple(array($id), $options);
+    $objects = $this->fetchMultiple([$id], $options);
     if (empty($objects)) {
-      throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} {$id} for {$this->getUser()->getUsername()}.");
+      throw new ObjectNotFoundException("Cannot load mpx {$this->objectType} {$id}.");
     }
     return reset($objects);
   }
@@ -152,6 +152,22 @@ class ObjectService implements ObjectServiceInterface {
 
     // Convert the data to objects.
     return $this->createObjects($data);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCount(array $options = []) {
+    $options += ['query' => []];
+    $options['query'] += ['count' => 'true', 'entries' => 'false'];
+
+    $data = $this->getClient()->authenticatedRequest('GET', $this->readOnlyUri, $this->getUser(), $options);
+    if (isset($data['totalResults']) && is_numeric($data['totalResults'])) {
+      return intval($data['totalResults']);
+    }
+    else {
+      throw new \RuntimeException("Unable to parse totalResults value from API.");
+    }
   }
 
   /**

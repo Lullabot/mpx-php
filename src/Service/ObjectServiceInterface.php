@@ -51,6 +51,16 @@ interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterfa
   public function fetchMultiple(array $ids, array $options = []);
 
   /**
+   * Fetch the total number of objects available from the API.
+   *
+   * @param array $options
+   *
+   * @return int
+   *   The number of objects from the API.
+   */
+  public function getCount(array $options = []);
+
+  /**
    * Load a single mpx object.
    *
    * @param $id
