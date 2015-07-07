@@ -203,4 +203,12 @@ class User implements UserInterface {
     return basename($data['userId']);
   }
 
+  public function __destruct() {
+    // If the cache storage is not persistent, then sign out the user.
+    $driver = $this->getCachePool()->getDriver();
+    if (method_exists($driver, 'isPersistent') && !$driver->isPersistent()) {
+      $this->signOut();
+    }
+  }
+
 }
