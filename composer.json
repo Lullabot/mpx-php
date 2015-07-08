@@ -14,8 +14,9 @@
         "tedivm/stash": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0",
-        "guzzlehttp/log-subscriber": "~1.0"
+        "phpunit/phpunit": "4.7.*",
+        "fabpot/php-cs-fixer": "1.9.*",
+        "guzzlehttp/log-subscriber": "1.0.*"
     },
     "autoload": {
         "psr-4": {
