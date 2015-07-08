@@ -4,8 +4,6 @@ namespace Mpx;
 
 use Psr\Log\LoggerInterface;
 use Stash\Interfaces\PoolInterface;
-use Stash\Driver\Apc;
-use Stash\Driver\Ephemeral;
 use Stash\Pool;
 
 trait HasCachePoolTrait {

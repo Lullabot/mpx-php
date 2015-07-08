@@ -3,7 +3,6 @@
 namespace Mpx\Service;
 
 use Mpx\ClientInterface;
-use Pimple\Container;
 use Psr\Log\LoggerInterface;
 use Stash\Interfaces\PoolInterface;
 

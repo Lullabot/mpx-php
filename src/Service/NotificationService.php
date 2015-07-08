@@ -303,9 +303,6 @@ class NotificationService implements NotificationServiceInterface {
       }
       catch (NotificationExpiredException $exception) {
         $this->processNotificationReset(NULL);
-        // In case this might be wrapped in a database transaction, use
-        // shutdown functions in addition to the above calls.
-        //register_shutdown_function(array($this, 'processNotificationReset'), NULL);
         throw $exception;
       }
     }
