@@ -14,7 +14,7 @@ class ObjectNotificationService extends NotificationService implements ObjectNot
   /**
    * Construct an mpx object notification service.
    *
-   * @param \GuzzleHttp\Url|string $uri
+   * @param \Psr\Http\Message\UriInterface|string $uri
    * @param \Mpx\Service\ObjectServiceInterface $objectService
    * @param \Mpx\ClientInterface $client
    * @param \Stash\Interfaces\PoolInterface $cache
