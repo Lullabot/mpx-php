@@ -18,7 +18,7 @@ class NotificationEvent extends AbstractEvent {
    * @param array $notifications
    */
   public function __construct(NotificationServiceInterface $notificationService, array &$notifications) {
-    $this->notificationSerivce = $notificationService;
+    $this->notificationService = $notificationService;
     $this->notifications = &$notifications;
   }
 
@@ -33,7 +33,7 @@ class NotificationEvent extends AbstractEvent {
    * @return \Mpx\Service\NotificationServiceInterface
    */
   public function getNotificationService() {
-    return $this->notificationSerivce;
+    return $this->notificationService;
   }
 
 }

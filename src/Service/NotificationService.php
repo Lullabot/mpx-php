@@ -199,7 +199,7 @@ class NotificationService implements NotificationServiceInterface {
 
         // Process the notification data.
         $notifications += $this->processNotificationData($data);
-        if ($notifications) {
+        if (!empty($notifications)) {
           $lastId = max(array_keys($notifications));
         }
 

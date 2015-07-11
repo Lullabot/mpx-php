@@ -223,7 +223,7 @@ class ObjectService implements ObjectServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function fetchbyPid($pid) {
+  public function fetchByPid($pid) {
     try {
       $object = $this->fetch('', ['query' => ['byPid' => $pid]]);
       return $object;
@@ -250,7 +250,7 @@ class ObjectService implements ObjectServiceInterface {
         throw $exception;
       }
     }
-    elseif ($id) {
+    elseif ($id !== FALSE) {
       return $this->load($id);
     }
     else {
@@ -294,7 +294,7 @@ class ObjectService implements ObjectServiceInterface {
 
   /**
    * @param string $pid
-   * @param string $id
+   * @param string|false $id
    *
    * @return bool
    */

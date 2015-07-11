@@ -31,8 +31,8 @@ interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterfa
    *   An array of IDs to fetch.
    * @param array $options
    *
-   * @return \Mpx\Object\ObjectInterface[]
-   *   An array of mpx objects, indexed by ID.
+   * @return \Mpx\Object\ObjectInterface
+   *   An mpx objects.
    *
    * @throws \Mpx\Exception\ObjectNotFoundException
    */
@@ -91,7 +91,7 @@ interface ObjectServiceInterface extends HasCachePoolInterface, HasClientInterfa
    *
    * @throws \Mpx\Exception\ObjectNotFoundException
    */
-  public function fetchbyPid($pid);
+  public function fetchByPid($pid);
 
   /**
    * Load a single mpx object by public ID.
