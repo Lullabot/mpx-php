@@ -2,7 +2,7 @@
 
 ## Requirements
 
-* PHP 5.4+
+* PHP 5.6+
 * [Composer](http://getcomposer.org/)
 
 ## Installation
@@ -10,7 +10,7 @@ In your composer.json, add the following require directive:
 ```json
 {
     "require" : {
-        "lullabot/mpx" : "master-dev"
+        "lullabot/mpx-php" : "master-dev"
     }
 }
 ```
