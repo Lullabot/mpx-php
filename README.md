@@ -6,18 +6,8 @@
 * [Composer](http://getcomposer.org/)
 
 ## Installation
-In your composer.json, add the following require directive:
-```json
-{
-    "require" : {
-        "lullabot/mpx-php" : "master-dev"
-    }
-}
 ```
-
-Then run:
-```bash
-$ composer update
+composer require lullabot/mpx-php
 ```
 
 ## Usage
