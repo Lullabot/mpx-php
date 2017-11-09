@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Mpx\LoggerTrait.
- */
-
 namespace Mpx;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
