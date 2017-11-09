@@ -6,7 +6,7 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Mpx\Exception\ApiException;
 use Psr\Http\Message\ResponseInterface;
 
-class Client implements ClientInterface {
+class Client {
 
     /**
      * @var \GuzzleHttp\ClientInterface
@@ -17,28 +17,37 @@ class Client implements ClientInterface {
         $this->client = $client;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function request($method = 'GET', $url = null, UserInterface $user = NULL, array $options = []) {
-        $duration = isset($options['timeout']) ? $options['timeout'] : NULL;
-
-        if (isset($user)) {
-            $options['query']['token'] = (string) $user->acquireToken($duration);
-        }
-
+    public function request($method = 'GET', $url = null, array $options = []) {
         // Disable HTTP error codes unless requested so that we can parse out
         // the errors ourselves.
         $options['query']['httpError'] = FALSE;
 
+        $response = $this->client->request($method, $url, $options);
+        $contentType = $response->getHeaderLine('Content-Type');
+        if (preg_match('~^(application|text)/json~', $contentType)) {
+            return $this->handleJsonResponse($response, $url);
+        }
+        elseif (preg_match('~^(application|text)/(atom\+)?xml~', $contentType)) {
+            return $this->handleXmlResponse($response, $url);
+        }
+        else {
+            throw new ApiException("Unable to handle response from {$url} with content type {$contentType}.");
+        }
+    }
+
+    public function authenticatedRequest(User $user, $method = 'GET', $url = NULL, array $options = []) {
+        if (isset($user)) {
+            $duration = isset($options['timeout']) ? $options['timeout'] : NULL;
+            $options['query']['token'] = (string) $user->acquireToken($duration);
+        }
+
         try {
-            $response = $this->client->request($method, $url, $options);
-            return $this->handleResponse($response, $url);
+            return $this->request($method, $url, $options);
         }
         catch (ApiException $exception) {
             // If the token is invalid, we should delete it from storage so that a
             // fresh token is fetched on the next request.
-            if ($exception->getCode() == 401 && isset($user)) {
+            if ($exception->getCode() == 401) {
                 // Ensure the token will be deleted.
                 $user->invalidateToken();
             }
@@ -47,44 +56,61 @@ class Client implements ClientInterface {
     }
 
     /**
-     * {@inheritdoc}
+     * Handle an JSON API response.
+     *
+     * @param ResponseInterface $response
+     *   The response.
+     * @param string $url
+     *   The request URL.
      *
      * @return array
+     *   The decoded response data.
+     *
+     * @throws \Mpx\Exception\ApiException
+     *   If an error occurred.
      */
-    public function handleResponse(ResponseInterface $response, $url) {
-        // Parse out exceptions from the response body.
-        $contentType = $response->getHeaderLine('Content-Type');
-        if (preg_match('~^(application|text)/json~', $contentType)) {
-            // @todo Figure out how we can support the big_int_string option here.
-            // @see http://stackoverflow.com/questions/19520487/json-bigint-as-string-removed-in-php-5-5
-            $data = \GuzzleHttp\json_decode($response->getBody()->getContents(), TRUE);
-            if (!empty($data['responseCode']) && !empty($data['isException'])) {
-                throw new ApiException("Error {$data['title']} on request to {$url}: {$data['description']}", (int) $data['responseCode']);
-            }
-            elseif (!empty($data[0]['entry']['responseCode']) && !empty($data[0]['entry']['isException'])) {
-                throw new ApiException(
-                    "Error {$data[0]['entry']['title']} on request to {$url}: {$data[0]['entry']['description']}",
-                    (int) $data[0]['entry']['responseCode']
-                );
-            }
-            return $data;
+    protected function handleJsonResponse(ResponseInterface $response, $url) {
+        // @todo Figure out how we can support the big_int_string option here.
+        // @see http://stackoverflow.com/questions/19520487/json-bigint-as-string-removed-in-php-5-5
+        $data = \GuzzleHttp\json_decode($response->getBody()->getContents(), TRUE);
+        if (!empty($data['responseCode']) && !empty($data['isException'])) {
+            throw new ApiException("Error {$data['title']} on request to {$url}: {$data['description']}", (int) $data['responseCode']);
         }
-        elseif (preg_match('~^(application|text)/(atom\+)?xml~', $contentType)) {
-            if (strpos((string) $response->getBody(), 'xmlns:e="http://xml.theplatform.com/exception"') !== FALSE) {
-                if (preg_match('~<e:title>(.+)</e:title><e:description>(.+)</e:description><e:responseCode>(.+)</e:responseCode>~', (string) $response->getBody(), $matches)) {
-                    throw new ApiException("Error {$matches[1]} on request to {$url}: {$matches[2]}", (int) $matches[3]);
-                }
-                elseif (preg_match('~<title>(.+)</title><summary>(.+)</summary><e:responseCode>(.+)</e:responseCode>~', (string) $response->getBody(), $matches)) {
-                    throw new ApiException("Error {$matches[1]} on request to {$url}: {$matches[2]}", (int) $matches[3]);
-                }
+        elseif (!empty($data[0]['entry']['responseCode']) && !empty($data[0]['entry']['isException'])) {
+            throw new ApiException(
+                "Error {$data[0]['entry']['title']} on request to {$url}: {$data[0]['entry']['description']}",
+                (int) $data[0]['entry']['responseCode']
+            );
+        }
+        return $data;
+    }
+
+    /**
+     * Handle an XML API response.
+     *
+     * @param ResponseInterface $response
+     *   The response.
+     * @param string $url
+     *   The request URL.
+     *
+     * @return array
+     *   The decoded response data.
+     *
+     * @throws \Mpx\Exception\ApiException
+     *   If an error occurred.
+     */
+    protected function handleXmlResponse(ResponseInterface $response, $url) {
+        if (strpos((string) $response->getBody(), 'xmlns:e="http://xml.theplatform.com/exception"') !== FALSE) {
+            if (preg_match('~<e:title>(.+)</e:title><e:description>(.+)</e:description><e:responseCode>(.+)</e:responseCode>~', (string) $response->getBody(), $matches)) {
+                throw new ApiException("Error {$matches[1]} on request to {$url}: {$matches[2]}", (int) $matches[3]);
             }
-            $data = simplexml_load_string($response->getBody()->getContents());
-            $data = array($data->getName() => static::convertXmlToArray($data));
-            return $data;
+            elseif (preg_match('~<title>(.+)</title><summary>(.+)</summary><e:responseCode>(.+)</e:responseCode>~', (string) $response->getBody(), $matches)) {
+                throw new ApiException("Error {$matches[1]} on request to {$url}: {$matches[2]}", (int) $matches[3]);
+            }
         }
-        else {
-            throw new \RuntimeException("Unable to handle response with type $contentType.", $response);
-        }
+        $data = simplexml_load_string($response->getBody()->getContents());
+        $data = array($data->getName() => static::convertXmlToArray($data));
+        return $data;
     }
 
     /**
@@ -96,7 +122,7 @@ class Client implements ClientInterface {
      * @return array
      *   An array representing the XML data.
      */
-    public static function convertXmlToArray(\SimpleXMLElement $data) {
+    protected static function convertXmlToArray(\SimpleXMLElement $data) {
         $result = array();
         foreach ((array) $data as $index => $node) {
             $result[$index] = (is_object($node)) ? static::convertXmlToArray($node) : trim(strval($node));

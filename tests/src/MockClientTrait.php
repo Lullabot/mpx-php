@@ -17,7 +17,7 @@ trait MockClientTrait {
      * @param array $options
      *   An optional array of client configuration.
      *
-     * @return \Mpx\ClientInterface
+     * @return \Mpx\Client
      *   A configured Mpx client.
      */
     protected function getMockClient(array $handler_queue = [], array $options = []) {

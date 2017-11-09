@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Mpx\HasClientTrait.
- */
-
 namespace Mpx;
 
 use GuzzleHttp\Client as GuzzleClient;
@@ -12,24 +7,24 @@ use GuzzleHttp\Client as GuzzleClient;
 trait HasClientTrait {
 
   /**
-   * @var \Mpx\ClientInterface
+   * @var \Mpx\Client
    */
   protected $client;
 
   /**
    * Sets a HTTP client.
    *
-   * @param \Mpx\ClientInterface $client
+   * @param \Mpx\Client $client
    *
    * @return static
    */
-  public function setClient(ClientInterface $client) {
+  public function setClient(Client $client) {
     $this->client = $client;
     return $this;
   }
 
   /**
-   * @return \Mpx\ClientInterface $client
+   * @return \Mpx\Client $client
    */
   public function getClient() {
     if (!isset($this->client)) {

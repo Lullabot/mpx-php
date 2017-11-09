@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Mpx\LoggerTrait.
- */
-
 namespace Mpx;
 
 use Psr\Log\LoggerInterface;
