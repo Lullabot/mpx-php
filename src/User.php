@@ -53,7 +53,7 @@ class User {
 
         // Fetch the current token from the cache.
         $this->tokenCacheKey = 'token|' . md5($this->getUsername());
-        $this->token = $this->getCachePool()->getItem($this->tokenCacheKey);
+        $this->token = $this->getCachePool()->getItem($this->tokenCacheKey)->get();
     }
 
     /**
@@ -157,7 +157,6 @@ class User {
         $data = $this->getClient()->request(
             'GET',
             'https://identity.auth.theplatform.com/idm/web/Authentication/signIn',
-            NULL,
             $options
         );
 
@@ -187,7 +186,6 @@ class User {
             $this->getClient()->request(
                 'GET',
                 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut',
-                NULL,
                 [
                     'query' => [
                         'schema' => '1.0',
@@ -214,10 +212,10 @@ class User {
         $data = $item->get();
 
         if (!$item->isHit()) {
-            $data = $this->getClient()->request(
+            $data = $this->getClient()->authenticatedRequest(
+                $this,
                 'GET',
                 'https://identity.auth.theplatform.com/idm/web/Self/getSelfId',
-                $this,
                 [
                     'query' => [
                         'schema' => '1.0',

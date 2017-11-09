@@ -17,34 +17,37 @@ class Client {
         $this->client = $client;
     }
 
-    public function request($method = 'GET', $url = null, User $user = NULL, array $options = []) {
-        $duration = isset($options['timeout']) ? $options['timeout'] : NULL;
-
-        if (isset($user)) {
-            $options['query']['token'] = (string) $user->acquireToken($duration);
-        }
-
+    public function request($method = 'GET', $url = null, array $options = []) {
         // Disable HTTP error codes unless requested so that we can parse out
         // the errors ourselves.
         $options['query']['httpError'] = FALSE;
 
+        $response = $this->client->request($method, $url, $options);
+        $contentType = $response->getHeaderLine('Content-Type');
+        if (preg_match('~^(application|text)/json~', $contentType)) {
+            return $this->handleJsonResponse($response, $url);
+        }
+        elseif (preg_match('~^(application|text)/(atom\+)?xml~', $contentType)) {
+            return $this->handleXmlResponse($response, $url);
+        }
+        else {
+            throw new ApiException("Unable to handle response from {$url} with content type {$contentType}.");
+        }
+    }
+
+    public function authenticatedRequest(User $user, $method = 'GET', $url = NULL, array $options = []) {
+        if (isset($user)) {
+            $duration = isset($options['timeout']) ? $options['timeout'] : NULL;
+            $options['query']['token'] = (string) $user->acquireToken($duration);
+        }
+
         try {
-            $response = $this->client->request($method, $url, $options);
-            $contentType = $response->getHeaderLine('Content-Type');
-            if (preg_match('~^(application|text)/json~', $contentType)) {
-                return $this->handleJsonResponse($response, $url);
-            }
-            elseif (preg_match('~^(application|text)/(atom\+)?xml~', $contentType)) {
-                return $this->handleXmlResponse($response, $url);
-            }
-            else {
-                throw new ApiException("Unable to handle response from {$url} with content type {$contentType}.");
-            }
+            return $this->request($method, $url, $options);
         }
         catch (ApiException $exception) {
             // If the token is invalid, we should delete it from storage so that a
             // fresh token is fetched on the next request.
-            if ($exception->getCode() == 401 && isset($user)) {
+            if ($exception->getCode() == 401) {
                 // Ensure the token will be deleted.
                 $user->invalidateToken();
             }
