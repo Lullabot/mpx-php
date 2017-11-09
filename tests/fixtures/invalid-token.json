@@ -1,0 +1,1 @@
+{"responseCode":401,"isException":true,"description":"Invalid token","title":"com.theplatform.authentication.api.exception.InvalidTokenException","correlationId":"c240c68a-d50f-486c-abde-226045851ce9"}

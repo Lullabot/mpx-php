@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./vendor/autoload.php"
+         forceCoversAnnotation="true"
+         colors="true">
+
+    <php>
+        <!-- Specify your MPX username and password for testing. -->
+        <env name="MPX_USERNAME" value="" />
+        <env name="MPX_PASSWORD" value="" />
+    </php>
+
+    <testsuites>
+        <testsuite name="unit">
+            <directory suffix="Test.php">tests/src/Unit</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="coverage"/>
+        <log type="coverage-clover" target="coverage/coverage.xml"/>
+    </logging>
+
+</phpunit>
