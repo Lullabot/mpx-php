@@ -6,7 +6,7 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Mpx\Exception\ApiException;
 use Psr\Http\Message\ResponseInterface;
 
-class Client implements ClientInterface {
+class Client {
 
     /**
      * @var \GuzzleHttp\ClientInterface
@@ -20,7 +20,7 @@ class Client implements ClientInterface {
     /**
      * {@inheritdoc}
      */
-    public function request($method = 'GET', $url = null, UserInterface $user = NULL, array $options = []) {
+    public function request($method = 'GET', $url = null, User $user = NULL, array $options = []) {
         $duration = isset($options['timeout']) ? $options['timeout'] : NULL;
 
         if (isset($user)) {
