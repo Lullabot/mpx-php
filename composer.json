@@ -1,7 +1,7 @@
 {
   "name": "lullabot/mpx-php",
   "type": "library",
-  "description": "A PHP 5.4+ library for accessing and interacting with data MPX services from ThePlatform (mpx.theplatform.com).",
+  "description": "A PHP library for accessing and interacting with data MPX services from ThePlatform (mpx.theplatform.com).",
   "keywords": [
     "MPX",
     "The Platform"
