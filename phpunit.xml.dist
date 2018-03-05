@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./vendor/autoload.php"
-         forceCoversAnnotation="true"
-         colors="true">
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
 
     <php>
         <!-- Specify your MPX username and password for testing. -->
@@ -10,20 +16,17 @@
     </php>
 
     <testsuites>
-        <testsuite name="unit">
-            <directory suffix="Test.php">tests/src/Unit</directory>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/src/Unit</directory>
         </testsuite>
     </testsuites>
-
     <filter>
-        <whitelist>
-            <directory suffix=".php">src</directory>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
-
     <logging>
-        <log type="coverage-html" target="coverage"/>
-        <log type="coverage-clover" target="coverage/coverage.xml"/>
+      <log type="junit" target="build/logs/results.xml"/>
+      <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
-
 </phpunit>
