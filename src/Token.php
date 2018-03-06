@@ -5,6 +5,8 @@ namespace Mpx;
 class Token {
 
     /**
+     * The value of the token, as returned by the signIn() method.
+     *
      * @var string
      */
     protected $value;
