@@ -8,8 +8,8 @@ namespace Mpx;
  * @see http://help.theplatform.com/display/wsf2/Identity+management+service+API+reference
  * @see http://help.theplatform.com/display/wsf2/User+operations
  */
-class User {
-
+class User
+{
     /**
      * @var string
      */
@@ -26,7 +26,8 @@ class User {
      * @param string $username
      * @param string $password
      */
-    public function __construct($username, $password) {
+    public function __construct($username, $password)
+    {
         $this->username = $username;
         $this->password = $password;
     }
@@ -36,7 +37,8 @@ class User {
      *
      * @return string
      */
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
@@ -45,8 +47,8 @@ class User {
      *
      * @return string
      */
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
-
 }

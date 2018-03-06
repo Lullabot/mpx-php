@@ -12,8 +12,8 @@ use Psr\Cache\CacheItemPoolInterface;
  *
  * @see https://docs.theplatform.com/help/wsf-signin-method
  */
-class TokenCachePool {
-
+class TokenCachePool
+{
     /**
      * The underlying cache backend.
      *
@@ -25,21 +25,23 @@ class TokenCachePool {
      * Construct a new cache of user authentication tokens.
      *
      * @param \Psr\Cache\CacheItemPoolInterface $cacheItemPool
-     *   The underlying cache backend.
+     *                                                         The underlying cache backend.
      */
-    public function __construct(CacheItemPoolInterface $cacheItemPool) {
+    public function __construct(CacheItemPoolInterface $cacheItemPool)
+    {
         $this->cacheItemPool = $cacheItemPool;
     }
 
     /**
      * Set an authentication token for a user.
      *
-     * @param \Mpx\User $user
-     *   The user the token is associated with.
+     * @param \Mpx\User  $user
+     *                          The user the token is associated with.
      * @param \Mpx\Token $token
-     *   The authentication token for the user.
+     *                          The authentication token for the user.
      */
-    public function setToken(User $user, Token $token) {
+    public function setToken(User $user, Token $token)
+    {
         $item = $this->cacheItemPool->getItem($this->cacheKey($user));
         $item->set($token);
         // @todo Test that these values are compatible.
@@ -51,12 +53,13 @@ class TokenCachePool {
      * Get the cached token for a user.
      *
      * @param \Mpx\User $user
-     *   The user to look up tokens for.
+     *                        The user to look up tokens for.
      *
      * @return \Mpx\Token
-     *   The cached token.
+     *                    The cached token.
      */
-    public function getToken(User $user) : Token {
+    public function getToken(User $user): Token
+    {
         $item = $this->cacheItemPool->getItem($this->cacheKey($user));
         // @todo Test that the expiresAfter() call works. We don't want to be caught
         // by cron etc.
@@ -72,9 +75,10 @@ class TokenCachePool {
      * Delete a cached token for a user.
      *
      * @param \Mpx\User $user
-     *   The user to delete the token for.
+     *                        The user to delete the token for.
      */
-    public function deleteToken(User $user) {
+    public function deleteToken(User $user)
+    {
         $this->cacheItemPool->deleteItem($this->cacheKey($user));
     }
 
@@ -82,13 +86,13 @@ class TokenCachePool {
      * Generate a cache key for a token, limiting key length.
      *
      * @param \Mpx\User $user
-     *   The user to generate the cache key for.
+     *                        The user to generate the cache key for.
      *
      * @return string
-     *   The cache key for the user.
+     *                The cache key for the user.
      */
-    private function cacheKey(User $user): string {
+    private function cacheKey(User $user): string
+    {
         return md5($user->getUsername());
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace Mpx;
 
-class UserSession {
-
+class UserSession
+{
     use HasLoggerTrait;
 
     /**
@@ -43,14 +43,15 @@ class UserSession {
      * Note that the session is not actually established until acquireToken is
      * called.
      *
-     * @param \Mpx\Client $client
-     *   The client used to access MPX.
-     * @param \Mpx\User $user
-     *   The user associated with this session.
+     * @param \Mpx\Client         $client
+     *                                            The client used to access MPX.
+     * @param \Mpx\User           $user
+     *                                            The user associated with this session.
      * @param \Mpx\TokenCachePool $tokenCachePool
-     *   The cache of authentication tokens.
+     *                                            The cache of authentication tokens.
      */
-    public function __construct(Client $client, User $user, TokenCachePool $tokenCachePool) {
+    public function __construct(Client $client, User $user, TokenCachePool $tokenCachePool)
+    {
         $this->client = $client;
         $this->user = $user;
         $this->tokenCachePool = $tokenCachePool;
@@ -62,16 +63,16 @@ class UserSession {
      * This method will automatically generate a new token if one does not exist.
      *
      * @param int $duration
-     *   (optional) The number of seconds for which the token should be valid.
+     *                      (optional) The number of seconds for which the token should be valid.
      *
      * @return \Mpx\Token
-     *   A valid MPX authentication token.
+     *                    A valid MPX authentication token.
      */
-    public function acquireToken($duration = NULL) :Token {
+    public function acquireToken($duration = null): Token
+    {
         try {
             $token = $this->tokenCachePool->getToken($this->user);
-        }
-        catch (\RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             // @todo This catch should be a more specific exception.
             $token = $this->signIn($duration);
         }
@@ -83,11 +84,12 @@ class UserSession {
      * Sign in the user and return the current token.
      *
      * @param int $duration
-     *   (optional) The number of seconds for which the token should be valid.
+     *                      (optional) The number of seconds for which the token should be valid.
      *
      * @return \Mpx\Token
      */
-    protected function signIn($duration = NULL) : Token {
+    protected function signIn($duration = null): Token
+    {
         $options = [];
         $options['auth'] = [
             $this->user->getUsername(),
@@ -120,7 +122,8 @@ class UserSession {
     /**
      * Sign out the user.
      */
-    public function signOut() {
+    public function signOut()
+    {
         // @todo Handle that the token may be expired.
         // @todo Handle and log that MPX may error on the signout.
         $this->client->request(
@@ -142,12 +145,13 @@ class UserSession {
      * Instantiate and cache a token.
      *
      * @param array $data
-     *   The MPX signIn() response data.
+     *                    The MPX signIn() response data.
      *
      * @return \Mpx\Token
-     *   The new token.
+     *                    The new token.
      */
-    private function tokenFromResponse(array $data): Token {
+    private function tokenFromResponse(array $data): Token
+    {
         $token = Token::fromResponse($data);
         $this->getLogger()->info(
             'Fetched new mpx token {token} for user {username} that expires on {date}.',
@@ -163,5 +167,4 @@ class UserSession {
 
         return $token;
     }
-
 }
