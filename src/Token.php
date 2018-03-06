@@ -69,8 +69,7 @@ class Token
     /**
      * Get the value of this token.
      *
-     * @return string
-     *   The unique token string.
+     * @return string The unique token string.
      */
     public function getValue()
     {
@@ -115,7 +114,7 @@ class Token
     /**
      * Return the time this token was created.
      *
-     * @return int
+     * @return int The Unix timestamp of when this token was created.
      */
     public function getCreated(): int
     {
