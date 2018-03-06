@@ -11,8 +11,8 @@ use Psr\Log\LoggerInterface;
  * @see http://help.theplatform.com/display/wsf2/Identity+management+service+API+reference
  * @see http://help.theplatform.com/display/wsf2/User+operations
  */
-class User {
-
+class User
+{
     use HasCachePoolTrait;
     use HasClientTrait;
     use HasLoggerTrait;
@@ -38,13 +38,14 @@ class User {
     private $token;
 
     /**
-     * @param string $username
-     * @param string $password
-     * @param \Mpx\Client $client
+     * @param string                            $username
+     * @param string                            $password
+     * @param \Mpx\Client                       $client
      * @param \Psr\Cache\CacheItemPoolInterface $cachePool
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface          $logger
      */
-    public function __construct($username, $password, Client $client = NULL, CacheItemPoolInterface $cachePool = NULL, LoggerInterface $logger = NULL) {
+    public function __construct($username, $password, Client $client = null, CacheItemPoolInterface $cachePool = null, LoggerInterface $logger = null)
+    {
         $this->username = $username;
         $this->password = $password;
         $this->client = $client;
@@ -52,7 +53,7 @@ class User {
         $this->logger = $logger;
 
         // Fetch the current token from the cache.
-        $this->tokenCacheKey = 'token|' . md5($this->getUsername());
+        $this->tokenCacheKey = 'token|'.md5($this->getUsername());
         $this->token = $this->getCachePool()->getItem($this->tokenCacheKey)->get();
     }
 
@@ -61,7 +62,8 @@ class User {
      *
      * @return string
      */
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
@@ -70,7 +72,8 @@ class User {
      *
      * @return string
      */
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
@@ -79,7 +82,8 @@ class User {
      *
      * @return \Mpx\Token|null
      */
-    public function getToken() {
+    public function getToken()
+    {
         return $this->token;
     }
 
@@ -87,11 +91,12 @@ class User {
      * Set the current token for the account.
      *
      * @param \Mpx\Token $token
-     *   The token to associate with the account.
+     *                          The token to associate with the account.
      *
      * @return static
      */
-    public function setToken(Token $token) {
+    public function setToken(Token $token)
+    {
         $this->token = $token;
 
         // Save the token to the cache pool.
@@ -99,21 +104,23 @@ class User {
         $item->set($token);
         $item->expiresAfter($token->getLifetime());
         $this->getCachePool()->save($item);
+
         return $this;
     }
 
     /**
      * Get a current authentication token for the account.
      *
-     * @param int $duration
-     *   The number of seconds for which the token should be valid.
+     * @param int  $duration
+     *                       The number of seconds for which the token should be valid.
      * @param bool $force
-     *   Set to TRUE if a fresh authentication token should always be fetched.
+     *                       Set to TRUE if a fresh authentication token should always be fetched.
      *
      * @return string
-     *   A valid MPX authentication token.
+     *                A valid MPX authentication token.
      */
-    public function acquireToken($duration = NULL, $force = FALSE) {
+    public function acquireToken($duration = null, $force = false)
+    {
         $token = $this->getToken();
 
         if ($force || !$token || !$token->isValid($duration)) {
@@ -129,15 +136,17 @@ class User {
     /**
      * Invalidate the current authentication token for the account.
      */
-    public function invalidateToken() {
-        $this->token = NULL;
+    public function invalidateToken()
+    {
+        $this->token = null;
         $this->getCachePool()->deleteItem($this->tokenCacheKey);
     }
 
     /**
      * Sign in the user and return the current token.
      */
-    public function signIn($duration = NULL) {
+    public function signIn($duration = null)
+    {
         $options = [];
         $options['auth'] = [
             $this->getUsername(),
@@ -181,7 +190,8 @@ class User {
     /**
      * Sign out the user.
      */
-    public function signOut() {
+    public function signOut()
+    {
         if ($token = $this->getToken()) {
             $this->getClient()->request(
                 'GET',
@@ -207,8 +217,9 @@ class User {
         }
     }
 
-    protected function getSelfId() {
-        $item = $this->getCachePool()->getItem('user|' . md5($this->getUsername()));
+    protected function getSelfId()
+    {
+        $item = $this->getCachePool()->getItem('user|'.md5($this->getUsername()));
         $data = $item->get();
 
         if (!$item->isHit()) {
@@ -233,9 +244,10 @@ class User {
     /**
      * {@inheritdoc}
      */
-    public function getId() {
+    public function getId()
+    {
         $data = $this->getSelfId();
+
         return basename($data['userId']);
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace Mpx;
 
-class Token {
-
+class Token
+{
     /**
      * @var string
      */
@@ -21,25 +21,30 @@ class Token {
 
     /**
      * Token constructor.
+     *
      * @param string $value
-     * @param int $lifetime
+     * @param int    $lifetime
      */
-    public function __construct($value, $lifetime) {
+    public function __construct($value, $lifetime)
+    {
         //assert('$lifetime > 0 /* $lifetime should be greater than zero */');
         $this->value = $value;
         $this->lifetime = $lifetime;
         $this->expiration = time() + $lifetime;
     }
 
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
 
-    public function getLifetime() {
+    public function getLifetime()
+    {
         return $this->lifetime;
     }
 
-    public function getExpiration() {
+    public function getExpiration()
+    {
         return $this->expiration;
     }
 
@@ -48,12 +53,13 @@ class Token {
      *
      * @return bool
      */
-    public function isValid($duration = NULL) {
+    public function isValid($duration = null)
+    {
         return $this->getExpiration() > time() + $duration;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->value;
     }
-
 }
