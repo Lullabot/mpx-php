@@ -1,9 +1,9 @@
 <?php
 
-namespace Mpx;
+namespace Lullabot\Mpx;
 
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
-use Mpx\Exception\ApiException;
+use Lullabot\Mpx\Exception\ApiException;
 use Psr\Http\Message\ResponseInterface;
 
 class Client
@@ -66,7 +66,7 @@ class Client
      * @return array
      *               The decoded response data.
      *
-     * @throws \Mpx\Exception\ApiException
+     * @throws \Lullabot\Mpx\Exception\ApiException
      *                                     If an error occurred.
      */
     protected function handleJsonResponse(ResponseInterface $response, $url)
@@ -97,7 +97,7 @@ class Client
      * @return array
      *               The decoded response data.
      *
-     * @throws \Mpx\Exception\ApiException
+     * @throws \Lullabot\Mpx\Exception\ApiException
      *                                     If an error occurred.
      */
     protected function handleXmlResponse(ResponseInterface $response, $url)

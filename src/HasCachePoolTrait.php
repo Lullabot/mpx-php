@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpx;
+namespace Lullabot\Mpx;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Psr\Cache\CacheItemPoolInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpx;
+namespace Lullabot\Mpx;
 
 /**
  * Class representing an MPX authentication token.
@@ -51,7 +51,7 @@ class Token
      * @param array $data
      *                    The MPX response data.
      *
-     * @return \Mpx\Token
+     * @return \Lullabot\Mpx\Token
      *                    A new MPX token.
      */
     public static function fromResponse(array $data): self

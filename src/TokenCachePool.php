@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpx;
+namespace Lullabot\Mpx;
 
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -35,9 +35,9 @@ class TokenCachePool
     /**
      * Set an authentication token for a user.
      *
-     * @param \Mpx\User  $user
+     * @param \Lullabot\Mpx\User  $user
      *                          The user the token is associated with.
-     * @param \Mpx\Token $token
+     * @param \Lullabot\Mpx\Token $token
      *                          The authentication token for the user.
      */
     public function setToken(User $user, Token $token)
@@ -52,10 +52,10 @@ class TokenCachePool
     /**
      * Get the cached token for a user.
      *
-     * @param \Mpx\User $user
+     * @param \Lullabot\Mpx\User $user
      *                        The user to look up tokens for.
      *
-     * @return \Mpx\Token
+     * @return \Lullabot\Mpx\Token
      *                    The cached token.
      */
     public function getToken(User $user): Token
@@ -74,7 +74,7 @@ class TokenCachePool
     /**
      * Delete a cached token for a user.
      *
-     * @param \Mpx\User $user
+     * @param \Lullabot\Mpx\User $user
      *                        The user to delete the token for.
      */
     public function deleteToken(User $user)
@@ -85,7 +85,7 @@ class TokenCachePool
     /**
      * Generate a cache key for a token, limiting key length.
      *
-     * @param \Mpx\User $user
+     * @param \Lullabot\Mpx\User $user
      *                        The user to generate the cache key for.
      *
      * @return string

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpx;
+namespace Lullabot\Mpx;
 
 /**
  * Defines an class for interacting with MPX users.
@@ -32,7 +32,7 @@ class User
     {
         $this->username = $username;
         $this->password = $password;
-    }
+/**/    }
 
     /**
      * Get the username of the MPX user.

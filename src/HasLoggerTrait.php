@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpx;
+namespace Lullabot\Mpx;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
