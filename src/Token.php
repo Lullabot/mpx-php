@@ -54,6 +54,8 @@ class Token {
      *   A new MPX token.
      */
     public static function fromResponse(array $data) : Token {
+        // @todo fix this as idle != duration.
+        // @todo We need to store the date this token was created.
         $lifetime = (int) floor(min($data['signInResponse']['duration'], $data['signInResponse']['idleTimeout']) / 1000);
         $token = new Token($data['signInResponse']['token'], $lifetime);
 
