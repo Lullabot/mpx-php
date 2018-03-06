@@ -2,6 +2,11 @@
 
 namespace Mpx;
 
+/**
+ * Class representing an MPX authentication token.
+ *
+ * @see https://docs.theplatform.com/help/wsf-signin-method
+ */
 class Token {
 
     /**
@@ -17,13 +22,17 @@ class Token {
     protected $lifetime;
 
     /**
+     * @todo This is not documented in thePlatform.
+     *
      * @var int
      */
     protected $expiration;
 
     /**
-     * Token constructor.
+     * Construct a new authentication token for a user.
+     *
      * @param string $value
+     *   The value of the authentication token as returned by MPX.
      * @param int $lifetime
      */
     public function __construct($value, $lifetime) {
@@ -31,6 +40,24 @@ class Token {
         $this->value = $value;
         $this->lifetime = $lifetime;
         $this->expiration = time() + $lifetime;
+    }
+
+    /**
+     * Create a token from an MPX signInResponse.
+     *
+     * @todo Use something !array for the type.
+     *
+     * @param array $data
+     *   The MPX response data.
+     *
+     * @return \Mpx\Token
+     *   A new MPX token.
+     */
+    public static function fromResponse(array $data) : Token {
+        $lifetime = (int) floor(min($data['signInResponse']['duration'], $data['signInResponse']['idleTimeout']) / 1000);
+        $token = new Token($data['signInResponse']['token'], $lifetime);
+
+        return $token;
     }
 
     public function getValue() {
@@ -54,6 +81,11 @@ class Token {
         return $this->getExpiration() > time() + $duration;
     }
 
+    /**
+     * Return the value of this token.
+     *
+     * @return string
+     */
     public function __toString() {
         return $this->value;
     }
