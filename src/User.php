@@ -23,10 +23,9 @@ class User
     /**
      * Construct a new MPX user.
 
-    *
+     *
      * @param string $username
      * @param string $password
-
      */
     public function __construct($username, $password)
     {
