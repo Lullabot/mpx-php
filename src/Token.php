@@ -79,7 +79,7 @@ class Token {
      *
      * @return bool
      */
-    public function isValid($duration = NULL) {
+    public function isValid($duration = 0) {
         return $this->getExpiration() > time() + $duration;
     }
 
