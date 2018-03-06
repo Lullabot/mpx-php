@@ -67,7 +67,7 @@ class Client
      *               The decoded response data.
      *
      * @throws \Lullabot\Mpx\Exception\ApiException
-     *                                     If an error occurred.
+     *                                              If an error occurred.
      */
     protected function handleJsonResponse(ResponseInterface $response, $url)
     {
@@ -98,7 +98,7 @@ class Client
      *               The decoded response data.
      *
      * @throws \Lullabot\Mpx\Exception\ApiException
-     *                                     If an error occurred.
+     *                                              If an error occurred.
      */
     protected function handleXmlResponse(ResponseInterface $response, $url)
     {

@@ -31,7 +31,7 @@ class User
     {
         $this->username = $username;
         $this->password = $password;
-/**/    }
+    }
 
     /**
      * Get the username of the MPX user.

@@ -43,12 +43,9 @@ class UserSession
      * Note that the session is not actually established until acquireToken is
      * called.
      *
-     * @param \Lullabot\Mpx\Client         $client
-     *                                            The client used to access MPX.
-     * @param \Lullabot\Mpx\User           $user
-     *                                            The user associated with this session.
-     * @param \Lullabot\Mpx\TokenCachePool $tokenCachePool
-     *                                            The cache of authentication tokens.
+     * @param \Lullabot\Mpx\Client         $client         The client used to access MPX.
+     * @param \Lullabot\Mpx\User           $user           The user associated with this session.
+     * @param \Lullabot\Mpx\TokenCachePool $tokenCachePool The cache of authentication tokens.
      */
     public function __construct(Client $client, User $user, TokenCachePool $tokenCachePool)
     {
@@ -62,11 +59,9 @@ class UserSession
      *
      * This method will automatically generate a new token if one does not exist.
      *
-     * @param int $duration
-     *                      (optional) The number of seconds for which the token should be valid.
+     * @param int $duration (optional) The number of seconds for which the token should be valid.
      *
-     * @return \Lullabot\Mpx\Token
-     *                    A valid MPX authentication token.
+     * @return \Lullabot\Mpx\Token A valid MPX authentication token.
      */
     public function acquireToken($duration = null): Token
     {
@@ -83,8 +78,7 @@ class UserSession
     /**
      * Sign in the user and return the current token.
      *
-     * @param int $duration
-     *                      (optional) The number of seconds for which the token should be valid.
+     * @param int $duration (optional) The number of seconds for which the token should be valid.
      *
      * @return \Lullabot\Mpx\Token
      */
@@ -144,11 +138,9 @@ class UserSession
     /**
      * Instantiate and cache a token.
      *
-     * @param array $data
-     *                    The MPX signIn() response data.
+     * @param array $data The MPX signIn() response data.
      *
-     * @return \Lullabot\Mpx\Token
-     *                    The new token.
+     * @return \Lullabot\Mpx\Token The new token.
      */
     private function tokenFromResponse(array $data): Token
     {

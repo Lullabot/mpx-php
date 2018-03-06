@@ -31,8 +31,7 @@ class Token
     /**
      * Construct a new authentication token for a user.
      *
-     * @param string $value
-     *                         The value of the authentication token as returned by MPX.
+     * @param string $value    The value of the authentication token as returned by MPX.
      * @param int    $lifetime
      */
     public function __construct($value, $lifetime)
@@ -48,11 +47,9 @@ class Token
      *
      * @todo Use something !array for the type.
      *
-     * @param array $data
-     *                    The MPX response data.
+     * @param array $data The MPX response data.
      *
-     * @return \Lullabot\Mpx\Token
-     *                    A new MPX token.
+     * @return \Lullabot\Mpx\Token A new MPX token.
      */
     public static function fromResponse(array $data): self
     {
