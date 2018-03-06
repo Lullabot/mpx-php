@@ -17,29 +17,34 @@ class Token
     protected $value;
 
     /**
+     * The lifetime in seconds of the token from when it was first created.
+     *
      * @var int
      */
     protected $lifetime;
 
     /**
-     * @todo This is not documented in thePlatform.
+     * The time this token was created. This is determined client-side.
      *
      * @var int
      */
-    protected $expiration;
+    protected $created;
 
     /**
      * Construct a new authentication token for a user.
      *
      * @param string $value    The value of the authentication token as returned by MPX.
-     * @param int    $lifetime
+     * @param int    $lifetime The number of seconds the token is valid for.
      */
     public function __construct($value, $lifetime)
     {
-        //assert('$lifetime > 0 /* $lifetime should be greater than zero */');
+        if ($lifetime <= 0) {
+            throw new \InvalidArgumentException('$lifetime must be greater than zero.');
+        }
+
         $this->value = $value;
         $this->lifetime = $lifetime;
-        $this->expiration = time() + $lifetime;
+        $this->created = time();
     }
 
     /**
@@ -61,6 +66,12 @@ class Token
         return $token;
     }
 
+    /**
+     * Get the value of this token.
+     *
+     * @return string
+     *   The unique token string.
+     */
     public function getValue()
     {
         return $this->value;
@@ -71,9 +82,14 @@ class Token
         return $this->lifetime;
     }
 
+    /**
+     * Return the absolute time this token expires at.
+     *
+     * @return int
+     */
     public function getExpiration()
     {
-        return $this->expiration;
+        return $this->created + $this->lifetime;
     }
 
     /**
@@ -94,5 +110,15 @@ class Token
     public function __toString()
     {
         return $this->value;
+    }
+
+    /**
+     * Return the time this token was created.
+     *
+     * @return int
+     */
+    public function getCreated(): int
+    {
+        return $this->created;
     }
 }

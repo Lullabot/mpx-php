@@ -31,13 +31,9 @@ class TokenTest extends TestCase {
      * @covers ::isValid
      */
     public function testTokenExpiration() {
-        $token = new Token('value', -5);
-        $this->assertFalse($token->isValid());
-        $this->assertFalse($token->isValid(30));
-        $this->assertFalse($token->isValid(60));
-
-        // A token with the same expiration as the current time should not be valid.
-        $token = new Token('value', 0);
+        // We use a serialized token as a fixture as we don't allow constructing
+        // of expired tokens.
+        $token = include __DIR__ . '/../../fixtures/ExpiredToken.php';
         $this->assertFalse($token->isValid());
         $this->assertFalse($token->isValid(30));
         $this->assertFalse($token->isValid(60));
@@ -45,10 +41,10 @@ class TokenTest extends TestCase {
         // Test that a token expires after passing time.
         $token = new Token('value', 1);
         $this->assertTrue($token->isValid());
-        sleep(2);
+        sleep(1);
         $this->assertFalse($token->isValid());
 
-        $token = new Token('value', 60);
+        $token = new Token('value', 59);
         $this->assertTrue($token->isValid());
         $this->assertTrue($token->isValid(30));
         $this->assertFalse($token->isValid(60));
