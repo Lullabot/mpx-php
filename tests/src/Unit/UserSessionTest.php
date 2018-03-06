@@ -37,7 +37,7 @@ class UserSessionTest extends TestCase {
     $this->expectException(ApiException::class);
     $this->expectExceptionMessage('Error com.theplatform.authentication.api.exception.AuthenticationException on request to https://identity.auth.theplatform.com/idm/web/Authentication/signIn: Either \'USER-NAME\' does not have an account with this site, or the password was incorrect.');
     $this->expectExceptionCode(401);
-    $session->signIn();
+    $session->acquireToken();
   }
 
   public function testSignOut() {

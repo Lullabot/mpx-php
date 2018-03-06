@@ -2,7 +2,13 @@
 
 namespace Mpx;
 
+use Mpx\Token;
+
 class UserSession {
+
+  const SIGN_IN_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signIn';
+
+  const SIGN_OUT_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut';
 
   use HasLoggerTrait;
 
@@ -31,7 +37,7 @@ class UserSession {
    * Get a current authentication token for the account.
    *
    * @param int $duration
-   *   The number of seconds for which the token should be valid.
+   *   (optional) The number of seconds for which the token should be valid.
    * @param bool $force
    *   Set to TRUE if a fresh authentication token should always be fetched.
    *
@@ -39,12 +45,10 @@ class UserSession {
    *   A valid MPX authentication token.
    */
   public function acquireToken($duration = NULL, $force = FALSE) {
-    $token = $this->tokenCachePool->getToken($this->user);
-
-    if ($force || !$token || !$token->isValid($duration)) {
-      if ($token) {
-        $this->signOut();
-      }
+    try {
+      $token = $this->tokenCachePool->getToken($this->user);
+    }
+    catch (\RuntimeException $e) {
       $token = $this->signIn();
     }
 
@@ -54,7 +58,7 @@ class UserSession {
   /**
    * Sign in the user and return the current token.
    */
-  public function signIn($duration = NULL) {
+  protected function signIn($duration = NULL) {
     $options = [];
     $options['auth'] = [
       $this->user->getUsername(),
@@ -73,10 +77,36 @@ class UserSession {
 
     $data = $this->client->request(
       'GET',
-      'https://identity.auth.theplatform.com/idm/web/Authentication/signIn',
+      self::SIGN_IN_URL,
       $options
     );
 
+    return $this->tokenFromResponse($data);
+  }
+
+  /**
+   * Sign out the user.
+   */
+  public function signOut() {
+    $this->client->request(
+      'GET',
+      self::SIGN_OUT_URL,
+      [
+        'query' => [
+          'schema' => '1.0',
+          'form' => 'json',
+          '_token' => (string) $this->tokenCachePool->getToken($this->user),
+        ],
+      ]
+    );
+  }
+
+  /**
+   * @param $data
+   *
+   * @return \Mpx\Token
+   */
+  private function tokenFromResponse($data): Token {
     $lifetime = (int) floor(min($data['signInResponse']['duration'], $data['signInResponse']['idleTimeout']) / 1000);
     $token = new Token($data['signInResponse']['token'], $lifetime);
 
@@ -93,23 +123,6 @@ class UserSession {
     $this->tokenCachePool->setToken($this->user, $token);
 
     return $token;
-  }
-
-  /**
-   * Sign out the user.
-   */
-  public function signOut() {
-    $this->client->request(
-      'GET',
-      'https://identity.auth.theplatform.com/idm/web/Authentication/signOut',
-      [
-        'query' => [
-          'schema' => '1.0',
-          'form' => 'json',
-          '_token' => (string) $this->tokenCachePool->getToken($this->user),
-        ],
-      ]
-    );
   }
 
 }
