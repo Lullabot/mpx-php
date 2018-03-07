@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx;
 
 use Lullabot\Mpx\Exception\ClientException;
+use Lullabot\Mpx\Exception\MpxExceptionFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -26,7 +27,8 @@ class HttpErrorMiddleware {
                         if (empty($data['responseCode']) && empty($data['isException'])) {
                             return $response;
                         }
-                        throw ClientException::create($request, $response);
+
+                        throw MpxExceptionFactory::create($request, $response);
                     }
                 );
             };
