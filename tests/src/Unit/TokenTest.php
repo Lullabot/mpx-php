@@ -50,4 +50,15 @@ class TokenTest extends TestCase {
         $this->assertFalse($token->isValid(60));
     }
 
+    /**
+     * Test an expiration that will never pass.
+     *
+     * @covers ::__construct
+     */
+    public function testInvalidExpiration() {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('$lifetime must be greater than zero.');
+        new Token('value', 0);
+    }
+
 }
