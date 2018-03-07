@@ -3,10 +3,11 @@
 namespace Lullabot\Mpx;
 
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
+use GuzzleHttp\HandlerStack;
 use Lullabot\Mpx\Exception\ApiException;
 use Psr\Http\Message\ResponseInterface;
 
-class Client
+class Client implements GuzzleClientInterface
 {
     /**
      * @var \GuzzleHttp\ClientInterface
@@ -18,20 +19,51 @@ class Client
         $this->client = $client;
     }
 
+    /**
+     * Get the default Guzzle client configuration array.
+     *
+     * @param mixed $handler
+     *   (optional) Specify a Guzzle handler to use for requests.
+     *
+     * @return array
+     *   An array of configuration options suitable for use with Guzzle.
+     */
+    public static function getDefaultConfiguration($handler = null) {
+        $config = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+        ];
+
+        if (!$handler) {
+            $handler = HandlerStack::create();
+        }
+        $handler->push(HttpErrorMiddleware::invoke());
+        $config['handler'] = $handler;
+
+        return $config;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function request($method = 'GET', $url = null, array $options = [])
     {
-        // Disable HTTP error codes unless requested so that we can parse out
-        // the errors ourselves.
+        // MPX forces all JSON requests to return HTTP 200, even with an error.
+        // We force all requests (including XML) to suppress errors so we can
+        // have the same error handling code.
         $options['query']['httpError'] = false;
 
-        $response = $this->client->request($method, $url, $options);
+        return $this->client->request($method, $url, $options);
         $contentType = $response->getHeaderLine('Content-Type');
         if (preg_match('~^(application|text)/json~', $contentType)) {
             return $this->handleJsonResponse($response, $url);
         } elseif (preg_match('~^(application|text)/(atom\+)?xml~', $contentType)) {
+            // @todo Are there APIs that are XML only?
             return $this->handleXmlResponse($response, $url);
         } else {
-            throw new ApiException("Unable to handle response from {$url} with content type {$contentType}.");
+            //throw new ApiException("Unable to handle response from {$url} with content type {$contentType}.");
         }
     }
 
@@ -122,5 +154,65 @@ class Client
         }
 
         return $result;
+    }
+
+    /**
+     * Send an HTTP request.
+     *
+     * @param \Psr\Http\Message\RequestInterface $request Request to send
+     * @param array $options Request options to apply to the given
+     *                                  request and to the transfer.
+     *
+     * @return ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function send(\Psr\Http\Message\RequestInterface $request, array $options = []) {
+        // TODO: Implement send() method.
+    }
+
+    /**
+     * Asynchronously send an HTTP request.
+     *
+     * @param \Psr\Http\Message\RequestInterface $request Request to send
+     * @param array $options Request options to apply to the given
+     *                                  request and to the transfer.
+     *
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function sendAsync(\Psr\Http\Message\RequestInterface $request, array $options = []) {
+        // TODO: Implement sendAsync() method.
+    }
+
+    /**
+     * Create and send an asynchronous HTTP request.
+     *
+     * Use an absolute path to override the base path of the client, or a
+     * relative path to append to the base path of the client. The URL can
+     * contain the query string as well. Use an array to provide a URL
+     * template and additional variables to use in the URL template expansion.
+     *
+     * @param string $method HTTP method
+     * @param string|\Psr\Http\Message\UriInterface $uri URI object or string.
+     * @param array $options Request options to apply.
+     *
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function requestAsync($method, $uri, array $options = []) {
+        // TODO: Implement requestAsync() method.
+    }
+
+    /**
+     * Get a client configuration option.
+     *
+     * These options include default request options of the client, a "handler"
+     * (if utilized by the concrete client), and a "base_uri" if utilized by
+     * the concrete client.
+     *
+     * @param string|null $option The config option to retrieve.
+     *
+     * @return mixed
+     */
+    public function getConfig($option = NULL) {
+        // TODO: Implement getConfig() method.
     }
 }

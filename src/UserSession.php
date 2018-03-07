@@ -104,12 +104,13 @@ class UserSession
             $options['query']['_idleTimeout'] = $duration * 1000;
         }
 
-        $data = $this->client->request(
+        $response = $this->client->request(
             'GET',
             self::SIGN_IN_URL,
             $options
         );
 
+        $data = \GuzzleHttp\json_decode($response->getBody(), true);
         return $this->tokenFromResponse($data);
     }
 
