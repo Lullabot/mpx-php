@@ -66,9 +66,12 @@ class UserSessionTest extends TestCase {
             new JsonResponse(200, [], 'signin-fail.json'),
         ]);
         $user = new User('USER-NAME', 'incorrect-password');
+
+        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
-        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
+        $logger->expects($this->never())->method('info');
+
         $session = new UserSession($client, $user, new TokenCachePool(new ArrayCachePool()), $logger);
         $this->expectException(ApiException::class);
         $this->expectExceptionMessage('Error com.theplatform.authentication.api.exception.AuthenticationException on request to https://identity.auth.theplatform.com/idm/web/Authentication/signIn: Either \'USER-NAME\' does not have an account with this site, or the password was incorrect.');
