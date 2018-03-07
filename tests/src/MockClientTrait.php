@@ -1,15 +1,15 @@
 <?php
 
-namespace Mpx\Tests;
+namespace Lullabot\Mpx\Tests;
 
 use GuzzleHttp\Client as GuzzleClient;
-use Mpx\Client;
 use GuzzleHttp\Handler\MockHandler;
+use Lullabot\Mpx\Client;
 
 trait MockClientTrait {
 
     /**
-     * Constructs a mock Mpx client.
+     * Constructs a mock Lullabot\Mpx client.
      *
      * @param array $handler_queue
      *   An optional array of requests if provided, will be passed into a new
@@ -17,8 +17,8 @@ trait MockClientTrait {
      * @param array $options
      *   An optional array of client configuration.
      *
-     * @return \Mpx\Client
-     *   A configured Mpx client.
+     * @return \Lullabot\Mpx\Client
+     *   A configured Lullabot\Mpx client.
      */
     protected function getMockClient(array $handler_queue = [], array $options = []) {
         $options += [

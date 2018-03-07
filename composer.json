@@ -22,12 +22,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Mpx\\": "src/"
+      "Lullabot\\Mpx\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Mpx\\Tests\\": "tests/src/"
+      "Lullabot\\Mpx\\Tests\\": "tests/src/"
     }
   }
 }

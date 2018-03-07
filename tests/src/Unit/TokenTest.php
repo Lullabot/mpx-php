@@ -1,12 +1,12 @@
 <?php
 
-namespace Mpx\Tests\Unit;
+namespace Lullabot\Mpx\Tests\Unit;
 
-use Mpx\Token;
+use Lullabot\Mpx\Token;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Mpx\Token
+ * @coversDefaultClass \Lullabot\Mpx\Token
  */
 class TokenTest extends TestCase {
 

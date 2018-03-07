@@ -1,20 +1,20 @@
 <?php
 
-namespace Mpx\Tests\Unit;
+namespace Lullabot\Mpx\Tests\Unit;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use Mpx\Exception\ApiException;
-use Mpx\Tests\JsonResponse;
-use Mpx\Tests\MockClientTrait;
-use Mpx\TokenCachePool;
-use Mpx\User;
-use Mpx\UserSession;
+use Lullabot\Mpx\Exception\ApiException;
+use Lullabot\Mpx\Tests\JsonResponse;
+use Lullabot\Mpx\Tests\MockClientTrait;
+use Lullabot\Mpx\TokenCachePool;
+use Lullabot\Mpx\User;
+use Lullabot\Mpx\UserSession;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @class UserSessionTest
- * @package Mpx\Tests\Unit
- * @coversDefaultClass Mpx\UserSession
+ * @package Lullabot\Mpx\Tests\Unit
+ * @coversDefaultClass Lullabot\Mpx\UserSession
  */
 class UserSessionTest extends TestCase {
 

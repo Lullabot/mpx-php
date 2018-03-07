@@ -1,20 +1,20 @@
 <?php
 
-namespace Mpx;
+namespace Lullabot\Mpx;
 
 use GuzzleHttp\Client as GuzzleClient;
 
 trait HasClientTrait
 {
     /**
-     * @var \Mpx\Client
+     * @var \Lullabot\Mpx\Client
      */
     protected $client;
 
     /**
      * Sets a HTTP client.
      *
-     * @param \Mpx\Client $client
+     * @param \Lullabot\Mpx\Client $client
      *
      * @return static
      */
@@ -26,7 +26,7 @@ trait HasClientTrait
     }
 
     /**
-     * @return \Mpx\Client $client
+     * @return \Lullabot\Mpx\Client $client
      */
     public function getClient()
     {

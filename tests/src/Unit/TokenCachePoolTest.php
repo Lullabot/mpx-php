@@ -1,25 +1,25 @@
 <?php
 
-namespace Mpx\Tests\Unit;
+namespace Lullabot\Mpx\Tests\Unit;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use Mpx\Token;
-use Mpx\TokenCachePool;
-use Mpx\User;
+use Lullabot\Mpx\Token;
+use Lullabot\Mpx\TokenCachePool;
+use Lullabot\Mpx\User;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Mpx\TokenCachePool
+ * @coversDefaultClass \Lullabot\Mpx\TokenCachePool
  */
 class TokenCachePoolTest extends TestCase {
 
     /**
-     * @var \Mpx\User
+     * @var \Lullabot\Mpx\User
      */
     protected $user;
 
     /**
-     * @var \Mpx\Token
+     * @var \Lullabot\Mpx\Token
      */
     protected $token;
 

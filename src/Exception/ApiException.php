@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains Mpx\Exception\ApiException.
+ * Contains Lullabot\Mpx\Exception\ApiException.
  */
 
-namespace Mpx\Exception;
+namespace Lullabot\Mpx\Exception;
 
 class ApiException extends \Exception
 {

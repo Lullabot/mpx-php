@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpx\Tests;
+namespace Lullabot\Mpx\Tests;
 
 use GuzzleHttp\Psr7\Response;
 

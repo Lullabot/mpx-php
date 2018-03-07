@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpx;
+namespace Lullabot\Mpx;
 
 class EchoLogger extends \Psr\Log\AbstractLogger
 {
