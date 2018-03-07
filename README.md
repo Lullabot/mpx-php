@@ -8,3 +8,14 @@
 * Composer
 
 `composer require lullabot/mpx-php`
+
+## Logging
+
+This library will log API actions that are transparent to the calling code. For
+example, calling code should handle logging of invalid credentials, while this
+library will log if an authentication was automatically refreshed during an
+API request that resulted in a `401`.
+
+If your application does not wish to log these actions at all, use
+`\Psr\Log\NullLogger` for any constructors that require a
+`\Psr\Log\LoggerInterface`.
