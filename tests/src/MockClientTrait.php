@@ -4,7 +4,9 @@ namespace Lullabot\Mpx\Tests;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
 use Lullabot\Mpx\Client;
+use Lullabot\Mpx\HttpErrorMiddleware;
 
 trait MockClientTrait {
 
@@ -21,8 +23,11 @@ trait MockClientTrait {
      *   A configured Lullabot\Mpx client.
      */
     protected function getMockClient(array $handler_queue = [], array $options = []) {
+        $mockHandler = $handler_queue ? new MockHandler($handler_queue) : NULL;
+        $stack = HandlerStack::create($mockHandler);
+        $stack->push(HttpErrorMiddleware::invoke());
         $options += [
-            'handler' => $handler_queue ? new MockHandler($handler_queue) : NULL,
+            'handler' => $stack,
         ];
         $guzzleClient = new GuzzleClient($options);
         return new Client($guzzleClient);
