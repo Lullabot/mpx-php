@@ -5,6 +5,7 @@ namespace Lullabot\Mpx;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\HandlerStack;
 use Lullabot\Mpx\Exception\ApiException;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class Client implements GuzzleClientInterface
@@ -56,19 +57,11 @@ class Client implements GuzzleClientInterface
         $options['query']['httpError'] = false;
 
         return $this->client->request($method, $url, $options);
-        $contentType = $response->getHeaderLine('Content-Type');
-        if (preg_match('~^(application|text)/json~', $contentType)) {
-            return $this->handleJsonResponse($response, $url);
-        } elseif (preg_match('~^(application|text)/(atom\+)?xml~', $contentType)) {
-            // @todo Are there APIs that are XML only?
-            return $this->handleXmlResponse($response, $url);
-        } else {
-            //throw new ApiException("Unable to handle response from {$url} with content type {$contentType}.");
-        }
     }
 
     public function authenticatedRequest(User $user, $method = 'GET', $url = null, array $options = [])
     {
+        // @todo Move this whole method to UserSession.
         if (isset($user)) {
             $duration = isset($options['timeout']) ? $options['timeout'] : null;
             $options['query']['token'] = (string) $user->acquireToken($duration);
@@ -85,33 +78,6 @@ class Client implements GuzzleClientInterface
             }
             throw $exception;
         }
-    }
-
-    /**
-     * Handle an JSON API response.
-     *
-     * @param ResponseInterface $response The response.
-     * @param string            $url      The request URL.
-     *
-     * @throws \Lullabot\Mpx\Exception\ApiException If an error occurred.
-     *
-     * @return array The decoded response data.
-     */
-    protected function handleJsonResponse(ResponseInterface $response, $url)
-    {
-        // @todo Figure out how we can support the big_int_string option here.
-        // @see http://stackoverflow.com/questions/19520487/json-bigint-as-string-removed-in-php-5-5
-        $data = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
-        if (!empty($data['responseCode']) && !empty($data['isException'])) {
-            throw new ApiException("Error {$data['title']} on request to {$url}: {$data['description']}", (int) $data['responseCode']);
-        } elseif (!empty($data[0]['entry']['responseCode']) && !empty($data[0]['entry']['isException'])) {
-            throw new ApiException(
-                "Error {$data[0]['entry']['title']} on request to {$url}: {$data[0]['entry']['description']}",
-                (int) $data[0]['entry']['responseCode']
-            );
-        }
-
-        return $data;
     }
 
     /**
@@ -157,62 +123,30 @@ class Client implements GuzzleClientInterface
     }
 
     /**
-     * Send an HTTP request.
-     *
-     * @param \Psr\Http\Message\RequestInterface $request Request to send
-     * @param array $options Request options to apply to the given
-     *                                  request and to the transfer.
-     *
-     * @return ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * {@inheritdoc}
      */
-    public function send(\Psr\Http\Message\RequestInterface $request, array $options = []) {
-        // TODO: Implement send() method.
+    public function send(RequestInterface $request, array $options = []) {
+        return $this->client->send($request, $options);
     }
 
     /**
-     * Asynchronously send an HTTP request.
-     *
-     * @param \Psr\Http\Message\RequestInterface $request Request to send
-     * @param array $options Request options to apply to the given
-     *                                  request and to the transfer.
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * {@inheritdoc}
      */
-    public function sendAsync(\Psr\Http\Message\RequestInterface $request, array $options = []) {
-        // TODO: Implement sendAsync() method.
+    public function sendAsync(RequestInterface $request, array $options = []) {
+        return $this->client->sendAsync($request, $options);
     }
 
     /**
-     * Create and send an asynchronous HTTP request.
-     *
-     * Use an absolute path to override the base path of the client, or a
-     * relative path to append to the base path of the client. The URL can
-     * contain the query string as well. Use an array to provide a URL
-     * template and additional variables to use in the URL template expansion.
-     *
-     * @param string $method HTTP method
-     * @param string|\Psr\Http\Message\UriInterface $uri URI object or string.
-     * @param array $options Request options to apply.
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * {@inheritdoc}
      */
     public function requestAsync($method, $uri, array $options = []) {
-        // TODO: Implement requestAsync() method.
+        return $this->client->requestAsync($method, $uri, $options);
     }
 
     /**
-     * Get a client configuration option.
-     *
-     * These options include default request options of the client, a "handler"
-     * (if utilized by the concrete client), and a "base_uri" if utilized by
-     * the concrete client.
-     *
-     * @param string|null $option The config option to retrieve.
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getConfig($option = NULL) {
-        // TODO: Implement getConfig() method.
+        return $this->client->getConfig($option);
     }
 }
