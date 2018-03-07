@@ -58,16 +58,12 @@ class Client
     /**
      * Handle an JSON API response.
      *
-     * @param ResponseInterface $response
-     *                                    The response.
-     * @param string            $url
-     *                                    The request URL.
+     * @param ResponseInterface $response The response.
+     * @param string            $url      The request URL.
      *
-     * @return array
-     *               The decoded response data.
+     * @throws \Lullabot\Mpx\Exception\ApiException If an error occurred.
      *
-     * @throws \Lullabot\Mpx\Exception\ApiException
-     *                                              If an error occurred.
+     * @return array The decoded response data.
      */
     protected function handleJsonResponse(ResponseInterface $response, $url)
     {
@@ -89,16 +85,12 @@ class Client
     /**
      * Handle an XML API response.
      *
-     * @param ResponseInterface $response
-     *                                    The response.
-     * @param string            $url
-     *                                    The request URL.
+     * @param ResponseInterface $response The response.
+     * @param string            $url      The request URL.
      *
-     * @return array
-     *               The decoded response data.
+     * @throws \Lullabot\Mpx\Exception\ApiException If an error occurred.
      *
-     * @throws \Lullabot\Mpx\Exception\ApiException
-     *                                              If an error occurred.
+     * @return array The decoded response data.
      */
     protected function handleXmlResponse(ResponseInterface $response, $url)
     {
@@ -118,11 +110,9 @@ class Client
     /**
      * Convert a string of XML to an associative array.
      *
-     * @param \SimpleXMLElement $data
-     *                                An XML element node.
+     * @param \SimpleXMLElement $data An XML element node.
      *
-     * @return array
-     *               An array representing the XML data.
+     * @return array An array representing the XML data.
      */
     protected static function convertXmlToArray(\SimpleXMLElement $data)
     {
