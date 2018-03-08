@@ -47,6 +47,7 @@ trait MpxExceptionTrait
         if (!isset($this->data['correlationId'])) {
             throw new \OutOfBoundsException('correlationId is not included in this error.');
         }
+
         return $this->data['correlationId'];
     }
 
@@ -62,6 +63,7 @@ trait MpxExceptionTrait
         if (!isset($this->data['serverStackTrace'])) {
             throw new \OutOfBoundsException('serverStackTrace is not included in this error.');
         }
+
         return $this->data['serverStackTrace'];
     }
 
