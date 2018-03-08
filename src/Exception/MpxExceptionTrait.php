@@ -15,32 +15,72 @@ trait MpxExceptionTrait
      */
     protected $data;
 
+    /**
+     * Return the error title.
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->data['title'];
     }
 
+    /**
+     * Return the error description.
+     *
+     * @return string
+     */
     public function getDescription()
     {
         return $this->data['description'];
     }
 
+    /**
+     * Return the request correlation ID.
+     *
+     * @throws \OutOfBoundsException Thrown when correlation ID is not set.
+     *
+     * @return string
+     */
     public function getCorrelationId()
     {
+        if (!isset($this->data['correlationId'])) {
+            throw new \OutOfBoundsException('correlationId is not included in this error.');
+        }
         return $this->data['correlationId'];
     }
 
+    /**
+     * Return the server stack trace.
+     *
+     * @throws \OutOfBoundsException Thrown when the stack trace is not set.
+     *
+     * @return string
+     */
     public function getServerStackTrace()
     {
+        if (!isset($this->data['serverStackTrace'])) {
+            throw new \OutOfBoundsException('serverStackTrace is not included in this error.');
+        }
         return $this->data['serverStackTrace'];
     }
 
+    /**
+     * Return all data associated with this error.
+     *
+     * @return array
+     */
     public function getData()
     {
         return $this->data;
     }
 
-    public function setData($data)
+    /**
+     * Validate and set the data for this error.
+     *
+     * @param array $data The MPX error data.
+     */
+    public function setData(array $data)
     {
         static::validateData($data);
         $this->data = $data;
