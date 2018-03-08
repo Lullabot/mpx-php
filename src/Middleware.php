@@ -11,7 +11,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Middleware
 {
-
     /**
      * A middleware to check for MPX errors in the body of the response.
      *
