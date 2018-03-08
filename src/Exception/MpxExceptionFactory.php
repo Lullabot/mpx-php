@@ -10,14 +10,13 @@ use Psr\Http\Message\ResponseInterface;
  */
 class MpxExceptionFactory
 {
-
     /**
      * Create a new MPX API exception.
      *
-     * @param \Psr\Http\Message\RequestInterface $request
+     * @param \Psr\Http\Message\RequestInterface  $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param \Exception|NULL $previous
-     * @param array $ctx
+     * @param \Exception|null                     $previous
+     * @param array                               $ctx
      *
      * @return \Lullabot\Mpx\Exception\MpxExceptionInterface
      */
