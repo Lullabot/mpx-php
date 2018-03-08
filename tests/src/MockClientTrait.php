@@ -25,7 +25,7 @@ trait MockClientTrait {
     protected function getMockClient(array $handler_queue = [], array $options = []) {
         $mockHandler = $handler_queue ? new MockHandler($handler_queue) : NULL;
         $stack = HandlerStack::create($mockHandler);
-        $stack->push(Middleware::invoke());
+        $stack->push(Middleware::mpxErrors());
         $options += [
             'handler' => $stack,
         ];
