@@ -3,12 +3,26 @@
 namespace Lullabot\Mpx\Exception;
 
 use GuzzleHttp\Exception\ClientException as GuzzleClientException;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
-class ClientException extends GuzzleClientException
+/**
+ * Exception when a client error is encountered (4xx codes).
+ */
+class ClientException extends GuzzleClientException implements MpxExceptionInterface
 {
     use MpxExceptionTrait;
 
-    public function __construct($data, \Psr\Http\Message\RequestInterface $request, \Psr\Http\Message\ResponseInterface $response = null, \Exception $previous = null, array $handlerContext = [])
+    /**
+     * Construct a new ClientException.
+     *
+     * @param array                                    $data           The array of data from the error response body.
+     * @param \Psr\Http\Message\RequestInterface       $request        The request that generated the error.
+     * @param \Psr\Http\Message\ResponseInterface|null $response       The error response.
+     * @param \Exception|null                          $previous       (optional) The previous exception.
+     * @param array                                    $handlerContext (optional) Custom HTTP handler context, if available.
+     */
+    public function __construct(array $data, RequestInterface $request, ResponseInterface $response, \Exception $previous = null, array $handlerContext = [])
     {
         $this->setData($data);
         $message = sprintf('Error %s: %s', $data['title'], $data['description']);
