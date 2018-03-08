@@ -5,12 +5,12 @@ namespace Lullabot\Mpx\Exception;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class MpxExceptionFactory {
-
+class MpxExceptionFactory
+{
     public static function create(
         RequestInterface $request,
-        ResponseInterface $response = NULL,
-        \Exception $previous = NULL,
+        ResponseInterface $response = null,
+        \Exception $previous = null,
         array $ctx = []
     ) {
         $data = \GuzzleHttp\json_decode($response->getBody(), true);

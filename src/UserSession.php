@@ -111,6 +111,7 @@ class UserSession
         );
 
         $data = \GuzzleHttp\json_decode($response->getBody(), true);
+
         return $this->tokenFromResponse($data);
     }
 

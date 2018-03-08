@@ -8,13 +8,29 @@ use Lullabot\Mpx\Exception\ApiException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * An MPX API client.
+ */
 class Client implements GuzzleClientInterface
 {
     /**
+     * The underlying HTTP client.
+     *
      * @var \GuzzleHttp\ClientInterface
      */
     protected $client;
 
+    /**
+     * Client constructor.
+     *
+     * Custom client implementations should include the HttpErrorMiddleware
+     * handler, otherwise MPX errors may not be exposed correctly.
+     *
+     * @see \Lullabot\Mpx\Client::getDefaultConfiguration
+     * @see \Lullabot\Mpx\HttpErrorMiddleware
+     *
+     * @param \GuzzleHttp\ClientInterface $client The underlying HTTP client to use for requests.
+     */
     public function __construct(GuzzleClientInterface $client)
     {
         $this->client = $client;
@@ -23,13 +39,12 @@ class Client implements GuzzleClientInterface
     /**
      * Get the default Guzzle client configuration array.
      *
-     * @param mixed $handler
-     *   (optional) Specify a Guzzle handler to use for requests.
+     * @param mixed $handler (optional) Specify a Guzzle handler to use for requests. If a custom handler is specified, it must
      *
-     * @return array
-     *   An array of configuration options suitable for use with Guzzle.
+     * @return array An array of configuration options suitable for use with Guzzle.
      */
-    public static function getDefaultConfiguration($handler = null) {
+    public static function getDefaultConfiguration($handler = null)
+    {
         $config = [
             'headers' => [
                 'Accept' => 'application/json',
@@ -125,28 +140,32 @@ class Client implements GuzzleClientInterface
     /**
      * {@inheritdoc}
      */
-    public function send(RequestInterface $request, array $options = []) {
+    public function send(RequestInterface $request, array $options = [])
+    {
         return $this->client->send($request, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function sendAsync(RequestInterface $request, array $options = []) {
+    public function sendAsync(RequestInterface $request, array $options = [])
+    {
         return $this->client->sendAsync($request, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function requestAsync($method, $uri, array $options = []) {
+    public function requestAsync($method, $uri, array $options = [])
+    {
         return $this->client->requestAsync($method, $uri, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getConfig($option = NULL) {
+    public function getConfig($option = null)
+    {
         return $this->client->getConfig($option);
     }
 }
