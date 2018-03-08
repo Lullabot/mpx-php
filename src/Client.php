@@ -39,7 +39,9 @@ class Client implements GuzzleClientInterface
     /**
      * Get the default Guzzle client configuration array.
      *
-     * @param mixed $handler (optional) Specify a Guzzle handler to use for requests. If a custom handler is specified, it must
+     * @param mixed $handler (optional) A Guzzle handler to use for
+     *                       requests. If a custom handler is specified, it must
+     *                       must include HttpErrorMiddleware or a replacement.
      *
      * @return array An array of configuration options suitable for use with Guzzle.
      */
