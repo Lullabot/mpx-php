@@ -18,7 +18,7 @@ class MpxExceptionFactory
      * @param \Exception|null                     $previous
      * @param array                               $ctx
      *
-     * @return \Lullabot\Mpx\Exception\MpxExceptionInterface
+     * @return \Lullabot\Mpx\Exception\ClientException|\Lullabot\Mpx\Exception\ServerException
      */
     public static function create(
         RequestInterface $request,
