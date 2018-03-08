@@ -41,7 +41,7 @@ class Client implements GuzzleClientInterface
      *
      * @param mixed $handler (optional) A Guzzle handler to use for
      *                       requests. If a custom handler is specified, it must
-     *                       must include Middleware::mpxErrors or a replacement.
+     *                       include Middleware::mpxErrors or a replacement.
      *
      * @return array An array of configuration options suitable for use with Guzzle.
      */
@@ -56,7 +56,7 @@ class Client implements GuzzleClientInterface
 
         if (!$handler) {
             $handler = HandlerStack::create();
-            $handler->push(Middleware::mpxErrors());
+            $handler->push(Middleware::mpxErrors(), 'mpx_errors');
         }
         $config['handler'] = $handler;
 

@@ -30,8 +30,8 @@ class Middleware
                     function (ResponseInterface $response) use ($request, $handler) {
                         // While it's not documented, we want to be sure that
                         // any 4XX or 5XX errors that break through suppression
-                        // are still caught. In other words, this handler should
-                        // be executed after the normal Guzzle error handler.
+                        // are still parsed. In other words, this handler should
+                        // be executed before the normal Guzzle error handler.
 
                         // If our response isn't JSON, we can't parse it.
                         $contentType = $response->getHeaderLine('Content-Type');
