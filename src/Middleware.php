@@ -6,12 +6,27 @@ use Lullabot\Mpx\Exception\MpxExceptionFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class HttpErrorMiddleware
+/**
+ * Guzzle middleware functions.
+ */
+class Middleware
 {
-    public static function invoke()
+
+    /**
+     * A middleware to check for MPX errors in the body of the response.
+     *
+     * @see https://docs.theplatform.com/help/wsf-handling-data-service-exceptions
+     *
+     * @return \Closure A middleware function.
+     */
+    public static function mpxErrors()
     {
+        // Guzzle's built-in middlewares also have this level of nested
+        // functions, so we follow the same pattern even though it's difficult
+        // to read.
         return function (callable $handler) {
             return function (RequestInterface $request, array $options) use ($handler) {
+                // We only need to process after the request has been sent.
                 return $handler($request, $options)->then(
                     function (ResponseInterface $response) use ($request, $handler) {
                         // While it's not documented, we want to be sure that

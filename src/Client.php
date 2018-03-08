@@ -23,11 +23,11 @@ class Client implements GuzzleClientInterface
     /**
      * Client constructor.
      *
-     * Custom client implementations should include the HttpErrorMiddleware
+     * Custom client implementations should include the Middleware
      * handler, otherwise MPX errors may not be exposed correctly.
      *
      * @see \Lullabot\Mpx\Client::getDefaultConfiguration
-     * @see \Lullabot\Mpx\HttpErrorMiddleware
+     * @see \Lullabot\Mpx\Middleware
      *
      * @param \GuzzleHttp\ClientInterface $client The underlying HTTP client to use for requests.
      */
@@ -41,7 +41,7 @@ class Client implements GuzzleClientInterface
      *
      * @param mixed $handler (optional) A Guzzle handler to use for
      *                       requests. If a custom handler is specified, it must
-     *                       must include HttpErrorMiddleware or a replacement.
+     *                       must include Middleware::mpxErrors or a replacement.
      *
      * @return array An array of configuration options suitable for use with Guzzle.
      */
@@ -56,7 +56,7 @@ class Client implements GuzzleClientInterface
 
         if (!$handler) {
             $handler = HandlerStack::create();
-            $handler->push(HttpErrorMiddleware::invoke());
+            $handler->push(Middleware::mpxErrors());
         }
         $config['handler'] = $handler;
 

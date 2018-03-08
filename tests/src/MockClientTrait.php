@@ -6,7 +6,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use Lullabot\Mpx\Client;
-use Lullabot\Mpx\HttpErrorMiddleware;
+use Lullabot\Mpx\Middleware;
 
 trait MockClientTrait {
 
@@ -25,7 +25,7 @@ trait MockClientTrait {
     protected function getMockClient(array $handler_queue = [], array $options = []) {
         $mockHandler = $handler_queue ? new MockHandler($handler_queue) : NULL;
         $stack = HandlerStack::create($mockHandler);
-        $stack->push(HttpErrorMiddleware::invoke());
+        $stack->push(Middleware::invoke());
         $options += [
             'handler' => $stack,
         ];
