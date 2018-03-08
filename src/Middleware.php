@@ -18,7 +18,7 @@ class Middleware
      *
      * @return \Closure A middleware function.
      */
-    public static function mpxErrors() : \Closure
+    public static function mpxErrors(): \Closure
     {
         // Guzzle's built-in middlewares also have this level of nested
         // functions, so we follow the same pattern even though it's difficult
