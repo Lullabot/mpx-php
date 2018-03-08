@@ -32,9 +32,9 @@ class MpxExceptionFactory
         $altered = $response->withStatus($data['responseCode'], $data['title']);
 
         if ($altered->getStatusCode() >= 400 && $altered->getStatusCode() < 500) {
-            return new ClientException($data, $request, $altered, $previous, $ctx);
+            return new ClientException($request, $altered, $previous, $ctx);
         }
 
-        return new ServerException($data, $request, $altered, $previous, $ctx);
+        return new ServerException($request, $altered, $previous, $ctx);
     }
 }
