@@ -35,10 +35,11 @@ class Middleware
 
                         // If our response isn't JSON, we can't parse it.
                         $contentType = $response->getHeaderLine('Content-Type');
-                        $data = \GuzzleHttp\json_decode($response->getBody(), true);
-                        if (false === preg_match('~^(application|text)/json~', $contentType)) {
+                        if (0 === preg_match('!^(application|text)\/json!', $contentType)) {
                             return $response;
                         }
+
+                        $data = \GuzzleHttp\json_decode($response->getBody(), true);
                         if (empty($data['responseCode']) && empty($data['isException'])) {
                             return $response;
                         }
