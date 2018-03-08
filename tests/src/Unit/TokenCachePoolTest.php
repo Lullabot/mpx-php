@@ -50,10 +50,10 @@ class TokenCachePoolTest extends TestCase {
      * @covers ::getToken
      */
     public function testExpiresToken() {
-        $this->markTestIncomplete('Expiration is not stored correctly on Tokens');
-        $token = new Token('value', time() - 60);
+        $token = new Token('value', 1);
         $cache = new TokenCachePool(new ArrayCachePool());
         $cache->setToken($this->user, $token);
+        sleep(1);
         $this->expectException(\RuntimeException::class);
         $cache->getToken($this->user);
     }

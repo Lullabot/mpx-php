@@ -2,10 +2,10 @@
 
 namespace Lullabot\Mpx;
 
+use Psr\Log\LoggerInterface;
+
 class UserSession
 {
-    use HasLoggerTrait;
-
     /**
      * The URL to sign in a user.
      */
@@ -38,6 +38,13 @@ class UserSession
     protected $client;
 
     /**
+     * The logger used to log automatic token renewals.
+     *
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * Construct a new user session.
      *
      * Note that the session is not actually established until acquireToken is
@@ -46,12 +53,16 @@ class UserSession
      * @param \Lullabot\Mpx\Client         $client         The client used to access MPX.
      * @param \Lullabot\Mpx\User           $user           The user associated with this session.
      * @param \Lullabot\Mpx\TokenCachePool $tokenCachePool The cache of authentication tokens.
+     * @param \Psr\Log\LoggerInterface     $logger         The logger used when logging automatic authentication renewals.
+     *
+     * @see \Psr\Log\NullLogger To disable logging within this session.
      */
-    public function __construct(Client $client, User $user, TokenCachePool $tokenCachePool)
+    public function __construct(Client $client, User $user, TokenCachePool $tokenCachePool, LoggerInterface $logger)
     {
         $this->client = $client;
         $this->user = $user;
         $this->tokenCachePool = $tokenCachePool;
+        $this->logger = $logger;
     }
 
     /**
@@ -70,6 +81,14 @@ class UserSession
         } catch (\RuntimeException $e) {
             // @todo This catch should be a more specific exception.
             $token = $this->signIn($duration);
+            $this->logger->info(
+                'Refreshed token with a new mpx token {token} for user {username} that expires on {date}.',
+                [
+                    'token' => $token->getValue(),
+                    'username' => $this->user->getUsername(),
+                    'date' => date(DATE_ISO8601, $token->getExpiration()),
+                ]
+            );
         }
 
         return $token;
@@ -147,15 +166,6 @@ class UserSession
     private function tokenFromResponse(array $data): Token
     {
         $token = Token::fromResponse($data);
-        $this->getLogger()->info(
-            'Fetched new mpx token {token} for user {username} that expires on {date}.',
-            [
-                'token' => $token->getValue(),
-                'username' => $this->user->getUsername(),
-                'date' => date(DATE_ISO8601, $token->getExpiration()),
-            ]
-        );
-
         // Save the token to the cache and return it.
         $this->tokenCachePool->setToken($this->user, $token);
 
