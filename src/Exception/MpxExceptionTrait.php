@@ -20,7 +20,7 @@ trait MpxExceptionTrait
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->data['title'];
     }
@@ -30,7 +30,7 @@ trait MpxExceptionTrait
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return $this->data['description'];
     }
@@ -42,7 +42,7 @@ trait MpxExceptionTrait
      *
      * @return string
      */
-    public function getCorrelationId()
+    public function getCorrelationId() : string
     {
         if (!isset($this->data['correlationId'])) {
             throw new \OutOfBoundsException('correlationId is not included in this error.');
@@ -58,7 +58,7 @@ trait MpxExceptionTrait
      *
      * @return string
      */
-    public function getServerStackTrace()
+    public function getServerStackTrace() : string
     {
         if (!isset($this->data['serverStackTrace'])) {
             throw new \OutOfBoundsException('serverStackTrace is not included in this error.');
@@ -72,7 +72,7 @@ trait MpxExceptionTrait
      *
      * @return array
      */
-    public function getData()
+    public function getData() : array
     {
         return $this->data;
     }
