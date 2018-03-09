@@ -165,7 +165,7 @@ class UserSession
      */
     private function tokenFromResponse(array $data): Token
     {
-        $token = Token::fromResponse($data);
+        $token = Token::fromResponseData($data);
         // Save the token to the cache and return it.
         $this->tokenCachePool->setToken($this->user, $token);
 
