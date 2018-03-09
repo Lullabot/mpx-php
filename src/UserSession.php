@@ -3,7 +3,9 @@
 namespace Lullabot\Mpx;
 
 use GuzzleHttp\ClientInterface;
+use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
+use Prophecy\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
 
@@ -53,6 +55,8 @@ class UserSession implements ClientInterface
      * Note that the session is not actually established until acquireToken is
      * called.
      *
+     * @todo There is a potential cache stampede on signing in.
+     *
      * @param \Lullabot\Mpx\Client         $client         The client used to access MPX.
      * @param \Lullabot\Mpx\User           $user           The user associated with this session.
      * @param \Lullabot\Mpx\TokenCachePool $tokenCachePool The cache of authentication tokens.
@@ -73,12 +77,20 @@ class UserSession implements ClientInterface
      *
      * This method will automatically generate a new token if one does not exist.
      *
-     * @param int $duration (optional) The number of seconds for which the token should be valid.
+     * @param int  $duration (optional) The number of seconds for which the token should be valid.
+     * @param bool $reset    Force fetching a new token, even if one exists.
      *
      * @return \Lullabot\Mpx\Token A valid MPX authentication token.
      */
-    public function acquireToken($duration = null): Token
+    public function acquireToken(int $duration = null, bool $reset = false): Token
     {
+        if ($reset) {
+            $this->tokenCachePool->deleteToken($this->user);
+        }
+
+        // We assume that the cache is backed by shared storage across multiple
+        // requests. In that case, it's possible for another thread to set a
+        // token between the above delete and the next try block.
         try {
             $token = $this->tokenCachePool->getToken($this->user);
         } catch (TokenNotFoundException $e) {
@@ -159,6 +171,63 @@ class UserSession implements ClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function send(RequestInterface $request, array $options = [])
+    {
+        return $this->sendWithRetry($request, $options, [$this->client, __FUNCTION__]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sendAsync(RequestInterface $request, array $options = [])
+    {
+        return $this->sendWithRetry($request, $options, [$this->client, __FUNCTION__]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function request($method, $uri, array $options = [])
+    {
+        return $this->requestWithRetry($method, $uri, $options, [$this->client, __FUNCTION__]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requestAsync($method, $uri, array $options = [])
+    {
+        return $this->requestWithRetry($method, $uri, $options, [$this->client, __FUNCTION__]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfig($option = null)
+    {
+        return $this->client->getConfig($option);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
+    private function mergeAuth(array $options, bool $reset = false): array
+    {
+        $options += [
+            'auth' => [
+                $this->user->getUsername(),
+                $this->acquireToken(null, $reset)->getValue(),
+            ],
+        ];
+
+        return $options;
+    }
+
+    /**
      * Instantiate and cache a token.
      *
      * @param array $data The MPX signIn() response data.
@@ -175,67 +244,59 @@ class UserSession implements ClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function send(RequestInterface $request, array $options = [])
-    {
-        $options = $this->mergeAuth($options);
-
-        return $this->client->send($request, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function sendAsync(RequestInterface $request, array $options = [])
-    {
-        $options = $this->mergeAuth($options);
-
-        return $this->client->sendAsync($request, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function request($method, $uri, array $options = [])
-    {
-        $options = $this->mergeAuth($options);
-
-        return $this->client->request($method, $uri, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function requestAsync($method, $uri, array $options = [])
-    {
-        $options = $this->mergeAuth($options);
-
-        return $this->client->requestAsync($method, $uri, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfig($option = null)
-    {
-        return $this->client->getConfig($option);
-    }
-
-    /**
-     * @param array $options
+     * Send a request, retrying once if the authentication token is invalid.
      *
-     * @return array
+     * @param \Psr\Http\Message\RequestInterface $request  The request to send.
+     * @param array                              $options  An array of request options.
+     * @param callable                           $callable The underlying HTTP client method to call.
+     *
+     * @return \Prophecy\Promise\PromiseInterface
      */
-    private function mergeAuth(array $options): array
+    private function sendWithRetry(RequestInterface $request, array $options, callable $callable): PromiseInterface
     {
-        $options += [
-            'auth' => [
-                $this->user->getUsername(),
-                $this->acquireToken(),
-            ],
-        ];
+        $merged = $this->mergeAuth($options);
 
-        return $options;
+        try {
+            return $callable($request, $merged);
+        } catch (ClientException $e) {
+            // Only retry if MPX has returned that the existing token is no
+            // longer valid.
+            if (401 != $e->getCode()) {
+                throw $e;
+            }
+
+            $merged = $this->mergeAuth($options, true);
+
+            return $callable($request, $merged);
+        }
+    }
+
+    /**
+     * Create and send a request, retrying once if the authentication token is invalid.
+     *
+     * @param string                                $method   HTTP method
+     * @param string|\Psr\Http\Message\UriInterface $uri      URI object or string.
+     * @param array                                 $options  Request options to apply.
+     * @param callable                              $callable The underlying HTTP client method to call.
+     *
+     * @return \Prophecy\Promise\PromiseInterface
+     */
+    private function requestWithRetry(string $method, $uri, array $options, callable $callable): PromiseInterface
+    {
+        $merged = $this->mergeAuth($options);
+
+        try {
+            return $callable($method, $uri, $merged);
+        } catch (ClientException $e) {
+            // Only retry if MPX has returned that the existing token is no
+            // longer valid.
+            if (401 != $e->getCode()) {
+                throw $e;
+            }
+
+            $merged = $this->mergeAuth($options, true);
+
+            return $callable($method, $uri, $merged);
+        }
     }
 }
