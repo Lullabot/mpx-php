@@ -3,10 +3,12 @@
 namespace Lullabot\Mpx;
 
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\Promise;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 class UserSession implements ClientInterface
@@ -76,6 +78,8 @@ class UserSession implements ClientInterface
      * Get a current authentication token for the account.
      *
      * This method will automatically generate a new token if one does not exist.
+     *
+     * @todo Do we want to make this async?
      *
      * @param int  $duration (optional) The number of seconds for which the token should be valid.
      * @param bool $reset    Force fetching a new token, even if one exists.
@@ -175,7 +179,7 @@ class UserSession implements ClientInterface
      */
     public function send(RequestInterface $request, array $options = [])
     {
-        return $this->sendWithRetry($request, $options, [$this->client, __FUNCTION__]);
+        return $this->sendWithRetry($request, $options);
     }
 
     /**
@@ -183,7 +187,7 @@ class UserSession implements ClientInterface
      */
     public function sendAsync(RequestInterface $request, array $options = [])
     {
-        return $this->sendWithRetry($request, $options, [$this->client, __FUNCTION__]);
+        return $this->sendAsyncWithRetry($request, $options);
     }
 
     /**
@@ -191,7 +195,7 @@ class UserSession implements ClientInterface
      */
     public function request($method, $uri, array $options = [])
     {
-        return $this->requestWithRetry($method, $uri, $options, [$this->client, __FUNCTION__]);
+        return $this->requestWithRetry($method, $uri, $options);
     }
 
     /**
@@ -199,7 +203,7 @@ class UserSession implements ClientInterface
      */
     public function requestAsync($method, $uri, array $options = [])
     {
-        return $this->requestWithRetry($method, $uri, $options, [$this->client, __FUNCTION__]);
+        return $this->requestAsyncWithRetry($method, $uri, $options);
     }
 
     /**
@@ -246,18 +250,56 @@ class UserSession implements ClientInterface
     /**
      * Send a request, retrying once if the authentication token is invalid.
      *
-     * @param \Psr\Http\Message\RequestInterface $request  The request to send.
-     * @param array                              $options  An array of request options.
-     * @param callable                           $callable The underlying HTTP client method to call.
+     * This method creates three promises. The outer promise is what is
+     * returned, and itself contains two promises. The first promise is the
+     * first attempt to make an authenticated request. If it fails, a second
+     * promise is created that explicitly rejects the outer promise, as we only
+     * want to retry once.
+     *
+     * @param string                                $method  HTTP method
+     * @param string|\Psr\Http\Message\UriInterface $uri     URI object or string.
+     * @param array                                 $options Request options to apply.
      *
      * @return \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
      */
-    private function sendWithRetry(RequestInterface $request, array $options, callable $callable)
+    private function sendAsyncWithRetry(RequestInterface $request, array $options)
+    {
+        /** @var \GuzzleHttp\Promise\Promise $promise */
+        $promise = new Promise(function () use (&$promise, $request, $options) {
+            $merged = $this->mergeAuth($options);
+            /** @var \GuzzleHttp\Promise\PromiseInterface $first */
+            $first = $this->client->sendAsync($request, $merged);
+            $first->then(function (ResponseInterface $response) use ($promise) {
+                $promise->resolve($response);
+            }, function (RequestException $e) use ($promise, $request, $options) {
+                $merged = $this->mergeAuth($options, true);
+                /** @var \GuzzleHttp\Promise\PromiseInterface $second */
+                $second = $this->client->sendAsync($request, $merged);
+                $second->then(function (ResponseInterface $response) use ($promise) {
+                    $promise->resolve($response);
+                }, function (RequestException $e) use ($promise) {
+                    $promise->reject($e);
+                });
+            });
+        });
+
+        return $promise;
+    }
+
+    /**
+     * Send a request, retrying once if the authentication token is invalid.
+     *
+     * @param \Psr\Http\Message\RequestInterface $request The request to send.
+     * @param array                              $options An array of request options.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    private function sendWithRetry(RequestInterface $request, array $options)
     {
         $merged = $this->mergeAuth($options);
 
         try {
-            return $callable($request, $merged);
+            return $this->client->send($request, $merged);
         } catch (ClientException $e) {
             // Only retry if MPX has returned that the existing token is no
             // longer valid.
@@ -267,37 +309,68 @@ class UserSession implements ClientInterface
 
             $merged = $this->mergeAuth($options, true);
 
-            return $callable($request, $merged);
+            return $this->client->send($request, $merged);
         }
     }
 
     /**
      * Create and send a request, retrying once if the authentication token is invalid.
      *
-     * @param string                                $method   HTTP method
-     * @param string|\Psr\Http\Message\UriInterface $uri      URI object or string.
-     * @param array                                 $options  Request options to apply.
-     * @param callable                              $callable The underlying HTTP client method to call.
+     * This method creates three promises. The outer promise is what is
+     * returned, and itself contains two promises. The first promise is the
+     * first attempt to make an authenticated request. If it fails, a second
+     * promise is created that explicitly rejects the outer promise, as we only
+     * want to retry once.
+     *
+     * @param string                                $method  HTTP method
+     * @param string|\Psr\Http\Message\UriInterface $uri     URI object or string.
+     * @param array                                 $options Request options to apply.
      *
      * @return \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
      */
-    private function requestWithRetry(string $method, $uri, array $options, callable $callable)
+    private function requestAsyncWithRetry(string $method, $uri, array $options)
     {
-        $merged = $this->mergeAuth($options);
-
-        try {
-            $response = $callable($method, $uri, $merged);
-            if ($response instanceof \GuzzleHttp\Promise\PromiseInterface) {
-                $response->then(null, function(\GuzzleHttp\Exception\RequestException $e) use ($method, $uri, $options, $callable) {
-                    if (!($e instanceof ClientException) || 401 != $e->getCode()) {
-                        throw $e;
-                    }
-                    $merged = $this->mergeAuth($options, true);
-                    return $callable($method, $uri, $merged);
+        /** @var \GuzzleHttp\Promise\Promise $promise */
+        $promise = new Promise(function () use (&$promise, $method, $uri, $options) {
+            $merged = $this->mergeAuth($options);
+            /** @var \GuzzleHttp\Promise\PromiseInterface $first */
+            $first = $this->client->requestAsync($method, $uri, $merged);
+            $first->then(function (ResponseInterface $response) use ($promise) {
+                $promise->resolve($response);
+            }, function (RequestException $e) use ($promise, $method, $uri, $options) {
+                $merged = $this->mergeAuth($options, true);
+                /** @var \GuzzleHttp\Promise\PromiseInterface $second */
+                $second = $this->client->requestAsync($method, $uri, $merged);
+                $second->then(function (ResponseInterface $response) use ($promise) {
+                    $promise->resolve($response);
+                }, function (RequestException $e) use ($promise) {
+                    $promise->reject($e);
                 });
-            }
+            });
+        });
 
-            return $response;
+        return $promise;
+    }
+
+    /**
+     * Create and send a request, retrying once if the authentication token is invalid.
+     *
+     * This method intentionally doesn't call requestAsyncWithRetry and wait()
+     * on the promise, as we want to make sure the underlying sync client
+     * methods are used.
+     *
+     * @param string                                $method  HTTP method
+     * @param string|\Psr\Http\Message\UriInterface $uri     URI object or string.
+     * @param array                                 $options Request options to apply.
+     *
+     * @return \Psr\Http\Message\ResponseInterface The response.
+     */
+    private function requestWithRetry(string $method, $uri, array $options)
+    {
+        try {
+            $merged = $this->mergeAuth($options);
+
+            return $this->client->request($method, $uri, $merged);
         } catch (ClientException $e) {
             // Only retry if MPX has returned that the existing token is no
             // longer valid.
@@ -307,7 +380,7 @@ class UserSession implements ClientInterface
 
             $merged = $this->mergeAuth($options, true);
 
-            return $callable($method, $uri, $merged);
+            return $this->client->request($method, $uri, $merged);
         }
     }
 }
