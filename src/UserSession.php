@@ -5,7 +5,6 @@ namespace Lullabot\Mpx;
 use GuzzleHttp\ClientInterface;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
-use Prophecy\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
 
@@ -250,9 +249,9 @@ class UserSession implements ClientInterface
      * @param array                              $options  An array of request options.
      * @param callable                           $callable The underlying HTTP client method to call.
      *
-     * @return \Prophecy\Promise\PromiseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
      */
-    private function sendWithRetry(RequestInterface $request, array $options, callable $callable): PromiseInterface
+    private function sendWithRetry(RequestInterface $request, array $options, callable $callable)
     {
         $merged = $this->mergeAuth($options);
 
@@ -279,9 +278,9 @@ class UserSession implements ClientInterface
      * @param array                                 $options  Request options to apply.
      * @param callable                              $callable The underlying HTTP client method to call.
      *
-     * @return \Prophecy\Promise\PromiseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
      */
-    private function requestWithRetry(string $method, $uri, array $options, callable $callable): PromiseInterface
+    private function requestWithRetry(string $method, $uri, array $options, callable $callable)
     {
         $merged = $this->mergeAuth($options);
 
