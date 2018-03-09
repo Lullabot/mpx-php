@@ -3,7 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use Lullabot\Mpx\Exception\ApiException;
+use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
@@ -73,8 +73,8 @@ class UserSessionTest extends TestCase {
         $logger->expects($this->never())->method('info');
 
         $session = new UserSession($client, $user, new TokenCachePool(new ArrayCachePool()), $logger);
-        $this->expectException(ApiException::class);
-        $this->expectExceptionMessage('Error com.theplatform.authentication.api.exception.AuthenticationException on request to https://identity.auth.theplatform.com/idm/web/Authentication/signIn: Either \'USER-NAME\' does not have an account with this site, or the password was incorrect.');
+        $this->expectException(ClientException::class);
+        $this->expectExceptionMessage("Error com.theplatform.authentication.api.exception.AuthenticationException: Either 'USER-NAME' does not have an account with this site, or the password was incorrect.");
         $this->expectExceptionCode(401);
         $session->acquireToken();
     }

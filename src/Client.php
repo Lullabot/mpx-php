@@ -3,40 +3,82 @@
 namespace Lullabot\Mpx;
 
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
+use GuzzleHttp\HandlerStack;
 use Lullabot\Mpx\Exception\ApiException;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class Client
+/**
+ * An MPX API client.
+ */
+class Client implements GuzzleClientInterface
 {
     /**
+     * The underlying HTTP client.
+     *
      * @var \GuzzleHttp\ClientInterface
      */
     protected $client;
 
+    /**
+     * Client constructor.
+     *
+     * Custom client implementations should include the Middleware
+     * handler, otherwise MPX errors may not be exposed correctly.
+     *
+     * @see \Lullabot\Mpx\Client::getDefaultConfiguration
+     * @see \Lullabot\Mpx\Middleware
+     *
+     * @param \GuzzleHttp\ClientInterface $client The underlying HTTP client to use for requests.
+     */
     public function __construct(GuzzleClientInterface $client)
     {
         $this->client = $client;
     }
 
+    /**
+     * Get the default Guzzle client configuration array.
+     *
+     * @param mixed $handler (optional) A Guzzle handler to use for
+     *                       requests. If a custom handler is specified, it must
+     *                       include Middleware::mpxErrors or a replacement.
+     *
+     * @return array An array of configuration options suitable for use with Guzzle.
+     */
+    public static function getDefaultConfiguration($handler = null)
+    {
+        $config = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+        ];
+
+        if (!$handler) {
+            $handler = HandlerStack::create();
+            $handler->push(Middleware::mpxErrors(), 'mpx_errors');
+        }
+        $config['handler'] = $handler;
+
+        return $config;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function request($method = 'GET', $url = null, array $options = [])
     {
-        // Disable HTTP error codes unless requested so that we can parse out
-        // the errors ourselves.
+        // MPX forces all JSON requests to return HTTP 200, even with an error.
+        // We force all requests (including XML) to suppress errors so we can
+        // have the same error handling code.
         $options['query']['httpError'] = false;
 
-        $response = $this->client->request($method, $url, $options);
-        $contentType = $response->getHeaderLine('Content-Type');
-        if (preg_match('~^(application|text)/json~', $contentType)) {
-            return $this->handleJsonResponse($response, $url);
-        } elseif (preg_match('~^(application|text)/(atom\+)?xml~', $contentType)) {
-            return $this->handleXmlResponse($response, $url);
-        } else {
-            throw new ApiException("Unable to handle response from {$url} with content type {$contentType}.");
-        }
+        return $this->client->request($method, $url, $options);
     }
 
     public function authenticatedRequest(User $user, $method = 'GET', $url = null, array $options = [])
     {
+        // @todo Move this whole method to UserSession.
         if (isset($user)) {
             $duration = isset($options['timeout']) ? $options['timeout'] : null;
             $options['query']['token'] = (string) $user->acquireToken($duration);
@@ -53,33 +95,6 @@ class Client
             }
             throw $exception;
         }
-    }
-
-    /**
-     * Handle an JSON API response.
-     *
-     * @param ResponseInterface $response The response.
-     * @param string            $url      The request URL.
-     *
-     * @throws \Lullabot\Mpx\Exception\ApiException If an error occurred.
-     *
-     * @return array The decoded response data.
-     */
-    protected function handleJsonResponse(ResponseInterface $response, $url)
-    {
-        // @todo Figure out how we can support the big_int_string option here.
-        // @see http://stackoverflow.com/questions/19520487/json-bigint-as-string-removed-in-php-5-5
-        $data = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
-        if (!empty($data['responseCode']) && !empty($data['isException'])) {
-            throw new ApiException("Error {$data['title']} on request to {$url}: {$data['description']}", (int) $data['responseCode']);
-        } elseif (!empty($data[0]['entry']['responseCode']) && !empty($data[0]['entry']['isException'])) {
-            throw new ApiException(
-                "Error {$data[0]['entry']['title']} on request to {$url}: {$data[0]['entry']['description']}",
-                (int) $data[0]['entry']['responseCode']
-            );
-        }
-
-        return $data;
     }
 
     /**
@@ -122,5 +137,37 @@ class Client
         }
 
         return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function send(RequestInterface $request, array $options = [])
+    {
+        return $this->client->send($request, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sendAsync(RequestInterface $request, array $options = [])
+    {
+        return $this->client->sendAsync($request, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requestAsync($method, $uri, array $options = [])
+    {
+        return $this->client->requestAsync($method, $uri, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfig($option = null)
+    {
+        return $this->client->getConfig($option);
     }
 }
