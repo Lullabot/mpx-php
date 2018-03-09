@@ -27,6 +27,7 @@ class UserSessionTest extends TestCase
      * @covers ::__construct
      * @covers ::acquireToken
      * @covers ::signIn
+     * @covers ::tokenFromResponse
      * @covers ::signOut
      */
     public function testAcquireToken()
@@ -135,6 +136,7 @@ class UserSessionTest extends TestCase
      * @covers ::sendAsync
      * @covers ::mergeAuth
      * @covers ::requestWithRetry
+     * @covers ::sendWithRetry
      */
     public function testAuthenticatedRequest(string $method, array $args)
     {
