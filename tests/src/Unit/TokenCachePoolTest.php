@@ -11,8 +11,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @coversDefaultClass \Lullabot\Mpx\TokenCachePool
  */
-class TokenCachePoolTest extends TestCase {
-
+class TokenCachePoolTest extends TestCase
+{
     /**
      * @var \Lullabot\Mpx\User
      */
@@ -26,7 +26,8 @@ class TokenCachePoolTest extends TestCase {
     /**
      * {@inheritdoc}
      */
-    public function setUp() {
+    public function setUp()
+    {
         $this->user = new User('username', 'password');
         $this->token = new Token('value', time() + 60);
     }
@@ -37,7 +38,8 @@ class TokenCachePoolTest extends TestCase {
      * @covers ::setToken
      * @covers ::getToken
      */
-    public function testGetSetToken() {
+    public function testGetSetToken()
+    {
         $cache = new TokenCachePool(new ArrayCachePool());
         $cache->setToken($this->user, $this->token);
         $this->assertEquals($this->token, $cache->getToken($this->user));
@@ -49,7 +51,8 @@ class TokenCachePoolTest extends TestCase {
      * @covers ::setToken
      * @covers ::getToken
      */
-    public function testExpiresToken() {
+    public function testExpiresToken()
+    {
         $token = new Token('value', 1);
         $cache = new TokenCachePool(new ArrayCachePool());
         $cache->setToken($this->user, $token);
@@ -64,7 +67,8 @@ class TokenCachePoolTest extends TestCase {
      * @covers ::deleteToken
      * @covers ::getToken
      */
-    public function testDeleteToken() {
+    public function testDeleteToken()
+    {
         $cache = new TokenCachePool(new ArrayCachePool());
         $cache->setToken($this->user, $this->token);
         $cache->deleteToken($this->user);

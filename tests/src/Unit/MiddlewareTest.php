@@ -4,7 +4,6 @@ namespace Lullabot\Mpx\Tests\Unit;
 
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
-use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Exception\MpxExceptionInterface;
 use Lullabot\Mpx\Middleware;
 use PHPUnit\Framework\TestCase;
@@ -14,14 +13,15 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @coversDefaultClass \Lullabot\Mpx\Middleware
  */
-class MiddlewareTest extends TestCase {
-
+class MiddlewareTest extends TestCase
+{
     /**
      * Test that a response with no JSON doesn't throw an error.
      *
      * @covers ::mpxErrors
      */
-    public function testMpxEmptyContentType() {
+    public function testMpxEmptyContentType()
+    {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
@@ -36,7 +36,8 @@ class MiddlewareTest extends TestCase {
      *
      * @covers ::mpxErrors
      */
-    public function testNoResponseData() {
+    public function testNoResponseData()
+    {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
@@ -55,7 +56,8 @@ class MiddlewareTest extends TestCase {
      *
      * @covers ::mpxErrors
      */
-    public function testExceptionThrown() {
+    public function testExceptionThrown()
+    {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
@@ -74,13 +76,14 @@ class MiddlewareTest extends TestCase {
     /**
      * Get the response from the MPX error handler.
      *
-     * @param \Psr\Http\Message\RequestInterface $request
+     * @param \Psr\Http\Message\RequestInterface  $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param callable $errorHandler
+     * @param callable                            $errorHandler
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    private function getResponse(RequestInterface $request, ResponseInterface $response, callable $errorHandler) {
+    private function getResponse(RequestInterface $request, ResponseInterface $response, callable $errorHandler)
+    {
         $handler = function (RequestInterface $request, array $options) use ($response) {
             return new FulfilledPromise($response);
         };
@@ -89,6 +92,7 @@ class MiddlewareTest extends TestCase {
         /** @var \GuzzleHttp\Promise\FulfilledPromise $promise */
         $promise = $fn($request, []);
         $processedResponse = $promise->wait();
+
         return $processedResponse;
     }
 }
