@@ -176,6 +176,51 @@ class UserSessionTest extends TestCase
     }
 
     /**
+     * Test retried authenticated requests.
+     *
+     * @dataProvider clientMethodDataProvider
+     *
+     * @param string $method The method on UserSession to call.
+     * @param array  $args   The method arguments.
+     *
+     * @covers ::requestWithRetry
+     * @covers ::sendWithRetry
+     */
+    public function testRetriedAuthenticatedRequest(string $method, array $args)
+    {
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(401, [], 'invalid-token.json'),
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(200, [], 'getSelfId.json'),
+        ]);
+        $user = new User('USER-NAME', 'correct-password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+
+        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
+        $logger = $this->getMockBuilder(LoggerInterface::class)
+            ->getMock();
+        $logger->expects($this->exactly(2))->method('info')
+            ->with(
+                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
+            )->willReturnCallback(function ($message, $context) {
+                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
+                $this->assertArraySubset([
+                    'token' => 'TOKEN-VALUE',
+                    'username' => 'USER-NAME',
+                ], $context);
+                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
+            });
+
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
+        $response = call_user_func_array([$session, $method], $args);
+        if ($response instanceof PromiseInterface) {
+            $response = $response->wait();
+        }
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    /**
      * Return an array of methods and parameters to call for authenticated requests.
      *
      * @return array

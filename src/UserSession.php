@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx;
 
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\BadResponseException;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
 use Psr\Http\Message\RequestInterface;
@@ -285,7 +286,18 @@ class UserSession implements ClientInterface
         $merged = $this->mergeAuth($options);
 
         try {
-            return $callable($method, $uri, $merged);
+            $response = $callable($method, $uri, $merged);
+            if ($response instanceof \GuzzleHttp\Promise\PromiseInterface) {
+                $response->then(null, function(\GuzzleHttp\Exception\RequestException $e) use ($method, $uri, $options, $callable) {
+                    if (!($e instanceof ClientException) || 401 != $e->getCode()) {
+                        throw $e;
+                    }
+                    $merged = $this->mergeAuth($options, true);
+                    return $callable($method, $uri, $merged);
+                });
+            }
+
+            return $response;
         } catch (ClientException $e) {
             // Only retry if MPX has returned that the existing token is no
             // longer valid.
