@@ -10,8 +10,8 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \Lullabot\Mpx\Exception\MpxExceptionTrait
  */
-class MpxExceptionTraitTest extends TestCase {
-
+class MpxExceptionTraitTest extends TestCase
+{
     /**
      * Test basic setters and getters.
      *
@@ -22,7 +22,8 @@ class MpxExceptionTraitTest extends TestCase {
      * @covers ::getServerStackTrace
      * @covers ::getData
      */
-    public function testGet() {
+    public function testGet()
+    {
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             'responseCode' => 403,
@@ -46,7 +47,8 @@ class MpxExceptionTraitTest extends TestCase {
      *
      * @covers ::getCorrelationId
      */
-    public function testNoCorrelationId() {
+    public function testNoCorrelationId()
+    {
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             'responseCode' => 403,
@@ -67,7 +69,8 @@ class MpxExceptionTraitTest extends TestCase {
      *
      * @covers ::getServerStackTrace
      */
-    public function testNoServerStackTrace() {
+    public function testNoServerStackTrace()
+    {
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             'responseCode' => 403,
@@ -87,7 +90,8 @@ class MpxExceptionTraitTest extends TestCase {
      *
      * @covers ::validateData
      */
-    public function testValidateData() {
+    public function testValidateData()
+    {
         $data = [
             'responseCode' => 503,
             'isException' => 1,
@@ -100,14 +104,15 @@ class MpxExceptionTraitTest extends TestCase {
     /**
      * Test validating an invalid MPX error.
      *
-     * @param array $data The data that is missing a required valid.
-     * @param string $key The key that is missing from $data.
+     * @param array  $data The data that is missing a required valid.
+     * @param string $key  The key that is missing from $data.
      *
      * @dataProvider validateDataProvider
      *
      * @covers ::validateData
      */
-    public function testValidateInvalidData($data, $key) {
+    public function testValidateInvalidData($data, $key)
+    {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
         MpxExceptionTrait::validateData($data);
@@ -118,7 +123,8 @@ class MpxExceptionTraitTest extends TestCase {
      *
      * @return array An array with an invalid error and the missing key.
      */
-    public function validateDataProvider() {
+    public function validateDataProvider()
+    {
         $required = [
             'responseCode' => 503,
             'isException' => 1,
@@ -129,6 +135,7 @@ class MpxExceptionTraitTest extends TestCase {
             end($required);
             $key = key($required);
             array_pop($required);
+
             return [$required, $key];
         }, $required);
 

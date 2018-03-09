@@ -14,11 +14,10 @@ use Psr\Log\LoggerInterface;
 
 /**
  * @class UserSessionTest
- * @package Lullabot\Mpx\Tests\Unit
- * @coversDefaultClass Lullabot\Mpx\UserSession
+ * @coversDefaultClass \Lullabot\Mpx\UserSession
  */
-class UserSessionTest extends TestCase {
-
+class UserSessionTest extends TestCase
+{
     use MockClientTrait;
 
     /**
@@ -26,7 +25,8 @@ class UserSessionTest extends TestCase {
      * @covers ::signIn
      * @covers ::signOut
      */
-    public function testAcquireToken() {
+    public function testAcquireToken()
+    {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'signout.json'),
@@ -61,7 +61,8 @@ class UserSessionTest extends TestCase {
      * @covers ::acquireToken
      * @covers ::signIn
      */
-    public function testAcquireTokenFailure() {
+    public function testAcquireTokenFailure()
+    {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-fail.json'),
         ]);
@@ -78,5 +79,4 @@ class UserSessionTest extends TestCase {
         $this->expectExceptionCode(401);
         $session->acquireToken();
     }
-
 }

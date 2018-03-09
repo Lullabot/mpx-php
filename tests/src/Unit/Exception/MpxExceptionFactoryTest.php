@@ -12,12 +12,13 @@ use Psr\Http\Message\RequestInterface;
 /**
  * @coversDefaultClass \Lullabot\Mpx\Exception\MpxExceptionFactory
  */
-class MpxExceptionFactoryTest extends TestCase {
-
+class MpxExceptionFactoryTest extends TestCase
+{
     /**
      * @covers ::create
      */
-    public function testCreateClientException() {
+    public function testCreateClientException()
+    {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
@@ -38,7 +39,8 @@ class MpxExceptionFactoryTest extends TestCase {
     /**
      * @covers ::create
      */
-    public function testCreateServerException() {
+    public function testCreateServerException()
+    {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
