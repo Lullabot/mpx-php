@@ -39,9 +39,9 @@ class UserSessionTest extends TestCase
             ->getMock();
         $logger->expects($this->once())->method('info')
             ->with(
-                'Refreshed token with a new mpx token {token} for user {username} that expires on {date}.'
+                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
             )->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Refreshed token with a new mpx token {token} for user {username} that expires on {date}.', $message);
+                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
                 $this->assertArraySubset([
                     'token' => 'TOKEN-VALUE',
                     'username' => 'USER-NAME',

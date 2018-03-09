@@ -2,9 +2,12 @@
 
 namespace Lullabot\Mpx;
 
+use GuzzleHttp\ClientInterface;
+use Lullabot\Mpx\Exception\TokenNotFoundException;
+use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
 
-class UserSession
+class UserSession implements ClientInterface
 {
     /**
      * The URL to sign in a user.
@@ -78,11 +81,10 @@ class UserSession
     {
         try {
             $token = $this->tokenCachePool->getToken($this->user);
-        } catch (\RuntimeException $e) {
-            // @todo This catch should be a more specific exception.
+        } catch (TokenNotFoundException $e) {
             $token = $this->signIn($duration);
             $this->logger->info(
-                'Refreshed token with a new mpx token {token} for user {username} that expires on {date}.',
+                'Retrieved a new MPX token {token} for user {username} that expires on {date}.',
                 [
                     'token' => $token->getValue(),
                     'username' => $this->user->getUsername(),
@@ -170,5 +172,70 @@ class UserSession
         $this->tokenCachePool->setToken($this->user, $token);
 
         return $token;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function send(RequestInterface $request, array $options = [])
+    {
+        $options = $this->mergeAuth($options);
+
+        return $this->client->send($request, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sendAsync(RequestInterface $request, array $options = [])
+    {
+        $options = $this->mergeAuth($options);
+
+        return $this->client->sendAsync($request, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function request($method, $uri, array $options = [])
+    {
+        $options = $this->mergeAuth($options);
+
+        return $this->client->request($method, $uri, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requestAsync($method, $uri, array $options = [])
+    {
+        $options = $this->mergeAuth($options);
+
+        return $this->client->requestAsync($method, $uri, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfig($option = null)
+    {
+        return $this->client->getConfig($option);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
+    private function mergeAuth(array $options): array
+    {
+        $options += [
+            'auth' => [
+                $this->user->getUsername(),
+                $this->acquireToken(),
+            ],
+        ];
+
+        return $options;
     }
 }
