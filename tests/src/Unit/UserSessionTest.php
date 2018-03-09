@@ -21,6 +21,7 @@ class UserSessionTest extends TestCase
     use MockClientTrait;
 
     /**
+     * @covers ::__construct
      * @covers ::acquireToken
      * @covers ::signIn
      * @covers ::signOut
@@ -78,5 +79,42 @@ class UserSessionTest extends TestCase
         $this->expectExceptionMessage("Error com.theplatform.authentication.api.exception.AuthenticationException: Either 'USER-NAME' does not have an account with this site, or the password was incorrect.");
         $this->expectExceptionCode(401);
         $session->acquireToken();
+    }
+
+    /**
+     * Test that resetting a token executes a new MPX request.
+     *
+     * @covers ::acquireToken
+     */
+    public function testAcquireReset()
+    {
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(200, [], 'signin-success.json'),
+        ]);
+        $user = new User('USER-NAME', 'correct-password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+
+        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
+        $logger = $this->getMockBuilder(LoggerInterface::class)
+            ->getMock();
+        $logger->expects($this->exactly(2))->method('info')
+            ->with(
+                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
+            )->willReturnCallback(function ($message, $context) {
+                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
+                $this->assertArraySubset([
+                    'token' => 'TOKEN-VALUE',
+                    'username' => 'USER-NAME',
+                ], $context);
+                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
+            });
+
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
+        $first_token = $session->acquireToken();
+        $this->assertEquals($first_token, $tokenCachePool->getToken($user));
+        $second_token = $session->acquireToken(null, true);
+        $this->assertEquals($second_token, $tokenCachePool->getToken($user));
+        $this->assertNotSame($first_token, $second_token);
     }
 }
