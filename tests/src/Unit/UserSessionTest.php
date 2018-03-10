@@ -39,20 +39,7 @@ class UserSessionTest extends TestCase
         $user = new User('USER-NAME', 'correct-password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
-        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
-        $logger = $this->getMockBuilder(LoggerInterface::class)
-            ->getMock();
-        $logger->expects($this->once())->method('info')
-            ->with(
-                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
-            )->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
-                $this->assertArraySubset([
-                    'token' => 'TOKEN-VALUE',
-                    'username' => 'USER-NAME',
-                ], $context);
-                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-            });
+        $logger = $this->fetchTokenLogger(1);
 
         $session = new UserSession($client, $user, $tokenCachePool, $logger);
         $token = $session->acquireToken();
@@ -99,20 +86,7 @@ class UserSessionTest extends TestCase
         $user = new User('USER-NAME', 'correct-password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
-        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
-        $logger = $this->getMockBuilder(LoggerInterface::class)
-            ->getMock();
-        $logger->expects($this->exactly(2))->method('info')
-            ->with(
-                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
-            )->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
-                $this->assertArraySubset([
-                    'token' => 'TOKEN-VALUE',
-                    'username' => 'USER-NAME',
-                ], $context);
-                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-            });
+        $logger = $this->fetchTokenLogger(2);
 
         $session = new UserSession($client, $user, $tokenCachePool, $logger);
         $first_token = $session->acquireToken();
@@ -152,20 +126,7 @@ class UserSessionTest extends TestCase
         $user = new User('USER-NAME', 'correct-password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
-        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
-        $logger = $this->getMockBuilder(LoggerInterface::class)
-            ->getMock();
-        $logger->expects($this->exactly(1))->method('info')
-            ->with(
-                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
-            )->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
-                $this->assertArraySubset([
-                    'token' => 'TOKEN-VALUE',
-                    'username' => 'USER-NAME',
-                ], $context);
-                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-            });
+        $logger = $this->fetchTokenLogger(1);
 
         $session = new UserSession($client, $user, $tokenCachePool, $logger);
         $response = call_user_func_array([$session, $method], $args);
@@ -199,20 +160,7 @@ class UserSessionTest extends TestCase
         $user = new User('USER-NAME', 'correct-password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
-        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
-        $logger = $this->getMockBuilder(LoggerInterface::class)
-            ->getMock();
-        $logger->expects($this->exactly(2))->method('info')
-            ->with(
-                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
-            )->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
-                $this->assertArraySubset([
-                    'token' => 'TOKEN-VALUE',
-                    'username' => 'USER-NAME',
-                ], $context);
-                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-            });
+        $logger = $this->fetchTokenLogger(2);
 
         $session = new UserSession($client, $user, $tokenCachePool, $logger);
         $response = call_user_func_array([$session, $method], $args);
@@ -235,5 +183,31 @@ class UserSessionTest extends TestCase
             ['send', [new Request('GET', 'https://identity.auth.theplatform.com/idm/web/Self/getSelfId')]],
             ['sendAsync', [new Request('GET', 'https://identity.auth.theplatform.com/idm/web/Self/getSelfId')]],
         ];
+    }
+
+    /**
+     * Fetch a logger that expects a number of tokens to be logged.
+     *
+     * @param int $count The number of times a token is logged.
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
+     */
+    private function fetchTokenLogger(int $count)
+    {
+        $logger = $this->getMockBuilder(LoggerInterface::class)
+            ->getMock();
+        $logger->expects($this->exactly($count))->method('info')
+            ->with(
+                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
+            )->willReturnCallback(function ($message, $context) {
+                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
+                $this->assertArraySubset([
+                    'token' => 'TOKEN-VALUE',
+                    'username' => 'USER-NAME',
+                ], $context);
+                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
+            });
+
+        return $logger;
     }
 }
