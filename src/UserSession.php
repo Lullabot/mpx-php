@@ -215,9 +215,12 @@ class UserSession implements ClientInterface
     }
 
     /**
-     * @param array $options
+     * Merge authentication headers into request options.
      *
-     * @return array
+     * @param array $options The array of request options.
+     * @param bool  $reset   Acquire a new token even if one is cached.
+     *
+     * @return array The updated request options.
      */
     private function mergeAuth(array $options, bool $reset = false): array
     {
