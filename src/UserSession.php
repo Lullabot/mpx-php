@@ -275,6 +275,11 @@ class UserSession implements ClientInterface
             $first->then(function (ResponseInterface $response) use ($promise) {
                 $promise->resolve($response);
             }, function (RequestException $e) use ($promise, $request, $options) {
+                // Only retry if it's a token auth error.
+                if (!($e instanceof ClientException) || $e->getCode() != 401) {
+                    $promise->reject($e);
+                }
+
                 $merged = $this->mergeAuth($options, true);
                 /** @var \GuzzleHttp\Promise\PromiseInterface $second */
                 $second = $this->client->sendAsync($request, $merged);
@@ -341,6 +346,11 @@ class UserSession implements ClientInterface
             $first->then(function (ResponseInterface $response) use ($promise) {
                 $promise->resolve($response);
             }, function (RequestException $e) use ($promise, $method, $uri, $options) {
+                // Only retry if it's a token auth error.
+                if (!($e instanceof ClientException) || $e->getCode() != 401) {
+                    $promise->reject($e);
+                }
+
                 $merged = $this->mergeAuth($options, true);
                 /** @var \GuzzleHttp\Promise\PromiseInterface $second */
                 $second = $this->client->requestAsync($method, $uri, $merged);

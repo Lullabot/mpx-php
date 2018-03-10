@@ -171,6 +171,70 @@ class UserSessionTest extends TestCase
     }
 
     /**
+     * Test authenticated requests that should not retry.
+     *
+     * @dataProvider clientMethodDataProvider
+     *
+     * @param string $method The method on UserSession to call.
+     * @param array  $args   The method arguments.
+     *
+     * @covers ::requestWithRetry
+     * @covers ::requestAsyncWithRetry
+     * @covers ::sendWithRetry
+     * @covers ::sendAsyncWithRetry
+     */
+    public function testNotRetriedAuthenticatedRequest(string $method, array $args)
+    {
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(403, [], '{}'),
+        ]);
+        $user = new User('USER-NAME', 'correct-password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+
+        $logger = $this->fetchTokenLogger(1);
+
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
+        $this->expectException(\GuzzleHttp\Exception\ClientException::class);
+        $response = call_user_func_array([$session, $method], $args);
+        if ($response instanceof PromiseInterface) {
+            $response->wait();
+        }
+    }
+
+    /**
+     * Test authenticated requests that should not retry due to a 5XX error.
+     *
+     * @dataProvider clientMethodDataProvider
+     *
+     * @param string $method The method on UserSession to call.
+     * @param array  $args   The method arguments.
+     *
+     * @covers ::requestWithRetry
+     * @covers ::requestAsyncWithRetry
+     * @covers ::sendWithRetry
+     * @covers ::sendAsyncWithRetry
+     */
+    public function testServerExceptionAuthenticatedRequest(string $method, array $args)
+    {
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(503, [], '{}'),
+        ]);
+        $user = new User('USER-NAME', 'correct-password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+
+        $logger = $this->fetchTokenLogger(1);
+
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
+        $this->expectException(\GuzzleHttp\Exception\ServerException::class);
+        $response = call_user_func_array([$session, $method], $args);
+        if ($response instanceof PromiseInterface) {
+            $response->wait();
+        }
+    }
+
+    /**
      * Return an array of methods and parameters to call for authenticated requests.
      *
      * @return array
