@@ -184,7 +184,9 @@ class UserSessionTest extends TestCase
      * @param array  $args   The method arguments.
      *
      * @covers ::requestWithRetry
+     * @covers ::requestAsyncWithRetry
      * @covers ::sendWithRetry
+     * @covers ::sendAsyncWithRetry
      */
     public function testRetriedAuthenticatedRequest(string $method, array $args)
     {
