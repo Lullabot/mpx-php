@@ -259,9 +259,8 @@ class UserSession implements ClientInterface
      * promise is created that explicitly rejects the outer promise, as we only
      * want to retry once.
      *
-     * @param string                                $method  HTTP method
-     * @param string|\Psr\Http\Message\UriInterface $uri     URI object or string.
-     * @param array                                 $options Request options to apply.
+     * @param \Psr\Http\Message\RequestInterface $request The request to send.
+     * @param array                              $options Request options to apply.
      *
      * @return \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
      */
@@ -276,7 +275,7 @@ class UserSession implements ClientInterface
                 $promise->resolve($response);
             }, function (RequestException $e) use ($promise, $request, $options) {
                 // Only retry if it's a token auth error.
-                if (!($e instanceof ClientException) || $e->getCode() != 401) {
+                if (!($e instanceof ClientException) || 401 != $e->getCode()) {
                     $promise->reject($e);
                 }
 
@@ -347,7 +346,7 @@ class UserSession implements ClientInterface
                 $promise->resolve($response);
             }, function (RequestException $e) use ($promise, $method, $uri, $options) {
                 // Only retry if it's a token auth error.
-                if (!($e instanceof ClientException) || $e->getCode() != 401) {
+                if (!($e instanceof ClientException) || 401 != $e->getCode()) {
                     $promise->reject($e);
                 }
 
