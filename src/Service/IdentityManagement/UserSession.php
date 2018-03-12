@@ -1,7 +1,11 @@
 <?php
 
-namespace Lullabot\Mpx;
+namespace Lullabot\Mpx\Service\IdentityManagement;
 
+use Lullabot\Mpx\Client;
+use Lullabot\Mpx\Token;
+use Lullabot\Mpx\TokenCachePool;
+use Lullabot\Mpx\User;
 use Psr\Log\LoggerInterface;
 
 class UserSession
@@ -74,8 +78,7 @@ class UserSession
      *
      * @return \Lullabot\Mpx\Token A valid MPX authentication token.
      */
-    public function acquireToken($duration = null): Token
-    {
+    public function acquireToken($duration = null): Token {
         try {
             $token = $this->tokenCachePool->getToken($this->user);
         } catch (\RuntimeException $e) {
@@ -101,8 +104,7 @@ class UserSession
      *
      * @return \Lullabot\Mpx\Token
      */
-    protected function signIn($duration = null): Token
-    {
+    protected function signIn($duration = null): Token {
         $options = [];
         $options['auth'] = [
             $this->user->getUsername(),
@@ -163,8 +165,7 @@ class UserSession
      *
      * @return \Lullabot\Mpx\Token The new token.
      */
-    private function tokenFromResponse(array $data): Token
-    {
+    private function tokenFromResponse(array $data): Token {
         $token = Token::fromResponse($data);
         // Save the token to the cache and return it.
         $this->tokenCachePool->setToken($this->user, $token);
