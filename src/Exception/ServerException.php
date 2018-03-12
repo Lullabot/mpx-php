@@ -22,7 +22,7 @@ class ServerException extends GuzzleServerException implements MpxExceptionInter
     {
         $data = \GuzzleHttp\json_decode($response->getBody(), true);
         $this->setData($data);
-        $message = sprintf('Error %s: %s', $data['title'], $data['description']);
+        $message = sprintf('HTTP %s Error %s: %s', $response->getStatusCode(), $data['title'], $data['description']);
         parent::__construct($message, $request, $response, $previous, $handlerContext);
     }
 }
