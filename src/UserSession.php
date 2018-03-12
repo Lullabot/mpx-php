@@ -224,11 +224,11 @@ class UserSession implements ClientInterface
      */
     private function mergeAuth(array $options, bool $reset = false): array
     {
-        $options += [
-            'auth' => [
-                $this->user->getUsername(),
-                $this->acquireToken(null, $reset)->getValue(),
-            ],
+        if (!isset($options['query'])) {
+            $options['query'] = [];
+        }
+        $options['query'] += [
+            'token' => $this->acquireToken(null, $reset)->getValue(),
         ];
 
         return $options;

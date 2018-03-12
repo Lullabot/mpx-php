@@ -118,7 +118,8 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             function (RequestInterface $request) {
                 //  This is what tests mergeAuth().
-                $this->assertEquals('Basic VVNFUi1OQU1FOlRPS0VOLVZBTFVF', $request->getHeaderLine('Authorization'));
+                $parts = \GuzzleHttp\Psr7\parse_query($request->getUri()->getQuery());
+                $this->assertEquals('TOKEN-VALUE', $parts['token']);
 
                 return new JsonResponse(200, [], 'getSelfId.json');
             },
