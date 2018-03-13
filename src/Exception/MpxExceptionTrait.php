@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\Exception;
 
+use Psr\Http\Message\ResponseInterface;
+
 /**
  * Trait for MPX error data.
  *
@@ -113,5 +115,20 @@ trait MpxExceptionTrait
                 throw new \InvalidArgumentException(sprintf('Required key %s is missing.', $key));
             }
         }
+    }
+
+    /**
+     * Parse a response into the exception.
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response The response exception.
+     *
+     * @return string The message to use for the exception.
+     */
+    protected function parseResponse(ResponseInterface $response): string
+    {
+        $data = \GuzzleHttp\json_decode($response->getBody(), TRUE);
+        $this->setData($data);
+        $message = sprintf('HTTP %s Error %s: %s', $response->getStatusCode(), $data['title'], $data['description']);
+        return $message;
     }
 }
