@@ -227,8 +227,9 @@ class UserSession implements ClientInterface
         if (!isset($options['query'])) {
             $options['query'] = [];
         }
+        $token = $this->acquireToken(null, $reset);
         $options['query'] += [
-            'token' => $this->acquireToken(null, $reset)->getValue(),
+            'token' => $token->getValue(),
         ];
 
         return $options;

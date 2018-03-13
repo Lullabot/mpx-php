@@ -24,6 +24,16 @@ class Token
     protected $lifetime;
 
     /**
+     * The full ID of the user, as a URL.
+     *
+     * While this properly belongs on a User, MPX returns it in the token as
+     * well, and many API calls need the account to be specified.
+     *
+     * @var string
+     */
+    protected $userId;
+
+    /**
      * The time this token was created. This is determined client-side.
      *
      * @var int
@@ -33,15 +43,17 @@ class Token
     /**
      * Construct a new authentication token for a user.
      *
+     * @param string $userId   The full user ID as a URL.
      * @param string $value    The value of the authentication token as returned by MPX.
      * @param int    $lifetime The number of seconds the token is valid for.
      */
-    public function __construct($value, $lifetime)
+    public function __construct(string $userId, string $value, int $lifetime)
     {
         if ($lifetime <= 0) {
             throw new \InvalidArgumentException('$lifetime must be greater than zero.');
         }
 
+        $this->userId = $userId;
         $this->value = $value;
         $this->lifetime = $lifetime;
         $this->created = time();
@@ -61,7 +73,7 @@ class Token
         // @todo fix this as idle != duration.
         // @todo We need to store the date this token was created.
         $lifetime = (int) floor(min($data['signInResponse']['duration'], $data['signInResponse']['idleTimeout']) / 1000);
-        $token = new self($data['signInResponse']['token'], $lifetime);
+        $token = new self($data['signInResponse']['userId'], $data['signInResponse']['token'], $lifetime);
 
         return $token;
     }
@@ -119,5 +131,13 @@ class Token
     public function getCreated(): int
     {
         return $this->created;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserId(): string
+    {
+        return $this->userId;
     }
 }
