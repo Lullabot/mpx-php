@@ -91,6 +91,7 @@ class MpxExceptionTraitTest extends TestCase
      * @doesNotPerformAssertions
      *
      * @covers ::validateData
+     * @doesNotPerformAssertions
      */
     public function testValidateData()
     {
