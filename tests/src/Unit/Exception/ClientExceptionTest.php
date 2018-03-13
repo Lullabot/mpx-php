@@ -7,15 +7,16 @@ use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Tests\JsonResponse;
 use PHPUnit\Framework\TestCase;
 
-class ClientExceptionTest extends TestCase {
-
+class ClientExceptionTest extends TestCase
+{
     /**
      * Test parsing a response into a client exception.
      *
      * @covers \Lullabot\Mpx\Exception\ClientException::__construct
      * @covers \Lullabot\Mpx\Exception\MpxExceptionTrait::parseResponse
      */
-    public function testConstruct() {
+    public function testConstruct()
+    {
         /** @var \GuzzleHttp\Psr7\Request $request */
         $request = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()

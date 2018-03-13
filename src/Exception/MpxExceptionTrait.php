@@ -126,9 +126,10 @@ trait MpxExceptionTrait
      */
     protected function parseResponse(ResponseInterface $response): string
     {
-        $data = \GuzzleHttp\json_decode($response->getBody(), TRUE);
+        $data = \GuzzleHttp\json_decode($response->getBody(), true);
         $this->setData($data);
         $message = sprintf('HTTP %s Error %s: %s', $response->getStatusCode(), $data['title'], $data['description']);
+
         return $message;
     }
 }

@@ -23,6 +23,4 @@ class ServerException extends GuzzleServerException implements MpxExceptionInter
         $message = $this->parseResponse($response);
         parent::__construct($message, $request, $response, $previous, $handlerContext);
     }
-
-
 }
