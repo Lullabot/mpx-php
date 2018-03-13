@@ -90,20 +90,6 @@ class TokenTest extends TestCase
     }
 
     /**
-     * Test parsing a response array into a Token.
-     *
-     * @covers ::fromResponse
-     */
-    public function testFromResponse()
-    {
-        $response = new JsonResponse(200, [], 'signin-success.json');
-        $token = Token::fromResponse(json_decode($response->getBody(), true));
-        $this->assertEquals('TOKEN-VALUE', $token->getValue());
-        $this->assertEquals(14400, $token->getLifetime());
-        $this->assertEquals('https://identity.auth.theplatform.com/idm/data/User/mpx/1', $token->getUserId());
-    }
-
-    /**
      * Test creating a token from an MPX response.
      *
      * @covers ::fromResponseData
