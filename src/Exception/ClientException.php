@@ -23,9 +23,7 @@ class ClientException extends GuzzleClientException implements MpxExceptionInter
      */
     public function __construct(RequestInterface $request, ResponseInterface $response, \Exception $previous = null, array $handlerContext = [])
     {
-        $data = \GuzzleHttp\json_decode($response->getBody(), true);
-        $this->setData($data);
-        $message = sprintf('HTTP %s Error %s: %s', $response->getStatusCode(), $data['title'], $data['description']);
+        $message = $this->parseResponse($response);
         parent::__construct($message, $request, $response, $previous, $handlerContext);
     }
 }
