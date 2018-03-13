@@ -102,4 +102,68 @@ class TokenTest extends TestCase
         $this->assertEquals(14400, $token->getLifetime());
         $this->assertEquals('https://identity.auth.theplatform.com/idm/data/User/mpx/1', $token->getUserId());
     }
+
+    /**
+     * Test creating a token from an MPX response.
+     *
+     * @covers ::fromResponseData
+     * @covers ::validateData
+     */
+    public function testFromResponseData()
+    {
+        $data = json_decode(file_get_contents(__DIR__.'/../../fixtures/signin-success.json'), true);
+        $token = Token::fromResponseData($data);
+        $this->assertSame('TOKEN-VALUE', (string) $token);
+        $this->assertSame('TOKEN-VALUE', $token->getValue());
+        $this->assertSame(14400, $token->getLifetime());
+    }
+
+    /**
+     * Test that a missing signInResponse throws an exception.
+     *
+     * @covers ::fromResponseData
+     * @covers ::validateData
+     */
+    public function testValidateDataNoRoot()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('signInResponse key is missing.');
+        Token::fromResponseData([]);
+    }
+
+    /**
+     * Test missing required keys within a signInResponse.
+     *
+     * @dataProvider validateDataProvider
+     * @covers ::validateData
+     */
+    public function testInvalidResponseData($data, $key)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
+        Token::fromResponseData(['signInResponse' => $data]);
+    }
+
+    /**
+     * Data provider for testing error validation.
+     *
+     * @return array An array with an invalid error and the missing key.
+     */
+    public function validateDataProvider()
+    {
+        $required = [
+            'duration' => 123,
+            'idleTimeout' => 456,
+            'token' => 'token-value',
+        ];
+        $data = array_map(function ($value) use (&$required) {
+            end($required);
+            $key = key($required);
+            array_pop($required);
+
+            return [$required, $key];
+        }, $required);
+
+        return $data;
+    }
 }

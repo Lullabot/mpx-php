@@ -68,14 +68,40 @@ class Token
      *
      * @return \Lullabot\Mpx\Token A new MPX token.
      */
-    public static function fromResponse(array $data): self
+    public static function fromResponseData(array $data): self
     {
         // @todo fix this as idle != duration.
         // @todo We need to store the date this token was created.
+        static::validateData($data);
         $lifetime = (int) floor(min($data['signInResponse']['duration'], $data['signInResponse']['idleTimeout']) / 1000);
         $token = new self($data['signInResponse']['userId'], $data['signInResponse']['token'], $lifetime);
 
         return $token;
+    }
+
+    /**
+     * Validate all required keys in a sign-in response.
+     *
+     * @param array $data The response data from MPX.
+     *
+     * @throws \InvalidArgumentException Thrown when $data is missing required data.
+     */
+    private static function validateData(array $data)
+    {
+        if (!isset($data['signInResponse'])) {
+            throw new \InvalidArgumentException('signInResponse key is missing.');
+        }
+
+        $required = [
+            'duration',
+            'idleTimeout',
+            'token',
+        ];
+        foreach ($required as $key) {
+            if (empty($data['signInResponse'][$key])) {
+                throw new \InvalidArgumentException(sprintf('Required key %s is missing.', $key));
+            }
+        }
     }
 
     /**

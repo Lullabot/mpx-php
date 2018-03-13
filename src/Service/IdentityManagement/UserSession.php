@@ -1,7 +1,11 @@
 <?php
 
-namespace Lullabot\Mpx;
+namespace Lullabot\Mpx\Service\IdentityManagement;
 
+use Lullabot\Mpx\Client;
+use Lullabot\Mpx\Token;
+use Lullabot\Mpx\TokenCachePool;
+use Lullabot\Mpx\User;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Promise;
@@ -244,7 +248,7 @@ class UserSession implements ClientInterface
      */
     private function tokenFromResponse(array $data): Token
     {
-        $token = Token::fromResponse($data);
+        $token = Token::fromResponseData($data);
         // Save the token to the cache and return it.
         $this->tokenCachePool->setToken($this->user, $token);
 
