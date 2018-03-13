@@ -1,7 +1,11 @@
 <?php
 
-namespace Lullabot\Mpx;
+namespace Lullabot\Mpx\Service\IdentityManagement;
 
+use Lullabot\Mpx\Client;
+use Lullabot\Mpx\Token;
+use Lullabot\Mpx\TokenCachePool;
+use Lullabot\Mpx\User;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Promise;
