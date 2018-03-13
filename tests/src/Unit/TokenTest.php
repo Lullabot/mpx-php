@@ -2,7 +2,6 @@
 
 namespace Lullabot\Mpx\Tests\Unit;
 
-use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Token;
 use PHPUnit\Framework\TestCase;
 
