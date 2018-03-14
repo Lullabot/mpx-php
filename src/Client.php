@@ -76,27 +76,6 @@ class Client implements GuzzleClientInterface
         return $this->client->request($method, $url, $options);
     }
 
-    public function authenticatedRequest(User $user, $method = 'GET', $url = null, array $options = [])
-    {
-        // @todo Move this whole method to UserSession.
-        if (isset($user)) {
-            $duration = isset($options['timeout']) ? $options['timeout'] : null;
-            $options['query']['token'] = (string) $user->acquireToken($duration);
-        }
-
-        try {
-            return $this->request($method, $url, $options);
-        } catch (ApiException $exception) {
-            // If the token is invalid, we should delete it from storage so that a
-            // fresh token is fetched on the next request.
-            if (401 == $exception->getCode()) {
-                // Ensure the token will be deleted.
-                $user->invalidateToken();
-            }
-            throw $exception;
-        }
-    }
-
     /**
      * Handle an XML API response.
      *

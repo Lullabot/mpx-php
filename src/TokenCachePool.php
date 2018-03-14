@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx;
 
+use Lullabot\Mpx\Exception\TokenNotFoundException;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -55,12 +56,12 @@ class TokenCachePool
      */
     public function getToken(User $user): Token
     {
-        $item = $this->cacheItemPool->getItem($this->cacheKey($user));
         // @todo Test that the expiresAfter() call works. We don't want to be caught
         // by cron etc.
+        $item = $this->cacheItemPool->getItem($this->cacheKey($user));
+
         if (!$item->isHit()) {
-            // @todo This should be a TokenNotFoundException.
-            throw new \RuntimeException();
+            throw new TokenNotFoundException($user);
         }
 
         return $item->get();
