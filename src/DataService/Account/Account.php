@@ -2,7 +2,13 @@
 
 namespace Lullabot\Mpx\DataService\Account;
 
+use GuzzleHttp\Psr7\Uri;
+use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class Account
 {
@@ -275,10 +281,13 @@ class Account
     /**
      * Set The globally unique URI of this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface|string
      */
     public function setId($id)
     {
+        if (is_string($id)) {
+            $id = new Uri($id);
+        }
         $this->id = $id;
     }
 
@@ -455,17 +464,36 @@ class Account
         $this->version = $version;
     }
 
-    public static function loadAllAccounts(\Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession) {
+    public static function loadAllAccounts(UserSession $userSession)
+    {
+        // @todo Implement global paging on search results.
+        // @todo Implement global handling of adding schema.
+        // @todo Implement global handling of adding cjson (Request object?)
         $promise = $userSession->requestAsync('GET', static::ACCOUNT_URI, [
             'query' => [
                 'schema' => '1.0',
                 'form' => 'cjson',
-            ]
-        ])->then(function (\Psr\Http\Message\ResponseInterface $response) {
-            return (string) $response->getBody();
+            ],
+        ])->then(function (ResponseInterface $response) {
+            $encoders = [new JsonEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+
+            $serializer = new Serializer($normalizers, $encoders);
+            $results = \GuzzleHttp\json_decode($response->getBody(), true);
+            $accounts = [];
+            foreach ($results['entries'] as $entry) {
+                // @todo Implement a QueryResult object that is returned, that in turn deserializes each object?
+                $encoded = \GuzzleHttp\json_encode($entry);
+                /** @var self $account */
+                $account = $serializer->deserialize($encoded, self::class, 'json', [
+                    'allow_extra_attributes' => false,
+                ]);
+                $accounts[(string) $account->getId()] = $account;
+            }
+
+            return $accounts;
         });
 
         return $promise;
     }
-
 }
