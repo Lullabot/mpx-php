@@ -6,6 +6,8 @@ use Psr\Http\Message\UriInterface;
 
 class Account
 {
+    const ACCOUNT_URI = 'https://access.auth.theplatform.com/data/Account';
+
     /**
      * The date and time that this object was created.
      *
@@ -451,6 +453,19 @@ class Account
     public function setVersion($version)
     {
         $this->version = $version;
+    }
+
+    public static function loadAllAccounts(\Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession) {
+        $promise = $userSession->requestAsync('GET', static::ACCOUNT_URI, [
+            'query' => [
+                'schema' => '1.0',
+                'form' => 'cjson',
+            ]
+        ])->then(function (\Psr\Http\Message\ResponseInterface $response) {
+            return (string) $response->getBody();
+        });
+
+        return $promise;
     }
 
 }
