@@ -231,8 +231,9 @@ class UserSession implements ClientInterface
         if (!isset($options['query'])) {
             $options['query'] = [];
         }
+        $token = $this->acquireToken(null, $reset);
         $options['query'] += [
-            'token' => $this->acquireToken(null, $reset)->getValue(),
+            'token' => $token->getValue(),
         ];
 
         return $options;
@@ -247,7 +248,7 @@ class UserSession implements ClientInterface
      */
     private function tokenFromResponse(array $data): Token
     {
-        $token = Token::fromResponse($data);
+        $token = Token::fromResponseData($data);
         // Save the token to the cache and return it.
         $this->tokenCachePool->setToken($this->user, $token);
 
