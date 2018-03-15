@@ -149,6 +149,9 @@ class UserSessionTest extends TestCase
      * @covers ::requestAsyncWithRetry
      * @covers ::sendWithRetry
      * @covers ::sendAsyncWithRetry
+     * @covers ::outerPromise
+     * @covers ::finallyResolve
+     * @covers ::isTokenAuthError
      */
     public function testRetriedAuthenticatedRequest(string $method, array $args)
     {
@@ -183,6 +186,8 @@ class UserSessionTest extends TestCase
      * @covers ::requestAsyncWithRetry
      * @covers ::sendWithRetry
      * @covers ::sendAsyncWithRetry
+     * @covers ::outerPromise
+     * @covers ::isTokenAuthError
      */
     public function testNotRetriedAuthenticatedRequest(string $method, array $args)
     {
