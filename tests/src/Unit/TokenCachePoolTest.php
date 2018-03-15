@@ -29,7 +29,7 @@ class TokenCachePoolTest extends TestCase
     public function setUp()
     {
         $this->user = new User('username', 'password');
-        $this->token = new Token('value', time() + 60);
+        $this->token = new Token('https://example.com/idm/data/User/mpx/123456', 'value', time() + 60);
     }
 
     /**
@@ -53,7 +53,7 @@ class TokenCachePoolTest extends TestCase
      */
     public function testExpiresToken()
     {
-        $token = new Token('value', 1);
+        $token = new Token('https://example.com/idm/data/User/mpx/123456', 'value', 1);
         $cache = new TokenCachePool(new ArrayCachePool());
         $cache->setToken($this->user, $token);
         sleep(1);
