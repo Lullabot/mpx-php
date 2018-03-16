@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\DataService\Account;
+namespace Lullabot\Mpx\DataService\Access;
 
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
