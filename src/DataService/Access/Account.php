@@ -129,7 +129,7 @@ class Account
     protected $version;
 
     /**
-     * Returns The date and time that this object was created.
+     * Returns the date and time that this object was created.
      *
      * @return \DateTime
      */
@@ -139,7 +139,7 @@ class Account
     }
 
     /**
-     * Set The date and time that this object was created.
+     * Set the date and time that this object was created.
      *
      * @param \DateTime
      */
@@ -149,7 +149,7 @@ class Account
     }
 
     /**
-     * Returns The id of the user that created this object.
+     * Returns the id of the user that created this object.
      *
      * @return \Psr\Http\Message\UriInterface
      */
@@ -159,7 +159,7 @@ class Account
     }
 
     /**
-     * Set The id of the user that created this object.
+     * Set the id of the user that created this object.
      *
      * @param \Psr\Http\Message\UriInterface
      */
@@ -169,7 +169,7 @@ class Account
     }
 
     /**
-     * Returns The description of this object.
+     * Returns the description of this object.
      *
      * @return string
      */
@@ -179,7 +179,7 @@ class Account
     }
 
     /**
-     * Set The description of this object.
+     * Set the description of this object.
      *
      * @param string
      */
@@ -209,7 +209,7 @@ class Account
     }
 
     /**
-     * Returns The id field values of the Role objects that define the domains, or service instances, that this account is permitted to use.
+     * Returns the id field values of the Role objects that define the domains, or service instances, that this account is permitted to use.
      *
      * @return \Psr\Http\Message\UriInterface[]
      */
@@ -219,7 +219,7 @@ class Account
     }
 
     /**
-     * Set The id field values of the Role objects that define the domains, or service instances, that this account is permitted to use.
+     * Set the id field values of the Role objects that define the domains, or service instances, that this account is permitted to use.
      *
      * @param \Psr\Http\Message\UriInterface[]
      */
@@ -229,7 +229,7 @@ class Account
     }
 
     /**
-     * Returns The id field values of the Role objects that define the features, or service types, that this account is permitted to use.
+     * Returns the id field values of the Role objects that define the features, or service types, that this account is permitted to use.
      *
      * @return \Psr\Http\Message\UriInterface[]
      */
@@ -239,7 +239,7 @@ class Account
     }
 
     /**
-     * Set The id field values of the Role objects that define the features, or service types, that this account is permitted to use.
+     * Set the id field values of the Role objects that define the features, or service types, that this account is permitted to use.
      *
      * @param \Psr\Http\Message\UriInterface[]
      */
@@ -269,7 +269,7 @@ class Account
     }
 
     /**
-     * Returns The globally unique URI of this object.
+     * Returns the globally unique URI of this object.
      *
      * @return \Psr\Http\Message\UriInterface
      */
@@ -279,7 +279,7 @@ class Account
     }
 
     /**
-     * Set The globally unique URI of this object.
+     * Set the globally unique URI of this object.
      *
      * @param \Psr\Http\Message\UriInterface|string
      */
@@ -312,7 +312,7 @@ class Account
     }
 
     /**
-     * Returns The id of the account that owns this account.
+     * Returns the id of the account that owns this account.
      *
      * @return \Psr\Http\Message\UriInterface
      */
@@ -322,7 +322,7 @@ class Account
     }
 
     /**
-     * Set The id of the account that owns this account.
+     * Set the id of the account that owns this account.
      *
      * @param \Psr\Http\Message\UriInterface
      */
@@ -358,7 +358,7 @@ class Account
     }
 
     /**
-     * Returns The account's region.
+     * Returns the account's region.
      *
      * @return string
      */
@@ -368,7 +368,7 @@ class Account
     }
 
     /**
-     * Set The account's region.
+     * Set the account's region.
      *
      * @param string
      */
@@ -378,7 +378,7 @@ class Account
     }
 
     /**
-     * Returns The name of this object.
+     * Returns the title of this object.
      *
      * @return string
      */
@@ -388,7 +388,7 @@ class Account
     }
 
     /**
-     * Set The name of this object.
+     * Set the title of this object.
      *
      * @param string
      */
@@ -405,7 +405,7 @@ class Account
     }
 
     /**
-     * Returns The date and time this object was last modified.
+     * Returns the date and time this object was last modified.
      *
      * @return \DateTime
      */
@@ -415,7 +415,7 @@ class Account
     }
 
     /**
-     * Set The date and time this object was last modified.
+     * Set the date and time this object was last modified.
      *
      * @param \DateTime
      */
@@ -425,7 +425,7 @@ class Account
     }
 
     /**
-     * Returns The id of the user that last modified this object.
+     * Returns the id of the user that last modified this object.
      *
      * @return \Psr\Http\Message\UriInterface
      */
@@ -435,7 +435,7 @@ class Account
     }
 
     /**
-     * Set The id of the user that last modified this object.
+     * Set the id of the user that last modified this object.
      *
      * @param \Psr\Http\Message\UriInterface
      */
@@ -445,7 +445,7 @@ class Account
     }
 
     /**
-     * Returns This object's modification version.
+     * Returns this object's modification version.
      *
      * @return int
      */
@@ -455,7 +455,7 @@ class Account
     }
 
     /**
-     * Set This object's modification version.
+     * Set this object's modification version.
      *
      * @param int
      */
