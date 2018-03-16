@@ -31,9 +31,10 @@ class ResolveAllUrls
      * @todo Is there value in storing Responses in all classes?
      *
      * @param string $service
-     * @param array $data
+     * @param array  $data
      */
-    public function __construct(string $service, array $data) {
+    public function __construct(string $service, array $data)
+    {
         if (!isset($data['resolveAllUrlsResponse'])) {
             throw new \InvalidArgumentException();
         }
@@ -51,7 +52,7 @@ class ResolveAllUrls
             ],
         ];
 
-        return $userSession->requestAsync('GET', self::RESOLVE_ALL_URLS_URL, $options)->then(function(ResponseInterface $response) use ($service) {
+        return $userSession->requestAsync('GET', self::RESOLVE_ALL_URLS_URL, $options)->then(function (ResponseInterface $response) use ($service) {
             return new static($service, \GuzzleHttp\json_decode($response->getBody(), true));
         });
     }
@@ -61,7 +62,8 @@ class ResolveAllUrls
      *
      * @return string[]
      */
-    public function getResolved(): array {
+    public function getResolved(): array
+    {
         return $this->resolved;
     }
 
@@ -70,7 +72,8 @@ class ResolveAllUrls
      *
      * @return string
      */
-    public function getService(): string {
+    public function getService(): string
+    {
         return $this->service;
     }
 }
