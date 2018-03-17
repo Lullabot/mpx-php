@@ -19,3 +19,22 @@ API request that resulted in a `401`.
 If your application does not wish to log these actions at all, use
 `\Psr\Log\NullLogger` for any constructors that require a
 `\Psr\Log\LoggerInterface`.
+
+
+## Overview of main classes
+
+### Client
+MPX API implementation of Guzzle ClientInterface. As a Client it doesn’t do anything extra but suppress errors to force a returning HTTP 200.
+It also handles XML from responses
+
+### UserSession
+A wrapper around Client, implementing all the stuff from Guzzle ClientInterface, and adding sign and singout functionalities.
+
+### User
+An MPX user. Just username and password getters.
+
+### Token
+MPX authentication token that is returned by the platform after [sign in](https://docs.theplatform.com/help/wsf-signin-method)
+
+### TokenCachePool
+Cache of user authentication tokens. This class is a wrapper around a \Psr\Cache\CacheItemPoolInterface object
