@@ -3,7 +3,7 @@
 namespace Lullabot\Mpx\DataService\Player;
 
 use Lullabot\Mpx\CreateKeyInterface;
-use Lullabot\Mpx\DataService\ConversionTrait;
+use Lullabot\Mpx\DataService\BaseDataTrait;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -15,21 +15,7 @@ use Psr\Http\Message\UriInterface;
  */
 class Player implements CreateKeyInterface
 {
-    use ConversionTrait;
-
-    /**
-     * The date and time that this object was created.
-     *
-     * @var \DateTime
-     */
-    protected $added;
-
-    /**
-     * The id of the user that created this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $addedByUserId;
+    use BaseDataTrait;
 
     /**
      * The administrative workflow tags for this object.
@@ -37,13 +23,6 @@ class Player implements CreateKeyInterface
      * @var string[]
      */
     protected $adminTags;
-
-    /**
-     * the identifier for the advertising policy for this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $adPolicyId;
 
     /**
      * Indicates whether the player will feature sharing via email.
@@ -333,13 +312,6 @@ class Player implements CreateKeyInterface
     protected $height;
 
     /**
-     * The globally unique URI of this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $id;
-
-    /**
      * Whether to include the default player CSS file in the player HTML page.
      *
      * @var bool
@@ -387,13 +359,6 @@ class Player implements CreateKeyInterface
      * @var \Psr\Http\Message\UriInterface
      */
     protected $overlayImageUrl;
-
-    /**
-     * The id of the account that owns this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $ownerId;
 
     /**
      * The amount of padding to add to the bottom of the player host page.
@@ -639,46 +604,6 @@ class Player implements CreateKeyInterface
      * @var int
      */
     protected $width;
-
-    /**
-     * Returns The date and time that this object was created.
-     *
-     * @return \DateTime
-     */
-    public function getAdded(): \DateTime
-    {
-        return $this->added;
-    }
-
-    /**
-     * Set The date and time that this object was created.
-     *
-     * @param \DateTime|int
-     */
-    public function setAdded($added)
-    {
-        $this->added = $this->convertDateTime($added);
-    }
-
-    /**
-     * Returns The id of the user that created this object.
-     *
-     * @return UriInterface
-     */
-    public function getAddedByUserId(): UriInterface
-    {
-        return $this->addedByUserId;
-    }
-
-    /**
-     * Set The id of the user that created this object.
-     *
-     * @param UriInterface|string
-     */
-    public function setAddedByUserId($addedByUserId)
-    {
-        $this->addedByUserId = $this->convertUri($addedByUserId);
-    }
 
     /**
      * Returns The administrative workflow tags for this object.
@@ -1541,26 +1466,6 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The globally unique URI of this object.
-     *
-     * @return UriInterface
-     */
-    public function getId(): UriInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set The globally unique URI of this object.
-     *
-     * @param UriInterface
-     */
-    public function setId($id)
-    {
-        $this->id = $this->convertUri($id);
-    }
-
-    /**
      * Returns Whether to include the default player CSS file in the player HTML page.
      *
      * @return bool
@@ -1698,26 +1603,6 @@ class Player implements CreateKeyInterface
     public function setOverlayImageUrl($overlayImageUrl)
     {
         $this->overlayImageUrl = $this->convertUri($overlayImageUrl);
-    }
-
-    /**
-     * Returns The id of the account that owns this object.
-     *
-     * @return UriInterface
-     */
-    public function getOwnerId(): UriInterface
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * Set The id of the account that owns this object.
-     *
-     * @param UriInterface
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $this->convertUri($ownerId);
     }
 
     /**

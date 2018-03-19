@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\DataService\Media;
 
 use Lullabot\Mpx\CreateKeyInterface;
 use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\DataService\BaseDataTrait;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -20,26 +21,7 @@ use Psr\Http\Message\UriInterface;
  */
 class Media implements CreateKeyInterface
 {
-    /**
-     * The id of the AdPolicy associated with this content.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $adPolicyId;
-
-    /**
-     * The date and time that this object was created.
-     *
-     * @var \DateTime
-     */
-    protected $added;
-
-    /**
-     * The id of the user that created this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $addedByUserId;
+    use BaseDataTrait;
 
     /**
      * The administrative workflow tags for this object.
@@ -217,13 +199,6 @@ class Media implements CreateKeyInterface
     protected $guid;
 
     /**
-     * The globally unique URI of this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $id;
-
-    /**
      * A list of internal keywords that describe this content.
      *
      * @var string
@@ -271,13 +246,6 @@ class Media implements CreateKeyInterface
      * @var \Psr\Http\Message\UriInterface[]
      */
     protected $originalOwnerIds;
-
-    /**
-     * The id of the account that owns this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $ownerId;
 
     /**
      * The globally unique public identifier for this media.
@@ -411,51 +379,11 @@ class Media implements CreateKeyInterface
     /**
      * Set the id of the AdPolicy associated with this content.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface|string
      */
     public function setAdPolicyId($adPolicyId)
     {
-        $this->adPolicyId = $adPolicyId;
-    }
-
-    /**
-     * Returns the date and time that this object was created.
-     *
-     * @return \DateTime
-     */
-    public function getAdded(): \DateTime
-    {
-        return $this->added;
-    }
-
-    /**
-     * Set the date and time that this object was created.
-     *
-     * @param \DateTime
-     */
-    public function setAdded($added)
-    {
-        $this->added = $added;
-    }
-
-    /**
-     * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getAddedByUserId(): UriInterface
-    {
-        return $this->addedByUserId;
-    }
-
-    /**
-     * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setAddedByUserId($addedByUserId)
-    {
-        $this->addedByUserId = $addedByUserId;
+        $this->adPolicyId = $this->convertUri($adPolicyId);
     }
 
     /**
@@ -959,26 +887,6 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getId(): UriInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * Returns A list of internal keywords that describe this content.
      *
      * @return string
@@ -1116,26 +1024,6 @@ class Media implements CreateKeyInterface
     public function setOriginalOwnerIds($originalOwnerIds)
     {
         $this->originalOwnerIds = $originalOwnerIds;
-    }
-
-    /**
-     * Returns the id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getOwnerId(): UriInterface
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * Set the id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
     }
 
     /**
