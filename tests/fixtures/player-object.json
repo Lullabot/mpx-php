@@ -110,13 +110,13 @@
     "customJavaScriptUrls": [
 
     ],
-    "posterImagePreviewAssetType" : null,
-    "posterImageMetaAssetType": null,
+    "posterImagePreviewAssetType" : "asset-type",
+    "posterImageMetaAssetType": "asset-type",
     "posterImageDefaultWidth": -1,
     "posterImageDefaultHeight": -1,
-    "failoverHtml": null,
+    "failoverHtml": "<p>failover</p>",
     "compatibilityMode": false,
-    "fallbackPdk": null,
-    "pdk": null,
+    "fallbackPdk": "reserved",
+    "pdk": "reserved",
     "pid": "DemoPlayer"
 }
