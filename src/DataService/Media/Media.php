@@ -411,7 +411,7 @@ class Media implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getApproved(): \boolean
+    public function getApproved(): bool
     {
         return $this->approved;
     }
@@ -471,7 +471,7 @@ class Media implements CreateKeyInterface
      *
      * @return AvailabilityState
      */
-    public function getAvailabilityState(): \AvailabilityState
+    public function getAvailabilityState()
     {
         return $this->availabilityState;
     }
@@ -539,11 +539,11 @@ class Media implements CreateKeyInterface
     /**
      * Set the date that this content becomes available for playback.
      *
-     * @param \DateTime
+     * @param \DateTime|int
      */
     public function setAvailableDate($availableDate)
     {
-        $this->availableDate = $availableDate;
+        $this->availableDate = $this->convertDateTime($availableDate);
     }
 
     /**
@@ -811,7 +811,7 @@ class Media implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getExcludeCountries(): \boolean
+    public function getExcludeCountries(): bool
     {
         return $this->excludeCountries;
     }
@@ -839,11 +839,11 @@ class Media implements CreateKeyInterface
     /**
      * Set the date that this content expires and is no longer available for playback.
      *
-     * @param \DateTime
+     * @param \DateTime|int
      */
     public function setExpirationDate($expirationDate)
     {
-        $this->expirationDate = $expirationDate;
+        $this->expirationDate = $this->convertDateTime($expirationDate);
     }
 
     /**
@@ -859,11 +859,11 @@ class Media implements CreateKeyInterface
     /**
      * Set Reserved for future use.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface|string
      */
     public function setFileSourceMediaId($fileSourceMediaId)
     {
-        $this->fileSourceMediaId = $fileSourceMediaId;
+        $this->fileSourceMediaId = $this->convertUri($fileSourceMediaId);
     }
 
     /**
@@ -971,7 +971,7 @@ class Media implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getLocked(): \boolean
+    public function getLocked(): bool
     {
         return $this->locked;
     }
@@ -1059,11 +1059,11 @@ class Media implements CreateKeyInterface
     /**
      * Set the ID of the Program that represents this media. The GUID URI is recommended.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface|string
      */
     public function setProgramId($programId)
     {
-        $this->programId = $programId;
+        $this->programId = $this->convertUri($programId);
     }
 
     /**
@@ -1103,7 +1103,7 @@ class Media implements CreateKeyInterface
      */
     public function setProviderId($providerId)
     {
-        $this->providerId = $providerId;
+        $this->providerId = $this->convertUri($providerId);
     }
 
     /**
@@ -1119,11 +1119,11 @@ class Media implements CreateKeyInterface
     /**
      * Set the original release date or airdate of this Media object's content.
      *
-     * @param \DateTime
+     * @param \DateTime|int
      */
     public function setPubDate($pubDate)
     {
-        $this->pubDate = $pubDate;
+        $this->pubDate = $this->convertDateTime($pubDate);
     }
 
     /**
@@ -1179,11 +1179,11 @@ class Media implements CreateKeyInterface
     /**
      * Set the id of the Restriction associated with this content.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface|string
      */
     public function setRestrictionId($restrictionId)
     {
-        $this->restrictionId = $restrictionId;
+        $this->restrictionId = $this->convertUri($restrictionId);
     }
 
     /**
@@ -1199,11 +1199,11 @@ class Media implements CreateKeyInterface
     /**
      * Set the ID of the Program that represents the series to which this media belongs. The GUID URI is recommended.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface|string
      */
     public function setSeriesId($seriesId)
     {
-        $this->seriesId = $seriesId;
+        $this->seriesId = $this->convertUri($seriesId);
     }
 
     /**
@@ -1319,11 +1319,11 @@ class Media implements CreateKeyInterface
     /**
      * Set the date and time this object was last modified.
      *
-     * @param \DateTime
+     * @param \DateTime|int
      */
     public function setUpdated($updated)
     {
-        $this->updated = $updated;
+        $this->updated = $this->convertDateTime($updated);
     }
 
     /**
@@ -1343,7 +1343,7 @@ class Media implements CreateKeyInterface
      */
     public function setUpdatedByUserId($updatedByUserId)
     {
-        $this->updatedByUserId = $updatedByUserId;
+        $this->updatedByUserId = $this->convertUri($updatedByUserId);
     }
 
     /**
