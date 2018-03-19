@@ -48,7 +48,7 @@ class ResolveAllUrls
     public function __construct(string $service, array $data)
     {
         if (!isset($data['resolveAllUrlsResponse'])) {
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException('Data does not contain a resolveAllUrlsResponse key and does not appear to be an MPX response.');
         }
 
         $this->resolved = $data['resolveAllUrlsResponse'];

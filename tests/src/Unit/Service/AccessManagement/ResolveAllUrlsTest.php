@@ -13,12 +13,16 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 
 /**
+ * Test resolving all URLs for a given MPX service.
+ *
  * @coversDefaultClass \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls
  */
 class ResolveAllUrlsTest extends TestCase {
     use MockClientTrait;
 
     /**
+     * Test basic response loading.
+     *
      * @covers ::load
      * @covers ::__construct
      * @covers ::getService
@@ -36,5 +40,16 @@ class ResolveAllUrlsTest extends TestCase {
         $r = ResolveAllUrls::load($session, 'Media Data Service')->wait();
         $this->assertEquals('Media Data Service', $r->getService());
         $this->assertEquals(["http://data.media.theplatform.com/media"], $r->getResolved());
+    }
+
+    /**
+     * Test that bad responses throw an exception.
+     *
+     * @covers ::__construct
+     */
+    public function testInvalidData() {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Data does not contain a resolveAllUrlsResponse key and does not appear to be an MPX response.');
+        $r = new ResolveAllUrls('Media Data Service', []);
     }
 }
