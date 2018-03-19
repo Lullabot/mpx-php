@@ -52,7 +52,7 @@ abstract class ObjectTestBase extends TestCase
     /**
      * @param $fixture
      */
-    protected function loadFixture($fixture): void
+    protected function loadFixture($fixture)
     {
         $encoders = [new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
