@@ -3,10 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService\Player;
 
 use Lullabot\Mpx\DataService\Player\Player;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
 /**
  * Tests the Player object.
@@ -15,21 +12,9 @@ use Symfony\Component\Serializer\Serializer;
  *
  * @coversDefaultClass \Lullabot\Mpx\DataService\Player\Player
  */
-class PlayerTest extends TestCase
+class PlayerTest extends ObjectTestBase
 {
-    /**
-     * The serializer used to decode the data.
-     *
-     * @var Serializer
-     */
-    protected $serializer;
-
-    /**
-     * The decoded player object fixture.
-     *
-     * @var array
-     */
-    protected $decoded;
+    protected $class = Player::class;
 
     /**
      * {@inheritdoc}
@@ -37,13 +22,7 @@ class PlayerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
-        $encoders = [new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $this->serializer = new Serializer($normalizers, $encoders);
-
-        $data = file_get_contents(__DIR__.'/../../../../fixtures/player-object.json');
-        $this->decoded = \GuzzleHttp\json_decode($data, true);
+        $this->loadFixture('player-object.json');
     }
 
     /**
@@ -56,38 +35,17 @@ class PlayerTest extends TestCase
      */
     public function testGetSet(string $field, $expected = null)
     {
-        // This significantly improves test performance as we only deserialize a single field at a time.
-        $filtered = [
-            $field => $this->decoded[$field],
-        ];
-
-        // @todo This is a total hack as MPX returns JSON with null values. Replace by omitting in the normalizer.
-        $filtered = array_filter($filtered, function ($value) {
-            return null !== $value;
-        });
-        $data = json_encode($filtered);
-
-        $player = $this->serializer->deserialize($data, Player::class, 'json');
-        $data = json_decode($data, true);
-
-        $method = 'get'.ucfirst($field);
-        if (!$expected) {
-            $expected = $filtered[$field];
-        }
-        $this->assertEquals($expected, $player->$method());
+        $this->assertObjectClass($this->class, $field, $expected);
     }
 
     /**
-     * Return an array of methods to test.
+     * @param string $class
      *
-     * @return array The array of methods to test.
+     * @return array
      */
     public function getSetMethods()
     {
-        $r = new \ReflectionClass(Player::class);
-        foreach ($r->getProperties() as $property) {
-            $tests[$property->getName()] = [$property->getName()];
-        }
+        $tests = parent::getSetMethods();
         $tests['added'] = ['added', \DateTime::createFromFormat('U.u', '1335377369.000')];
         $tests['updated'] = ['updated', \DateTime::createFromFormat('U.u', '1335378125.000')];
 
