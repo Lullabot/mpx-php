@@ -34,5 +34,8 @@
       "Lullabot\\Mpx\\Tests\\": "tests/src/",
       "Lullabot\\Mpx\\Command\\": "command/src/"
     }
+  },
+  "extra": {
+    "composer-version": "^1.6.3"
   }
 }
