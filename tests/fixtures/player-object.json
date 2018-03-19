@@ -1,0 +1,203 @@
+{
+  "id": "http://data.player.theplatform.com/player/data/Player/34928",
+  "guid": "yahtocha4aiP2aiVah4Jee7ahkohK2qu",
+  "updated": 1479405200000,
+  "title": "MPX Production Player",
+  "description": "Universal player used by the Production environment.",
+  "added": 1464885946000,
+  "ownerId": "http://access.auth.theplatform.com/data/Account/1",
+  "addedByUserId": "https://identity.auth.theplatform.com/idm/data/User/mpx/1",
+  "updatedByUserId": "https://identity.auth.theplatform.com/idm/data/User/mpx/1",
+  "version": 16,
+  "locked": false,
+  "paddingLeft": -1,
+  "paddingTop": -1,
+  "paddingRight": -1,
+  "paddingBottom": -1,
+  "height": 0,
+  "width": 0,
+  "allowFullScreen": true,
+  "backgroundImageUrl": "",
+  "colorSchemeId": "http://data.player.theplatform.com/player/data/ColorScheme/",
+  "columns": 0,
+  "disabled": false,
+  "headerImageHeight": 0,
+  "headerImageUrl": "",
+  "itemsPerPage": 0,
+  "layoutId": "http://data.player.theplatform.com/player/data/Layout/1",
+  "limitToCategories": [],
+  "overlayImageUrl": "",
+  "feedUrl": "https://feed.theplatform.com/f/jei1iS/Ohy1tahcoo1y",
+  "feedUrlParams": "",
+  "releaseUrlParams": "",
+  "skinId": "http://data.player.theplatform.com/player/data/Skin/1",
+  "showAirdate": false,
+  "showAuthor": false,
+  "showBitrate": false,
+  "thumbnailHeight": 0,
+  "thumbnailWidth": 0,
+  "allowSearch": true,
+  "allowEmail": true,
+  "allowGetLink": true,
+  "allowEmbed": true,
+  "alwaysShowOverlay": true,
+  "autoPlay": true,
+  "controlRackHeight": 0,
+  "embedAllowFullScreen": true,
+  "embedHeight": 387,
+  "embedWidth": 688,
+  "playAll": true,
+  "playerUrl": "",
+  "linkUrl": "",
+  "endCardFeedUrl": "",
+  "showAllChoice": false,
+  "showFullTime": true,
+  "showMostPopularChoice": false,
+  "showNav": false,
+  "shuffle": false,
+  "useFloatingControls": true,
+  "restrictionId": null,
+  "embedRestrictionId": null,
+  "adPolicyId": null,
+  "embedAdPolicyId": null,
+  "preferredRuntimes": [
+    "universal",
+    "flash",
+    "html5"
+  ],
+  "preferredFormats": [
+    "F4M",
+    "M3U",
+    "MPEG4"
+  ],
+  "aspectRatioWidth": 16,
+  "aspectRatioHeight": 9,
+  "controlLayoutXml": "",
+  "customHtml": "",
+  "customCss": "html, body {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t\tborder: 0;\n\t\t}\n\t\t.tpLayout {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t}\n\t\t.tpMessage {\n\t\t\tfont-size: 14px;\n\t\t\tcolor: #bebebe;\n\t\t\tbackground: #131313;\n\t\t}\n\t\t#player {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t}\n\t\t.tpBackground {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tpadding:0px;\n\t\t}\n\t\t.tpContainer {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tpadding:0px;\n\t\t}\n\n.tpPlayerCard.tpSubtitleStylesCard\n{\n\toverflow: auto;\n}\n\n.tpPlayerCard .tpSubtitlesForm\n{\n\tfont-size: 14px;\n}\n.tpPlayerCard .tpFontColor, .tpPlayerCard .tpFontBackgroundColor, .tpPlayerCard .tpFontEdgeColor {\n\twidth: 15px;\n\theight: 15px;\n\tfloat: left;\n\tcursor: hand;\n\tborder-style: solid;\n\tborder-width: 1px;\n\tmargin-right: 4px;\n\ttext-align: center;\n\tcursor: pointer;\n}\n\n.tpPlayerCard select {\n\tcolor: #FFFFFF;\n}\n\n.tpPlayerCard.tpSubtitleStylesCard .tpCardClose .tpButton\n{\n\tfloat: right;\n\tmargin-right: 4px;\n\twidth: 120px;\n\theight: 34px;\n}\n\n.tpPlayerCard.tpSubtitleStylesCard .tpFormActions .tpButton\n{\n\tfloat: right;\n\tmargin-right: 4px;\n\twidth: 120px;\n\theight: 34px;\n}\n\n.tpPlayerCard.tpSubtitleStylesCard input\n{\n\theight: auto;\n}",
+  "customJavaScript": "$pdk.env.Detect.getInstance().addToConfigSet(\"flashblacklist\", \"\");\n\nif ($(window).width() < 450) {\n  $pdk.controller.setPlayerLayoutUrl(\"https://bravo-video.nbcuni.com/up/PDK/metalayout/smallMetaLayout.xml\");\n}else{\n  $pdk.controller.setPlayerLayoutUrl(\"https://bravo-video.nbcuni.com/up/PDK/metalayout/normalMetaLayout-univ.xml\");\n}\n\nNBCUOmniture.initialize(null);\n\nfunction tpExtCompanionAdScriptCallback(htmlAdContent, deprecatedParam, height, width, mimeType, slotCustomId) {\nconsole.log(\"INSIDE tpExtCompanionAdScriptCallback\");\n  var companionAdEventObj = {\n    id: slotCustomId,\n    mime: mimeType,\n    html: htmlAdContent,\n    width: width,\n    height: height\n  };\n  $pdk.controller.dispatchEvent(\"onCompanionAd\", companionAdEventObj);\n}\n\n$('document').ready( function() {\n  if (fw.gup('m') !== '1') {\n    $('body').append(fw.slot(728, 90));\n    $('body').append(fw.slot(300, 60));\n    $('body').append(fw.slot(300, 250));\n  }\n  $('.controlsLayer').css('visibility','hidden');\n});",
+  "includeDefaultCss": true,
+  "regionWidths": {
+    "player": 688
+  },
+  "regionHeights": {
+    "player": 387
+  },
+  "customProperties": {
+    "endCard": "none",
+    "allowBandwidth": "false"
+  },
+  "enabledPlugIns": [
+    {
+      "plugInId": "http://data.player.theplatform.com/player/data/PlugIn/1",
+      "regionName": "player",
+      "params": {
+        "persistentlabels": "c1=2,ns_site=tpf,tp_cid=CUST,tp_type=production",
+        "timinglabel": "tp_st_ps",
+        "labelmapping": "ns_st_cl=clip.length,ns_st_pl=playlist.title,ns_st_pr=playlist.feed,ns_st_ep=playlist.title,tp_aid=playlist.accountID,tp_st_cat=content.baseclip.categories,tp_st_mp=playlist.player,tp_st_guid=content.baseclip.guid",
+        "sendErrors": "true",
+        "sendload": "true",
+        "priority": "1",
+        "c2": "9924155"
+      }
+    },
+    {
+      "plugInId": "http://data.player.theplatform.com/player/data/PlugIn/2",
+      "regionName": "player",
+      "params": {
+        "visitorNamespace": "visitor",
+        "trackVars": "eVar4,eVar7,eVar9,eVar11,eVar12,eVar13,eVar14,eVar27,eVar32,eVar36,eVar37,eVar38,eVar39,eVar40,eVar41,eVar42,eVar44,eVar45,eVar47,eVar48,eVar49,eVar50,eVar75,prop2,prop8,prop9,prop20,prop42,prop43,prop44,prop45,prop46,prop50,products,events",
+        "host": "oimg.nbcuni.com",
+        "secureHost": "osimg.nbcuni.com",
+        "trackEvents": "event20,event21,event22,event23,event24,event25,event26,event27,event28,event29,event30,event31,event81,event82,event70,event71,event72,event73,event74,event75,event76,event77,event78,event79,event80",
+        "priority": "1",
+        "account": "nbcuglobal",
+        "dc": "112",
+        "frequency": "25%"
+      }
+    },
+    {
+      "plugInId": "http://data.player.theplatform.com/player/data/PlugIn/3",
+      "regionName": "player",
+      "params": {
+        "path": "https://example.com/PDK/img/ratings/",
+        "enableAgeVerification": "false",
+        "delay": "10",
+        "reminder": "20",
+        "showRatings": "true",
+        "priority": "1"
+      }
+    },
+    {
+      "plugInId": "http://data.player.theplatform.com/player/data/PlugIn/4",
+      "regionName": "player",
+      "params": {
+        "bufferProfile": "livestable",
+        "manifest": "true",
+        "videoLayer": "akamaihd",
+        "priority": "1",
+        "fallback": "switch=progressive"
+      }
+    },
+    {
+      "plugInId": "http://data.player.theplatform.com/player/data/PlugIn/4",
+      "regionName": "player",
+      "params": {
+        "enablecustomparse": "true",
+        "DPR": "true",
+        "apid": "P11111111-2222-3333-4444-555555555555",
+        "sfcode": "us",
+        "lfappend": "true",
+        "priority": "1",
+        "apn": "Production Player"
+      }
+    },
+    {
+      "plugInId": "http://data.player.theplatform.com/player/data/PlugIn/6",
+      "regionName": "player",
+      "params": {
+        "labelmapping": "c3=\"bravo\",c4=\"*null\",c6=content.baseclip.categories",
+        "priority": "1",
+        "c2": "3000039"
+      }
+    },
+    {
+      "plugInId": "http://data.player.theplatform.com/player/data/PlugIn/5",
+      "regionName": "player",
+      "params": {
+        "pemURLs": "http://example.com/p/AnalyticsExtension.swf",
+        "playerProfile": "live_profile",
+        "siteSectionId": "cable_default",
+        "adManagerUrl": "http://adm.example.com/p/AdManager.{ext}",
+        "priority": "1",
+        "customVideoAssetIdField": "externalAdvertiserId",
+        "isLive": "false",
+        "exitFullscreenOnPause": "true",
+        "serverUrl": "http://example.com",
+        "playerProfileHTML5": "live_jsam",
+        "networkId": "12345",
+        "requestTimeout": "5",
+        "pemURLsSeparator": ","
+      }
+    }
+  ],
+  "adminTags": [],
+  "enableExternalController": true,
+  "autoInitialize": true,
+  "allowRss": true,
+  "customCssUrls": [
+    "//example.com/PDK/card/ui-7.css"
+  ],
+  "customJavaScriptUrls": [
+    "https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"
+  ],
+  "posterImagePreviewAssetType": null,
+  "posterImageMetaAssetType": null,
+  "posterImageDefaultWidth": -1,
+  "posterImageDefaultHeight": -1,
+  "failoverHtml": null,
+  "compatibilityMode": false,
+  "fallbackPdk": null,
+  "pdk": null,
+  "pid": "production"
+}
