@@ -122,7 +122,7 @@ class DataObjectFactory
         // @todo This is a total hack as MPX returns JSON with null values. Replace by ommitting in the normalizer.
         $j = \GuzzleHttp\json_decode($data, true);
         array_filter($j, function ($value) {
-            return !is_null($value);
+            return null !== $value;
         });
         $data = json_encode($j);
         $encoders = [new JsonEncoder()];

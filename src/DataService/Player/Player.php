@@ -3,9 +3,20 @@
 namespace Lullabot\Mpx\DataService\Player;
 
 use Lullabot\Mpx\CreateKeyInterface;
+use Lullabot\Mpx\DataService\ConversionTrait;
+use Psr\Http\Message\UriInterface;
 
+/**
+ * @\Lullabot\Mpx\DataService\Annotation\DataService(
+ *     service="Player Data Service",
+ *     path="/data/Player",
+ *     schemaVersion="1.6",
+ * )
+ */
 class Player implements CreateKeyInterface
 {
+    use ConversionTrait;
+
     /**
      * The date and time that this object was created.
      *
@@ -114,7 +125,7 @@ class Player implements CreateKeyInterface
     /**
      * URL for a custom background image.
      *
-     * @var string
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $backgroundImageUrl;
 
@@ -163,7 +174,7 @@ class Player implements CreateKeyInterface
     /**
      * URLs to remote custom CSS content for the player.
      *
-     * @var string[]
+     * @var \Psr\Http\Message\UriInterface[]
      */
     protected $customCssUrls;
 
@@ -184,7 +195,7 @@ class Player implements CreateKeyInterface
     /**
      * URLs to custom JavaScript content for the player.
      *
-     * @var string[]
+     * @var \Psr\Http\Message\UriInterface[]
      */
     protected $customJavaScriptUrls;
 
@@ -261,7 +272,7 @@ class Player implements CreateKeyInterface
     /**
      * The URL of the feed that will populate the related items list end card.
      *
-     * @var string
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $endCardFeedUrl;
 
@@ -282,7 +293,7 @@ class Player implements CreateKeyInterface
     /**
      * The URL of the player's default feed.
      *
-     * @var string
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $feedUrl;
 
@@ -310,7 +321,7 @@ class Player implements CreateKeyInterface
     /**
      * The URL of the header image.
      *
-     * @var string
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $headerImageUrl;
 
@@ -359,7 +370,7 @@ class Player implements CreateKeyInterface
     /**
      * The destination URL for when a user clicks the player video area.
      *
-     * @var string
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $linkUrl;
 
@@ -373,7 +384,7 @@ class Player implements CreateKeyInterface
     /**
      * The URL of the player overlay image.
      *
-     * @var string
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $overlayImageUrl;
 
@@ -436,7 +447,7 @@ class Player implements CreateKeyInterface
     /**
      * Player URL used in the sharing features.
      *
-     * @var string
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $playerUrl;
 
@@ -515,7 +526,7 @@ class Player implements CreateKeyInterface
      *
      * @var bool
      */
-    protected $showAirDate;
+    protected $showAirdate;
 
     /**
      * Indicates whether to include the All option in the category list component.
@@ -642,19 +653,19 @@ class Player implements CreateKeyInterface
     /**
      * Set The date and time that this object was created.
      *
-     * @param \DateTime
+     * @param \DateTime|int
      */
     public function setAdded($added)
     {
-        $this->added = $added;
+        $this->added = $this->convertDateTime($added);
     }
 
     /**
      * Returns The id of the user that created this object.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    public function getAddedByUserId(): UriInterface
     {
         return $this->addedByUserId;
     }
@@ -662,11 +673,11 @@ class Player implements CreateKeyInterface
     /**
      * Set The id of the user that created this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface|string
      */
     public function setAddedByUserId($addedByUserId)
     {
-        $this->addedByUserId = $addedByUserId;
+        $this->addedByUserId = $this->convertUri($addedByUserId);
     }
 
     /**
@@ -692,9 +703,9 @@ class Player implements CreateKeyInterface
     /**
      * Returns the identifier for the advertising policy for this object.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getAdPolicyId(): \Psr\Http\Message\UriInterface
+    public function getAdPolicyId(): UriInterface
     {
         return $this->adPolicyId;
     }
@@ -702,11 +713,11 @@ class Player implements CreateKeyInterface
     /**
      * Set the identifier for the advertising policy for this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setAdPolicyId($adPolicyId)
     {
-        $this->adPolicyId = $adPolicyId;
+        $this->adPolicyId = $this->convertUri($adPolicyId);
     }
 
     /**
@@ -714,7 +725,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getAllowEmail(): \boolean
+    public function getAllowEmail(): bool
     {
         return $this->allowEmail;
     }
@@ -734,7 +745,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getAllowEmbed(): \boolean
+    public function getAllowEmbed(): bool
     {
         return $this->allowEmbed;
     }
@@ -754,7 +765,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getAllowFullScreen(): \boolean
+    public function getAllowFullScreen(): bool
     {
         return $this->allowFullScreen;
     }
@@ -774,7 +785,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getAllowGetLink(): \boolean
+    public function getAllowGetLink(): bool
     {
         return $this->allowGetLink;
     }
@@ -794,7 +805,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getAllowRss(): \boolean
+    public function getAllowRss(): bool
     {
         return $this->allowRss;
     }
@@ -814,7 +825,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getAllowSearch(): \boolean
+    public function getAllowSearch(): bool
     {
         return $this->allowSearch;
     }
@@ -834,7 +845,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getAlwaysShowOverlay(): \boolean
+    public function getAlwaysShowOverlay(): bool
     {
         return $this->alwaysShowOverlay;
     }
@@ -854,7 +865,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getAspectRatioHeight(): \Integer
+    public function getAspectRatioHeight(): int
     {
         return $this->aspectRatioHeight;
     }
@@ -874,7 +885,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getAspectRatioWidth(): \Integer
+    public function getAspectRatioWidth(): int
     {
         return $this->aspectRatioWidth;
     }
@@ -894,7 +905,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getAutoPlay(): \boolean
+    public function getAutoPlay(): bool
     {
         return $this->autoPlay;
     }
@@ -914,7 +925,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getAutoInitialize(): \boolean
+    public function getAutoInitialize(): bool
     {
         return $this->autoInitialize;
     }
@@ -946,15 +957,15 @@ class Player implements CreateKeyInterface
      */
     public function setBackgroundImageUrl($backgroundImageUrl)
     {
-        $this->backgroundImageUrl = $backgroundImageUrl;
+        $this->backgroundImageUrl = $this->convertUri($backgroundImageUrl);
     }
 
     /**
      * Returns Identifier for the color scheme assigned to this player.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getColorSchemeId(): \Psr\Http\Message\UriInterface
+    public function getColorSchemeId(): UriInterface
     {
         return $this->colorSchemeId;
     }
@@ -962,11 +973,11 @@ class Player implements CreateKeyInterface
     /**
      * Set Identifier for the color scheme assigned to this player.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setColorSchemeId($colorSchemeId)
     {
-        $this->colorSchemeId = $colorSchemeId;
+        $this->colorSchemeId = $this->convertUri($colorSchemeId);
     }
 
     /**
@@ -974,7 +985,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getColumns(): \Integer
+    public function getColumns(): int
     {
         return $this->columns;
     }
@@ -994,7 +1005,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getCompatibilityMode(): \boolean
+    public function getCompatibilityMode(): bool
     {
         return $this->compatibilityMode;
     }
@@ -1034,7 +1045,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getControlRackHeight(): \Integer
+    public function getControlRackHeight(): int
     {
         return $this->controlRackHeight;
     }
@@ -1194,7 +1205,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getDisabled(): \boolean
+    public function getDisabled(): bool
     {
         return $this->disabled;
     }
@@ -1212,9 +1223,9 @@ class Player implements CreateKeyInterface
     /**
      * Returns The identifier for the advertising policy to use when the player is embedded in another site.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getEmbedAdPolicyId(): \Psr\Http\Message\UriInterface
+    public function getEmbedAdPolicyId(): UriInterface
     {
         return $this->embedAdPolicyId;
     }
@@ -1222,11 +1233,11 @@ class Player implements CreateKeyInterface
     /**
      * Set The identifier for the advertising policy to use when the player is embedded in another site.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setEmbedAdPolicyId($embedAdPolicyId)
     {
-        $this->embedAdPolicyId = $embedAdPolicyId;
+        $this->embedAdPolicyId = $this->convertUri($embedAdPolicyId);
     }
 
     /**
@@ -1234,7 +1245,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getEmbedAllowFullScreen(): \boolean
+    public function getEmbedAllowFullScreen(): bool
     {
         return $this->embedAllowFullScreen;
     }
@@ -1254,7 +1265,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getEmbedHeight(): \Integer
+    public function getEmbedHeight(): int
     {
         return $this->embedHeight;
     }
@@ -1272,9 +1283,9 @@ class Player implements CreateKeyInterface
     /**
      * Returns The identifier for the restriction to apply to this player when embedded in another site.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getEmbedRestrictionId(): \Psr\Http\Message\UriInterface
+    public function getEmbedRestrictionId(): UriInterface
     {
         return $this->embedRestrictionId;
     }
@@ -1282,11 +1293,11 @@ class Player implements CreateKeyInterface
     /**
      * Set The identifier for the restriction to apply to this player when embedded in another site.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setEmbedRestrictionId($embedRestrictionId)
     {
-        $this->embedRestrictionId = $embedRestrictionId;
+        $this->embedRestrictionId = $this->convertUri($embedRestrictionId);
     }
 
     /**
@@ -1294,7 +1305,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getEmbedWidth(): \Integer
+    public function getEmbedWidth(): int
     {
         return $this->embedWidth;
     }
@@ -1334,7 +1345,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getEnableExternalController(): \boolean
+    public function getEnableExternalController(): bool
     {
         return $this->enableExternalController;
     }
@@ -1366,7 +1377,7 @@ class Player implements CreateKeyInterface
      */
     public function setEndCardFeedUrl($endCardFeedUrl)
     {
-        $this->endCardFeedUrl = $endCardFeedUrl;
+        $this->endCardFeedUrl = $this->convertUri($endCardFeedUrl);
     }
 
     /**
@@ -1426,7 +1437,7 @@ class Player implements CreateKeyInterface
      */
     public function setFeedUrl($feedUrl)
     {
-        $this->feedUrl = $feedUrl;
+        $this->feedUrl = $this->convertUri($feedUrl);
     }
 
     /**
@@ -1474,7 +1485,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getHeaderImageHeight(): \Integer
+    public function getHeaderImageHeight(): int
     {
         return $this->headerImageHeight;
     }
@@ -1506,7 +1517,7 @@ class Player implements CreateKeyInterface
      */
     public function setHeaderImageUrl($headerImageUrl)
     {
-        $this->headerImageUrl = $headerImageUrl;
+        $this->headerImageUrl = $this->convertUri($headerImageUrl);
     }
 
     /**
@@ -1514,7 +1525,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getHeight(): \Integer
+    public function getHeight(): int
     {
         return $this->height;
     }
@@ -1532,9 +1543,9 @@ class Player implements CreateKeyInterface
     /**
      * Returns The globally unique URI of this object.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getId(): \Psr\Http\Message\UriInterface
+    public function getId(): UriInterface
     {
         return $this->id;
     }
@@ -1542,11 +1553,11 @@ class Player implements CreateKeyInterface
     /**
      * Set The globally unique URI of this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->id = $this->convertUri($id);
     }
 
     /**
@@ -1554,7 +1565,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getIncludeDefaultCss(): \boolean
+    public function getIncludeDefaultCss(): bool
     {
         return $this->includeDefaultCss;
     }
@@ -1574,7 +1585,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getItemsPerPage(): \Integer
+    public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
     }
@@ -1592,9 +1603,9 @@ class Player implements CreateKeyInterface
     /**
      * Returns The identifier for the layout assigned to this player.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getLayoutId(): \Psr\Http\Message\UriInterface
+    public function getLayoutId(): UriInterface
     {
         return $this->layoutId;
     }
@@ -1602,11 +1613,11 @@ class Player implements CreateKeyInterface
     /**
      * Set The identifier for the layout assigned to this player.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setLayoutId($layoutId)
     {
-        $this->layoutId = $layoutId;
+        $this->layoutId = $this->convertUri($layoutId);
     }
 
     /**
@@ -1632,9 +1643,9 @@ class Player implements CreateKeyInterface
     /**
      * Returns The destination URL for when a user clicks the player video area.
      *
-     * @return string
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getLinkUrl(): string
+    public function getLinkUrl(): UriInterface
     {
         return $this->linkUrl;
     }
@@ -1646,7 +1657,7 @@ class Player implements CreateKeyInterface
      */
     public function setLinkUrl($linkUrl)
     {
-        $this->linkUrl = $linkUrl;
+        $this->linkUrl = $this->convertUri($linkUrl);
     }
 
     /**
@@ -1654,7 +1665,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getLocked(): \boolean
+    public function getLocked(): bool
     {
         return $this->locked;
     }
@@ -1672,9 +1683,9 @@ class Player implements CreateKeyInterface
     /**
      * Returns The URL of the player overlay image.
      *
-     * @return string
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getOverlayImageUrl(): string
+    public function getOverlayImageUrl(): UriInterface
     {
         return $this->overlayImageUrl;
     }
@@ -1686,15 +1697,15 @@ class Player implements CreateKeyInterface
      */
     public function setOverlayImageUrl($overlayImageUrl)
     {
-        $this->overlayImageUrl = $overlayImageUrl;
+        $this->overlayImageUrl = $this->convertUri($overlayImageUrl);
     }
 
     /**
      * Returns The id of the account that owns this object.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getOwnerId(): \Psr\Http\Message\UriInterface
+    public function getOwnerId(): UriInterface
     {
         return $this->ownerId;
     }
@@ -1702,11 +1713,11 @@ class Player implements CreateKeyInterface
     /**
      * Set The id of the account that owns this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setOwnerId($ownerId)
     {
-        $this->ownerId = $ownerId;
+        $this->ownerId = $this->convertUri($ownerId);
     }
 
     /**
@@ -1714,7 +1725,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getPaddingBottom(): \Integer
+    public function getPaddingBottom(): int
     {
         return $this->paddingBottom;
     }
@@ -1734,7 +1745,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getPaddingLeft(): \Integer
+    public function getPaddingLeft(): int
     {
         return $this->paddingLeft;
     }
@@ -1754,7 +1765,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getPaddingRight(): \Integer
+    public function getPaddingRight(): int
     {
         return $this->paddingRight;
     }
@@ -1774,7 +1785,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getPaddingTop(): \Integer
+    public function getPaddingTop(): int
     {
         return $this->paddingTop;
     }
@@ -1834,7 +1845,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getPlayAll(): \boolean
+    public function getPlayAll(): bool
     {
         return $this->playAll;
     }
@@ -1874,7 +1885,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getPosterImageDefaultHeight(): \Integer
+    public function getPosterImageDefaultHeight(): int
     {
         return $this->posterImageDefaultHeight;
     }
@@ -1894,7 +1905,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getPosterImageDefaultWidth(): \Integer
+    public function getPosterImageDefaultWidth(): int
     {
         return $this->posterImageDefaultWidth;
     }
@@ -2052,9 +2063,9 @@ class Player implements CreateKeyInterface
     /**
      * Returns The identifier of the restriction to apply to this player.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getRestrictionId(): \Psr\Http\Message\UriInterface
+    public function getRestrictionId(): UriInterface
     {
         return $this->restrictionId;
     }
@@ -2062,11 +2073,11 @@ class Player implements CreateKeyInterface
     /**
      * Set The identifier of the restriction to apply to this player.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setRestrictionId($restrictionId)
     {
-        $this->restrictionId = $restrictionId;
+        $this->restrictionId = $this->convertUri($restrictionId);
     }
 
     /**
@@ -2074,9 +2085,9 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getShowAirDate(): \boolean
+    public function getShowAirdate(): bool
     {
-        return $this->showAirDate;
+        return $this->showAirdate;
     }
 
     /**
@@ -2084,9 +2095,9 @@ class Player implements CreateKeyInterface
      *
      * @param bool
      */
-    public function setShowAirDate($showAirDate)
+    public function setShowAirdate($showAirdate)
     {
-        $this->showAirDate = $showAirDate;
+        $this->showAirdate = $showAirdate;
     }
 
     /**
@@ -2094,7 +2105,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getShowAllChoice(): \boolean
+    public function getShowAllChoice(): bool
     {
         return $this->showAllChoice;
     }
@@ -2114,7 +2125,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getShowAuthor(): \boolean
+    public function getShowAuthor(): bool
     {
         return $this->showAuthor;
     }
@@ -2134,7 +2145,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getShowBitrate(): \boolean
+    public function getShowBitrate(): bool
     {
         return $this->showBitrate;
     }
@@ -2154,7 +2165,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getShowFullTime(): \boolean
+    public function getShowFullTime(): bool
     {
         return $this->showFullTime;
     }
@@ -2174,7 +2185,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getShowMostPopularChoice(): \boolean
+    public function getShowMostPopularChoice(): bool
     {
         return $this->showMostPopularChoice;
     }
@@ -2194,7 +2205,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getShowNav(): \boolean
+    public function getShowNav(): bool
     {
         return $this->showNav;
     }
@@ -2214,7 +2225,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getShuffle(): \boolean
+    public function getShuffle(): bool
     {
         return $this->shuffle;
     }
@@ -2232,9 +2243,9 @@ class Player implements CreateKeyInterface
     /**
      * Returns Identifier for the skin object to apply this player.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getSkinId(): \Psr\Http\Message\UriInterface
+    public function getSkinId(): UriInterface
     {
         return $this->skinId;
     }
@@ -2242,11 +2253,11 @@ class Player implements CreateKeyInterface
     /**
      * Set Identifier for the skin object to apply this player.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setSkinId($skinId)
     {
-        $this->skinId = $skinId;
+        $this->skinId = $this->convertUri($skinId);
     }
 
     /**
@@ -2254,7 +2265,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getThumbnailHeight(): \Integer
+    public function getThumbnailHeight(): int
     {
         return $this->thumbnailHeight;
     }
@@ -2274,7 +2285,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getThumbnailWidth(): \Integer
+    public function getThumbnailWidth(): int
     {
         return $this->thumbnailWidth;
     }
@@ -2322,19 +2333,19 @@ class Player implements CreateKeyInterface
     /**
      * Set The date and time this object was last modified.
      *
-     * @param \DateTime
+     * @param int
      */
     public function setUpdated($updated)
     {
-        $this->updated = $updated;
+        $this->updated = $this->convertDateTime($updated);
     }
 
     /**
      * Returns The id of the user that last modified this object.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
+    public function getUpdatedByUserId(): UriInterface
     {
         return $this->updatedByUserId;
     }
@@ -2342,11 +2353,11 @@ class Player implements CreateKeyInterface
     /**
      * Set The id of the user that last modified this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setUpdatedByUserId($updatedByUserId)
     {
-        $this->updatedByUserId = $updatedByUserId;
+        $this->updatedByUserId = $this->convertUri($updatedByUserId);
     }
 
     /**
@@ -2354,7 +2365,7 @@ class Player implements CreateKeyInterface
      *
      * @return bool
      */
-    public function getUseFloatingControls(): \boolean
+    public function getUseFloatingControls(): bool
     {
         return $this->useFloatingControls;
     }
@@ -2394,7 +2405,7 @@ class Player implements CreateKeyInterface
      *
      * @return int
      */
-    public function getWidth(): \Integer
+    public function getWidth(): int
     {
         return $this->width;
     }
