@@ -17,7 +17,8 @@ use Psr\Log\NullLogger;
  *
  * @coversDefaultClass \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls
  */
-class ResolveAllUrlsTest extends TestCase {
+class ResolveAllUrlsTest extends TestCase
+{
     use MockClientTrait;
 
     /**
@@ -28,7 +29,8 @@ class ResolveAllUrlsTest extends TestCase {
      * @covers ::getService
      * @covers ::getResolved
      */
-    public function testLoad() {
+    public function testLoad()
+    {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'resolveAllUrls.json'),
@@ -39,7 +41,7 @@ class ResolveAllUrlsTest extends TestCase {
         /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls $r */
         $r = ResolveAllUrls::load($session, 'Media Data Service')->wait();
         $this->assertEquals('Media Data Service', $r->getService());
-        $this->assertEquals(["http://data.media.theplatform.com/media"], $r->getResolved());
+        $this->assertEquals(['http://data.media.theplatform.com/media'], $r->getResolved());
     }
 
     /**
@@ -47,7 +49,8 @@ class ResolveAllUrlsTest extends TestCase {
      *
      * @covers ::__construct
      */
-    public function testInvalidData() {
+    public function testInvalidData()
+    {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Data does not contain a resolveAllUrlsResponse key and does not appear to be an MPX response.');
         $r = new ResolveAllUrls('Media Data Service', []);
