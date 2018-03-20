@@ -58,12 +58,13 @@ class DataObjectFactory
      *
      * @todo Add a load that takes a full URL?
      *
-     * @param int                                      $id      The numeric ID to load.
+     * @param int                                      $id       The numeric ID to load.
      * @param \Lullabot\Mpx\DataService\Access\Account $account
+     * @param bool                                     $readonly (optional) Load from the read-only service.
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function load(int $id, Account $account = null)
+    public function load(int $id, Account $account = null, bool $readonly = false)
     {
         /** @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
         $annotation = $this->description['annotation'];
@@ -73,7 +74,7 @@ class DataObjectFactory
         // @todo Can we do this by calling ResolveAllUrls?
         if (!($base = $annotation->getBaseUri())) {
             $resolved = $this->resolveDomain->resolve($account);
-            $base = $resolved->getUrl($annotation->getService()).$annotation->getPath();
+            $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getPath();
         }
         $uri = $base.'/'.$id;
 
