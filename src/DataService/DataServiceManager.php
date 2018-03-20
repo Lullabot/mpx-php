@@ -50,7 +50,7 @@ class DataServiceManager
      *
      * @return array
      */
-    public function getDataService(string $name, $path)
+    public function getDataService(string $name, string $path)
     {
         $services = $this->discovery->getDataServices();
         if (isset($services[$name][$path])) {
@@ -72,6 +72,7 @@ class DataServiceManager
     public function create($name)
     {
         $services = $this->discovery->getDataServices();
+        // @todo This is broken.
         if (array_key_exists($name, $services)) {
             $class = $services[$name]['class'];
             if (!class_exists($class)) {
