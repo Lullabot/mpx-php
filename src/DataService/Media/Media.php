@@ -16,7 +16,6 @@ use Psr\Http\Message\UriInterface;
  *   service="Media Data Service",
  *   schemaVersion="1.10",
  *   path="/data/Media",
- *   hasAccountContext=true
  * )
  */
 class Media implements CreateKeyInterface

@@ -41,15 +41,6 @@ class DataService
     public $schemaVersion;
 
     /**
-     * If the service supports an account context.
-     *
-     * @todo Should this be optional with a default to false?
-     *
-     * @var bool
-     */
-    public $hasAccountContext;
-
-    /**
      * The base URI of the service, for when the service registry cannot be used.
      *
      * @var string
@@ -86,16 +77,6 @@ class DataService
     public function getSchemaVersion(): string
     {
         return $this->schemaVersion;
-    }
-
-    /**
-     * Return if the service supports an account context.
-     *
-     * @return bool
-     */
-    public function isHasAccountContext(): bool
-    {
-        return $this->hasAccountContext;
     }
 
     /**
