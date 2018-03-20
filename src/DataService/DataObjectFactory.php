@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
@@ -72,14 +73,12 @@ class DataObjectFactory
     /**
      * Load a data object from MPX, returning a promise to it.
      *
-     * @todo Add a load that takes a full URL?
-     *
      * @param int                                      $id      The numeric ID to load.
      * @param \Lullabot\Mpx\DataService\Access\Account $account
      *
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function load(int $id, Account $account = null)
+    public function loadByNumericId(int $id, Account $account = null)
     {
         /** @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
         $annotation = $this->description['annotation'];
@@ -93,18 +92,7 @@ class DataObjectFactory
         }
         $uri = $base.'/'.$id;
 
-        $options = [
-            'query' => [
-                'schema' => $annotation->getSchemaVersion(),
-                'form' => 'cjson',
-            ],
-        ];
-
-        $response = $this->userSession->requestAsync('GET', $uri, $options)->then(function (ResponseInterface $response) {
-            return $this->deserialize($this->description['class'], $response->getBody());
-        });
-
-        return $response;
+        return $this->load($uri);
     }
 
     /**
@@ -130,5 +118,29 @@ class DataObjectFactory
         $serializer = new Serializer($normalizers, $encoders);
 
         return $serializer->deserialize($data, $class, 'json');
+    }
+
+    /**
+     * @param $uri
+     * @return PromiseInterface
+     */
+    public function load($uri): PromiseInterface
+    {
+        /** @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
+        $annotation = $this->description['annotation'];
+        $options = [
+            'query' => [
+                'schema' => $annotation->getSchemaVersion(),
+                'form' => 'cjson',
+            ],
+        ];
+
+        $response = $this->userSession->requestAsync('GET', $uri, $options)->then(
+            function (ResponseInterface $response) {
+                return $this->deserialize($this->description['class'], $response->getBody());
+            }
+        );
+
+        return $response;
     }
 }
