@@ -10,7 +10,6 @@ namespace Lullabot\Mpx\DataService\Annotation;
  * currently implemented. In general, there should only be one implementation
  * of a given (path, service, schema) triple.
  *
- * @todo Use symfony validation to assert requirements.
  * @todo Rename to DataServiceObject
  * @todo Can we infer /data/ from path and assume it's always consistent?
  *
