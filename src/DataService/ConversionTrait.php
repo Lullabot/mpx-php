@@ -17,8 +17,9 @@ trait ConversionTrait
     protected function convertDateTime($microseconds): \DateTime
     {
         if (is_int($microseconds)) {
-            // It's simpler to treat the number a string, since we have to create from a format anyways.
-            $bySeconds = substr_replace($microseconds, '.', -3, 0);
+            $seconds = floor($microseconds / 1000);
+            $remainder = $microseconds % 1000;
+            $bySeconds = "$seconds.$remainder";
 
             return \DateTime::createFromFormat('U.u', $bySeconds);
         }
