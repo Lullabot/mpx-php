@@ -15,6 +15,7 @@ use Lullabot\Mpx\User;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Component\Lock\Exception\LockConflictedException;
 use Symfony\Component\Lock\StoreInterface;
 
@@ -314,8 +315,8 @@ class UserSessionTest extends TestCase
             ->willThrowException(new LockConflictedException());
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
-        //$logger = $this->fetchTokenLogger(1);
-        $logger = new \Psr\Log\NullLogger();
+        // We cover logging in other tests.
+        $logger = new NullLogger();
 
         $session = new UserSession($client, $user, $store, $tokenCachePool, $logger);
         $this->expectException(LockConflictedException::class);
