@@ -39,18 +39,6 @@ class DataObjectFactory
     protected $userSession;
 
     /**
-     * The manager used to load implementation classes of data objects.
-     *
-     * @var \Lullabot\Mpx\DataService\DataServiceManager
-     */
-    protected $manager;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
      * DataObjectFactory constructor.
      *
      * @todo Merge manager and service parameters?
@@ -64,9 +52,7 @@ class DataObjectFactory
     {
         $this->userSession = $userSession;
         $this->resolveDomain = new ResolveDomain($this->userSession);
-        $this->manager = $manager;
         $this->description = $manager->getDataService($service, $path);
-        $this->path = $path;
     }
 
     /**
