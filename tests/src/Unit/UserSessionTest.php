@@ -15,6 +15,7 @@ use Lullabot\Mpx\User;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Lock\Exception\LockConflictedException;
 use Symfony\Component\Lock\StoreInterface;
 
 /**
@@ -293,6 +294,32 @@ class UserSessionTest extends TestCase
         if ($response instanceof PromiseInterface) {
             $response->wait();
         }
+    }
+
+    /**
+     * Test that acquiring a token fails if the lock cannot be grabbed.
+     *
+     * @covers ::signInWithLock
+     */
+    public function testConcurrentSignInFails()
+    {
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+        ]);
+        $user = new User('USER-NAME', 'correct-password');
+        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)
+            ->getMock();
+        $store->expects($this->once())->method('waitAndSave')
+            ->willThrowException(new LockConflictedException());
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+
+        //$logger = $this->fetchTokenLogger(1);
+        $logger = new \Psr\Log\NullLogger();
+
+        $session = new UserSession($client, $user, $store, $tokenCachePool, $logger);
+        $this->expectException(LockConflictedException::class);
+        $session->acquireToken();
     }
 
     /**
