@@ -158,7 +158,17 @@ class UserSession implements ClientInterface
 
         $data = \GuzzleHttp\json_decode($response->getBody(), true);
 
-        return $this->tokenFromResponse($data);
+        $token = $this->tokenFromResponse($data);
+        $this->logger->info(
+            'Retrieved a new MPX token {token} for user {username} that expires on {date}.',
+            [
+                'token' => $token->getValue(),
+                'username' => $this->user->getUsername(),
+                'date' => date(DATE_ISO8601, $token->getExpiration()),
+            ]
+        );
+
+        return $token;
     }
 
     /**
@@ -467,17 +477,11 @@ class UserSession implements ClientInterface
         $lock->acquire(true);
 
         try {
+            // It's possible another thread has signed in for us, so check for a token first.
             $token = $this->tokenCachePool->getToken($this->user);
         } catch (TokenNotFoundException $e) {
+            // We have the lock, and there's no token, so sign in.
             $token = $this->signIn($duration);
-            $this->logger->info(
-                'Retrieved a new MPX token {token} for user {username} that expires on {date}.',
-                [
-                    'token' => $token->getValue(),
-                    'username' => $this->user->getUsername(),
-                    'date' => date(DATE_ISO8601, $token->getExpiration()),
-                ]
-            );
         }
 
         return $token;
