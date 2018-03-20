@@ -2,17 +2,16 @@
 
 namespace Lullabot\Mpx\Service\IdentityManagement;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\Token;
 use Lullabot\Mpx\TokenCachePool;
 use Lullabot\Mpx\User;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Promise;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 class UserSession implements ClientInterface
@@ -231,8 +230,9 @@ class UserSession implements ClientInterface
         if (!isset($options['query'])) {
             $options['query'] = [];
         }
+        $token = $this->acquireToken(null, $reset);
         $options['query'] += [
-            'token' => $this->acquireToken(null, $reset)->getValue(),
+            'token' => $token->getValue(),
         ];
 
         return $options;
@@ -257,12 +257,6 @@ class UserSession implements ClientInterface
     /**
      * Send a request, retrying once if the authentication token is invalid.
      *
-     * This method creates three promises. The outer promise is what is
-     * returned, and itself contains two promises. The first promise is the
-     * first attempt to make an authenticated request. If it fails, a second
-     * promise is created that explicitly rejects the outer promise, as we only
-     * want to retry once.
-     *
      * @param \Psr\Http\Message\RequestInterface $request The request to send.
      * @param array                              $options Request options to apply.
      *
@@ -270,31 +264,33 @@ class UserSession implements ClientInterface
      */
     private function sendAsyncWithRetry(RequestInterface $request, array $options)
     {
-        /** @var \GuzzleHttp\Promise\Promise $promise */
-        $promise = new Promise(function () use (&$promise, $request, $options) {
-            $merged = $this->mergeAuth($options);
-            /** @var \GuzzleHttp\Promise\PromiseInterface $first */
-            $first = $this->client->sendAsync($request, $merged);
-            $first->then(function (ResponseInterface $response) use ($promise) {
-                $promise->resolve($response);
-            }, function (RequestException $e) use ($promise, $request, $options) {
-                // Only retry if it's a token auth error.
-                if (!($e instanceof ClientException) || 401 != $e->getCode()) {
-                    $promise->reject($e);
-                }
+        // This is the initial API request that we expect to pass.
+        $merged = $this->mergeAuth($options);
+        $inner = $this->client->sendAsync($request, $merged);
 
-                $merged = $this->mergeAuth($options, true);
-                /** @var \GuzzleHttp\Promise\PromiseInterface $second */
-                $second = $this->client->sendAsync($request, $merged);
-                $second->then(function (ResponseInterface $response) use ($promise) {
-                    $promise->resolve($response);
-                }, function (RequestException $e) use ($promise) {
-                    $promise->reject($e);
-                });
-            });
+        // However, if it fails, we need to try a second request. We can't
+        // create the second request method outside of the promise body as we
+        // need a new invocation of mergeAuth() that resets the token.
+        $outer = $this->outerPromise($inner);
+
+        $inner->then(function ($value) use ($outer) {
+            // The very first request worked, so resolve the outer promise.
+            $outer->resolve($value);
+        }, function ($e) use ($request, $options, $outer) {
+            // Only retry if it's a token auth error.
+            if (!$this->isTokenAuthError($e)) {
+                $outer->reject($e);
+
+                return;
+            }
+
+            $merged = $this->mergeAuth($options, true);
+            $func = [$this->client, 'send'];
+            $args = [$request, $merged];
+            $this->finallyResolve($outer, $func, $args);
         });
 
-        return $promise;
+        return $outer;
     }
 
     /**
@@ -314,7 +310,7 @@ class UserSession implements ClientInterface
         } catch (ClientException $e) {
             // Only retry if MPX has returned that the existing token is no
             // longer valid.
-            if (401 != $e->getCode()) {
+            if (!$this->isTokenAuthError($e)) {
                 throw $e;
             }
 
@@ -327,12 +323,6 @@ class UserSession implements ClientInterface
     /**
      * Create and send a request, retrying once if the authentication token is invalid.
      *
-     * This method creates three promises. The outer promise is what is
-     * returned, and itself contains two promises. The first promise is the
-     * first attempt to make an authenticated request. If it fails, a second
-     * promise is created that explicitly rejects the outer promise, as we only
-     * want to retry once.
-     *
      * @param string                                $method  HTTP method
      * @param string|\Psr\Http\Message\UriInterface $uri     URI object or string.
      * @param array                                 $options Request options to apply.
@@ -341,31 +331,63 @@ class UserSession implements ClientInterface
      */
     private function requestAsyncWithRetry(string $method, $uri, array $options)
     {
-        /** @var \GuzzleHttp\Promise\Promise $promise */
-        $promise = new Promise(function () use (&$promise, $method, $uri, $options) {
-            $merged = $this->mergeAuth($options);
-            /** @var \GuzzleHttp\Promise\PromiseInterface $first */
-            $first = $this->client->requestAsync($method, $uri, $merged);
-            $first->then(function (ResponseInterface $response) use ($promise) {
-                $promise->resolve($response);
-            }, function (RequestException $e) use ($promise, $method, $uri, $options) {
-                // Only retry if it's a token auth error.
-                if (!($e instanceof ClientException) || 401 != $e->getCode()) {
-                    $promise->reject($e);
-                }
+        // This is the initial API request that we expect to pass.
+        $merged = $this->mergeAuth($options);
+        $inner = $this->client->requestAsync($method, $uri, $merged);
 
-                $merged = $this->mergeAuth($options, true);
-                /** @var \GuzzleHttp\Promise\PromiseInterface $second */
-                $second = $this->client->requestAsync($method, $uri, $merged);
-                $second->then(function (ResponseInterface $response) use ($promise) {
-                    $promise->resolve($response);
-                }, function (RequestException $e) use ($promise) {
-                    $promise->reject($e);
-                });
-            });
+        // However, if it fails, we need to try a second request. We can't
+        // create the second request method outside of the promise body as we
+        // need a new invocation of mergeAuth() that resets the token.
+        $outer = $this->outerPromise($inner);
+
+        $inner->then(function ($value) use ($outer) {
+            // The very first request worked, so resolve the outer promise.
+            $outer->resolve($value);
+        }, function ($e) use ($method, $uri, $options, $outer) {
+            // Only retry if it's a token auth error.
+            if (!$this->isTokenAuthError($e)) {
+                $outer->reject($e);
+
+                return;
+            }
+
+            $merged = $this->mergeAuth($options, true);
+            $func = [$this->client, 'request'];
+            $args = [$method, $uri, $merged];
+            $this->finallyResolve($outer, $func, $args);
         });
 
-        return $promise;
+        return $outer;
+    }
+
+    /**
+     * Determine if an MPX exception is due to a token authentication failure.
+     *
+     * @param \Exception $e
+     *
+     * @return bool
+     */
+    private function isTokenAuthError(\Exception $e): bool
+    {
+        return ($e instanceof ClientException) && 401 == $e->getCode();
+    }
+
+    /**
+     * Resolve or reject a promise by invoking a callable.
+     *
+     * @param \GuzzleHttp\Promise\PromiseInterface $promise
+     * @param callable                             $callable
+     * @param array                                $args
+     */
+    private function finallyResolve(PromiseInterface $promise, callable $callable, $args)
+    {
+        try {
+            // Since we must have blocked to get to this point, we now use
+            // a blocking request to resolve things once and for all.
+            $promise->resolve(call_user_func_array($callable, $args));
+        } catch (\Exception $e) {
+            $promise->reject($e);
+        }
     }
 
     /**
@@ -390,7 +412,7 @@ class UserSession implements ClientInterface
         } catch (ClientException $e) {
             // Only retry if MPX has returned that the existing token is no
             // longer valid.
-            if (401 != $e->getCode()) {
+            if (!$this->isTokenAuthError($e)) {
                 throw $e;
             }
 
@@ -398,5 +420,27 @@ class UserSession implements ClientInterface
 
             return $this->client->request($method, $uri, $merged);
         }
+    }
+
+    /**
+     * Return a new promise that waits on another promise.
+     *
+     * @param \GuzzleHttp\Promise\PromiseInterface $inner
+     *
+     * @return \GuzzleHttp\Promise\Promise
+     */
+    private function outerPromise(PromiseInterface $inner): Promise
+    {
+        $outer = new Promise(function () use ($inner) {
+            // Our wait function invokes the inner's wait function, as as far
+            // as callers are concerned there is only one promise.
+            try {
+                $inner->wait();
+            } catch (\Exception $e) {
+                // The inner promise handles all rejections.
+            }
+        });
+
+        return $outer;
     }
 }
