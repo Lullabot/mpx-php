@@ -41,18 +41,16 @@ class DataObjectFactory
     /**
      * DataObjectFactory constructor.
      *
-     * @todo Merge manager and service parameters?
      * @todo Inject the resolveDomain() instead of constructing?
      *
-     * @param \Lullabot\Mpx\DataService\DataServiceManager         $manager
+     * @param array                                                $description The array describing the destination class for this factory.
      * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession
-     * @param string                                               $service
      */
-    public function __construct(DataServiceManager $manager, UserSession $userSession, string $service, string $path)
+    public function __construct(array $description, UserSession $userSession)
     {
         $this->userSession = $userSession;
         $this->resolveDomain = new ResolveDomain($this->userSession);
-        $this->description = $manager->getDataService($service, $path);
+        $this->description = $description;
     }
 
     /**
