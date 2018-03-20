@@ -50,10 +50,16 @@ class DataService
     /**
      * Return the service of the data object, such as 'Media Data Service'.
      *
-     * @return string
+     * @param bool $readonly (optional) Set to true to return the read-only name of the service.
+     *
+     * @return string The name of the service.
      */
-    public function getService(): string
+    public function getService($readonly = false): string
     {
+        if ($readonly) {
+            return $this->service.' read-only';
+        }
+
         return $this->service;
     }
 
