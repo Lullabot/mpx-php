@@ -198,9 +198,8 @@ workflows:
   nightly:
     triggers:
       - schedule:
-          cron: "0 * * * *"
           # Run jobs every Monday morning at 12AM
-          # cron: "0 0 * * 1"
+          cron: "0 0 * * 1"
           filters:
             branches:
               only:
