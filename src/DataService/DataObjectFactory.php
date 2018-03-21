@@ -5,10 +5,13 @@ namespace Lullabot\Mpx\DataService;
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\Encoder\CJsonEncoder;
+use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
+use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -119,21 +122,53 @@ class DataObjectFactory
         return $response;
     }
 
+    /**
+     * Query for MPX data using 'byField' parameters.
+     *
+     * @param array   $byFields The fields and values to filter by. Note these are exact matches.
+     * @param Account $account  The account context to use in the request.
+     *
+     * @return PromiseInterface A promise returning a \Lullabot\Mpx\DataService\ResultList.
+     */
     public function select(array $byFields, Account $account): PromiseInterface
     {
         /** @var DataService $annotation */
         $annotation = $this->description['annotation'];
         $options = [
-            'query' => [
+            'query' => $byFields + [
                 'schema' => $annotation->getSchemaVersion(),
                 'form' => 'cjson',
-            ] + $byFields,
+            ],
         ];
 
         $uri = $this->getBaseUri($account, $annotation);
+
         $response = $this->userSession->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) {
-                return $this->deserialize($this->description['class'], $response->getBody());
+                $data = $response->getBody();
+
+                // First, we need an encoder that filters out null values.
+                $encoders = [new CJsonEncoder()];
+
+                // We need a property extractor that understands the varying types of 'entries'.
+                // @todo Should we just make multiple subclasses of ResultList?
+                $dataServiceExtractor = new DataServiceExtractor();
+                $dataServiceExtractor->setClass($this->description['class']);
+
+                // Attempt normalizing each key in this order, including denormalizing recursively.
+                $normalizers = [
+                    new UnixMicrosecondNormalizer(),
+                    new UriNormalizer(),
+                    new ObjectNormalizer(
+                        null, null, null,
+                        $dataServiceExtractor
+                    ),
+                    new ArrayDenormalizer(),
+                ];
+
+                $serializer = new Serializer($normalizers, $encoders);
+
+                return $serializer->deserialize($data, ResultList::class, 'json');
             }
         );
 
@@ -143,12 +178,13 @@ class DataObjectFactory
     /**
      * Get the base URI from an annotation or service registry.
      *
-     * @param Account $account The account to use for service resolution.
+     * @param Account     $account    The account to use for service resolution.
      * @param DataService $annotation The annotation data is being loaded for.
      * @param bool                                     $readonly (optional) Load from the read-only service.
+     *
      * @return string The base URI.
      */
-    private function getBaseUri(Account $account, DataService $annotation, bool $readonly = false): string
+    private function getBaseUri(Account $account = null, DataService $annotation, bool $readonly = false): string
     {
         // Accounts are optional as you need to be able to load an account
         // before you can resolve services.
