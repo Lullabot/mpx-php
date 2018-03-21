@@ -27,7 +27,7 @@ class ResolveAllUrlsTest extends TestCase
      * @covers ::load
      * @covers ::__construct
      * @covers ::getService
-     * @covers ::getResolved
+     * @covers ::resolve
      */
     public function testLoad()
     {
@@ -41,7 +41,7 @@ class ResolveAllUrlsTest extends TestCase
         /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls $r */
         $r = ResolveAllUrls::load($session, 'Media Data Service')->wait();
         $this->assertEquals('Media Data Service', $r->getService());
-        $this->assertEquals(['http://data.media.theplatform.com/media'], $r->getResolved());
+        $this->assertEquals('http://data.media.theplatform.com/media', $r->resolve());
     }
 
     /**
