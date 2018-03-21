@@ -11,6 +11,7 @@ use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -201,7 +202,7 @@ class DataObjectFactory
      *
      * @return Serializer
      */
-    private function getObjectSerializer(DataServiceExtractor $dataServiceExtractor = null): Serializer
+    private function getObjectSerializer(PropertyTypeExtractorInterface $dataServiceExtractor): Serializer
     {
         // First, we need an encoder that filters out null values.
         $encoders = [new CJsonEncoder()];

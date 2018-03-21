@@ -5,7 +5,7 @@ namespace Lullabot\Mpx\Encoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 /**
- * Remove null and empty string values from a decoded JSON array.
+ * Remove null values from a decoded JSON array.
  */
 class CJsonEncoder extends JsonEncoder
 {
@@ -35,7 +35,7 @@ class CJsonEncoder extends JsonEncoder
         }
 
         return array_filter($data, function ($value) {
-            return null !== $value && '' != $value;
+            return null !== $value;
         });
     }
 }

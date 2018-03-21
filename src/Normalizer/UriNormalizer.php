@@ -44,8 +44,9 @@ class UriNormalizer implements NormalizerInterface, DenormalizerInterface
      */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
+        // If an empty string is normalized, we can still return a valid URI object.
         if ('' === $data || null === $data) {
-            throw new NotNormalizableValueException('The data is either an empty string or null, you should pass a valid URI string.');
+            return new Uri();
         }
 
         try {
