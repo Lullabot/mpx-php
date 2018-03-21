@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\DataService;
+namespace Lullabot\Mpx\Encoder;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
@@ -9,13 +9,13 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
  */
 class CJsonEncoder extends JsonEncoder
 {
-
     /**
      * {@inheritdoc}
      */
-    public function decode($data, $format, array $context = array())
+    public function decode($data, $format, array $context = [])
     {
         $decoded = parent::decode($data, $format, $context);
+
         return $this->cleanup($decoded);
     }
 
@@ -34,8 +34,8 @@ class CJsonEncoder extends JsonEncoder
             }
         }
 
-        return array_filter($data, function($value) {
-            return null !== $value && "" != $value;
+        return array_filter($data, function ($value) {
+            return null !== $value && '' != $value;
         });
     }
 }
