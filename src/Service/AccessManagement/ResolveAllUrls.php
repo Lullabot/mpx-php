@@ -78,21 +78,16 @@ class ResolveAllUrls
     }
 
     /**
-     * Return the resolved URLs for this service.
+     * Return a resolved URI for this service.
      *
-     * @return string[]
+     * @return string The resolved URI.
      */
-    public function getResolved(): array
-    {
-        return $this->resolved;
-    }
-
     public function resolve(): string
     {
         // If multiple URLs are returned, any of them are usable, so we choose
         // a random one.
         // @todo Double check this assumption.
-        return $this->getResolved()[array_rand($this->getResolved())];
+        return $this->resolved[array_rand($this->resolved)];
     }
 
     /**
