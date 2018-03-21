@@ -479,7 +479,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns Whether this content is approved for playback.
+     * Returns whether this content is approved for playback.
      *
      * @return bool
      */
@@ -489,7 +489,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set Whether this content is approved for playback.
+     * Set whether this content is approved for playback.
      *
      * @param bool
      */
@@ -519,7 +519,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A map that contains localized versions of this object's author value.
+     * Returns a map that contains localized versions of this object's author value.
      *
      * @return array
      */
@@ -529,7 +529,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A map that contains localized versions of this object's author value.
+     * Set a map that contains localized versions of this object's author value.
      *
      * @param array
      */
@@ -579,7 +579,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns An array of distinct time frames that identify the playback availability for this media.
+     * Returns an array of distinct time frames that identify the playback availability for this media.
      *
      * @return AvailabilityWindow[]
      */
@@ -589,7 +589,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set An array of distinct time frames that identify the playback availability for this media.
+     * Set an array of distinct time frames that identify the playback availability for this media.
      *
      * @param AvailabilityWindow[]
      */
@@ -719,7 +719,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A map that contains localized versions of this object's copyright value.
+     * Returns a map that contains localized versions of this object's copyright value.
      *
      * @return array
      */
@@ -729,7 +729,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A map that contains localized versions of this object's copyright value.
+     * Set a map that contains localized versions of this object's copyright value.
      *
      * @param array
      */
@@ -759,7 +759,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A map that contains localized versions of this object's copyrightUrl value.
+     * Returns a map that contains localized versions of this object's copyrightUrl value.
      *
      * @return array
      */
@@ -769,7 +769,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A map that contains localized versions of this object's copyrightUrl value.
+     * Set a map that contains localized versions of this object's copyrightUrl value.
      *
      * @param array
      */
@@ -839,7 +839,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A description of this content.
+     * Returns a description of this content.
      *
      * @return string
      */
@@ -849,7 +849,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A description of this content.
+     * Set a description of this content.
      *
      * @param string
      */
@@ -859,7 +859,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A map that contains localized versions of this object's description value.
+     * Returns a map that contains localized versions of this object's description value.
      *
      * @return array
      */
@@ -869,7 +869,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A map that contains localized versions of this object's description value.
+     * Set a map that contains localized versions of this object's description value.
      *
      * @param array
      */
@@ -879,7 +879,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns Whether the specified countries are excluded from playing this content.
+     * Returns whether the specified countries are excluded from playing this content.
      *
      * @return bool
      */
@@ -889,7 +889,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set Whether the specified countries are excluded from playing this content.
+     * Set whether the specified countries are excluded from playing this content.
      *
      * @param bool
      */
@@ -939,7 +939,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns An alternate identifier for this object that is unique within the owning account.
+     * Returns an alternate identifier for this object that is unique within the owning account.
      *
      * @return string
      */
@@ -949,7 +949,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set An alternate identifier for this object that is unique within the owning account.
+     * Set an alternate identifier for this object that is unique within the owning account.
      *
      * @param string
      */
@@ -979,7 +979,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A list of internal keywords that describe this content.
+     * Returns a list of internal keywords that describe this content.
      *
      * @return string
      */
@@ -989,7 +989,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A list of internal keywords that describe this content.
+     * Set a list of internal keywords that describe this content.
      *
      * @param string
      */
@@ -999,7 +999,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A map that contains localized versions of this object's keywords value.
+     * Returns a map that contains localized versions of this object's keywords value.
      *
      * @return array
      */
@@ -1009,7 +1009,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A map that contains localized versions of this object's keywords value.
+     * Set a map that contains localized versions of this object's keywords value.
      *
      * @param array
      */
@@ -1019,7 +1019,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A link to additional information related to this content.
+     * Returns a link to additional information related to this content.
      *
      * @return string
      */
@@ -1029,7 +1029,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A link to additional information related to this content.
+     * Set a link to additional information related to this content.
      *
      * @param string
      */
@@ -1039,7 +1039,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A map that contains localized versions of this object's link value.
+     * Returns a map that contains localized versions of this object's link value.
      *
      * @return array
      */
@@ -1049,7 +1049,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A map that contains localized versions of this object's link value.
+     * Set a map that contains localized versions of this object's link value.
      *
      * @param array
      */
@@ -1059,7 +1059,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns Whether this object currently allows updates.
+     * Returns whether this object currently allows updates.
      *
      * @return bool
      */
@@ -1069,7 +1069,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set Whether this object currently allows updates.
+     * Set whether this object currently allows updates.
      *
      * @param bool
      */
@@ -1299,7 +1299,8 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns the ID of the Program that represents the series to which this media belongs. The GUID URI is recommended.
+     * Returns the ID of the Program that represents the series to which this media belongs. The GUID URI is
+     * recommended.
      *
      * @return \Psr\Http\Message\UriInterface
      */
@@ -1339,7 +1340,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A map that contains localized versions of this object's text value.
+     * Returns a map that contains localized versions of this object's text value.
      *
      * @return array
      */
@@ -1349,7 +1350,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A map that contains localized versions of this object's text value.
+     * Set a map that contains localized versions of this object's text value.
      *
      * @param array
      */
@@ -1399,7 +1400,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Returns A map that contains localized versions of this object's title value.
+     * Returns a map that contains localized versions of this object's title value.
      *
      * @return array
      */
@@ -1409,7 +1410,7 @@ class Media implements CreateKeyInterface
     }
 
     /**
-     * Set A map that contains localized versions of this object's title value.
+     * Set a map that contains localized versions of this object's title value.
      *
      * @param array
      */
