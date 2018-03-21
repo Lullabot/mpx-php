@@ -642,7 +642,7 @@ class Player implements CreateKeyInterface
      */
     public function setAdPolicyId($adPolicyId)
     {
-        $this->adPolicyId = $this->convertUri($adPolicyId);
+        $this->adPolicyId = $adPolicyId;
     }
 
     /**
@@ -882,7 +882,7 @@ class Player implements CreateKeyInterface
      */
     public function setBackgroundImageUrl($backgroundImageUrl)
     {
-        $this->backgroundImageUrl = $this->convertUri($backgroundImageUrl);
+        $this->backgroundImageUrl = $backgroundImageUrl;
     }
 
     /**
@@ -902,7 +902,7 @@ class Player implements CreateKeyInterface
      */
     public function setColorSchemeId($colorSchemeId)
     {
-        $this->colorSchemeId = $this->convertUri($colorSchemeId);
+        $this->colorSchemeId = $colorSchemeId;
     }
 
     /**
@@ -1162,7 +1162,7 @@ class Player implements CreateKeyInterface
      */
     public function setEmbedAdPolicyId($embedAdPolicyId)
     {
-        $this->embedAdPolicyId = $this->convertUri($embedAdPolicyId);
+        $this->embedAdPolicyId = $embedAdPolicyId;
     }
 
     /**
@@ -1222,7 +1222,7 @@ class Player implements CreateKeyInterface
      */
     public function setEmbedRestrictionId($embedRestrictionId)
     {
-        $this->embedRestrictionId = $this->convertUri($embedRestrictionId);
+        $this->embedRestrictionId = $embedRestrictionId;
     }
 
     /**
@@ -1302,7 +1302,7 @@ class Player implements CreateKeyInterface
      */
     public function setEndCardFeedUrl($endCardFeedUrl)
     {
-        $this->endCardFeedUrl = $this->convertUri($endCardFeedUrl);
+        $this->endCardFeedUrl = $endCardFeedUrl;
     }
 
     /**
@@ -1362,7 +1362,7 @@ class Player implements CreateKeyInterface
      */
     public function setFeedUrl($feedUrl)
     {
-        $this->feedUrl = $this->convertUri($feedUrl);
+        $this->feedUrl = $feedUrl;
     }
 
     /**
@@ -1442,7 +1442,7 @@ class Player implements CreateKeyInterface
      */
     public function setHeaderImageUrl($headerImageUrl)
     {
-        $this->headerImageUrl = $this->convertUri($headerImageUrl);
+        $this->headerImageUrl = $headerImageUrl;
     }
 
     /**
@@ -1522,7 +1522,7 @@ class Player implements CreateKeyInterface
      */
     public function setLayoutId($layoutId)
     {
-        $this->layoutId = $this->convertUri($layoutId);
+        $this->layoutId = $layoutId;
     }
 
     /**
@@ -1562,7 +1562,7 @@ class Player implements CreateKeyInterface
      */
     public function setLinkUrl($linkUrl)
     {
-        $this->linkUrl = $this->convertUri($linkUrl);
+        $this->linkUrl = $linkUrl;
     }
 
     /**
@@ -1602,7 +1602,7 @@ class Player implements CreateKeyInterface
      */
     public function setOverlayImageUrl($overlayImageUrl)
     {
-        $this->overlayImageUrl = $this->convertUri($overlayImageUrl);
+        $this->overlayImageUrl = $overlayImageUrl;
     }
 
     /**
@@ -1962,7 +1962,7 @@ class Player implements CreateKeyInterface
      */
     public function setRestrictionId($restrictionId)
     {
-        $this->restrictionId = $this->convertUri($restrictionId);
+        $this->restrictionId = $restrictionId;
     }
 
     /**
@@ -2142,7 +2142,7 @@ class Player implements CreateKeyInterface
      */
     public function setSkinId($skinId)
     {
-        $this->skinId = $this->convertUri($skinId);
+        $this->skinId = $skinId;
     }
 
     /**
@@ -2222,7 +2222,7 @@ class Player implements CreateKeyInterface
      */
     public function setUpdated($updated)
     {
-        $this->updated = $this->convertDateTime($updated);
+        $this->updated = $updated;
     }
 
     /**
@@ -2242,7 +2242,7 @@ class Player implements CreateKeyInterface
      */
     public function setUpdatedByUserId($updatedByUserId)
     {
-        $this->updatedByUserId = $this->convertUri($updatedByUserId);
+        $this->updatedByUserId = $updatedByUserId;
     }
 
     /**
