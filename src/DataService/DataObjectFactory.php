@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\DataService;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Http\Message\ResponseInterface;
@@ -65,16 +66,10 @@ class DataObjectFactory
      */
     public function loadByNumericId(int $id, Account $account = null, bool $readonly = false)
     {
-        /** @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
+        /** @var DataService $annotation */
         $annotation = $this->description['annotation'];
+        $base = $this->getBaseUri($account, $annotation, $readonly);
 
-        // Accounts are optional as you need to be able to load an account
-        // before you can resolve services.
-        // @todo Can we do this by calling ResolveAllUrls?
-        if (!($base = $annotation->getBaseUri())) {
-            $resolved = $this->resolveDomain->resolve($account);
-            $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getPath();
-        }
         $uri = $base.'/'.$id;
 
         return $this->load($uri);
@@ -112,7 +107,7 @@ class DataObjectFactory
      */
     public function load($uri): PromiseInterface
     {
-        /** @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
+        /** @var DataService $annotation */
         $annotation = $this->description['annotation'];
         $options = [
             'query' => [
@@ -128,5 +123,47 @@ class DataObjectFactory
         );
 
         return $response;
+    }
+
+    public function select(array $byFields, Account $account): PromiseInterface
+    {
+        /** @var DataService $annotation */
+        $annotation = $this->description['annotation'];
+        $options = [
+            'query' => [
+                'schema' => $annotation->getSchemaVersion(),
+                'form' => 'cjson',
+            ] + $byFields,
+        ];
+
+        $uri = $this->getBaseUri($account, $annotation);
+        $response = $this->userSession->requestAsync('GET', $uri, $options)->then(
+            function (ResponseInterface $response) {
+                return $this->deserialize($this->description['class'], $response->getBody());
+            }
+        );
+
+        return $response;
+    }
+
+    /**
+     * Get the base URI from an annotation or service registry.
+     *
+     * @param Account $account The account to use for service resolution.
+     * @param DataService $annotation The annotation data is being loaded for.
+     * @param bool                                     $readonly (optional) Load from the read-only service.
+     * @return string The base URI.
+     */
+    private function getBaseUri(Account $account, DataService $annotation, bool $readonly = false): string
+    {
+        // Accounts are optional as you need to be able to load an account
+        // before you can resolve services.
+        // @todo Can we do this by calling ResolveAllUrls?
+        if (!($base = $annotation->getBaseUri())) {
+            $resolved = $this->resolveDomain->resolve($account);
+            $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getPath();
+        }
+
+        return $base;
     }
 }
