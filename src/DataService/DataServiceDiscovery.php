@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\DataService;
 
 use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class to discover Data Service implementations.
@@ -84,13 +85,9 @@ class DataServiceDiscovery
         $finder = new Finder();
         $finder->files()->in($path);
 
-        /** @var \Symfony\Component\Finder\SplFileInfo $file */
+        /** @var SplFileInfo $file */
         foreach ($finder as $file) {
-            $subnamespace = str_replace('/', '\\', $file->getRelativePath());
-            if (!empty($subnamespace)) {
-                $subnamespace .= '\\';
-            }
-            $class = $this->namespace.'\\'.$subnamespace.$file->getBasename('.php');
+            $class = $this->classForFile($file);
             $annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), 'Lullabot\Mpx\DataService\Annotation\DataService');
             if (!$annotation) {
                 continue;
@@ -102,5 +99,23 @@ class DataServiceDiscovery
                 'annotation' => $annotation,
             ];
         }
+    }
+
+    /**
+     * Given a file path, return the PSR-4 class it should contain.
+     *
+     * @param SplFileInfo $file The file to generate the class name for.
+     *
+     * @return string The fully-qualified class name.
+     */
+    private function classForFile(SplFileInfo $file): string
+    {
+        $subnamespace = str_replace('/', '\\', $file->getRelativePath());
+        if (!empty($subnamespace)) {
+            $subnamespace .= '\\';
+        }
+        $class = $this->namespace.'\\'.$subnamespace.$file->getBasename('.php');
+
+        return $class;
     }
 }
