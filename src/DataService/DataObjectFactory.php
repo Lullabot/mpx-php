@@ -87,13 +87,7 @@ class DataObjectFactory
      */
     public function deserialize(string $class, $data)
     {
-        // @todo This is a total hack as MPX returns JSON with null values. Replace by ommitting in the normalizer.
-        $j = \GuzzleHttp\json_decode($data, true);
-        array_filter($j, function ($value) {
-            return null !== $value;
-        });
-        $data = json_encode($j);
-        $encoders = [new JsonEncoder()];
+        $encoders = [new CJsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
 
