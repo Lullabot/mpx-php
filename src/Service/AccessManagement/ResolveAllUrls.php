@@ -87,6 +87,14 @@ class ResolveAllUrls
         return $this->resolved;
     }
 
+    public function resolve(): string
+    {
+        // If multiple URLs are returned, any of them are usable, so we choose
+        // a random one.
+        // @todo Double check this assumption.
+        return $this->getResolved()[array_rand($this->getResolved())];
+    }
+
     /**
      * Return the service these URLs correspond to, such as 'Media Data Service'.
      *
