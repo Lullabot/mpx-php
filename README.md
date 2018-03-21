@@ -23,18 +23,19 @@ If your application does not wish to log these actions at all, use
 
 ## Overview of main classes
 
-### Client
-MPX API implementation of Guzzle ClientInterface. As a Client it doesn’t do anything extra but suppress errors to force a returning HTTP 200.
-It also handles XML from responses
+### Lullabot\Mpx\Client
+MPX API implementation of [GuzzleHttp\ClientInterface](https://github.com/guzzle/guzzle/blob/master/src/ClientInterface.php).
+As a Client it doesn’t do anything extra but suppress errors to force a returning HTTP 200 for XML responses.
+It also handles XML from responses.
 
-### UserSession
-A wrapper around Client, implementing all the stuff from Guzzle ClientInterface, and adding sign and singout functionalities.
+### Lullabot\Mpx\Service\IdentityManagement\UserSession
+Manages authenticated sessions and proxies API calls with a ClientInterface implementation, automatically refreshing expired API tokens as required.
 
-### User
+### Lullabot\Mpx\User
 An MPX user. Just username and password getters.
 
-### Token
-MPX authentication token that is returned by the platform after [sign in](https://docs.theplatform.com/help/wsf-signin-method)
+### Lullabot\Mpx\Token
+MPX authentication token that is returned by the platform after [sign in](https://docs.theplatform.com/help/wsf-signin-method).
 
-### TokenCachePool
-Cache of user authentication tokens. This class is a wrapper around a \Psr\Cache\CacheItemPoolInterface object
+### Lullabot\Mpx\TokenCachePool
+Cache of user authentication tokens. This class is a wrapper around a \Psr\Cache\CacheItemPoolInterface object.
