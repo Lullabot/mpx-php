@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Service\AccessManagement;
 
-use Lullabot\Mpx\DataService\Account\Account;
+use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 
 class ResolveDomain
@@ -25,7 +25,7 @@ class ResolveDomain
     {
         $options = [
             'query' => [
-                'schema' => static::getSchemaVersion(),
+                'schema' => static::SCHEMA_VERSION,
                 '_accountId' => (string) $account->getId(),
                 'account' => (string) $account->getId(),
             ],
