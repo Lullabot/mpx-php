@@ -3,12 +3,20 @@
 namespace Lullabot\Mpx\DataService\Media;
 
 use Lullabot\Mpx\CreateKeyInterface;
+use Lullabot\Mpx\DataService\Annotation\DataService;
 use Psr\Http\Message\UriInterface;
 
 /**
  * Implements the Media endpoint in the Media data service.
  *
  * @see https://docs.theplatform.com/help/media-media-object
+ *
+ * @DataService(
+ *   service="Media Data Service",
+ *   schemaVersion="1.10",
+ *   path="/data/Media",
+ *   hasAccountContext=true
+ * )
  */
 class Media implements CreateKeyInterface
 {
