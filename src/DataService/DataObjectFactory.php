@@ -220,5 +220,4 @@ class DataObjectFactory
 
         return new Serializer($normalizers, $encoders);
     }
-
 }

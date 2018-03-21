@@ -43,7 +43,7 @@ class NotificationListener
 
         /** @var ResolveAllUrls $resolver */
         $resolver = ResolveAllUrls::load($this->session, $this->service)->wait();
-        $this->uri = $resolver->resolve(). '/notify';
+        $this->uri = $resolver->resolve().'/notify';
     }
 
     public function sync()
@@ -54,9 +54,10 @@ class NotificationListener
                 'clientId' => $this->clientId,
                 'form' => 'cjson',
                 'schema' => '1.10',
-            ]
+            ],
         ])->then(function (ResponseInterface $response) {
             $data = \GuzzleHttp\json_decode($response->getBody(), true);
+
             return $data[0]['id'];
         });
     }
@@ -77,12 +78,12 @@ class NotificationListener
             $objects = [];
             $dof = new DataObjectFactory($manager, $this->session, $this->service, '/data/Media');
             foreach ($data as $result) {
-                if ($result['type'] == 'Media') {
+                if ('Media' == $result['type']) {
                     $objects[] = $dof->load($result['entry']['id']);
                 }
             }
+
             return $objects;
         });
     }
-
 }

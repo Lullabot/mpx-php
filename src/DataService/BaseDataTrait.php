@@ -9,7 +9,6 @@ use Psr\Http\Message\UriInterface;
  */
 trait BaseDataTrait
 {
-
     /**
      * The date and time that this object was created.
      *
