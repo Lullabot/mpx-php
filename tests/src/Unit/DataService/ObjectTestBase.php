@@ -7,7 +7,6 @@ use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -99,8 +98,7 @@ abstract class ObjectTestBase extends TestCase
 
         if ('' === $expected) {
             $this->assertEmpty((string) $object->$method());
-        }
-        else {
+        } else {
             $this->assertEquals($expected, $object->$method());
         }
     }
