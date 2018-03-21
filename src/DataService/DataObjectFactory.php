@@ -90,11 +90,7 @@ class DataObjectFactory
      */
     public function deserialize(string $class, $data)
     {
-        $encoders = [new CJsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-
-        return $serializer->deserialize($data, $class, 'json');
+        return $this->getObjectSerializer()->deserialize($data, $class, 'json');
     }
 
     /**
@@ -147,28 +143,7 @@ class DataObjectFactory
             function (ResponseInterface $response) {
                 $data = $response->getBody();
 
-                // First, we need an encoder that filters out null values.
-                $encoders = [new CJsonEncoder()];
-
-                // We need a property extractor that understands the varying types of 'entries'.
-                // @todo Should we just make multiple subclasses of ResultList?
-                $dataServiceExtractor = new DataServiceExtractor();
-                $dataServiceExtractor->setClass($this->description['class']);
-
-                // Attempt normalizing each key in this order, including denormalizing recursively.
-                $normalizers = [
-                    new UnixMicrosecondNormalizer(),
-                    new UriNormalizer(),
-                    new ObjectNormalizer(
-                        null, null, null,
-                        $dataServiceExtractor
-                    ),
-                    new ArrayDenormalizer(),
-                ];
-
-                $serializer = new Serializer($normalizers, $encoders);
-
-                return $serializer->deserialize($data, ResultList::class, 'json');
+                return $this->getEntriesSerializer()->deserialize($data, ResultList::class, 'json');
             }
         );
 
@@ -196,4 +171,39 @@ class DataObjectFactory
 
         return $base;
     }
+
+    private function getEntriesSerializer()
+    {
+        // We need a property extractor that understands the varying types of 'entries'.
+        // @todo Should we just make multiple subclasses of ResultList?
+        $dataServiceExtractor = new DataServiceExtractor();
+        $dataServiceExtractor->setClass($this->description['class']);
+
+        return $this->getObjectSerializer($dataServiceExtractor);
+    }
+
+    /**
+     * @param null $dataServiceExtractor
+     *
+     * @return Serializer
+     */
+    private function getObjectSerializer(DataServiceExtractor $dataServiceExtractor = null): Serializer
+    {
+        // First, we need an encoder that filters out null values.
+        $encoders = [new CJsonEncoder()];
+
+        // Attempt normalizing each key in this order, including denormalizing recursively.
+        $normalizers = [
+            new UnixMicrosecondNormalizer(),
+            new UriNormalizer(),
+            new ObjectNormalizer(
+                null, null, null,
+                $dataServiceExtractor
+            ),
+            new ArrayDenormalizer(),
+        ];
+
+        return new Serializer($normalizers, $encoders);
+    }
+
 }
