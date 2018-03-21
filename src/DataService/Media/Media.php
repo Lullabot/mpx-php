@@ -123,7 +123,7 @@ class Media implements CreateKeyInterface
      *
      * @var MediaFile[]
      */
-    //protected $content;
+    protected $content;
 
     /**
      * The copyright holder of this content.
@@ -693,7 +693,7 @@ class Media implements CreateKeyInterface
      *
      * @param MediaFile[]
      */
-    public function setzContent($content)
+    public function setContent($content)
     {
         $this->content = $content;
     }
