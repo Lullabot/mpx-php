@@ -13,7 +13,6 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
  */
 class UnixMicrosecondNormalizerTest extends TestCase
 {
-
     /**
      * Test denormalizing a variety of timestamps.
      *
@@ -38,6 +37,6 @@ class UnixMicrosecondNormalizerTest extends TestCase
         $normalizer = new UnixMicrosecondNormalizer();
         $this->expectException(NotNormalizableValueException::class);
         $this->expectExceptionMessage('The data is not an integer, you should pass an integer representing the unix time in microseconds.');
-        $normalized = $normalizer->denormalize("0", \DateTime::class);
+        $normalized = $normalizer->denormalize('0', \DateTime::class);
     }
 }
