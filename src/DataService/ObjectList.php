@@ -3,9 +3,11 @@
 namespace Lullabot\Mpx\DataService;
 
 /**
- * A ResultList represents a list of data service objects from a search query or a notification.
+ * An ObjectList represents a list of data service objects from a search query or a notification.
+ *
+ * @see https://docs.theplatform.com/help/wsf-retrieving-data-objects#tp-toc11
  */
-class ResultList
+class ObjectList
 {
     /**
      * An array of namespaces in the results.

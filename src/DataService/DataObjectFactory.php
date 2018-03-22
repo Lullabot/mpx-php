@@ -125,7 +125,7 @@ class DataObjectFactory
      * @param array   $byFields The fields and values to filter by. Note these are exact matches.
      * @param Account $account  The account context to use in the request.
      *
-     * @return PromiseInterface A promise returning a \Lullabot\Mpx\DataService\ResultList.
+     * @return PromiseInterface A promise returning a \Lullabot\Mpx\DataService\ObjectList.
      */
     public function select(array $byFields, Account $account): PromiseInterface
     {
@@ -144,7 +144,7 @@ class DataObjectFactory
             function (ResponseInterface $response) {
                 $data = $response->getBody();
 
-                return $this->getEntriesSerializer()->deserialize($data, ResultList::class, 'json');
+                return $this->getEntriesSerializer()->deserialize($data, ObjectList::class, 'json');
             }
         );
 
@@ -176,7 +176,7 @@ class DataObjectFactory
     private function getEntriesSerializer()
     {
         // We need a property extractor that understands the varying types of 'entries'.
-        // @todo Should we just make multiple subclasses of ResultList?
+        // @todo Should we just make multiple subclasses of ObjectList?
         $dataServiceExtractor = new DataServiceExtractor();
         $dataServiceExtractor->setClass($this->description['class']);
 

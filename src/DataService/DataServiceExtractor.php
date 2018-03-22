@@ -6,7 +6,7 @@ use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Type;
 
 /**
- * A property extractor to allow for a ResultList to have varying 'entries' data types.
+ * A property extractor to allow for a ObjectList to have varying 'entries' data types.
  */
 class DataServiceExtractor extends ReflectionExtractor
 {
