@@ -11,8 +11,7 @@ use Psr\Http\Message\UriInterface;
  *   service="Access Data Service",
  *   baseUri="https://access.auth.theplatform.com/data/Account",
  *   schemaVersion="1.0",
- *   path="/data/Account",
- *   hasAccountContext=false
+ *   path="/data/Account"
  * )
  */
 class Account

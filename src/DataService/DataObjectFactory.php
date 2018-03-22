@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Serializer;
 /**
  * Factory to construct new data service objects from MPX.
  *
- * @todo link to generic upstream docs.
+ * @see https://docs.theplatform.com/help/wsf-developing-with-theplatforms-data-services
  */
 class DataObjectFactory
 {
@@ -39,34 +39,17 @@ class DataObjectFactory
     protected $userSession;
 
     /**
-     * The manager used to load implementation classes of data objects.
-     *
-     * @var \Lullabot\Mpx\DataService\DataServiceManager
-     */
-    protected $manager;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
      * DataObjectFactory constructor.
      *
-     * @todo Merge manager and service parameters?
-     * @todo Inject the resolveDomain() instead of constructing?
-     *
-     * @param \Lullabot\Mpx\DataService\DataServiceManager         $manager
-     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession
-     * @param string                                               $service
+     * @param array                                                $description   The array describing the destination class for this factory.
+     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession   The session to use for load requests.
+     * @param ResolveDomain                                        $resolveDomain The MPX service resolver.
      */
-    public function __construct(DataServiceManager $manager, UserSession $userSession, string $service, string $path)
+    public function __construct(array $description, UserSession $userSession, ResolveDomain $resolveDomain)
     {
         $this->userSession = $userSession;
-        $this->resolveDomain = new ResolveDomain($this->userSession);
-        $this->manager = $manager;
-        $this->description = $manager->getDataService($service, $path);
-        $this->path = $path;
+        $this->resolveDomain = $resolveDomain;
+        $this->description = $description;
     }
 
     /**
@@ -74,12 +57,13 @@ class DataObjectFactory
      *
      * @todo Add a load that takes a full URL?
      *
-     * @param int                                      $id      The numeric ID to load.
+     * @param int                                      $id       The numeric ID to load.
      * @param \Lullabot\Mpx\DataService\Access\Account $account
+     * @param bool                                     $readonly (optional) Load from the read-only service.
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function load(int $id, Account $account = null)
+    public function load(int $id, Account $account = null, bool $readonly = false)
     {
         /** @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
         $annotation = $this->description['annotation'];
@@ -89,7 +73,7 @@ class DataObjectFactory
         // @todo Can we do this by calling ResolveAllUrls?
         if (!($base = $annotation->getBaseUri())) {
             $resolved = $this->resolveDomain->resolve($account);
-            $base = $resolved->getUrl($annotation->getService()).$annotation->getPath();
+            $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getPath();
         }
         $uri = $base.'/'.$id;
 
@@ -117,7 +101,7 @@ class DataObjectFactory
      *
      * @return object
      */
-    public function deserialize(string $class, $data)
+    protected function deserialize(string $class, $data)
     {
         // @todo This is a total hack as MPX returns JSON with null values. Replace by ommitting in the normalizer.
         $j = \GuzzleHttp\json_decode($data, true);
