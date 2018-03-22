@@ -65,7 +65,7 @@ class CreateDataServiceClassCommand extends Command {
             // Add a get method for the property.
             $get = $class->addMethod('get' . ucfirst($property->getName()));
             $get->setVisibility('public');
-            $get->addComment('Returns ' . $description);
+            $get->addComment('Returns ' . lcfirst($description));
             $get->addComment('');
             $get->addComment('@return ' . $data_type);
 
@@ -86,7 +86,7 @@ class CreateDataServiceClassCommand extends Command {
             // Add a set method for the property.
             $set = $class->addMethod('set' . ucfirst($property->getName()));
             $set->setVisibility('public');
-            $set->addComment('Set ' . $description);
+            $set->addComment('Set ' . lcfirst($description));
             $set->addComment('');
             $set->addComment('@param ' . $data_type);
             $set->addParameter($field_name);
