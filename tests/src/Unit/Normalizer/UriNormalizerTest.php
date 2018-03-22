@@ -13,7 +13,6 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
  */
 class UriNormalizerTest extends TestCase
 {
-
     /**
      * Test normalizing a URI into a string.
      *
@@ -79,7 +78,7 @@ class UriNormalizerTest extends TestCase
         $normalizer = new UriNormalizer();
         $this->expectException(\Symfony\Component\Serializer\Exception\NotNormalizableValueException::class);
         $this->expectExceptionMessage('Parsing URI string "http://" resulted in error: Unable to parse URI: http://');
-        $normalizer->denormalize("http://", UriInterface::class);
+        $normalizer->denormalize('http://', UriInterface::class);
     }
 
     /**
