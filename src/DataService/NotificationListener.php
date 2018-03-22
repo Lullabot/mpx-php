@@ -11,6 +11,8 @@ use Psr\Http\Message\ResponseInterface;
  * Listen to events from MPX.
  *
  * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications
+ *
+ * @codeCoverageIgnore Until we refactor this to allow loading all objects.
  */
 class NotificationListener
 {
