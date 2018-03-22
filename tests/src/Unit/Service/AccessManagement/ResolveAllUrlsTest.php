@@ -11,6 +11,7 @@ use Lullabot\Mpx\TokenCachePool;
 use Lullabot\Mpx\User;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
+use Symfony\Component\Lock\StoreInterface;
 
 /**
  * Test resolving all URLs for a given MPX service.
@@ -37,7 +38,10 @@ class ResolveAllUrlsTest extends TestCase
         ]);
         $user = new User('USER-NAME', 'correct-password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        $session = new UserSession($client, $user, $tokenCachePool, new NullLogger());
+        /** @var StoreInterface $store */
+        $store = $this->getMockBuilder(StoreInterface::class)
+            ->getMock();
+        $session = new UserSession($client, $user, $store, $tokenCachePool, new NullLogger());
         /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls $r */
         $r = ResolveAllUrls::load($session, 'Media Data Service')->wait();
         $this->assertEquals('Media Data Service', $r->getService());
