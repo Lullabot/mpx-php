@@ -1,0 +1,90 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+added,,DateTime,The date and time that this object was created
+addedByUserId,,URI,The id of the user that created this object
+adminTags,,String[],The administrative workflow tags for this object
+adPolicyId,,URI,the identifier for the advertising policy for this object
+allowEmail,,Boolean,Indicates whether the player will feature sharing via email
+allowEmbed,,Boolean,Indicates whether the player will provide an embed code for sharing on other sites
+allowFullScreen,,Boolean,Indicates whether the player will be allowed to play video in fullscreen mode
+allowGetLink,,Boolean,Indicates whether the player will make a shareable link available to users
+allowRss,,Boolean,Indicates whether the player will make an RSS link available to users
+allowSearch,,Boolean,Indicates whether to include the search component
+alwaysShowOverlay,,Boolean,Indicates whether the player should always display the play overlay
+aspectRatioHeight,,Integer,The value of the aspect ratio for the height of the media area
+aspectRatioWidth,,Integer,The value of the aspect ratio for the width of the media area
+autoPlay,,Boolean,Indicates whether the player will start playback on load
+autoInitialize,,Boolean,Indicates whether the player will self-initialize on load
+backgroundImageUrl,,String,URL for a custom background image
+colorSchemeId,,URI,Identifier for the color scheme assigned to this player
+columns,,Integer,The number of columns in the release list.
+compatibilityMode,,Boolean,Reserved for future use. The default value is false
+controlLayoutXml,,String,XML layout content for the player control rack
+controlRackHeight,,Integer,Height of the player control rack
+customCss,,String,Custom CSS content for the player
+customCssUrls,,String[],URLs to remote custom CSS content for the player
+customHtml,,String,Custom HTML content for the player (not currently used)
+customJavaScript,,String,Custom JavaScript content for the player
+customJavaScriptUrls,,String[],URLs to custom JavaScript content for the player
+customProperties,,"Map<String, String>",Additional attributes to include in the player HTML
+description,,String,The description of this object
+disabled,,Boolean,Whether is player is available for customer retrieval
+embedAdPolicyId,,URI,The identifier for the advertising policy to use when the player is embedded in another site
+embedAllowFullScreen,,Boolean,Indicates whether embedded players will be allowed to be viewed in fullscreen mode
+embedHeight,,Integer,The default height of the player when embedded in another site
+embedRestrictionId,,URI,The identifier for the restriction to apply to this player when embedded in another site
+embedWidth,,Integer,The default width of the player when embedded in another site
+enabledPlugIns,,PlugInInstance[],The set of plug-ins for this player
+enableExternalController,,Boolean,Indicates if the player responds to commands from an IFrame parent element
+endCardFeedUrl,,String,The URL of the feed that will populate the related items list end card
+failoverHtml,,String,The custom failover HTML
+fallbackPdk,,String,Reserved for future use. The default value is null.
+feedUrl,,String,The URL of the player's default feed
+feedUrlParams,,String,The request parameters to include in the feed request
+guid,,String,An alternate identifier for this object that is unique within the owning account
+headerImageHeight,,Integer,The height of the header image
+headerImageUrl,,String,The URL of the header image
+height,,Integer,The height of the player
+id,,URI,The globally unique URI of this object
+includeDefaultCss,,Boolean,Whether to include the default player CSS file in the player HTML page
+itemsPerPage,,Integer,The number of items to make visible in each page of the release list
+layoutId,,URI,The identifier for the layout assigned to this player
+limitToCategories,,String[],A list of categories that will appear in the category list
+linkUrl,,String,The destination URL for when a user clicks the player video area
+locked,,Boolean,Whether this object currently allows updates
+overlayImageUrl,,String,The URL of the player overlay image
+ownerId,,URI,The id of the account that owns this object
+paddingBottom,,Integer,The amount of padding to add to the bottom of the player host page
+paddingLeft,,Integer,The amount of padding to add to the left side of the player host page
+paddingRight,,Integer,The amount of padding to add to the right side of the player host page
+paddingTop,,Integer,The amount of padding to add to the top of the player host page
+pdk,,String,Reserved for future use. The default value is null.
+pid,,String,The public identifier for this player when requested through the Player Service
+playAll,,Boolean,Indicates if the player should automatically play the next release when one finishes
+playerUrl,,String,Player URL used in the sharing features
+posterImageDefaultHeight,,Integer,The default height to use for the poster image
+posterImageDefaultWidth,,Integer,The default width to use for the poster image
+posterImageMetaAssetType,,String,The meta asset type to use for the poster image
+posterImagePreviewAssetType,,String,The preview asset type to use for the poster image
+preferredFormats,,String[],The media formats meant for use in this player
+preferredRuntimes,,String[],The runtimes meant for use in the player
+regionHeights,,"Map<String, Integer>",Heights of the regions in the layout
+regionWidths,,"Map<String, Integer>",Widths of the regions in the layout
+releaseUrlParams,,String,URL parameters to add to Public URL requests
+restrictionId,,URI,The identifier of the restriction to apply to this player
+showAirDate,,Boolean,Indicates whether to display the air date in the release list component
+showAllChoice,,Boolean,Indicates whether to include the All option in the category list component
+showAuthor,,Boolean,Indicates whether to display the author in the release list and clip info components
+showBitrate,,Boolean,Indicates whether to display the media bitrate in the release list component
+showFullTime,,Boolean,Indicates whether to show the full video time in the player control rack
+showMostPopularChoice,,Boolean,Indicates whether to show the Most Popular option in the category list component
+showNav,,Boolean,Indicates whether to display the previous and next buttons in the player control rack
+shuffle,,Boolean,Indicates whether to randomize the contents of the release list
+skinId,,URI,Identifier for the skin object to apply this player
+thumbnailHeight,,Integer,The height of the thumbnail images in the release list
+thumbnailWidth,,Integer,The width of the thumbnail images in the release list
+title,,String,The name of this object
+updated,,DateTime,The date and time this object was last modified
+updatedByUserId,,URI,The id of the user that last modified this object
+useFloatingControls,,Boolean,Indicates whether to float the control rack over the media area of the player
+version,,Long,"This object's modification version, used for optimistic locking"
+width,,Integer,The width of the player
