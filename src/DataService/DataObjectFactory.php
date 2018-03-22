@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Serializer;
 /**
  * Factory to construct new data service objects from MPX.
  *
- * @todo link to generic upstream docs.
+ * @see https://docs.theplatform.com/help/wsf-developing-with-theplatforms-data-services
  */
 class DataObjectFactory
 {
@@ -41,15 +41,14 @@ class DataObjectFactory
     /**
      * DataObjectFactory constructor.
      *
-     * @todo Inject the resolveDomain() instead of constructing?
-     *
-     * @param array                                                $description The array describing the destination class for this factory.
-     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession
+     * @param array                                                $description   The array describing the destination class for this factory.
+     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession   The session to use for load requests.
+     * @param ResolveDomain                                        $resolveDomain The MPX service resolver.
      */
-    public function __construct(array $description, UserSession $userSession)
+    public function __construct(array $description, UserSession $userSession, ResolveDomain $resolveDomain)
     {
         $this->userSession = $userSession;
-        $this->resolveDomain = new ResolveDomain($this->userSession);
+        $this->resolveDomain = $resolveDomain;
         $this->description = $description;
     }
 
@@ -102,7 +101,7 @@ class DataObjectFactory
      *
      * @return object
      */
-    public function deserialize(string $class, $data)
+    protected function deserialize(string $class, $data)
     {
         // @todo This is a total hack as MPX returns JSON with null values. Replace by ommitting in the normalizer.
         $j = \GuzzleHttp\json_decode($data, true);
