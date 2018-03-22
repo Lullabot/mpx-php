@@ -53,7 +53,7 @@ class UriNormalizer implements NormalizerInterface, DenormalizerInterface
             $object = new Uri($data);
         } catch (\InvalidArgumentException $e) {
             throw new NotNormalizableValueException(sprintf(
-                    'Parsing datetime string "%s" using format "%s" resulted in %d errors:'."\n".'%s'), $e->getCode(), $e);
+                    'Parsing URI string "%s" resulted in error: %s', $data, $e->getMessage()), $e->getCode(), $e);
         }
 
         return $object;
