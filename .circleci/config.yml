@@ -194,3 +194,18 @@ workflows:
       - build_php70
       - build_php71
       - code_fixer
+
+  nightly:
+    triggers:
+      - schedule:
+          # Run jobs every Monday morning at 12AM
+          cron: "0 0 * * 1"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build
+      - build_php70
+      - build_php71
+      - code_fixer
