@@ -606,7 +606,7 @@ class Player implements CreateKeyInterface
     protected $width;
 
     /**
-     * Returns The administrative workflow tags for this object.
+     * Returns the administrative workflow tags for this object.
      *
      * @return string[]
      */
@@ -616,7 +616,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The administrative workflow tags for this object.
+     * Set the administrative workflow tags for this object.
      *
      * @param string[]
      */
@@ -786,7 +786,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The value of the aspect ratio for the height of the media area.
+     * Returns the value of the aspect ratio for the height of the media area.
      *
      * @return int
      */
@@ -796,7 +796,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The value of the aspect ratio for the height of the media area.
+     * Set the value of the aspect ratio for the height of the media area.
      *
      * @param int
      */
@@ -806,7 +806,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The value of the aspect ratio for the width of the media area.
+     * Returns the value of the aspect ratio for the width of the media area.
      *
      * @return int
      */
@@ -816,7 +816,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The value of the aspect ratio for the width of the media area.
+     * Set the value of the aspect ratio for the width of the media area.
      *
      * @param int
      */
@@ -906,7 +906,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The number of columns in the release list.
+     * Returns the number of columns in the release list.
      *
      * @return int
      */
@@ -916,7 +916,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The number of columns in the release list.
+     * Set the number of columns in the release list.
      *
      * @param int
      */
@@ -1106,7 +1106,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The description of this object.
+     * Returns the description of this object.
      *
      * @return string
      */
@@ -1116,7 +1116,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The description of this object.
+     * Set the description of this object.
      *
      * @param string
      */
@@ -1146,7 +1146,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The identifier for the advertising policy to use when the player is embedded in another site.
+     * Returns the identifier for the advertising policy to use when the player is embedded in another site.
      *
      * @return UriInterface
      */
@@ -1156,7 +1156,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The identifier for the advertising policy to use when the player is embedded in another site.
+     * Set the identifier for the advertising policy to use when the player is embedded in another site.
      *
      * @param UriInterface
      */
@@ -1186,7 +1186,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The default height of the player when embedded in another site.
+     * Returns the default height of the player when embedded in another site.
      *
      * @return int
      */
@@ -1196,7 +1196,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The default height of the player when embedded in another site.
+     * Set the default height of the player when embedded in another site.
      *
      * @param int
      */
@@ -1206,7 +1206,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The identifier for the restriction to apply to this player when embedded in another site.
+     * Returns the identifier for the restriction to apply to this player when embedded in another site.
      *
      * @return UriInterface
      */
@@ -1216,7 +1216,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The identifier for the restriction to apply to this player when embedded in another site.
+     * Set the identifier for the restriction to apply to this player when embedded in another site.
      *
      * @param UriInterface
      */
@@ -1226,7 +1226,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The default width of the player when embedded in another site.
+     * Returns the default width of the player when embedded in another site.
      *
      * @return int
      */
@@ -1236,7 +1236,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The default width of the player when embedded in another site.
+     * Set the default width of the player when embedded in another site.
      *
      * @param int
      */
@@ -1246,7 +1246,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The set of plug-ins for this player.
+     * Returns the set of plug-ins for this player.
      *
      * @return PlugInInstance[]
      */
@@ -1256,7 +1256,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The set of plug-ins for this player.
+     * Set the set of plug-ins for this player.
      *
      * @param PlugInInstance[]
      */
@@ -1286,7 +1286,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The URL of the feed that will populate the related items list end card.
+     * Returns the URL of the feed that will populate the related items list end card.
      *
      * @return string
      */
@@ -1296,7 +1296,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The URL of the feed that will populate the related items list end card.
+     * Set the URL of the feed that will populate the related items list end card.
      *
      * @param string
      */
@@ -1306,7 +1306,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The custom failover HTML.
+     * Returns the custom failover HTML.
      *
      * @return string
      */
@@ -1316,7 +1316,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The custom failover HTML.
+     * Set the custom failover HTML.
      *
      * @param string
      */
@@ -1346,7 +1346,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The URL of the player's default feed.
+     * Returns the URL of the player's default feed.
      *
      * @return string
      */
@@ -1356,7 +1356,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The URL of the player's default feed.
+     * Set the URL of the player's default feed.
      *
      * @param string
      */
@@ -1366,7 +1366,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The request parameters to include in the feed request.
+     * Returns the request parameters to include in the feed request.
      *
      * @return string
      */
@@ -1376,7 +1376,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The request parameters to include in the feed request.
+     * Set the request parameters to include in the feed request.
      *
      * @param string
      */
@@ -1406,7 +1406,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The height of the header image.
+     * Returns the height of the header image.
      *
      * @return int
      */
@@ -1416,7 +1416,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The height of the header image.
+     * Set the height of the header image.
      *
      * @param int
      */
@@ -1426,7 +1426,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The URL of the header image.
+     * Returns the URL of the header image.
      *
      * @return string
      */
@@ -1436,7 +1436,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The URL of the header image.
+     * Set the URL of the header image.
      *
      * @param string
      */
@@ -1446,7 +1446,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The height of the player.
+     * Returns the height of the player.
      *
      * @return int
      */
@@ -1456,7 +1456,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The height of the player.
+     * Set the height of the player.
      *
      * @param int
      */
@@ -1486,7 +1486,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The number of items to make visible in each page of the release list.
+     * Returns the number of items to make visible in each page of the release list.
      *
      * @return int
      */
@@ -1496,7 +1496,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The number of items to make visible in each page of the release list.
+     * Set the number of items to make visible in each page of the release list.
      *
      * @param int
      */
@@ -1506,7 +1506,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The identifier for the layout assigned to this player.
+     * Returns the identifier for the layout assigned to this player.
      *
      * @return UriInterface
      */
@@ -1516,7 +1516,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The identifier for the layout assigned to this player.
+     * Set the identifier for the layout assigned to this player.
      *
      * @param UriInterface
      */
@@ -1546,7 +1546,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The destination URL for when a user clicks the player video area.
+     * Returns the destination URL for when a user clicks the player video area.
      *
      * @return \Psr\Http\Message\UriInterface
      */
@@ -1556,7 +1556,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The destination URL for when a user clicks the player video area.
+     * Set the destination URL for when a user clicks the player video area.
      *
      * @param string
      */
@@ -1586,7 +1586,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The URL of the player overlay image.
+     * Returns the URL of the player overlay image.
      *
      * @return \Psr\Http\Message\UriInterface
      */
@@ -1596,7 +1596,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The URL of the player overlay image.
+     * Set the URL of the player overlay image.
      *
      * @param string
      */
@@ -1606,7 +1606,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The amount of padding to add to the bottom of the player host page.
+     * Returns the amount of padding to add to the bottom of the player host page.
      *
      * @return int
      */
@@ -1616,7 +1616,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The amount of padding to add to the bottom of the player host page.
+     * Set the amount of padding to add to the bottom of the player host page.
      *
      * @param int
      */
@@ -1626,7 +1626,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The amount of padding to add to the left side of the player host page.
+     * Returns the amount of padding to add to the left side of the player host page.
      *
      * @return int
      */
@@ -1636,7 +1636,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The amount of padding to add to the left side of the player host page.
+     * Set the amount of padding to add to the left side of the player host page.
      *
      * @param int
      */
@@ -1646,7 +1646,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The amount of padding to add to the right side of the player host page.
+     * Returns the amount of padding to add to the right side of the player host page.
      *
      * @return int
      */
@@ -1656,7 +1656,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The amount of padding to add to the right side of the player host page.
+     * Set the amount of padding to add to the right side of the player host page.
      *
      * @param int
      */
@@ -1666,7 +1666,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The amount of padding to add to the top of the player host page.
+     * Returns the amount of padding to add to the top of the player host page.
      *
      * @return int
      */
@@ -1676,7 +1676,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The amount of padding to add to the top of the player host page.
+     * Set the amount of padding to add to the top of the player host page.
      *
      * @param int
      */
@@ -1706,7 +1706,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The public identifier for this player when requested through the Player Service.
+     * Returns the public identifier for this player when requested through the Player Service.
      *
      * @return string
      */
@@ -1716,7 +1716,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The public identifier for this player when requested through the Player Service.
+     * Set the public identifier for this player when requested through the Player Service.
      *
      * @param string
      */
@@ -1766,7 +1766,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The default height to use for the poster image.
+     * Returns the default height to use for the poster image.
      *
      * @return int
      */
@@ -1776,7 +1776,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The default height to use for the poster image.
+     * Set the default height to use for the poster image.
      *
      * @param int
      */
@@ -1786,7 +1786,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The default width to use for the poster image.
+     * Returns the default width to use for the poster image.
      *
      * @return int
      */
@@ -1796,7 +1796,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The default width to use for the poster image.
+     * Set the default width to use for the poster image.
      *
      * @param int
      */
@@ -1806,7 +1806,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The meta asset type to use for the poster image.
+     * Returns the meta asset type to use for the poster image.
      *
      * @return string
      */
@@ -1816,7 +1816,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The meta asset type to use for the poster image.
+     * Set the meta asset type to use for the poster image.
      *
      * @param string
      */
@@ -1826,7 +1826,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The preview asset type to use for the poster image.
+     * Returns the preview asset type to use for the poster image.
      *
      * @return string
      */
@@ -1836,7 +1836,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The preview asset type to use for the poster image.
+     * Set the preview asset type to use for the poster image.
      *
      * @param string
      */
@@ -1846,7 +1846,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The media formats meant for use in this player.
+     * Returns the media formats meant for use in this player.
      *
      * @return string[]
      */
@@ -1856,7 +1856,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The media formats meant for use in this player.
+     * Set the media formats meant for use in this player.
      *
      * @param string[]
      */
@@ -1866,7 +1866,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The runtimes meant for use in the player.
+     * Returns the runtimes meant for use in the player.
      *
      * @return string[]
      */
@@ -1876,7 +1876,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The runtimes meant for use in the player.
+     * Set the runtimes meant for use in the player.
      *
      * @param string[]
      */
@@ -1946,7 +1946,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The identifier of the restriction to apply to this player.
+     * Returns the identifier of the restriction to apply to this player.
      *
      * @return UriInterface
      */
@@ -1956,7 +1956,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The identifier of the restriction to apply to this player.
+     * Set the identifier of the restriction to apply to this player.
      *
      * @param UriInterface
      */
@@ -2146,7 +2146,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The height of the thumbnail images in the release list.
+     * Returns the height of the thumbnail images in the release list.
      *
      * @return int
      */
@@ -2156,7 +2156,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The height of the thumbnail images in the release list.
+     * Set the height of the thumbnail images in the release list.
      *
      * @param int
      */
@@ -2166,7 +2166,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The width of the thumbnail images in the release list.
+     * Returns the width of the thumbnail images in the release list.
      *
      * @return int
      */
@@ -2176,7 +2176,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The width of the thumbnail images in the release list.
+     * Set the width of the thumbnail images in the release list.
      *
      * @param int
      */
@@ -2186,7 +2186,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The name of this object.
+     * Returns the name of this object.
      *
      * @return string
      */
@@ -2196,7 +2196,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The name of this object.
+     * Set the name of this object.
      *
      * @param string
      */
@@ -2206,7 +2206,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The date and time this object was last modified.
+     * Returns the date and time this object was last modified.
      *
      * @return \DateTime
      */
@@ -2216,7 +2216,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The date and time this object was last modified.
+     * Set the date and time this object was last modified.
      *
      * @param int
      */
@@ -2226,7 +2226,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The id of the user that last modified this object.
+     * Returns the id of the user that last modified this object.
      *
      * @return UriInterface
      */
@@ -2236,7 +2236,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The id of the user that last modified this object.
+     * Set the id of the user that last modified this object.
      *
      * @param UriInterface
      */
@@ -2266,7 +2266,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns This object's modification version, used for optimistic locking.
+     * Returns this object's modification version, used for optimistic locking.
      *
      * @return int
      */
@@ -2276,7 +2276,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set This object's modification version, used for optimistic locking.
+     * Set this object's modification version, used for optimistic locking.
      *
      * @param int
      */
@@ -2286,7 +2286,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Returns The width of the player.
+     * Returns the width of the player.
      *
      * @return int
      */
@@ -2296,7 +2296,7 @@ class Player implements CreateKeyInterface
     }
 
     /**
-     * Set The width of the player.
+     * Set the width of the player.
      *
      * @param int
      */
