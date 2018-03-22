@@ -3,7 +3,6 @@
 namespace Lullabot\Mpx\Tests\Unit;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use Lullabot\Mpx\Exception\ClientException;
@@ -15,9 +14,6 @@ use Lullabot\Mpx\User;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
-use Symfony\Component\Lock\Exception\LockConflictedException;
-use Symfony\Component\Lock\StoreInterface;
 
 /**
  * @class UserSessionTest
@@ -31,7 +27,6 @@ class UserSessionTest extends TestCase
      * @covers ::__construct
      * @covers ::acquireToken
      * @covers ::signIn
-     * @covers ::signInWithLock
      * @covers ::tokenFromResponse
      * @covers ::signOut
      */
@@ -42,14 +37,11 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signout.json'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
-            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
 
-        $session = new UserSession($client, $user, $store, $tokenCachePool, $logger);
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
         $token = $session->acquireToken();
         $this->assertEquals($token, $tokenCachePool->getToken($user));
         $session->signOut();
@@ -60,7 +52,6 @@ class UserSessionTest extends TestCase
     /**
      * @covers ::acquireToken
      * @covers ::signIn
-     * @covers ::signInWithLock
      */
     public function testAcquireTokenFailure()
     {
@@ -69,17 +60,12 @@ class UserSessionTest extends TestCase
         ]);
         $user = new User('USER-NAME', 'incorrect-password');
 
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
-            ->getMock();
         /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
+        $logger->expects($this->never())->method('info');
 
-        $logger->expects($this->at(0))->method('info')
-            ->with('Successfully acquired the "{resource}" lock.');
-
-        $session = new UserSession($client, $user, $store, new TokenCachePool(new ArrayCachePool()), $logger);
+        $session = new UserSession($client, $user, new TokenCachePool(new ArrayCachePool()), $logger);
         $this->expectException(ClientException::class);
         $this->expectExceptionMessage("Error com.theplatform.authentication.api.exception.AuthenticationException: Either 'USER-NAME' does not have an account with this site, or the password was incorrect.");
         $this->expectExceptionCode(401);
@@ -98,42 +84,11 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
-            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
-        /** @var LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
-        $logger = $this->getMockBuilder(LoggerInterface::class)
-            ->getMock();
-        $logger->expects($this->at(0))->method('info')
-            ->with('Successfully acquired the "{resource}" lock.');
-        $logger->expects($this->at(1))->method('info')
-            ->with('Expiration defined for "{resource}" lock for "{ttl}" seconds.');
-        $logger->expects($this->at(2))->method('info')
-            ->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
-                $this->assertArraySubset([
-                    'token' => 'TOKEN-VALUE',
-                    'username' => 'USER-NAME',
-                ], $context);
-                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-            });
-        $logger->expects($this->at(3))->method('info')
-            ->with('Successfully acquired the "{resource}" lock.');
-        $logger->expects($this->at(4))->method('info')
-            ->with('Expiration defined for "{resource}" lock for "{ttl}" seconds.');
-        $logger->expects($this->at(5))->method('info')
-            ->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
-                $this->assertArraySubset([
-                    'token' => 'TOKEN-VALUE',
-                    'username' => 'USER-NAME',
-                ], $context);
-                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-            });
+        $logger = $this->fetchTokenLogger(2);
 
-        $session = new UserSession($client, $user, $store, $tokenCachePool, $logger);
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
         $first_token = $session->acquireToken();
         $this->assertEquals($first_token, $tokenCachePool->getToken($user));
         $second_token = $session->acquireToken(null, true);
@@ -170,14 +125,11 @@ class UserSessionTest extends TestCase
             },
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
-            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
 
-        $session = new UserSession($client, $user, $store, $tokenCachePool, $logger);
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
@@ -210,14 +162,11 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'getSelfId.json'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
-            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(2);
 
-        $session = new UserSession($client, $user, $store, $tokenCachePool, $logger);
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
@@ -247,14 +196,11 @@ class UserSessionTest extends TestCase
             new JsonResponse(403, [], '{}'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
-            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
 
-        $session = new UserSession($client, $user, $store, $tokenCachePool, $logger);
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
         $this->expectException(\GuzzleHttp\Exception\ClientException::class);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {
@@ -282,45 +228,16 @@ class UserSessionTest extends TestCase
             new JsonResponse(503, [], '{}'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
-            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
 
-        $session = new UserSession($client, $user, $store, $tokenCachePool, $logger);
-        $this->expectException(ServerException::class);
+        $session = new UserSession($client, $user, $tokenCachePool, $logger);
+        $this->expectException(\GuzzleHttp\Exception\ServerException::class);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response->wait();
         }
-    }
-
-    /**
-     * Test that acquiring a token fails if the lock cannot be grabbed.
-     *
-     * @covers ::signInWithLock
-     */
-    public function testConcurrentSignInFails()
-    {
-        $client = $this->getMockClient([
-            new JsonResponse(200, [], 'signin-success.json'),
-        ]);
-        $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
-            ->getMock();
-        $store->expects($this->once())->method('waitAndSave')
-            ->willThrowException(new LockConflictedException());
-        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-
-        // We cover logging in other tests.
-        $logger = new NullLogger();
-
-        $session = new UserSession($client, $user, $store, $tokenCachePool, $logger);
-        $this->expectException(LockConflictedException::class);
-        $session->acquireToken();
     }
 
     /**
@@ -349,26 +266,17 @@ class UserSessionTest extends TestCase
     {
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
-
-        $call = 0;
-        for ($tokens = 0; $tokens < $count; ++$tokens) {
-            // Since our class instantiates the Lock and passes in the logger, we have to expect these method calls
-            // if we want to assert the last method call in this loop.
-            $logger->expects($this->at($call++))->method('info')
-                ->with('Successfully acquired the "{resource}" lock.');
-            $logger->expects($this->at($call++))->method('info')
-                ->with('Expiration defined for "{resource}" lock for "{ttl}" seconds.');
-
-            $logger->expects($this->at($call++))->method('info')
-                ->willReturnCallback(function ($message, $context) {
-                    $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
-                    $this->assertArraySubset([
-                        'token' => 'TOKEN-VALUE',
-                        'username' => 'USER-NAME',
-                    ], $context);
-                    $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-                });
-        }
+        $logger->expects($this->exactly($count))->method('info')
+            ->with(
+                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
+            )->willReturnCallback(function ($message, $context) {
+                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
+                $this->assertArraySubset([
+                    'token' => 'TOKEN-VALUE',
+                    'username' => 'USER-NAME',
+                ], $context);
+                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
+            });
 
         return $logger;
     }
