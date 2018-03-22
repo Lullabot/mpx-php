@@ -122,6 +122,7 @@ class DataObjectFactory
 
     /**
      * @param $uri
+     *
      * @return PromiseInterface
      */
     public function load($uri): PromiseInterface
