@@ -23,7 +23,8 @@
     "squizlabs/php_codesniffer": "^2.9",
     "friendsofphp/php-cs-fixer": "^2.10",
     "nette/php-generator": "^3.0",
-    "symfony/console": "^3.0"
+    "symfony/console": "^3.4",
+    "namshi/cuzzle": "^2.0"
   },
   "autoload": {
     "psr-4": {

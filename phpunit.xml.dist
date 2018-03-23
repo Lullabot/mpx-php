@@ -13,6 +13,11 @@
         <!-- Specify your MPX username and password for testing. -->
         <env name="MPX_USERNAME" value="" />
         <env name="MPX_PASSWORD" value="" />
+
+        <!-- Set to 'true' to log all HTTP requests as curl commands.
+             Note this will EXPOSE PASSWORDS AND TOKENS in logs, so
+             this should only be enabled on local environments. -->
+        <env name="MPX_LOG_CURL" value="false" />
     </php>
 
     <testsuites>
