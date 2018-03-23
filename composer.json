@@ -24,7 +24,8 @@
     "friendsofphp/php-cs-fixer": "^2.10",
     "nette/php-generator": "^3.0",
     "symfony/console": "^3.4",
-    "namshi/cuzzle": "^2.0"
+    "namshi/cuzzle": "^2.0",
+    "rtheunissen/guzzle-log-middleware": "^0.4.1"
   },
   "autoload": {
     "psr-4": {

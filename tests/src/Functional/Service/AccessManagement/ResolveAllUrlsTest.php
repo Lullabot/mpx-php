@@ -3,7 +3,9 @@
 namespace Lullabot\Mpx\Tests\Functional\Service\AccessManagement;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use Concat\Http\Middleware\Logger;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\MessageFormatter;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
@@ -11,13 +13,19 @@ use Lullabot\Mpx\TokenCachePool;
 use Lullabot\Mpx\User;
 use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 use Psr\Log\NullLogger;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
+/**
+ * Test resolving URLs with a live API call.
+ */
 class ResolveAllUrlsTest extends TestCase
 {
-
+    /**
+     * Execute a resolveAllUrls() call.
+     */
     public function testResolve()
     {
         $username = getenv('MPX_USERNAME');
@@ -29,13 +37,18 @@ class ResolveAllUrlsTest extends TestCase
 
         $config = Client::getDefaultConfiguration();
 
-        if (getEnv('MPX_LOG_CURL')) {
+        if (getenv('MPX_LOG_CURL')) {
             $output = new ConsoleOutput();
             $output->setVerbosity(ConsoleOutput::VERBOSITY_DEBUG);
             $cl = new ConsoleLogger($output);
             /** @var $handler \GuzzleHttp\HandlerStack */
             $handler = $config['handler'];
             $handler->after('cookies', new CurlFormatterMiddleware($cl));
+
+            $responseLogger = new Logger($cl);
+            $responseLogger->setLogLevel(LogLevel::DEBUG);
+            $responseLogger->setFormatter(new MessageFormatter(MessageFormatter::DEBUG));
+            $handler->after('cookies', $responseLogger);
         }
 
         $client = new Client(new GuzzleClient($config));
