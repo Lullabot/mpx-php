@@ -91,7 +91,10 @@ class DataObjectFactory
      */
     public function deserialize(string $class, $data)
     {
-        return $this->getObjectSerializer()->deserialize($data, $class, 'json');
+        $dataServiceExtractor = new DataServiceExtractor();
+        $dataServiceExtractor->setClass($this->description['class']);
+
+        return $this->getObjectSerializer($dataServiceExtractor)->deserialize($data, $class, 'json');
     }
 
     /**
@@ -122,33 +125,54 @@ class DataObjectFactory
     /**
      * Query for MPX data using 'byField' parameters.
      *
-     * @param array   $byFields The fields and values to filter by. Note these are exact matches.
-     * @param Account $account  The account context to use in the request.
+     * @param ByFields $byFields The fields and values to filter by. Note these are exact matches.
+     * @param Account  $account  The account context to use in the request.
      *
-     * @return PromiseInterface A promise returning a \Lullabot\Mpx\DataService\ObjectList.
+     * @return ObjectListIterator An iterator over the full result set.
      */
-    public function select(array $byFields, Account $account): PromiseInterface
+    public function select(ByFields $byFields, Account $account): ObjectListIterator
+    {
+        return new ObjectListIterator($this->selectRequest($byFields, $account));
+    }
+
+    /**
+     * Return a promise to an object list.
+     *
+     * @see \Lullabot\Mpx\DataService\DataObjectFactory::select
+     *
+     * @param ByFields $byFields The fields and values to filter by. Note these are exact matches.
+     * @param Account  $account  The account context to use in the request.
+     *
+     * @return PromiseInterface A promise to return an ObjectList.
+     */
+    public function selectRequest(ByFields $byFields, Account $account): PromiseInterface
     {
         /** @var DataService $annotation */
         $annotation = $this->description['annotation'];
         $options = [
-            'query' => $byFields + [
+            'query' => $byFields->toQueryParts() + [
                 'schema' => $annotation->getSchemaVersion(),
                 'form' => 'cjson',
+                'count' => true,
             ],
         ];
 
         $uri = $this->getBaseUri($account, $annotation);
 
-        $response = $this->userSession->requestAsync('GET', $uri, $options)->then(
-            function (ResponseInterface $response) {
+        $request = $this->userSession->requestAsync('GET', $uri, $options)->then(
+            function (ResponseInterface $response) use ($byFields, $account) {
                 $data = $response->getBody();
 
-                return $this->getEntriesSerializer()->deserialize($data, ObjectList::class, 'json');
+                /** @var ObjectList $list */
+                $list = $this->getEntriesSerializer()->deserialize($data, ObjectList::class, 'json');
+                $list->setByFields($byFields);
+                $list->setDataObjectFactory($this, $account);
+
+                return $list;
             }
         );
 
-        return $response;
+        return $request;
     }
 
     /**
@@ -184,7 +208,7 @@ class DataObjectFactory
     }
 
     /**
-     * @param null $dataServiceExtractor
+     * @param PropertyTypeExtractorInterface $dataServiceExtractor
      *
      * @return Serializer
      */
