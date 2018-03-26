@@ -24,11 +24,11 @@ class ResolveAllUrls
     const RESOLVE_ALL_URLS_URL = 'https://access.auth.theplatform.com/web/Registry/resolveAllUrls';
 
     /**
-     * An array of resolved URLs for the service.
+     * An array of resolvedUrls URLs for the service.
      *
      * @var string[]
      */
-    protected $resolved;
+    protected $resolvedUrls;
 
     /**
      * The service these URLs correspond to, such as 'Media Data Service'.
@@ -51,7 +51,7 @@ class ResolveAllUrls
             throw new \InvalidArgumentException('Data does not contain a resolveAllUrlsResponse key and does not appear to be an MPX response.');
         }
 
-        $this->resolved = $data['resolveAllUrlsResponse'];
+        $this->resolvedUrls = $data['resolveAllUrlsResponse'];
         $this->service = $service;
     }
 
@@ -77,17 +77,12 @@ class ResolveAllUrls
         });
     }
 
-    /**
-     * Return a resolved URI for this service.
-     *
-     * @return string The resolved URI.
-     */
     public function resolve(): string
     {
         // If multiple URLs are returned, any of them are usable, so we choose
         // a random one.
         // @todo Double check this assumption.
-        return $this->resolved[array_rand($this->resolved)];
+        return $this->resolvedUrls[array_rand($this->resolvedUrls)];
     }
 
     /**
