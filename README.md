@@ -39,3 +39,11 @@ MPX authentication token that is returned by the platform after [sign in](https:
 
 ### Lullabot\Mpx\TokenCachePool
 Cache of user authentication tokens. This class is a wrapper around a \Psr\Cache\CacheItemPoolInterface object.
+
+## Known issues
+
+[#2001 in Guzzle](https://github.com/guzzle/guzzle/pull/2001) forces processing
+notifications to load all objects that have been notified. Consider applying
+that patch with
+[composer-patches](https://github.com/cweagans/composer-patches) until a new
+release is out.
