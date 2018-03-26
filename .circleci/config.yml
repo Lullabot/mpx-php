@@ -42,7 +42,7 @@ test: &test
       # run tests!
       - run: |
           mkdir -p build/logs
-          vendor/bin/phpunit
+          vendor/bin/phpunit --testsuite Unit
 
       - store_test_results:
           path: build/logs
@@ -98,7 +98,7 @@ test_and_cover: &test_and_cover
       - run: |
           mkdir -p build/logs
           ./cc-test-reporter before-build
-          vendor/bin/phpunit
+          vendor/bin/phpunit --testsuite Unit
 
       - store_test_results:
           path: build/logs
