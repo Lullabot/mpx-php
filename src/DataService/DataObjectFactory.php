@@ -40,45 +40,30 @@ class DataObjectFactory
     protected $userSession;
 
     /**
-     * The manager used to load implementation classes of data objects.
-     *
-     * @var \Lullabot\Mpx\DataService\DataServiceManager
-     */
-    protected $manager;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
      * DataObjectFactory constructor.
      *
-     * @todo Merge manager and service parameters?
      * @todo Inject the resolveDomain() instead of constructing?
      *
-     * @param \Lullabot\Mpx\DataService\DataServiceManager         $manager
+     * @param array                                                $description The array describing the destination class for this factory.
      * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession
-     * @param string                                               $service
      */
-    public function __construct(DataServiceManager $manager, UserSession $userSession, string $service, string $path)
+    public function __construct(array $description, UserSession $userSession)
     {
         $this->userSession = $userSession;
         $this->resolveDomain = new ResolveDomain($this->userSession);
-        $this->manager = $manager;
-        $this->description = $manager->getDataService($service, $path);
-        $this->path = $path;
+        $this->description = $description;
     }
 
     /**
      * Load a data object from MPX, returning a promise to it.
      *
-     * @param int                                      $id      The numeric ID to load.
+     * @param int                                      $id       The numeric ID to load.
      * @param \Lullabot\Mpx\DataService\Access\Account $account
+     * @param bool                                     $readonly (optional) Load from the read-only service.
      *
      * @return PromiseInterface
      */
-    public function loadByNumericId(int $id, Account $account = null)
+    public function loadByNumericId(int $id, Account $account = null, bool $readonly = false)
     {
         /** @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
         $annotation = $this->description['annotation'];
@@ -88,7 +73,7 @@ class DataObjectFactory
         // @todo Can we do this by calling ResolveAllUrls?
         if (!($base = $annotation->getBaseUri())) {
             $resolved = $this->resolveDomain->resolve($account);
-            $base = $resolved->getUrl($annotation->getService()).$annotation->getPath();
+            $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getPath();
         }
         $uri = $base.'/'.$id;
 

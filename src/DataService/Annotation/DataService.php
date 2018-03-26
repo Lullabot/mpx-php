@@ -41,15 +41,6 @@ class DataService
     public $schemaVersion;
 
     /**
-     * If the service supports an account context.
-     *
-     * @todo Should this be optional with a default to false?
-     *
-     * @var bool
-     */
-    public $hasAccountContext;
-
-    /**
      * The base URI of the service, for when the service registry cannot be used.
      *
      * @var string
@@ -59,10 +50,16 @@ class DataService
     /**
      * Return the service of the data object, such as 'Media Data Service'.
      *
-     * @return string
+     * @param bool $readonly (optional) Set to true to return the read-only name of the service.
+     *
+     * @return string The name of the service.
      */
-    public function getService(): string
+    public function getService($readonly = false): string
     {
+        if ($readonly) {
+            return $this->service.' read-only';
+        }
+
         return $this->service;
     }
 
@@ -86,16 +83,6 @@ class DataService
     public function getSchemaVersion(): string
     {
         return $this->schemaVersion;
-    }
-
-    /**
-     * Return if the service supports an account context.
-     *
-     * @return bool
-     */
-    public function isHasAccountContext(): bool
-    {
-        return $this->hasAccountContext;
     }
 
     /**
