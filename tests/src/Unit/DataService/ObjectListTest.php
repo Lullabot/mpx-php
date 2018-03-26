@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
  */
 class ObjectListTest extends TestCase
 {
-
     /**
      * @var ObjectList
      */
@@ -40,8 +39,8 @@ class ObjectListTest extends TestCase
      */
     public function testGetSet($method, $value)
     {
-        $get = 'get' . ucfirst($method);
-        $set = 'set' . ucfirst($method);
+        $get = 'get'.ucfirst($method);
+        $set = 'set'.ucfirst($method);
         $this->list->$set($value);
         $this->assertEquals($value, $this->list->$get());
     }
@@ -208,5 +207,4 @@ class ObjectListTest extends TestCase
         $this->assertEquals(0, $this->list->key());
         $this->assertEquals($first, $this->list->current());
     }
-
 }

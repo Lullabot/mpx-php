@@ -180,7 +180,7 @@ class DataObjectFactory
      *
      * @param Account     $account    The account to use for service resolution.
      * @param DataService $annotation The annotation data is being loaded for.
-     * @param bool                                     $readonly (optional) Load from the read-only service.
+     * @param bool        $readonly   (optional) Load from the read-only service.
      *
      * @return string The base URI.
      */

@@ -21,5 +21,4 @@ class SortTest extends TestCase
         $sort->addSort('title');
         $this->assertEquals(['sort' => 'id|desc,title'], $sort->toQueryParts());
     }
-
 }
