@@ -10,7 +10,6 @@ use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
  */
 class ResolveDomainTest extends FunctionalTestBase
 {
-
     /**
      * Tests that resolving domains returns an array.
      */
