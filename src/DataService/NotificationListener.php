@@ -38,7 +38,7 @@ class NotificationListener
     protected $session;
 
     /**
-     * The name of the service to listen to notifications on, such as 'Media Data Service.'.
+     * The name of the service to listen to notifications on, such as 'Media Data Service'.
      *
      * @var string
      */
@@ -54,7 +54,7 @@ class NotificationListener
      *
      * @param string      $clientId A string to identify this client in debugging.
      * @param UserSession $session  The user session to use for authenticated requests.
-     * @param string      $service  The name of the service to listen to notifications on, such as 'Media Data Service.'
+     * @param string      $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
      */
     public function __construct(string $clientId, UserSession $session, string $service)
     {
