@@ -44,14 +44,14 @@ class ObjectList implements \ArrayAccess, \Iterator
     /**
      * @var object[]
      */
-    protected $entries;
+    protected $entries = [];
 
     /**
      * The total count of objects across all pages.
      *
      * @var int
      */
-    protected $totalResults;
+    protected $totalResults = 0;
 
     /**
      * @var ByFields
@@ -63,7 +63,7 @@ class ObjectList implements \ArrayAccess, \Iterator
      *
      * @var int
      */
-    protected $position;
+    protected $position = 0;
 
     /**
      * The factory used to generate the next object list request.
@@ -157,6 +157,7 @@ class ObjectList implements \ArrayAccess, \Iterator
     public function setEntries(array $entries)
     {
         $this->entries = $entries;
+        $this->rewind();
     }
 
     /**
@@ -185,7 +186,7 @@ class ObjectList implements \ArrayAccess, \Iterator
     public function getByFields(): ByFields
     {
         if (!isset($this->byFields)) {
-            throw new \RuntimeException('This object list does not have byFields set.');
+            throw new \LogicException('This object list does not have byFields set.');
         }
 
         return $this->byFields;
@@ -218,7 +219,7 @@ class ObjectList implements \ArrayAccess, \Iterator
      */
     public function hasNext(): bool
     {
-        return $this->getEntryCount() >= $this->getItemsPerPage();
+        return !empty($this->entries) && ($this->getEntryCount() >= $this->getItemsPerPage());
     }
 
     /**
@@ -235,7 +236,11 @@ class ObjectList implements \ArrayAccess, \Iterator
         }
 
         if (!isset($this->dataObjectFactory) || !isset($this->account)) {
-            throw new \LogicException('setDataObjectFactory must be called before calling hasNext');
+            throw new \LogicException('setDataObjectFactory must be called before calling nextList.');
+        }
+
+        if (!isset($this->byFields)) {
+            throw new \LogicException('setByFields must be called before calling nextList.');
         }
 
         $byFields = clone $this->byFields;
