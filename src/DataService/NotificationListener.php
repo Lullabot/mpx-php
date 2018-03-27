@@ -38,9 +38,9 @@ class NotificationListener
     protected $session;
 
     /**
-     * The name of the service to listen to notifications on, such as 'Media Data Service'.
+     * The service to listen to notifications on, such as /data/Media from the Media Data Service.
      *
-     * @var string
+     * @var DiscoveredDataService
      */
     protected $service;
 
@@ -52,11 +52,15 @@ class NotificationListener
     /**
      * NotificationListener constructor.
      *
-     * @param string      $clientId A string to identify this client in debugging.
-     * @param UserSession $session  The user session to use for authenticated requests.
-     * @param string      $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
+     * This method always uses the read-only version of a service.
+     *
+     * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications#tp-toc2
+     *
+     * @param UserSession           $session  The user session to use for authenticated requests.
+     * @param DiscoveredDataService $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
+     * @param string                $clientId A string to identify this client in debugging.
      */
-    public function __construct(string $clientId, UserSession $session, string $service)
+    public function __construct(UserSession $session, DiscoveredDataService $service, string $clientId)
     {
         $this->clientId = $clientId;
         $this->session = $session;
@@ -65,7 +69,7 @@ class NotificationListener
         $this->resolveDomain = new ResolveDomain($this->session);
 
         /** @var ResolveAllUrls $resolver */
-        $resolver = ResolveAllUrls::load($this->session, $this->service)->wait();
+        $resolver = ResolveAllUrls::load($this->session, $this->service->getAnnotation()->getService(true))->wait();
         $this->uri = $resolver->resolve().'/notify';
     }
 
@@ -116,14 +120,10 @@ class NotificationListener
             ],
         ])->then(function (ResponseInterface $response) {
             $data = \GuzzleHttp\json_decode($response->getBody(), true);
-            $manager = DataServiceManager::basicDiscovery();
             $objects = [];
-            // @todo Fix only being able to load into Media objects.
-            $dof = new DataObjectFactory($manager, $this->session, $this->service, '/data/Media');
+            $dof = new DataObjectFactory($this->service, $this->session);
             foreach ($data as $result) {
-                if ('Media' == $result['type']) {
-                    $objects[] = $dof->load($result['entry']['id']);
-                }
+                $objects[] = $dof->load($result['entry']['id']);
             }
 
             return $objects;

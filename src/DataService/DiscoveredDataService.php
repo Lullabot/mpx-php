@@ -2,16 +2,21 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Lullabot\Mpx\DataService\Annotation\DataService;
+
 class DiscoveredDataService
 {
-
     /**
      * @var string
      */
     private $class;
+
+    /**
+     * @var DataService
+     */
     private $annotation;
 
-    public function __construct(string $class, $annotation)
+    public function __construct(string $class, DataService $annotation)
     {
         $this->class = $class;
         $this->annotation = $annotation;
@@ -26,7 +31,7 @@ class DiscoveredDataService
     }
 
     /**
-     * @return mixed
+     * @return DataService
      */
     public function getAnnotation()
     {
