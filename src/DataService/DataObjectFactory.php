@@ -33,9 +33,9 @@ class DataObjectFactory
     /**
      * The class and annotation to load data objects into.
      *
-     * @var array
+     * @var DiscoveredDataService
      */
-    protected $description;
+    protected $dataService;
 
     /**
      * The user session to use when loading from MPX.
@@ -49,14 +49,14 @@ class DataObjectFactory
      *
      * @todo Inject the resolveDomain() instead of constructing?
      *
-     * @param array                                                $description The array describing the destination class for this factory.
+     * @param DiscoveredDataService                                $dataService The service to load data from.
      * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession
      */
-    public function __construct(array $description, UserSession $userSession)
+    public function __construct(DiscoveredDataService $dataService, UserSession $userSession)
     {
         $this->userSession = $userSession;
         $this->resolveDomain = new ResolveDomain($this->userSession);
-        $this->description = $description;
+        $this->dataService = $dataService;
     }
 
     /**
@@ -70,8 +70,7 @@ class DataObjectFactory
      */
     public function loadByNumericId(int $id, Account $account = null, bool $readonly = false)
     {
-        /** @var DataService $annotation */
-        $annotation = $this->description['annotation'];
+        $annotation = $this->dataService->getAnnotation();
         $base = $this->getBaseUri($account, $annotation, $readonly);
 
         $uri = $base.'/'.$id;
@@ -92,7 +91,7 @@ class DataObjectFactory
     public function deserialize(string $class, $data)
     {
         $dataServiceExtractor = new DataServiceExtractor();
-        $dataServiceExtractor->setClass($this->description['class']);
+        $dataServiceExtractor->setClass($this->dataService->getClass());
 
         return $this->getObjectSerializer($dataServiceExtractor)->deserialize($data, $class, 'json');
     }
@@ -105,7 +104,7 @@ class DataObjectFactory
     public function load($uri): PromiseInterface
     {
         /** @var DataService $annotation */
-        $annotation = $this->description['annotation'];
+        $annotation = $this->dataService->getAnnotation();
         $options = [
             'query' => [
                 'schema' => $annotation->getSchemaVersion(),
@@ -115,7 +114,7 @@ class DataObjectFactory
 
         $response = $this->userSession->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) {
-                return $this->deserialize($this->description['class'], $response->getBody());
+                return $this->deserialize($this->dataService->getClass(), $response->getBody());
             }
         );
 
@@ -147,8 +146,7 @@ class DataObjectFactory
      */
     public function selectRequest(ByFields $byFields, Account $account): PromiseInterface
     {
-        /** @var DataService $annotation */
-        $annotation = $this->description['annotation'];
+        $annotation = $this->dataService->getAnnotation();
         $options = [
             'query' => $byFields->toQueryParts() + [
                 'schema' => $annotation->getSchemaVersion(),
@@ -202,7 +200,7 @@ class DataObjectFactory
         // We need a property extractor that understands the varying types of 'entries'.
         // @todo Should we just make multiple subclasses of ObjectList?
         $dataServiceExtractor = new DataServiceExtractor();
-        $dataServiceExtractor->setClass($this->description['class']);
+        $dataServiceExtractor->setClass($this->dataService->getClass());
 
         return $this->getObjectSerializer($dataServiceExtractor);
     }
