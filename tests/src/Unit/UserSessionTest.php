@@ -42,7 +42,7 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signout.json'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
@@ -69,10 +69,10 @@ class UserSessionTest extends TestCase
         ]);
         $user = new User('USER-NAME', 'incorrect-password');
 
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
-        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
+        /** @var \Psr\Log\LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
 
@@ -98,12 +98,12 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
-        /** @var LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
+        /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
         $logger->expects($this->at(0))->method('info')
@@ -170,7 +170,7 @@ class UserSessionTest extends TestCase
             },
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
@@ -210,7 +210,7 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'getSelfId.json'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
@@ -247,7 +247,7 @@ class UserSessionTest extends TestCase
             new JsonResponse(403, [], '{}'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
@@ -282,7 +282,7 @@ class UserSessionTest extends TestCase
             new JsonResponse(503, [], '{}'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
@@ -308,7 +308,7 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
         ]);
         $user = new User('USER-NAME', 'correct-password');
-        /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
         $store->expects($this->once())->method('waitAndSave')
@@ -343,10 +343,11 @@ class UserSessionTest extends TestCase
      *
      * @param int $count The number of times a token is logged.
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
      */
     private function fetchTokenLogger(int $count)
     {
+        /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
 
