@@ -32,7 +32,7 @@ test: &test
 
           php composer-setup.php --quiet --install-dir /usr/local/bin --filename composer
 
-      - run: composer install -n --prefer-dist
+      - run: composer update -n --prefer-dist $COMPOSER_FLAGS
 
       - save_cache:
           paths:
@@ -42,7 +42,7 @@ test: &test
       # run tests!
       - run: |
           mkdir -p build/logs
-          vendor/bin/phpunit
+          vendor/bin/phpunit --testsuite Unit
 
       - store_test_results:
           path: build/logs
@@ -75,7 +75,7 @@ test_and_cover: &test_and_cover
 
           php composer-setup.php --quiet --install-dir /usr/local/bin --filename composer
 
-      - run: composer install -n --prefer-dist
+      - run: composer update -n --prefer-dist
 
       - run: |
           [ -f /usr/local/lib/php/extensions/no-debug-non-zts-20170718/xdebug.so ] || pecl install xdebug
@@ -98,7 +98,7 @@ test_and_cover: &test_and_cover
       - run: |
           mkdir -p build/logs
           ./cc-test-reporter before-build
-          vendor/bin/phpunit
+          vendor/bin/phpunit --testsuite Unit
 
       - store_test_results:
           path: build/logs
@@ -135,7 +135,7 @@ code_fixer: &code_fixer
 
           php composer-setup.php --quiet --install-dir /usr/local/bin --filename composer
 
-      - run: composer install -n --prefer-dist
+      - run: composer update -n --prefer-dist
 
       - save_cache:
           paths:
@@ -165,6 +165,9 @@ jobs:
       - image: php:7.0
 
     working_directory: ~/repo
+
+    environment:
+      - COMPOSER_FLAGS: --prefer-lowest
 
     <<: *test
 

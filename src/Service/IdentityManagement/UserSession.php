@@ -13,8 +13,6 @@ use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Lock\Factory;
-use Symfony\Component\Lock\StoreInterface;
 
 class UserSession implements ClientInterface
 {
@@ -57,38 +55,26 @@ class UserSession implements ClientInterface
     protected $logger;
 
     /**
-     * The backend lock store used to store a lock when signing in to MPX.
-     *
-     * @var StoreInterface
-     */
-    protected $store;
-
-    /**
      * Construct a new user session.
      *
      * Note that the session is not actually established until acquireToken is
      * called.
      *
+     * @todo There is a potential cache stampede on signing in.
+     *
      * @param \Lullabot\Mpx\Client         $client         The client used to access MPX.
      * @param \Lullabot\Mpx\User           $user           The user associated with this session.
-     * @param StoreInterface               $store          The lock backend to store locks in.
      * @param \Lullabot\Mpx\TokenCachePool $tokenCachePool The cache of authentication tokens.
      * @param \Psr\Log\LoggerInterface     $logger         The logger used when logging automatic authentication renewals.
      *
      * @see \Psr\Log\NullLogger To disable logging within this session.
      */
-    public function __construct(
-        Client $client,
-        User $user,
-        StoreInterface $store,
-        TokenCachePool $tokenCachePool,
-        LoggerInterface $logger
-    ) {
+    public function __construct(Client $client, User $user, TokenCachePool $tokenCachePool, LoggerInterface $logger)
+    {
         $this->client = $client;
         $this->user = $user;
         $this->tokenCachePool = $tokenCachePool;
         $this->logger = $logger;
-        $this->store = $store;
     }
 
     /**
@@ -115,7 +101,15 @@ class UserSession implements ClientInterface
         try {
             $token = $this->tokenCachePool->getToken($this->user);
         } catch (TokenNotFoundException $e) {
-            $token = $this->signInWithLock($duration);
+            $token = $this->signIn($duration);
+            $this->logger->info(
+                'Retrieved a new MPX token {token} for user {username} that expires on {date}.',
+                [
+                    'token' => $token->getValue(),
+                    'username' => $this->user->getUsername(),
+                    'date' => date(DATE_ISO8601, $token->getExpiration()),
+                ]
+            );
         }
 
         return $token;
@@ -158,17 +152,7 @@ class UserSession implements ClientInterface
 
         $data = \GuzzleHttp\json_decode($response->getBody(), true);
 
-        $token = $this->tokenFromResponse($data);
-        $this->logger->info(
-            'Retrieved a new MPX token {token} for user {username} that expires on {date}.',
-            [
-                'token' => $token->getValue(),
-                'username' => $this->user->getUsername(),
-                'date' => date(DATE_ISO8601, $token->getExpiration()),
-            ]
-        );
-
-        return $token;
+        return $this->tokenFromResponse($data);
     }
 
     /**
@@ -458,32 +442,5 @@ class UserSession implements ClientInterface
         });
 
         return $outer;
-    }
-
-    /**
-     * Sign in to MPX, with a lock to prevent sign-in stampedes.
-     *
-     * @param int $duration (optional) The number of seconds that the sign-in token should be valid for.
-     *
-     * @return Token
-     */
-    protected function signInWithLock(int $duration = null): Token
-    {
-        $factory = new Factory($this->store);
-        $factory->setLogger($this->logger);
-        $lock = $factory->createLock($this->user->getUsername(), 10);
-
-        // Blocking means this will throw an exception on failure.
-        $lock->acquire(true);
-
-        try {
-            // It's possible another thread has signed in for us, so check for a token first.
-            $token = $this->tokenCachePool->getToken($this->user);
-        } catch (TokenNotFoundException $e) {
-            // We have the lock, and there's no token, so sign in.
-            $token = $this->signIn($duration);
-        }
-
-        return $token;
     }
 }
