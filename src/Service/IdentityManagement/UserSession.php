@@ -9,7 +9,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\Promise;
 use Lullabot\Mpx\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
-use Symfony\Component\Lock\StoreInterface;
 
 class UserSession implements ClientInterface
 {
@@ -21,32 +20,11 @@ class UserSession implements ClientInterface
     protected $user;
 
     /**
-     * The cache of authentication tokens.
-     *
-     * @var \Lullabot\Mpx\TokenCachePool
-     */
-    protected $tokenCachePool;
-
-    /**
      * The client used to access MPX.
      *
      * @var \Lullabot\Mpx\Client
      */
     protected $client;
-
-    /**
-     * The logger used to log automatic token renewals.
-     *
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * The backend lock store used to store a lock when signing in to MPX.
-     *
-     * @var StoreInterface
-     */
-    protected $store;
 
     /**
      * Construct a new user session.
@@ -56,8 +34,6 @@ class UserSession implements ClientInterface
      *
      * @param \Lullabot\Mpx\Client $client The client used to access MPX.
      * @param \Lullabot\Mpx\User   $user   The user associated with this session.
-     *
-     * @see \Psr\Log\NullLogger To disable logging within this session.
      */
     public function __construct(
         Client $client,

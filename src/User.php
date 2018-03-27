@@ -34,19 +34,29 @@ class User
      * @var string
      */
     protected $password;
+
     /**
      * @var Client
      */
     protected $client;
+
     /**
+     * The backend lock store used to store a lock when signing in to MPX.
+     *
      * @var StoreInterface
      */
     protected $store;
+
     /**
+     * The cache of authentication tokens.
+     *
      * @var TokenCachePool
      */
     protected $tokenCachePool;
+
     /**
+     * The logger used to log automatic token renewals.
+     *
      * @var LoggerInterface
      */
     protected $logger;
@@ -59,8 +69,10 @@ class User
      * @param StoreInterface               $store          The lock backend to store locks in.
      * @param \Lullabot\Mpx\TokenCachePool $tokenCachePool The cache of authentication tokens.
      * @param LoggerInterface              $logger         The logger used when logging automatic authentication renewals.
-     * @param string                       $username
-     * @param string                       $password
+     * @param string                       $username       The username of the user.
+     * @param string                       $password       The user password.
+     *
+     * @see \Psr\Log\NullLogger To disable logging within this session.
      */
     public function __construct(Client $client, StoreInterface $store, TokenCachePool $tokenCachePool, LoggerInterface $logger, $username, $password)
     {
