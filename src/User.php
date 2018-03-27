@@ -143,25 +143,7 @@ class User
      */
     protected function signIn($duration = null): Token
     {
-        $options = [];
-        $options['auth'] = [
-            $this->getUsername(),
-            $this->getPassword(),
-        ];
-
-        // @todo Make this a class constant.
-        $options['query'] = [
-            'schema' => '1.0',
-            'form' => 'json',
-        ];
-
-        // @todo move these to POST.
-        // https://docs.theplatform.com/help/wsf-signin-method#signInmethod-JSONPOSTexample
-        if (!empty($duration)) {
-            // API expects this value in milliseconds, not seconds.
-            $options['query']['_duration'] = $duration * 1000;
-            $options['query']['_idleTimeout'] = $duration * 1000;
-        }
+        $options = $this->signInOptions($duration);
 
         $response = $this->client->request(
             'GET',
@@ -247,5 +229,37 @@ class User
         $this->tokenCachePool->setToken($this, $token);
 
         return $token;
+    }
+
+    /**
+     * Return the query parameters for signing in.
+     *
+     * @param int $duration The duration to sign in for.
+     *
+     * @return array An array of query parameters.
+     */
+    private function signInOptions($duration = null): array
+    {
+        $options = [];
+        $options['auth'] = [
+            $this->getUsername(),
+            $this->getPassword(),
+        ];
+
+        // @todo Make this a class constant.
+        $options['query'] = [
+            'schema' => '1.0',
+            'form' => 'json',
+        ];
+
+        // @todo move these to POST.
+        // https://docs.theplatform.com/help/wsf-signin-method#signInmethod-JSONPOSTexample
+        if (!empty($duration)) {
+            // API expects this value in milliseconds, not seconds.
+            $options['query']['_duration'] = $duration * 1000;
+            $options['query']['_idleTimeout'] = $duration * 1000;
+        }
+
+        return $options;
     }
 }

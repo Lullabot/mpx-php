@@ -27,6 +27,7 @@ class UserTest extends TestCase
      * @covers ::__construct
      * @covers ::acquireToken
      * @covers ::signIn
+     * @covers ::signInOptions
      * @covers ::signInWithLock
      * @covers ::tokenFromResponse
      * @covers ::signOut
