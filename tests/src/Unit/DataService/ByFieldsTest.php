@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
  */
 class ByFieldsTest extends TestCase
 {
-
     /**
      * Tests creating the ByFields query array.
      *
