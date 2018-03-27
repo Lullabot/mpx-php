@@ -36,12 +36,12 @@ class ResolveAllUrlsTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'resolveAllUrls.json'),
         ]);
-        $user = new User('USER-NAME', 'correct-password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
-        $session = new UserSession($client, $user, $store, $tokenCachePool, new NullLogger());
+        $user = new User($client, $store, $tokenCachePool, new NullLogger(), 'USER-NAME', 'correct-password');
+        $session = new UserSession($client, $user);
         /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls $r */
         $r = ResolveAllUrls::load($session, 'Media Data Service')->wait();
         $this->assertEquals('Media Data Service', $r->getService());
@@ -57,6 +57,6 @@ class ResolveAllUrlsTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Data does not contain a resolveAllUrlsResponse key and does not appear to be an MPX response.');
-        $r = new ResolveAllUrls('Media Data Service', []);
+        new ResolveAllUrls('Media Data Service', []);
     }
 }
