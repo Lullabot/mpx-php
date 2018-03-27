@@ -94,7 +94,7 @@ class DataServiceDiscovery
                 continue;
             }
 
-            $this->dataServices[$annotation->getService()][$annotation->getPath()][$annotation->getSchemaVersion()] = new DiscoveredDataService($class, $annotation);
+            $this->dataServices[$annotation->getService()][$annotation->getObjectType()][$annotation->getSchemaVersion()] = new DiscoveredDataService($class, $annotation);
         }
     }
 

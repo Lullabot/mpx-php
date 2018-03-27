@@ -9,7 +9,7 @@ use Psr\Http\Message\UriInterface;
 /**
  * @\Lullabot\Mpx\DataService\Annotation\DataService(
  *     service="Player Data Service",
- *     path="/data/Player",
+ *     objectType="Player",
  *     schemaVersion="1.6",
  * )
  */

@@ -17,7 +17,7 @@ use Psr\Http\Message\UriInterface;
  * @DataService(
  *   service="Media Data Service",
  *   schemaVersion="1.10",
- *   path="/data/Media",
+ *   objectType="Media",
  * )
  */
 class Media implements CreateKeyInterface

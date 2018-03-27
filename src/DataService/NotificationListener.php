@@ -99,8 +99,12 @@ class NotificationListener
     /**
      * Listen for notifications.
      *
+     * This method always filters to the object type defined in the discovered
+     * data service passed in the constructor, such as 'Media'.
+     *
+     * @see https://docs.theplatform.com/help/media-media-data-service-api-reference
+     *
      * @todo Add support for a configurable timeout?
-     * @todo Convert the return to an ObjectList.
      *
      * @see \Lullabot\Mpx\DataService\NotificationListener::sync
      *
@@ -117,6 +121,7 @@ class NotificationListener
                 'block' => 'true',
                 'form' => 'cjson',
                 'schema' => '1.10',
+                'filter' => $this->service->getAnnotation()->getObjectType(),
             ],
         ])->then(function (ResponseInterface $response) {
             $data = \GuzzleHttp\json_decode($response->getBody(), true);

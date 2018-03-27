@@ -189,7 +189,7 @@ class DataObjectFactory
         // @todo Can we do this by calling ResolveAllUrls?
         if (!($base = $annotation->getBaseUri())) {
             $resolved = $this->resolveDomain->resolve($account);
-            $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getPath();
+            $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getObjectType();
         }
 
         return $base;
