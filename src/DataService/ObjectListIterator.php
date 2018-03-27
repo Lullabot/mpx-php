@@ -104,7 +104,12 @@ class ObjectListIterator extends \NoRewindIterator
         $requested_page = floor($this->position / $this->list->getItemsPerPage());
 
         while ($requested_page > $this->page) {
-            $this->list = $this->list->nextList()->wait();
+            // There is no next page to retrieve, but we just asked to go beyond the last page.
+            if (!$next = $this->list->nextList()) {
+                return false;
+            }
+
+            $this->list = $next->wait();
             ++$this->page;
         }
 
@@ -114,6 +119,8 @@ class ObjectListIterator extends \NoRewindIterator
             return true;
         }
 
+        // The last page is not completely full, but the relative position does
+        // not exist.
         return false;
     }
 }
