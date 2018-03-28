@@ -9,12 +9,14 @@ use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 use Lullabot\Mpx\TokenCachePool;
-use Lullabot\Mpx\User;
+use Lullabot\Mpx\UserSession;
 use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 use Psr\Log\NullLogger;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Lock\StoreInterface;
 
 abstract class FunctionalTestBase extends TestCase
 {
@@ -24,9 +26,9 @@ abstract class FunctionalTestBase extends TestCase
     protected $client;
 
     /**
-     * @var User
+     * @var UserSession
      */
-    protected $user;
+    protected $userSession;
 
     /**
      * @var AuthenticatedClient
@@ -68,18 +70,22 @@ abstract class FunctionalTestBase extends TestCase
             $handler->after('cookies', new CurlFormatterMiddleware($cl));
 
             $responseLogger = new Logger($cl);
-            $responseLogger->setLogLevel(\Psr\Log\LogLevel::DEBUG);
+            $responseLogger->setLogLevel(LogLevel::DEBUG);
             $responseLogger->setFormatter(new MessageFormatter(MessageFormatter::DEBUG));
             $handler->after('cookies', $responseLogger);
         }
 
         $this->client = new Client(new \GuzzleHttp\Client($config));
-        $this->user = new User($username, $password);
+
+        // Since this is a single thread within a test, we know it's impossible
+        // for the lock to fail so we can stub out the entire class.
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+
+        $this->userSession = new UserSession($this->client, $store, new TokenCachePool(new ArrayCachePool()), new NullLogger(), $username, $password);
         $this->session = new AuthenticatedClient(
             $this->client,
-            $this->user,
-            new TokenCachePool(new ArrayCachePool()),
-            new NullLogger()
+            $this->userSession
         );
 
         $this->account = new Account();

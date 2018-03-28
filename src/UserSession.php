@@ -13,7 +13,7 @@ use Symfony\Component\Lock\StoreInterface;
  * @see http://help.theplatform.com/display/wsf2/Identity+management+service+API+reference
  * @see http://help.theplatform.com/display/wsf2/User+operations
  */
-class User
+class UserSession
 {
     /**
      * The URL to sign in a user.

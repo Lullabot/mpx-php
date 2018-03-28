@@ -11,7 +11,7 @@ use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
-use Lullabot\Mpx\User;
+use Lullabot\Mpx\UserSession;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
@@ -59,7 +59,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
+        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
         $session = new AuthenticatedClient($client, $user);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {
@@ -99,7 +99,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(2);
 
-        $user = new User($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
+        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
         $session = new AuthenticatedClient($client, $user);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {
@@ -136,7 +136,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
+        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
         $session = new AuthenticatedClient($client, $user);
         $this->expectException(ClientException::class);
         $response = call_user_func_array([$session, $method], $args);
@@ -171,7 +171,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
+        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
         $session = new AuthenticatedClient($client, $user);
         $this->expectException(ServerException::class);
         $response = call_user_func_array([$session, $method], $args);

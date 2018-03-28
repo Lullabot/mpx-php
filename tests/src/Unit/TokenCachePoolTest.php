@@ -5,7 +5,7 @@ namespace Lullabot\Mpx\Tests\Unit;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Token;
 use Lullabot\Mpx\TokenCachePool;
-use Lullabot\Mpx\User;
+use Lullabot\Mpx\UserSession;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 class TokenCachePoolTest extends TestCase
 {
     /**
-     * @var \Lullabot\Mpx\User|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Lullabot\Mpx\UserSession|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $user;
 
@@ -28,8 +28,8 @@ class TokenCachePoolTest extends TestCase
      */
     public function setUp()
     {
-        /* @var User|\PHPUnit_Framework_MockObject_MockObject $user */
-        $this->user = $this->getMockBuilder(User::class)
+        /* @var UserSession|\PHPUnit_Framework_MockObject_MockObject $user */
+        $this->user = $this->getMockBuilder(UserSession::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->user->method('getUsername')->willReturn('username');

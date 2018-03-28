@@ -35,10 +35,10 @@ class TokenCachePool
     /**
      * Set an authentication token for a user.
      *
-     * @param \Lullabot\Mpx\User  $user  The user the token is associated with.
-     * @param \Lullabot\Mpx\Token $token The authentication token for the user.
+     * @param \Lullabot\Mpx\UserSession $user  The user the token is associated with.
+     * @param \Lullabot\Mpx\Token       $token The authentication token for the user.
      */
-    public function setToken(User $user, Token $token)
+    public function setToken(UserSession $user, Token $token)
     {
         $item = $this->cacheItemPool->getItem($this->cacheKey($user));
         $item->set($token);
@@ -50,11 +50,11 @@ class TokenCachePool
     /**
      * Get the cached token for a user.
      *
-     * @param \Lullabot\Mpx\User $user The user to look up tokens for.
+     * @param \Lullabot\Mpx\UserSession $user The user to look up tokens for.
      *
      * @return \Lullabot\Mpx\Token The cached token.
      */
-    public function getToken(User $user): Token
+    public function getToken(UserSession $user): Token
     {
         // @todo Test that the expiresAfter() call works. We don't want to be caught
         // by cron etc.
@@ -70,9 +70,9 @@ class TokenCachePool
     /**
      * Delete a cached token for a user.
      *
-     * @param \Lullabot\Mpx\User $user The user to delete the token for.
+     * @param \Lullabot\Mpx\UserSession $user The user to delete the token for.
      */
-    public function deleteToken(User $user)
+    public function deleteToken(UserSession $user)
     {
         $this->cacheItemPool->deleteItem($this->cacheKey($user));
     }
@@ -80,11 +80,11 @@ class TokenCachePool
     /**
      * Generate a cache key for a token, limiting key length.
      *
-     * @param \Lullabot\Mpx\User $user The user to generate the cache key for.
+     * @param \Lullabot\Mpx\UserSession $user The user to generate the cache key for.
      *
      * @return string The cache key for the user.
      */
-    private function cacheKey(User $user): string
+    private function cacheKey(UserSession $user): string
     {
         return md5($user->getUsername());
     }

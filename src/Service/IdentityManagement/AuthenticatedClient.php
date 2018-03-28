@@ -4,7 +4,7 @@ namespace Lullabot\Mpx\Service\IdentityManagement;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\Client;
-use Lullabot\Mpx\User;
+use Lullabot\Mpx\UserSession;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\Promise;
 use Lullabot\Mpx\Exception\ClientException;
@@ -15,7 +15,7 @@ class AuthenticatedClient implements ClientInterface
     /**
      * The user to establish a client for.
      *
-     * @var \Lullabot\Mpx\User
+     * @var \Lullabot\Mpx\UserSession
      */
     protected $user;
 
@@ -32,12 +32,12 @@ class AuthenticatedClient implements ClientInterface
      * Note that the authentication is not actually established until
      * acquireToken is called.
      *
-     * @param \Lullabot\Mpx\Client $client The client used to access MPX.
-     * @param \Lullabot\Mpx\User   $user   The user associated with this client.
+     * @param \Lullabot\Mpx\Client      $client The client used to access MPX.
+     * @param \Lullabot\Mpx\UserSession $user   The user associated with this client.
      */
     public function __construct(
         Client $client,
-        User $user
+        UserSession $user
     ) {
         $this->client = $client;
         $this->user = $user;

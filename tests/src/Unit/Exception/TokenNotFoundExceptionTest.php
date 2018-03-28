@@ -3,7 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit\Exception;
 
 use Lullabot\Mpx\Exception\TokenNotFoundException;
-use Lullabot\Mpx\User;
+use Lullabot\Mpx\UserSession;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,8 +16,8 @@ class TokenNotFoundExceptionTest extends TestCase
      */
     public function testConstruct()
     {
-        /** @var User|\PHPUnit_Framework_MockObject_MockObject $user */
-        $user = $this->getMockBuilder(User::class)
+        /** @var UserSession|\PHPUnit_Framework_MockObject_MockObject $user */
+        $user = $this->getMockBuilder(UserSession::class)
             ->disableOriginalConstructor()
             ->getMock();
         $user->method('getUsername')->willReturn('username');

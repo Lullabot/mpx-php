@@ -31,7 +31,7 @@ It also handles XML from responses.
 ### Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient
 Manages authenticated sessions and proxies API calls with a ClientInterface implementation, automatically refreshing expired API tokens as required.
 
-### Lullabot\Mpx\User
+### Lullabot\Mpx\UserSession
 An MPX user. Just username and password getters.
 
 ### Lullabot\Mpx\Token
