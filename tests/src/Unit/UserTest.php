@@ -4,10 +4,10 @@ namespace Lullabot\Mpx\Tests\Unit;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Exception\ClientException;
+use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
-use Lullabot\Mpx\UserSession;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -17,7 +17,7 @@ use Symfony\Component\Lock\StoreInterface;
 /**
  * Tests MPX user accounts.
  *
- * @coversDefaultClass \Lullabot\Mpx\UserSession
+ * @coversDefaultClass \Lullabot\Mpx\Service\IdentityManagement\UserSession
  */
 class UserTest extends TestCase
 {

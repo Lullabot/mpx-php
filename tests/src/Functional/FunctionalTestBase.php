@@ -8,8 +8,8 @@ use GuzzleHttp\MessageFormatter;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
+use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
-use Lullabot\Mpx\UserSession;
 use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
@@ -26,7 +26,7 @@ abstract class FunctionalTestBase extends TestCase
     protected $client;
 
     /**
-     * @var UserSession
+     * @var \Lullabot\Mpx\Service\IdentityManagement\UserSession
      */
     protected $userSession;
 

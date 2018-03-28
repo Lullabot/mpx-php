@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx;
 
 use Lullabot\Mpx\Exception\TokenNotFoundException;
+use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -35,8 +36,8 @@ class TokenCachePool
     /**
      * Set an authentication token for a user.
      *
-     * @param \Lullabot\Mpx\UserSession $user  The user the token is associated with.
-     * @param \Lullabot\Mpx\Token       $token The authentication token for the user.
+     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $user  The user the token is associated with.
+     * @param \Lullabot\Mpx\Token                                  $token The authentication token for the user.
      */
     public function setToken(UserSession $user, Token $token)
     {
@@ -50,7 +51,7 @@ class TokenCachePool
     /**
      * Get the cached token for a user.
      *
-     * @param \Lullabot\Mpx\UserSession $user The user to look up tokens for.
+     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $user The user to look up tokens for.
      *
      * @return \Lullabot\Mpx\Token The cached token.
      */
@@ -70,7 +71,7 @@ class TokenCachePool
     /**
      * Delete a cached token for a user.
      *
-     * @param \Lullabot\Mpx\UserSession $user The user to delete the token for.
+     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $user The user to delete the token for.
      */
     public function deleteToken(UserSession $user)
     {
@@ -80,7 +81,7 @@ class TokenCachePool
     /**
      * Generate a cache key for a token, limiting key length.
      *
-     * @param \Lullabot\Mpx\UserSession $user The user to generate the cache key for.
+     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $user The user to generate the cache key for.
      *
      * @return string The cache key for the user.
      */

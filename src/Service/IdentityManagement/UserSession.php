@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx;
+namespace Lullabot\Mpx\Service\IdentityManagement;
 
 use Lullabot\Mpx\Exception\TokenNotFoundException;
 use Psr\Log\LoggerInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\StoreInterface;
 
 /**
- * Defines an class for interacting with MPX users.
+ * Defines a class for authenticating a user with MPX.
  *
  * @see http://help.theplatform.com/display/wsf2/Identity+management+service+API+reference
  * @see http://help.theplatform.com/display/wsf2/User+operations
@@ -36,7 +36,7 @@ class UserSession
     protected $password;
 
     /**
-     * @var Client
+     * @var \Lullabot\Mpx\Client
      */
     protected $client;
 
@@ -50,7 +50,7 @@ class UserSession
     /**
      * The cache of authentication tokens.
      *
-     * @var TokenCachePool
+     * @var \Lullabot\Mpx\TokenCachePool
      */
     protected $tokenCachePool;
 
@@ -73,7 +73,8 @@ class UserSession
      * @param string                       $username       The username of the user.
      * @param string                       $password       The user password.
      */
-    public function __construct(Client $client, StoreInterface $store, TokenCachePool $tokenCachePool, LoggerInterface $logger, $username, $password)
+    public function __construct(
+        \Lullabot\Mpx\Client $client, StoreInterface $store, \Lullabot\Mpx\TokenCachePool $tokenCachePool, LoggerInterface $logger, $username, $password)
     {
         $this->username = $username;
         $this->password = $password;
@@ -115,7 +116,7 @@ class UserSession
      *
      * @return \Lullabot\Mpx\Token A valid MPX authentication token.
      */
-    public function acquireToken(int $duration = null, bool $reset = false): Token
+    public function acquireToken(int $duration = null, bool $reset = false): \Lullabot\Mpx\Token
     {
         if ($reset) {
             $this->tokenCachePool->deleteToken($this);
@@ -140,7 +141,7 @@ class UserSession
      *
      * @return \Lullabot\Mpx\Token
      */
-    protected function signIn($duration = null): Token
+    protected function signIn($duration = null): \Lullabot\Mpx\Token
     {
         $options = $this->signInOptions($duration);
 
@@ -192,9 +193,9 @@ class UserSession
      *
      * @param int $duration (optional) The number of seconds that the sign-in token should be valid for.
      *
-     * @return Token
+     * @return \Lullabot\Mpx\Token
      */
-    protected function signInWithLock(int $duration = null): Token
+    protected function signInWithLock(int $duration = null): \Lullabot\Mpx\Token
     {
         $factory = new Factory($this->store);
         $factory->setLogger($this->logger);
@@ -221,9 +222,9 @@ class UserSession
      *
      * @return \Lullabot\Mpx\Token The new token.
      */
-    private function tokenFromResponse(array $data): Token
+    private function tokenFromResponse(array $data): \Lullabot\Mpx\Token
     {
-        $token = Token::fromResponseData($data);
+        $token = \Lullabot\Mpx\Token::fromResponseData($data);
         // Save the token to the cache and return it.
         $this->tokenCachePool->setToken($this, $token);
 
