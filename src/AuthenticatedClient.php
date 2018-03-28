@@ -1,11 +1,10 @@
 <?php
 
-namespace Lullabot\Mpx\Service\IdentityManagement;
+namespace Lullabot\Mpx;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
-use Lullabot\Mpx\Client;
 use Lullabot\Mpx\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
 
@@ -36,7 +35,7 @@ class AuthenticatedClient implements ClientInterface
      */
     public function __construct(
         Client $client,
-        UserSession $user
+        \Lullabot\Mpx\Service\IdentityManagement\UserSession $user
     ) {
         $this->client = $client;
         $this->user = $user;

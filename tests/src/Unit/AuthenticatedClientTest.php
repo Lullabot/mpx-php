@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
-use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
@@ -18,7 +18,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Lock\StoreInterface;
 
 /**
- * @coversDefaultClass \Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient
+ * @coversDefaultClass \Lullabot\Mpx\AuthenticatedClient
  */
 class AuthenticatedClientTest extends TestCase
 {

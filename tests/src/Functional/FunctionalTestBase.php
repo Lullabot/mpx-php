@@ -5,9 +5,9 @@ namespace Lullabot\Mpx\Tests\Functional;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Concat\Http\Middleware\Logger;
 use GuzzleHttp\MessageFormatter;
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
-use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
 use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
@@ -31,7 +31,7 @@ abstract class FunctionalTestBase extends TestCase
     protected $userSession;
 
     /**
-     * @var AuthenticatedClient
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
     protected $session;
 

@@ -3,9 +3,9 @@
 namespace Lullabot\Mpx\DataService;
 
 use GuzzleHttp\Promise\PromiseInterface;
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
-use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -35,7 +35,7 @@ class DataObjectFactory
     /**
      * The client to make authenticated API calls.
      *
-     * @var \Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
     protected $authenticatedClient;
 
@@ -44,8 +44,8 @@ class DataObjectFactory
      *
      * @todo Inject the resolveDomain() instead of constructing?
      *
-     * @param array                                                        $description         The array describing the destination class for this factory.
-     * @param \Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
+     * @param array                             $description         The array describing the destination class for this factory.
+     * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
      */
     public function __construct(array $description, AuthenticatedClient $authenticatedClient)
     {

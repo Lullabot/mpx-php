@@ -3,8 +3,8 @@
 namespace Lullabot\Mpx\Tests\Unit\Service\AccessManagement;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
-use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;

@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Service\AccessManagement;
 
-use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
+use Lullabot\Mpx\AuthenticatedClient;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -58,8 +58,8 @@ class ResolveAllUrls
     /**
      * Fetch URLs and return the response.
      *
-     * @param \Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient $authenticatedClient The authenticated session to use when querying.
-     * @param string                                                       $service             The service to find URLs for, such as 'Media Data Service'.
+     * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient The authenticated session to use when querying.
+     * @param string                            $service             The service to find URLs for, such as 'Media Data Service'.
      *
      * @return \GuzzleHttp\Promise\PromiseInterface A promise to return a new ResolveAllUrls class.
      */

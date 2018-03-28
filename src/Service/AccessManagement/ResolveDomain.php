@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\Service\AccessManagement;
 
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
-use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 
 /**
  * Resolve all service URLs for an account.
@@ -23,7 +23,7 @@ class ResolveDomain
     const SCHEMA_VERSION = '1.0';
 
     /**
-     * @var \Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
     private $authenticatedClient;
 

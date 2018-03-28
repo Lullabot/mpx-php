@@ -2,9 +2,9 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
-use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -33,7 +33,7 @@ class NotificationListener
     /**
      * The client for authenticated requests.
      *
-     * @var AuthenticatedClient
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
     protected $authenticatedClient;
 
@@ -52,9 +52,9 @@ class NotificationListener
     /**
      * NotificationListener constructor.
      *
-     * @param string              $clientId A string to identify this client in debugging.
-     * @param AuthenticatedClient $session  The client to use for authenticated requests.
-     * @param string              $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
+     * @param string                            $clientId A string to identify this client in debugging.
+     * @param \Lullabot\Mpx\AuthenticatedClient $session  The client to use for authenticated requests.
+     * @param string                            $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
      */
     public function __construct(string $clientId, AuthenticatedClient $session, string $service)
     {
