@@ -17,8 +17,6 @@ use Symfony\Component\Serializer\Serializer;
  * Listen to events from MPX.
  *
  * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications
- *
- * @codeCoverageIgnore Until we refactor this to allow loading all objects.
  */
 class NotificationListener
 {
@@ -113,10 +111,11 @@ class NotificationListener
      * @todo Add support for a configurable timeout?
      *
      * @see \Lullabot\Mpx\DataService\NotificationListener::sync
+     * @see \Lullabot\Mpx\DataService\Notification
      *
      * @param int $since The last sync ID.
      *
-     * @return \GuzzleHttp\Promise\PromiseInterface A promise returning a list of notified objects.
+     * @return \GuzzleHttp\Promise\PromiseInterface A promise returning an array of Notifications.
      */
     public function listen(int $since)
     {

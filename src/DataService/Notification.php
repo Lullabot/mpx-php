@@ -3,7 +3,9 @@
 namespace Lullabot\Mpx\DataService;
 
 /**
- * @class   Notification
+ * Represents an MPX notification.
+ *
+ * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications
  */
 class Notification
 {
@@ -30,7 +32,7 @@ class Notification
     /**
      * @return object
      */
-    public function getEntry(): object
+    public function getEntry()
     {
         return $this->entry;
     }
