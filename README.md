@@ -11,6 +11,9 @@
 
 ## Example
 
+Here is a complete example showing how to load an account and media items from
+MPX.
+
 ```php
 <?php
 
