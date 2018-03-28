@@ -32,7 +32,7 @@ class DataServiceExtractor extends ReflectionExtractor
      */
     public function getTypes($class, $property, array $context = [])
     {
-        if ('entries' != $property) {
+        if ('entries' !== $property) {
             return parent::getTypes($class, $property, $context);
         }
 
