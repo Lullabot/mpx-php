@@ -9,7 +9,7 @@ use Psr\Cache\CacheItemPoolInterface;
  * The cache of user authentication tokens.
  *
  * MPX allows for multiple active sessions for a given user. However, we only
- * support a single session per user within a given PHP request.
+ * support a single authenticated client per user within a given PHP request.
  *
  * @see https://docs.theplatform.com/help/wsf-signin-method
  */

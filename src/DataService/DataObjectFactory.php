@@ -5,7 +5,7 @@ namespace Lullabot\Mpx\DataService;
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
-use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -33,24 +33,24 @@ class DataObjectFactory
     protected $description;
 
     /**
-     * The user session to use when loading from MPX.
+     * The client to make authenticated API calls.
      *
-     * @var \Lullabot\Mpx\Service\IdentityManagement\UserSession
+     * @var \Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient
      */
-    protected $userSession;
+    protected $authenticatedClient;
 
     /**
      * DataObjectFactory constructor.
      *
      * @todo Inject the resolveDomain() instead of constructing?
      *
-     * @param array                                                $description The array describing the destination class for this factory.
-     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession
+     * @param array                                                        $description         The array describing the destination class for this factory.
+     * @param \Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
      */
-    public function __construct(array $description, UserSession $userSession)
+    public function __construct(array $description, AuthenticatedClient $authenticatedClient)
     {
-        $this->userSession = $userSession;
-        $this->resolveDomain = new ResolveDomain($this->userSession);
+        $this->authenticatedClient = $authenticatedClient;
+        $this->resolveDomain = new ResolveDomain($this->authenticatedClient);
         $this->description = $description;
     }
 
@@ -121,7 +121,7 @@ class DataObjectFactory
             ],
         ];
 
-        $response = $this->userSession->requestAsync('GET', $uri, $options)->then(
+        $response = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) {
                 return $this->deserialize($this->description['class'], $response->getBody());
             }

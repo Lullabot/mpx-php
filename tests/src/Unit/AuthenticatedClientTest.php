@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
-use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
@@ -18,10 +18,9 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Lock\StoreInterface;
 
 /**
- * @class UserSessionTest
- * @coversDefaultClass \Lullabot\Mpx\Service\IdentityManagement\UserSession
+ * @coversDefaultClass \Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient
  */
-class UserSessionTest extends TestCase
+class AuthenticatedClientTest extends TestCase
 {
     use MockClientTrait;
 
@@ -30,7 +29,7 @@ class UserSessionTest extends TestCase
      *
      * @dataProvider clientMethodDataProvider
      *
-     * @param string $method The method on UserSession to call.
+     * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
      * @covers ::request
@@ -61,7 +60,7 @@ class UserSessionTest extends TestCase
         $logger = $this->fetchTokenLogger(1);
 
         $user = new User($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $session = new UserSession($client, $user);
+        $session = new AuthenticatedClient($client, $user);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
@@ -74,7 +73,7 @@ class UserSessionTest extends TestCase
      *
      * @dataProvider clientMethodDataProvider
      *
-     * @param string $method The method on UserSession to call.
+     * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
      * @covers ::requestWithRetry
@@ -101,7 +100,7 @@ class UserSessionTest extends TestCase
         $logger = $this->fetchTokenLogger(2);
 
         $user = new User($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $session = new UserSession($client, $user);
+        $session = new AuthenticatedClient($client, $user);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
@@ -114,7 +113,7 @@ class UserSessionTest extends TestCase
      *
      * @dataProvider clientMethodDataProvider
      *
-     * @param string $method The method on UserSession to call.
+     * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
      * @covers ::requestWithRetry
@@ -138,7 +137,7 @@ class UserSessionTest extends TestCase
         $logger = $this->fetchTokenLogger(1);
 
         $user = new User($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $session = new UserSession($client, $user);
+        $session = new AuthenticatedClient($client, $user);
         $this->expectException(ClientException::class);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {
@@ -151,7 +150,7 @@ class UserSessionTest extends TestCase
      *
      * @dataProvider clientMethodDataProvider
      *
-     * @param string $method The method on UserSession to call.
+     * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
      * @covers ::requestWithRetry
@@ -173,7 +172,7 @@ class UserSessionTest extends TestCase
         $logger = $this->fetchTokenLogger(1);
 
         $user = new User($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $session = new UserSession($client, $user);
+        $session = new AuthenticatedClient($client, $user);
         $this->expectException(ServerException::class);
         $response = call_user_func_array([$session, $method], $args);
         if ($response instanceof PromiseInterface) {

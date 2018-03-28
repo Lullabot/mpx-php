@@ -63,7 +63,8 @@ class User
 
     /**
      * Construct a new MPX user.
-
+     *
+     * @see \Psr\Log\NullLogger To disable logging of token requests.
      *
      * @param \Lullabot\Mpx\Client         $client         The client used to access MPX.
      * @param StoreInterface               $store          The lock backend to store locks in.
@@ -71,8 +72,6 @@ class User
      * @param LoggerInterface              $logger         The logger used when logging automatic authentication renewals.
      * @param string                       $username       The username of the user.
      * @param string                       $password       The user password.
-     *
-     * @see \Psr\Log\NullLogger To disable logging within this session.
      */
     public function __construct(Client $client, StoreInterface $store, TokenCachePool $tokenCachePool, LoggerInterface $logger, $username, $password)
     {

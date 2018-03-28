@@ -7,7 +7,7 @@ use Concat\Http\Middleware\Logger;
 use GuzzleHttp\MessageFormatter;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
-use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Service\IdentityManagement\AuthenticatedClient;
 use Lullabot\Mpx\TokenCachePool;
 use Lullabot\Mpx\User;
 use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
@@ -29,7 +29,7 @@ abstract class FunctionalTestBase extends TestCase
     protected $user;
 
     /**
-     * @var UserSession
+     * @var AuthenticatedClient
      */
     protected $session;
 
@@ -75,7 +75,7 @@ abstract class FunctionalTestBase extends TestCase
 
         $this->client = new Client(new \GuzzleHttp\Client($config));
         $this->user = new User($username, $password);
-        $this->session = new UserSession(
+        $this->session = new AuthenticatedClient(
             $this->client,
             $this->user,
             new TokenCachePool(new ArrayCachePool()),

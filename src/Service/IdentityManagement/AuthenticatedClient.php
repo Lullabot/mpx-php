@@ -10,10 +10,10 @@ use GuzzleHttp\Promise\Promise;
 use Lullabot\Mpx\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
 
-class UserSession implements ClientInterface
+class AuthenticatedClient implements ClientInterface
 {
     /**
-     * The user to establish a session for.
+     * The user to establish a client for.
      *
      * @var \Lullabot\Mpx\User
      */
@@ -27,13 +27,13 @@ class UserSession implements ClientInterface
     protected $client;
 
     /**
-     * Construct a new user session.
+     * Construct a new AuthenticatedClient.
      *
-     * Note that the session is not actually established until acquireToken is
-     * called.
+     * Note that the authentication is not actually established until
+     * acquireToken is called.
      *
      * @param \Lullabot\Mpx\Client $client The client used to access MPX.
-     * @param \Lullabot\Mpx\User   $user   The user associated with this session.
+     * @param \Lullabot\Mpx\User   $user   The user associated with this client.
      */
     public function __construct(
         Client $client,
