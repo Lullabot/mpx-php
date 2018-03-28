@@ -37,7 +37,7 @@ class NotificationTypeExtractor extends ReflectionExtractor
         }
 
         if (!isset($this->class)) {
-            throw new \UnexpectedValueException('setClass() must be called before using this extractor.');
+            throw new \LogicException('setClass() must be called before using this extractor.');
         }
 
         return [new Type('object', false, $this->class)];
