@@ -6,7 +6,8 @@ use Lullabot\Mpx\Client;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
 use Lullabot\Mpx\Token;
 use Lullabot\Mpx\TokenCachePool;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\StoreInterface;
 
@@ -18,6 +19,8 @@ use Symfony\Component\Lock\StoreInterface;
  */
 class UserSession
 {
+    use LoggerAwareTrait;
+
     /**
      * The URL to sign in a user.
      */
@@ -48,13 +51,6 @@ class UserSession
     protected $tokenCachePool;
 
     /**
-     * The logger used to log automatic token renewals.
-     *
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    /**
      * The user to authenticate as.
      *
      * @var User
@@ -66,19 +62,18 @@ class UserSession
      *
      * @see \Psr\Log\NullLogger To disable logging of token requests.
      *
-     * @param User            $user           The user to authenticate as.
-     * @param Client          $client         The client used to access MPX.
-     * @param StoreInterface  $store          The lock backend to store locks in.
-     * @param TokenCachePool  $tokenCachePool The cache of authentication tokens.
-     * @param LoggerInterface $logger         The logger used when logging automatic authentication renewals.
+     * @param User           $user           The user to authenticate as.
+     * @param Client         $client         The client used to access MPX.
+     * @param StoreInterface $store          The lock backend to store locks in.
+     * @param TokenCachePool $tokenCachePool The cache of authentication tokens.
      */
-    public function __construct(User $user, Client $client, StoreInterface $store, TokenCachePool $tokenCachePool, LoggerInterface $logger)
+    public function __construct(User $user, Client $client, StoreInterface $store, TokenCachePool $tokenCachePool)
     {
         $this->user = $user;
         $this->client = $client;
         $this->store = $store;
         $this->tokenCachePool = $tokenCachePool;
-        $this->logger = $logger;
+        $this->logger = new NullLogger();
     }
 
     /**

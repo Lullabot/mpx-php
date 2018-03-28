@@ -11,7 +11,6 @@ use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\NullLogger;
 use Symfony\Component\Lock\StoreInterface;
 
 /**
@@ -43,7 +42,7 @@ class ResolveAllUrlsTest extends TestCase
             ->getMock();
 
         $user = new User('USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool, new NullLogger());
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $session = new AuthenticatedClient($client, $userSession);
         /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls $r */
         $r = ResolveAllUrls::load($session, 'Media Data Service')->wait();

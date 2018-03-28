@@ -14,7 +14,6 @@ use Lullabot\Mpx\TokenCachePool;
 use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
-use Psr\Log\NullLogger;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Lock\StoreInterface;
@@ -84,7 +83,7 @@ abstract class FunctionalTestBase extends TestCase
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
 
         $user = new User($username, $password);
-        $this->userSession = new UserSession($user, $this->client, $store, new TokenCachePool(new ArrayCachePool()), new NullLogger());
+        $this->userSession = new UserSession($user, $this->client, $store, new TokenCachePool(new ArrayCachePool()));
         $this->session = new AuthenticatedClient(
             $this->client,
             $this->userSession

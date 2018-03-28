@@ -47,7 +47,8 @@ class UserSessionTest extends TestCase
         $logger = $this->fetchTokenLogger(1);
 
         $user = new User('USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool, $logger);
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession->setLogger($logger);
         $token = $userSession->acquireToken();
         $this->assertEquals($token, $tokenCachePool->getToken($userSession));
         $userSession->signOut();
@@ -77,7 +78,8 @@ class UserSessionTest extends TestCase
             ->with('Successfully acquired the "{resource}" lock.');
 
         $user = new User('USER-NAME', 'incorrect-password');
-        $userSession = new UserSession($user, $client, $store, new TokenCachePool(new ArrayCachePool()), $logger);
+        $userSession = new UserSession($user, $client, $store, new TokenCachePool(new ArrayCachePool()));
+        $userSession->setLogger($logger);
         $this->expectException(ClientException::class);
         $this->expectExceptionMessage("Error com.theplatform.authentication.api.exception.AuthenticationException: Either 'USER-NAME' does not have an account with this site, or the password was incorrect.");
         $this->expectExceptionCode(401);
@@ -131,7 +133,8 @@ class UserSessionTest extends TestCase
             });
 
         $user = new User('USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool, $logger);
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession->setLogger($logger);
         $first_token = $userSession->acquireToken();
         $this->assertEquals($first_token, $tokenCachePool->getToken($userSession));
         $second_token = $userSession->acquireToken(null, true);
@@ -160,7 +163,8 @@ class UserSessionTest extends TestCase
         $logger = new NullLogger();
 
         $user = new User('USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool, $logger);
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession->setLogger($logger);
         $this->expectException(LockConflictedException::class);
         $userSession->acquireToken();
     }
