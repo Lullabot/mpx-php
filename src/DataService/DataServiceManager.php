@@ -46,16 +46,16 @@ class DataServiceManager
      * Returns one data service by service.
      *
      * @param string $name
-     * @param string $path
+     * @param string $objectType
      * @param string $schema
      *
      * @return DiscoveredDataService
      */
-    public function getDataService(string $name, string $path, string $schema)
+    public function getDataService(string $name, string $objectType, string $schema)
     {
         $services = $this->discovery->getDataServices();
-        if (isset($services[$name][$path][$schema])) {
-            return $services[$name][$path][$schema];
+        if (isset($services[$name][$objectType][$schema])) {
+            return $services[$name][$objectType][$schema];
         }
 
         throw new \RuntimeException('Data service not found.');
