@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Service\AccessManagement;
 
-use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\AuthenticatedClient;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -58,12 +58,12 @@ class ResolveAllUrls
     /**
      * Fetch URLs and return the response.
      *
-     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession The authenticated session to use when querying.
-     * @param string                                               $service     The service to find URLs for, such as 'Media Data Service'.
+     * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient The authenticated session to use when querying.
+     * @param string                            $service             The service to find URLs for, such as 'Media Data Service'.
      *
      * @return \GuzzleHttp\Promise\PromiseInterface A promise to return a new ResolveAllUrls class.
      */
-    public static function load(UserSession $userSession, string $service)
+    public static function load(AuthenticatedClient $authenticatedClient, string $service)
     {
         $options = [
             'query' => [
@@ -72,7 +72,7 @@ class ResolveAllUrls
             ],
         ];
 
-        return $userSession->requestAsync('GET', self::RESOLVE_ALL_URLS_URL, $options)->then(function (ResponseInterface $response) use ($service) {
+        return $authenticatedClient->requestAsync('GET', self::RESOLVE_ALL_URLS_URL, $options)->then(function (ResponseInterface $response) use ($service) {
             return new static($service, \GuzzleHttp\json_decode($response->getBody(), true));
         });
     }

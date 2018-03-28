@@ -76,10 +76,10 @@ MPX API implementation of [GuzzleHttp\ClientInterface](https://github.com/guzzle
 As a Client it doesn’t do anything extra but suppress errors to force a returning HTTP 200 for XML responses.
 It also handles XML from responses.
 
-### Lullabot\Mpx\Service\IdentityManagement\UserSession
+### Lullabot\Mpx\AuthenticatedClient
 Manages authenticated sessions and proxies API calls with a ClientInterface implementation, automatically refreshing expired API tokens as required.
 
-### Lullabot\Mpx\User
+### Lullabot\Mpx\Service\IdentityManagement\UserSession
 An MPX user. Just username and password getters.
 
 ### Lullabot\Mpx\Token

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx;
+namespace Lullabot\Mpx\Service\IdentityManagement;
 
 /**
  * Defines an class for interacting with MPX users.
@@ -22,7 +22,6 @@ class User
 
     /**
      * Construct a new MPX user.
-
      *
      * @param string $username
      * @param string $password

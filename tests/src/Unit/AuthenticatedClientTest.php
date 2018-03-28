@@ -3,105 +3,34 @@
 namespace Lullabot\Mpx\Tests\Unit;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
-use Lullabot\Mpx\Exception\ClientException;
+use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
-use Lullabot\Mpx\User;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Lock\StoreInterface;
 
 /**
- * @class UserSessionTest
- * @coversDefaultClass \Lullabot\Mpx\Service\IdentityManagement\UserSession
+ * @coversDefaultClass \Lullabot\Mpx\AuthenticatedClient
  */
-class UserSessionTest extends TestCase
+class AuthenticatedClientTest extends TestCase
 {
     use MockClientTrait;
-
-    /**
-     * @covers ::__construct
-     * @covers ::acquireToken
-     * @covers ::signIn
-     * @covers ::tokenFromResponse
-     * @covers ::signOut
-     */
-    public function testAcquireToken()
-    {
-        $client = $this->getMockClient([
-            new JsonResponse(200, [], 'signin-success.json'),
-            new JsonResponse(200, [], 'signout.json'),
-        ]);
-        $user = new User('USER-NAME', 'correct-password');
-        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-
-        $logger = $this->fetchTokenLogger(1);
-
-        $session = new UserSession($client, $user, $tokenCachePool, $logger);
-        $token = $session->acquireToken();
-        $this->assertEquals($token, $tokenCachePool->getToken($user));
-        $session->signOut();
-        $this->expectException(\RuntimeException::class);
-        $tokenCachePool->getToken($user);
-    }
-
-    /**
-     * @covers ::acquireToken
-     * @covers ::signIn
-     */
-    public function testAcquireTokenFailure()
-    {
-        $client = $this->getMockClient([
-            new JsonResponse(200, [], 'signin-fail.json'),
-        ]);
-        $user = new User('USER-NAME', 'incorrect-password');
-
-        /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $logger */
-        $logger = $this->getMockBuilder(LoggerInterface::class)
-            ->getMock();
-        $logger->expects($this->never())->method('info');
-
-        $session = new UserSession($client, $user, new TokenCachePool(new ArrayCachePool()), $logger);
-        $this->expectException(ClientException::class);
-        $this->expectExceptionMessage("Error com.theplatform.authentication.api.exception.AuthenticationException: Either 'USER-NAME' does not have an account with this site, or the password was incorrect.");
-        $this->expectExceptionCode(401);
-        $session->acquireToken();
-    }
-
-    /**
-     * Test that resetting a token executes a new MPX request.
-     *
-     * @covers ::acquireToken
-     */
-    public function testAcquireReset()
-    {
-        $client = $this->getMockClient([
-            new JsonResponse(200, [], 'signin-success.json'),
-            new JsonResponse(200, [], 'signin-success.json'),
-        ]);
-        $user = new User('USER-NAME', 'correct-password');
-        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-
-        $logger = $this->fetchTokenLogger(2);
-
-        $session = new UserSession($client, $user, $tokenCachePool, $logger);
-        $first_token = $session->acquireToken();
-        $this->assertEquals($first_token, $tokenCachePool->getToken($user));
-        $second_token = $session->acquireToken(null, true);
-        $this->assertEquals($second_token, $tokenCachePool->getToken($user));
-        $this->assertNotSame($first_token, $second_token);
-    }
 
     /**
      * Test normal authenticated requests.
      *
      * @dataProvider clientMethodDataProvider
      *
-     * @param string $method The method on UserSession to call.
+     * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
      * @covers ::request
@@ -124,13 +53,18 @@ class UserSessionTest extends TestCase
                 return new JsonResponse(200, [], 'getSelfId.json');
             },
         ]);
-        $user = new User('USER-NAME', 'correct-password');
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)
+            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
 
-        $session = new UserSession($client, $user, $tokenCachePool, $logger);
-        $response = call_user_func_array([$session, $method], $args);
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession->setLogger($logger);
+        $authenticatedClient = new AuthenticatedClient($client, $userSession);
+        $response = call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
         }
@@ -142,7 +76,7 @@ class UserSessionTest extends TestCase
      *
      * @dataProvider clientMethodDataProvider
      *
-     * @param string $method The method on UserSession to call.
+     * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
      * @covers ::requestWithRetry
@@ -161,13 +95,18 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'getSelfId.json'),
         ]);
-        $user = new User('USER-NAME', 'correct-password');
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)
+            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(2);
 
-        $session = new UserSession($client, $user, $tokenCachePool, $logger);
-        $response = call_user_func_array([$session, $method], $args);
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession->setLogger($logger);
+        $authenticatedClient = new AuthenticatedClient($client, $userSession);
+        $response = call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
         }
@@ -179,7 +118,7 @@ class UserSessionTest extends TestCase
      *
      * @dataProvider clientMethodDataProvider
      *
-     * @param string $method The method on UserSession to call.
+     * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
      * @covers ::requestWithRetry
@@ -195,14 +134,19 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(403, [], '{}'),
         ]);
-        $user = new User('USER-NAME', 'correct-password');
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)
+            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
 
-        $session = new UserSession($client, $user, $tokenCachePool, $logger);
-        $this->expectException(\GuzzleHttp\Exception\ClientException::class);
-        $response = call_user_func_array([$session, $method], $args);
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession->setLogger($logger);
+        $authenticatedClient = new AuthenticatedClient($client, $userSession);
+        $this->expectException(ClientException::class);
+        $response = call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response->wait();
         }
@@ -213,7 +157,7 @@ class UserSessionTest extends TestCase
      *
      * @dataProvider clientMethodDataProvider
      *
-     * @param string $method The method on UserSession to call.
+     * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
      * @covers ::requestWithRetry
@@ -227,14 +171,19 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(503, [], '{}'),
         ]);
-        $user = new User('USER-NAME', 'correct-password');
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)
+            ->getMock();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
 
-        $session = new UserSession($client, $user, $tokenCachePool, $logger);
-        $this->expectException(\GuzzleHttp\Exception\ServerException::class);
-        $response = call_user_func_array([$session, $method], $args);
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession->setLogger($logger);
+        $authenticatedClient = new AuthenticatedClient($client, $userSession);
+        $this->expectException(ServerException::class);
+        $response = call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response->wait();
         }
@@ -260,23 +209,33 @@ class UserSessionTest extends TestCase
      *
      * @param int $count The number of times a token is logged.
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
      */
     private function fetchTokenLogger(int $count)
     {
+        /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
-        $logger->expects($this->exactly($count))->method('info')
-            ->with(
-                'Retrieved a new MPX token {token} for user {username} that expires on {date}.'
-            )->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
-                $this->assertArraySubset([
-                    'token' => 'TOKEN-VALUE',
-                    'username' => 'USER-NAME',
-                ], $context);
-                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-            });
+
+        $call = 0;
+        for ($tokens = 0; $tokens < $count; ++$tokens) {
+            // Since our class instantiates the Lock and passes in the logger, we have to expect these method calls
+            // if we want to assert the last method call in this loop.
+            $logger->expects($this->at($call++))->method('info')
+                ->with('Successfully acquired the "{resource}" lock.');
+            $logger->expects($this->at($call++))->method('info')
+                ->with('Expiration defined for "{resource}" lock for "{ttl}" seconds.');
+
+            $logger->expects($this->at($call++))->method('info')
+                ->willReturnCallback(function ($message, $context) {
+                    $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
+                    $this->assertArraySubset([
+                        'token' => 'TOKEN-VALUE',
+                        'username' => 'USER-NAME',
+                    ], $context);
+                    $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
+                });
+        }
 
         return $logger;
     }
