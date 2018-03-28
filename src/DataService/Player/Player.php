@@ -11,6 +11,7 @@ use Psr\Http\Message\UriInterface;
  *     service="Player Data Service",
  *     path="/data/Player",
  *     schemaVersion="1.6",
+ *     insecure=true,
  * )
  */
 class Player implements CreateKeyInterface

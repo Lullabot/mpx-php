@@ -17,11 +17,13 @@ class ResolveDomainTest extends FunctionalTestBase
     public function testResolve()
     {
         $resolveDomain = new ResolveDomain($this->session);
-        $resolved = $resolveDomain->resolve($this->account)->getResolveDomainResponse();
-        $this->assertInternalType('array', $resolved);
-        $this->assertNotEmpty($resolved);
-        foreach ($resolved as $uri) {
+        $resolved = $resolveDomain->resolve($this->account);
+        $this->assertNotEmpty($resolved->getServices());
+
+        foreach ($resolved->getServices() as $service) {
+            $uri = $resolved->getUrl($service);
             $this->assertInstanceOf(UriInterface::class, $uri);
+            $this->assertEquals('https', $uri->getScheme());
         }
     }
 }

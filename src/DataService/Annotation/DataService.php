@@ -48,6 +48,13 @@ class DataService
     public $baseUri;
 
     /**
+     * Is this service only available over HTTP?
+     *
+     * @var bool
+     */
+    public $insecure = false;
+
+    /**
      * Return the service of the data object, such as 'Media Data Service'.
      *
      * @param bool $readonly (optional) Set to true to return the read-only name of the service.
@@ -96,5 +103,15 @@ class DataService
     public function hasBaseUri(): bool
     {
         return (bool) $this->baseUri;
+    }
+
+    /**
+     * Return if this service is only available over HTTP.
+     *
+     * @return bool
+     */
+    public function isInsecure(): bool
+    {
+        return $this->insecure;
     }
 }

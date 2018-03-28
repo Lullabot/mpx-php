@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\Service\AccessManagement;
 
+use GuzzleHttp\Psr7\Uri;
+
 /**
  * A response of all service domains.
  */
@@ -10,40 +12,47 @@ class ResolveDomainResponse
     /**
      * The array of resolveDomainResponse domains, indexed by their service name.
      *
-     * @var \GuzzleHttp\Psr7\Uri[]
+     * @var Uri[]
      */
     protected $resolveDomainResponse;
 
     /**
-     * Return all resolveDomainResponse domains.
+     * Return all available services.
      *
-     * @return \GuzzleHttp\Psr7\Uri[]
+     * @return string[]
      */
-    public function getResolveDomainResponse(): array
+    public function getServices(): array
     {
-        return $this->resolveDomainResponse;
+        return array_keys($this->resolveDomainResponse);
     }
 
     /**
      * Get the URL for a given service.
      *
-     * @param string $service The name of the service, such as 'Media Data Service read-only'.
+     * Note that no 'getResolveDomainResponse' method is implemented, to ensure
+     * that callers get https URLs unless they explicitly ask for insecure URLs.
      *
-     * @return string The URL for the service.
+     * @param string $service  The name of the service, such as 'Media Data Service read-only'.
+     * @param bool   $insecure (optional) Set to true to request the insecure version of this service.
      *
-     * @throws \RuntimeException When the service is not found.
+     * @return Uri The URL for the service.
      */
-    public function getUrl(string $service): string
+    public function getUrl(string $service, bool $insecure = false): Uri
     {
         if (!isset($this->resolveDomainResponse[$service])) {
             throw new \RuntimeException(sprintf('%s service was not found.', $service));
         }
 
-        return $this->resolveDomainResponse[$service];
+        $url = $this->resolveDomainResponse[$service];
+        if (!$insecure) {
+            $url = $url->withScheme('https');
+        }
+
+        return $url;
     }
 
     /**
-     * @param \GuzzleHttp\Psr7\Uri[] $resolveDomainResponse
+     * @param Uri[] $resolveDomainResponse
      */
     public function setResolveDomainResponse(array $resolveDomainResponse)
     {
