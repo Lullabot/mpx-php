@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Token;
 use Lullabot\Mpx\TokenCachePool;
@@ -32,7 +33,7 @@ class TokenCachePoolTest extends TestCase
         $this->user = $this->getMockBuilder(UserSession::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->user->method('getUsername')->willReturn('username');
+        $this->user->method('getUser')->willReturn(new User('username', 'password'));
         $this->token = new Token('https://example.com/idm/data/User/mpx/123456', 'value', time() + 60);
     }
 

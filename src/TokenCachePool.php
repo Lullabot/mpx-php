@@ -81,12 +81,12 @@ class TokenCachePool
     /**
      * Generate a cache key for a token, limiting key length.
      *
-     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $user The user to generate the cache key for.
+     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession The user to generate the cache key for.
      *
      * @return string The cache key for the user.
      */
-    private function cacheKey(UserSession $user): string
+    private function cacheKey(UserSession $userSession): string
     {
-        return md5($user->getUsername());
+        return md5($userSession->getUser()->getUsername());
     }
 }

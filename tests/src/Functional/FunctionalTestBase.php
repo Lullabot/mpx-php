@@ -8,6 +8,7 @@ use GuzzleHttp\MessageFormatter;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
 use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
@@ -82,7 +83,8 @@ abstract class FunctionalTestBase extends TestCase
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
 
-        $this->userSession = new UserSession($this->client, $store, new TokenCachePool(new ArrayCachePool()), new NullLogger(), $username, $password);
+        $user = new User($username, $password);
+        $this->userSession = new UserSession($user, $this->client, $store, new TokenCachePool(new ArrayCachePool()), new NullLogger());
         $this->session = new AuthenticatedClient(
             $this->client,
             $this->userSession

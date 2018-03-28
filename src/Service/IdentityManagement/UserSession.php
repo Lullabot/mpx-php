@@ -2,7 +2,10 @@
 
 namespace Lullabot\Mpx\Service\IdentityManagement;
 
+use Lullabot\Mpx\Client;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
+use Lullabot\Mpx\Token;
+use Lullabot\Mpx\TokenCachePool;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\StoreInterface;
@@ -26,17 +29,7 @@ class UserSession
     const SIGN_OUT_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut';
 
     /**
-     * @var string
-     */
-    protected $username;
-
-    /**
-     * @var string
-     */
-    protected $password;
-
-    /**
-     * @var \Lullabot\Mpx\Client
+     * @var Client
      */
     protected $client;
 
@@ -50,7 +43,7 @@ class UserSession
     /**
      * The cache of authentication tokens.
      *
-     * @var \Lullabot\Mpx\TokenCachePool
+     * @var TokenCachePool
      */
     protected $tokenCachePool;
 
@@ -62,46 +55,30 @@ class UserSession
     protected $logger;
 
     /**
+     * The user to authenticate as.
+     *
+     * @var User
+     */
+    protected $user;
+
+    /**
      * Construct a new MPX user.
      *
      * @see \Psr\Log\NullLogger To disable logging of token requests.
      *
-     * @param \Lullabot\Mpx\Client         $client         The client used to access MPX.
-     * @param StoreInterface               $store          The lock backend to store locks in.
-     * @param \Lullabot\Mpx\TokenCachePool $tokenCachePool The cache of authentication tokens.
-     * @param LoggerInterface              $logger         The logger used when logging automatic authentication renewals.
-     * @param string                       $username       The username of the user.
-     * @param string                       $password       The user password.
+     * @param User            $user           The user to authenticate as.
+     * @param Client          $client         The client used to access MPX.
+     * @param StoreInterface  $store          The lock backend to store locks in.
+     * @param TokenCachePool  $tokenCachePool The cache of authentication tokens.
+     * @param LoggerInterface $logger         The logger used when logging automatic authentication renewals.
      */
-    public function __construct(
-        \Lullabot\Mpx\Client $client, StoreInterface $store, \Lullabot\Mpx\TokenCachePool $tokenCachePool, LoggerInterface $logger, $username, $password)
+    public function __construct(User $user, Client $client, StoreInterface $store, TokenCachePool $tokenCachePool, LoggerInterface $logger)
     {
-        $this->username = $username;
-        $this->password = $password;
+        $this->user = $user;
         $this->client = $client;
         $this->store = $store;
         $this->tokenCachePool = $tokenCachePool;
         $this->logger = $logger;
-    }
-
-    /**
-     * Get the username of the MPX user.
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Get the password of the MPX user.
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -114,9 +91,9 @@ class UserSession
      * @param int  $duration (optional) The number of seconds for which the token should be valid.
      * @param bool $reset    Force fetching a new token, even if one exists.
      *
-     * @return \Lullabot\Mpx\Token A valid MPX authentication token.
+     * @return Token A valid MPX authentication token.
      */
-    public function acquireToken(int $duration = null, bool $reset = false): \Lullabot\Mpx\Token
+    public function acquireToken(int $duration = null, bool $reset = false): Token
     {
         if ($reset) {
             $this->tokenCachePool->deleteToken($this);
@@ -139,9 +116,9 @@ class UserSession
      *
      * @param int $duration (optional) The number of seconds for which the token should be valid.
      *
-     * @return \Lullabot\Mpx\Token
+     * @return Token
      */
-    protected function signIn($duration = null): \Lullabot\Mpx\Token
+    protected function signIn($duration = null): Token
     {
         $options = $this->signInOptions($duration);
 
@@ -158,7 +135,7 @@ class UserSession
             'Retrieved a new MPX token {token} for user {username} that expires on {date}.',
             [
                 'token' => $token->getValue(),
-                'username' => $this->getUsername(),
+                'username' => $this->user->getUsername(),
                 'date' => date(DATE_ISO8601, $token->getExpiration()),
             ]
         );
@@ -193,13 +170,13 @@ class UserSession
      *
      * @param int $duration (optional) The number of seconds that the sign-in token should be valid for.
      *
-     * @return \Lullabot\Mpx\Token
+     * @return Token
      */
-    protected function signInWithLock(int $duration = null): \Lullabot\Mpx\Token
+    protected function signInWithLock(int $duration = null): Token
     {
         $factory = new Factory($this->store);
         $factory->setLogger($this->logger);
-        $lock = $factory->createLock($this->getUsername(), 10);
+        $lock = $factory->createLock($this->user->getUsername(), 10);
 
         // Blocking means this will throw an exception on failure.
         $lock->acquire(true);
@@ -220,11 +197,11 @@ class UserSession
      *
      * @param array $data The MPX signIn() response data.
      *
-     * @return \Lullabot\Mpx\Token The new token.
+     * @return Token The new token.
      */
-    private function tokenFromResponse(array $data): \Lullabot\Mpx\Token
+    private function tokenFromResponse(array $data): Token
     {
-        $token = \Lullabot\Mpx\Token::fromResponseData($data);
+        $token = Token::fromResponseData($data);
         // Save the token to the cache and return it.
         $this->tokenCachePool->setToken($this, $token);
 
@@ -242,8 +219,8 @@ class UserSession
     {
         $options = [];
         $options['auth'] = [
-            $this->getUsername(),
-            $this->getPassword(),
+            $this->user->getUsername(),
+            $this->user->getPassword(),
         ];
 
         // @todo Make this a class constant.
@@ -261,5 +238,15 @@ class UserSession
         }
 
         return $options;
+    }
+
+    /**
+     * Return the user associated with this session.
+     *
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
-namespace Lullabot\Mpx\Tests\Unit;
+namespace Lullabot\Mpx\Tests\Unit\Service\IdentityManagement;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Exception\ClientException;
+use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
@@ -19,7 +20,7 @@ use Symfony\Component\Lock\StoreInterface;
  *
  * @coversDefaultClass \Lullabot\Mpx\Service\IdentityManagement\UserSession
  */
-class UserTest extends TestCase
+class UserSessionTest extends TestCase
 {
     use MockClientTrait;
 
@@ -45,12 +46,13 @@ class UserTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $token = $user->acquireToken();
-        $this->assertEquals($token, $tokenCachePool->getToken($user));
-        $user->signOut();
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool, $logger);
+        $token = $userSession->acquireToken();
+        $this->assertEquals($token, $tokenCachePool->getToken($userSession));
+        $userSession->signOut();
         $this->expectException(\RuntimeException::class);
-        $tokenCachePool->getToken($user);
+        $tokenCachePool->getToken($userSession);
     }
 
     /**
@@ -74,11 +76,12 @@ class UserTest extends TestCase
         $logger->expects($this->at(0))->method('info')
             ->with('Successfully acquired the "{resource}" lock.');
 
-        $user = new UserSession($client, $store, new TokenCachePool(new ArrayCachePool()), $logger, 'USER-NAME', 'incorrect-password');
+        $user = new User('USER-NAME', 'incorrect-password');
+        $userSession = new UserSession($user, $client, $store, new TokenCachePool(new ArrayCachePool()), $logger);
         $this->expectException(ClientException::class);
         $this->expectExceptionMessage("Error com.theplatform.authentication.api.exception.AuthenticationException: Either 'USER-NAME' does not have an account with this site, or the password was incorrect.");
         $this->expectExceptionCode(401);
-        $user->acquireToken();
+        $userSession->acquireToken();
     }
 
     /**
@@ -127,11 +130,12 @@ class UserTest extends TestCase
                 $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
             });
 
-        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $first_token = $user->acquireToken();
-        $this->assertEquals($first_token, $tokenCachePool->getToken($user));
-        $second_token = $user->acquireToken(null, true);
-        $this->assertEquals($second_token, $tokenCachePool->getToken($user));
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool, $logger);
+        $first_token = $userSession->acquireToken();
+        $this->assertEquals($first_token, $tokenCachePool->getToken($userSession));
+        $second_token = $userSession->acquireToken(null, true);
+        $this->assertEquals($second_token, $tokenCachePool->getToken($userSession));
         $this->assertNotSame($first_token, $second_token);
     }
 
@@ -155,9 +159,10 @@ class UserTest extends TestCase
         // We cover logging in other tests.
         $logger = new NullLogger();
 
-        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool, $logger);
         $this->expectException(LockConflictedException::class);
-        $user->acquireToken();
+        $userSession->acquireToken();
     }
 
     /**

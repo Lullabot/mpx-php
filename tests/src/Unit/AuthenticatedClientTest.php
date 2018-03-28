@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
@@ -59,9 +60,10 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $session = new AuthenticatedClient($client, $user);
-        $response = call_user_func_array([$session, $method], $args);
+        $user = new User('USER-NAME', 'correct-password');
+        $user = new UserSession($user, $client, $store, $tokenCachePool, $logger);
+        $authenticatedClient = new AuthenticatedClient($client, $user);
+        $response = call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
         }
@@ -99,9 +101,10 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(2);
 
-        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $session = new AuthenticatedClient($client, $user);
-        $response = call_user_func_array([$session, $method], $args);
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool, $logger);
+        $authenticatedClient = new AuthenticatedClient($client, $userSession);
+        $response = call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
         }
@@ -136,10 +139,11 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $session = new AuthenticatedClient($client, $user);
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool, $logger);
+        $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $this->expectException(ClientException::class);
-        $response = call_user_func_array([$session, $method], $args);
+        $response = call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response->wait();
         }
@@ -171,10 +175,11 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new UserSession($client, $store, $tokenCachePool, $logger, 'USER-NAME', 'correct-password');
-        $session = new AuthenticatedClient($client, $user);
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool, $logger);
+        $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $this->expectException(ServerException::class);
-        $response = call_user_func_array([$session, $method], $args);
+        $response = call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response->wait();
         }

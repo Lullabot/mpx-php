@@ -5,6 +5,7 @@ namespace Lullabot\Mpx\Tests\Unit\Service\AccessManagement;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
+use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
@@ -40,8 +41,10 @@ class ResolveAllUrlsTest extends TestCase
         /** @var StoreInterface $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
-        $user = new UserSession($client, $store, $tokenCachePool, new NullLogger(), 'USER-NAME', 'correct-password');
-        $session = new AuthenticatedClient($client, $user);
+
+        $user = new User('USER-NAME', 'correct-password');
+        $userSession = new UserSession($user, $client, $store, $tokenCachePool, new NullLogger());
+        $session = new AuthenticatedClient($client, $userSession);
         /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls $r */
         $r = ResolveAllUrls::load($session, 'Media Data Service')->wait();
         $this->assertEquals('Media Data Service', $r->getService());
