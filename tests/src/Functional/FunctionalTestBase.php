@@ -5,16 +5,18 @@ namespace Lullabot\Mpx\Tests\Functional;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Concat\Http\Middleware\Logger;
 use GuzzleHttp\MessageFormatter;
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
-use Lullabot\Mpx\User;
 use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\NullLogger;
+use Psr\Log\LogLevel;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Lock\StoreInterface;
 
 abstract class FunctionalTestBase extends TestCase
 {
@@ -24,12 +26,12 @@ abstract class FunctionalTestBase extends TestCase
     protected $client;
 
     /**
-     * @var User
+     * @var \Lullabot\Mpx\Service\IdentityManagement\UserSession
      */
-    protected $user;
+    protected $userSession;
 
     /**
-     * @var UserSession
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
     protected $session;
 
@@ -68,18 +70,23 @@ abstract class FunctionalTestBase extends TestCase
             $handler->after('cookies', new CurlFormatterMiddleware($cl));
 
             $responseLogger = new Logger($cl);
-            $responseLogger->setLogLevel(\Psr\Log\LogLevel::DEBUG);
+            $responseLogger->setLogLevel(LogLevel::DEBUG);
             $responseLogger->setFormatter(new MessageFormatter(MessageFormatter::DEBUG));
             $handler->after('cookies', $responseLogger);
         }
 
         $this->client = new Client(new \GuzzleHttp\Client($config));
-        $this->user = new User($username, $password);
-        $this->session = new UserSession(
+
+        // Since this is a single thread within a test, we know it's impossible
+        // for the lock to fail so we can stub out the entire class.
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+
+        $user = new User($username, $password);
+        $this->userSession = new UserSession($user, $this->client, $store, new TokenCachePool(new ArrayCachePool()));
+        $this->session = new AuthenticatedClient(
             $this->client,
-            $this->user,
-            new TokenCachePool(new ArrayCachePool()),
-            new NullLogger()
+            $this->userSession
         );
 
         $this->account = new Account();

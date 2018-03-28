@@ -3,16 +3,17 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\NotificationListener;
+use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
-use Lullabot\Mpx\User;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\NullLogger;
+use Symfony\Component\Lock\StoreInterface;
 
 /**
  * Tests listening for notifications.
@@ -43,10 +44,13 @@ class NotificationListenerTest extends TestCase
         ]);
         $user = new User('username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        $session = new UserSession($client, $user, $tokenCachePool, new NullLogger());
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $authenticatedClient = new AuthenticatedClient($client, $session);
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
-        $listener = new NotificationListener($session, $service, 'unit-tests');
+        $listener = new NotificationListener($authenticatedClient, $service, 'unit-tests');
         $last = $listener->sync()->wait();
         $this->assertEquals($id, $last);
     }
@@ -66,13 +70,15 @@ class NotificationListenerTest extends TestCase
         ]);
         $user = new User('username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        $session = new UserSession($client, $user, $tokenCachePool, new NullLogger());
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $authenticatedClient = new AuthenticatedClient($client, $session);
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
-        $listener = new NotificationListener($session, $service, 'unit-tests');
-        $last = 98765;
+        $listener = new NotificationListener($authenticatedClient, $service, 'unit-tests');
         /** @var \Lullabot\Mpx\DataService\Notification[] $notifications */
-        $notifications = $listener->listen($last)->wait();
+        $notifications = $listener->listen(98765)->wait();
         $this->assertCount(2, $notifications);
 
         foreach ($notifications as $index => $notification) {

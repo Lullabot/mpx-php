@@ -4,9 +4,9 @@ namespace Lullabot\Mpx\DataService;
 
 use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
-use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -35,11 +35,11 @@ class NotificationListener
     protected $uri;
 
     /**
-     * The user session to use for authenticated requests.
+     * The client for authenticated requests.
      *
-     * @var UserSession
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
-    protected $session;
+    protected $authenticatedClient;
 
     /**
      * The service to listen to notifications on, such as /data/Media from the Media Data Service.
@@ -58,22 +58,22 @@ class NotificationListener
      *
      * This method always uses the read-only version of a service.
      *
-     * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications#tp-toc2
+     * @see https://docs.theplatform.com/help/wsf-subscribing- to -change-notifications#tp-toc2
      *
-     * @param UserSession           $session  The user session to use for authenticated requests.
-     * @param DiscoveredDataService $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
-     * @param string                $clientId A string to identify this client in debugging.
+     * @param \Lullabot\Mpx\AuthenticatedClient $session  The client to use for authenticated requests.
+     * @param DiscoveredDataService             $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
+     * @param string                            $clientId A string to identify this client in debugging.
      */
-    public function __construct(UserSession $session, DiscoveredDataService $service, string $clientId)
+    public function __construct(AuthenticatedClient $session, DiscoveredDataService $service, string $clientId)
     {
         $this->clientId = $clientId;
-        $this->session = $session;
+        $this->authenticatedClient = $session;
         $this->service = $service;
 
-        $this->resolveDomain = new ResolveDomain($this->session);
+        $this->resolveDomain = new ResolveDomain($this->authenticatedClient);
 
         /** @var ResolveAllUrls $resolver */
-        $resolver = ResolveAllUrls::load($this->session, $this->service->getAnnotation()->getService(true))->wait();
+        $resolver = ResolveAllUrls::load($this->authenticatedClient, $this->service->getAnnotation()->getService(true))->wait();
         $this->uri = $resolver->resolve().'/notify';
     }
 
@@ -87,7 +87,7 @@ class NotificationListener
     public function sync()
     {
         // @todo Add support for filtering.
-        return $this->session->requestAsync('GET', $this->uri, [
+        return $this->authenticatedClient->requestAsync('GET', $this->uri, [
             'query' => [
                 'clientId' => $this->clientId,
                 'form' => 'cjson',
@@ -120,7 +120,7 @@ class NotificationListener
      */
     public function listen(int $since, int $maximum = 500)
     {
-        return $this->session->requestAsync('GET', $this->uri, [
+        return $this->authenticatedClient->requestAsync('GET', $this->uri, [
             'query' => [
                 'clientId' => $this->clientId,
                 'since' => $since,
