@@ -8,34 +8,20 @@ namespace Lullabot\Mpx\Service\AccessManagement;
 class ResolveDomainResponse
 {
     /**
-     * The array of resolved domains, indexed by their service name.
+     * The array of resolveDomainResponse domains, indexed by their service name.
      *
-     * @var array
+     * @var \GuzzleHttp\Psr7\Uri[]
      */
-    protected $resolved;
+    protected $resolveDomainResponse;
 
     /**
-     * ResolveDomainResponse constructor.
+     * Return all resolveDomainResponse domains.
      *
-     * @param array $resolved The array of data from the resolveDomain response.
+     * @return \GuzzleHttp\Psr7\Uri[]
      */
-    public function __construct(array $resolved)
+    public function getResolveDomainResponse(): array
     {
-        if (empty($resolved['resolveDomainResponse'])) {
-            throw new \InvalidArgumentException('The resolved data must contain a resolveDomainResponse key.');
-        }
-
-        $this->resolved = $resolved['resolveDomainResponse'];
-    }
-
-    /**
-     * Return all resolved domains.
-     *
-     * @return array
-     */
-    public function getResolved(): array
-    {
-        return $this->resolved;
+        return $this->resolveDomainResponse;
     }
 
     /**
@@ -49,10 +35,18 @@ class ResolveDomainResponse
      */
     public function getUrl(string $service): string
     {
-        if (!isset($this->resolved[$service])) {
+        if (!isset($this->resolveDomainResponse[$service])) {
             throw new \RuntimeException(sprintf('%s service was not found.', $service));
         }
 
-        return $this->resolved[$service];
+        return $this->resolveDomainResponse[$service];
+    }
+
+    /**
+     * @param \GuzzleHttp\Psr7\Uri[] $resolveDomainResponse
+     */
+    public function setResolveDomainResponse(array $resolveDomainResponse)
+    {
+        $this->resolveDomainResponse = $resolveDomainResponse;
     }
 }
