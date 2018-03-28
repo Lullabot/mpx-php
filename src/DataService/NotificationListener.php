@@ -2,10 +2,16 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
+use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Listen to events from MPX.
@@ -124,14 +130,22 @@ class NotificationListener
                 'filter' => $this->service->getAnnotation()->getObjectType(),
             ],
         ])->then(function (ResponseInterface $response) {
-            $data = \GuzzleHttp\json_decode($response->getBody(), true);
-            $objects = [];
-            $dof = new DataObjectFactory($this->service, $this->session);
-            foreach ($data as $result) {
-                $objects[] = $dof->load($result['entry']['id']);
-            }
+            // First, we need an encoder that filters out null values.
+            $encoders = [new JsonEncoder()];
 
-            return $objects;
+            // Attempt normalizing each key in this order, including denormalizing recursively.
+            $extractor = new NotificationTypeExtractor();
+            $extractor->setClass($this->service->getClass());
+            $normalizers = [
+                new UnixMicrosecondNormalizer(),
+                new UriNormalizer(),
+                new ObjectNormalizer(null, null, null, $extractor),
+                new ArrayDenormalizer(),
+            ];
+
+            $serializer = new Serializer($normalizers, $encoders);
+            // @todo Handle exception returns.
+            return $serializer->deserialize($response->getBody(), Notification::class.'[]', 'json');
         });
     }
 }
