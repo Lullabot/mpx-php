@@ -2,9 +2,9 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
-use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -31,11 +31,11 @@ class NotificationListener
     protected $uri;
 
     /**
-     * The user session to use for authenticated requests.
+     * The client for authenticated requests.
      *
-     * @var UserSession
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
-    protected $session;
+    protected $authenticatedClient;
 
     /**
      * The name of the service to listen to notifications on, such as 'Media Data Service'.
@@ -52,20 +52,20 @@ class NotificationListener
     /**
      * NotificationListener constructor.
      *
-     * @param string      $clientId A string to identify this client in debugging.
-     * @param UserSession $session  The user session to use for authenticated requests.
-     * @param string      $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
+     * @param string                            $clientId A string to identify this client in debugging.
+     * @param \Lullabot\Mpx\AuthenticatedClient $session  The client to use for authenticated requests.
+     * @param string                            $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
      */
-    public function __construct(string $clientId, UserSession $session, string $service)
+    public function __construct(string $clientId, AuthenticatedClient $session, string $service)
     {
         $this->clientId = $clientId;
-        $this->session = $session;
+        $this->authenticatedClient = $session;
         $this->service = $service;
 
-        $this->resolveDomain = new ResolveDomain($this->session);
+        $this->resolveDomain = new ResolveDomain($this->authenticatedClient);
 
         /** @var ResolveAllUrls $resolver */
-        $resolver = ResolveAllUrls::load($this->session, $this->service)->wait();
+        $resolver = ResolveAllUrls::load($this->authenticatedClient, $this->service)->wait();
         $this->uri = $resolver->resolve().'/notify';
     }
 
@@ -79,7 +79,7 @@ class NotificationListener
     public function sync()
     {
         // @todo Add support for filtering.
-        return $this->session->requestAsync('GET', $this->uri, [
+        return $this->authenticatedClient->requestAsync('GET', $this->uri, [
             'query' => [
                 'clientId' => $this->clientId,
                 'form' => 'cjson',
@@ -106,7 +106,7 @@ class NotificationListener
      */
     public function listen(int $since)
     {
-        return $this->session->requestAsync('GET', $this->uri, [
+        return $this->authenticatedClient->requestAsync('GET', $this->uri, [
             'query' => [
                 'clientId' => $this->clientId,
                 'since' => $since,
@@ -119,7 +119,7 @@ class NotificationListener
             $manager = DataServiceManager::basicDiscovery();
             $objects = [];
             // @todo Fix only being able to load into Media objects.
-            $dof = new DataObjectFactory($manager, $this->session, $this->service, '/data/Media');
+            $dof = new DataObjectFactory($manager, $this->authenticatedClient, $this->service, '/data/Media');
             foreach ($data as $result) {
                 if ('Media' == $result['type']) {
                     $objects[] = $dof->load($result['entry']['id']);

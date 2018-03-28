@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\Service\AccessManagement;
 
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
-use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 
 /**
  * Resolve all service URLs for an account.
@@ -23,13 +23,13 @@ class ResolveDomain
     const SCHEMA_VERSION = '1.0';
 
     /**
-     * @var \Lullabot\Mpx\Service\IdentityManagement\UserSession
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
-    private $userSession;
+    private $authenticatedClient;
 
-    public function __construct(UserSession $userSession)
+    public function __construct(AuthenticatedClient $authenticatedClient)
     {
-        $this->userSession = $userSession;
+        $this->authenticatedClient = $authenticatedClient;
     }
 
     /**
@@ -49,7 +49,7 @@ class ResolveDomain
             ],
         ];
 
-        $data = \GuzzleHttp\json_decode($this->userSession->request('GET', static::RESOLVE_DOMAIN_URL, $options)->getBody(), true);
+        $data = \GuzzleHttp\json_decode($this->authenticatedClient->request('GET', static::RESOLVE_DOMAIN_URL, $options)->getBody(), true);
 
         return new ResolveDomainResponse($data);
     }
