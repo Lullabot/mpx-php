@@ -11,6 +11,8 @@ use Psr\Http\Message\UriInterface;
  * create request, instead of creating a new object.
  *
  * @see https://docs.theplatform.com/help/wsf-creating-or-updating-data-objects-using-create-keys
+ *
+ * @todo Move to the annotation and convert to CustomKeyInterface.
  */
 interface CreateKeyInterface
 {

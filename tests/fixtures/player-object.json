@@ -1,0 +1,122 @@
+{
+    "id": "http://data.player.test.corp.theplatform.com/player/data/Player/1424281",
+    "guid": "V2ePA6WcdF0y29G1Y3wUcoqm_RiIM6Pu",
+    "updated": 1335378125000,
+    "title": "Fancy new player",
+    "description": "To be used on our main site",
+    "added": 1335377369000,
+    "ownerId": "http://access.auth.theplatform.com/data/Account/165515816",
+    "addedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mps/5",
+    "updatedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mps/5",
+    "version": 1,
+    "locked": false,
+    "paddingLeft": -1,
+    "paddingTop": -1,
+    "paddingRight": -1,
+    "paddingBottom": -1,
+    "height": 0,
+    "width": 0,
+    "pid": "2qDVKDWgwe_g",
+    "allowFullScreen": true,
+    "backgroundImageUrl": "http://example.org/images/sample.png",
+    "colorSchemeId": "http://data.player.theplatform.com/player/data/ColorScheme/1314564",
+    "columns": 0,
+    "disabled": false,
+    "headerImageHeight": 0,
+    "headerImageUrl": "http://example.org/images/background.png",
+    "itemsPerPage": 0,
+    "layoutId": "http://data.player.theplatform.com/player/data/Layout/210951",
+    "limitToCategories": [
+        "Sports",
+        "News"
+    ],
+    "overlayImageUrl": "http://example.org/images/overlay.png",
+    "feedUrl": "http://feed.media.theplatform.com/f/cons/Spq1ms2pbT1l",
+    "feedUrlParams": "count=true",
+    "releaseUrlParams": "mbr=true",
+    "skinId": "http://data.player.theplatform.com/player/data/Skin/1038",
+    "showAirdate": false,
+    "showAuthor": false,
+    "showBitrate": false,
+    "thumbnailHeight": 0,
+    "thumbnailWidth": 0,
+    "allowSearch": true,
+    "allowEmail": true,
+    "allowGetLink": true,
+    "allowEmbed": true,
+    "alwaysShowOverlay": false,
+    "autoPlay": false,
+    "controlRackHeight": 0,
+    "embedAllowFullScreen": true,
+    "embedHeight": 0,
+    "embedWidth": 0,
+    "playAll": false,
+    "playerUrl": "http://player.theplatform.com/p/customer/mainplayer",
+    "linkUrl": "http://example.org",
+    "endCardFeedUrl": "http://feed.media.theplatform.com/f/cons/5rfyyRD30",
+    "showAllChoice": true,
+    "showFullTime": false,
+    "showMostPopularChoice": false,
+    "showNav": false,
+    "shuffle": false,
+    "useFloatingControls": true,
+    "restrictionId": "http://data.delivery.theplatform.com/delivery/data/Restriction/644",
+    "embedRestrictionId": "http://data.delivery.theplatform.com/delivery/data/Restriction/645",
+    "adPolicyId": "http://data.delivery.theplatform.com/delivery/data/AdPolicy/1601",
+    "embedAdPolicyId": "http://data.delivery.theplatform.com/delivery/data/AdPolicy/1602",
+    "preferredRuntimes": [
+        "Flash",
+        "HTML5"
+    ],
+    "preferredFormats": [
+        "mpeg4",
+        "webm"
+    ],
+    "aspectRatioWidth": 0,
+    "aspectRatioHeight": 0,
+    "controlLayoutXml": "<controls> <region /> </controls>",
+    "customHtml": "<html><head>...",
+    "customCss": ".body {margin: auto}...",
+    "customJavaScript": "function s(){...",
+    "includeDefaultCss": true,
+    "regionWidths": {
+        "player": 1024
+    },
+    "regionHeights": {
+        "player": 768
+    },
+    "customProperties": {
+        "endCard": "tpMenuCard",
+        "overrideNativeControls": "true"
+    },
+    "enabledPlugIns": [
+         {
+            "plugInId": "http://data.player.theplatform.com/player/data/PlugIn/5555",
+            "regionName": "player",
+            "params": {
+                "priority": "1"
+            }
+        }
+    ],
+    "adminTags": [
+        "workflow_main"
+    ],
+    "enableExternalController": true,
+    "autoInitialize": true,
+    "allowRss": true,
+    "customCssUrls": [
+
+    ],
+    "customJavaScriptUrls": [
+
+    ],
+    "posterImagePreviewAssetType" : "asset-type",
+    "posterImageMetaAssetType": "asset-type",
+    "posterImageDefaultWidth": -1,
+    "posterImageDefaultHeight": -1,
+    "failoverHtml": "<p>failover</p>",
+    "compatibilityMode": false,
+    "fallbackPdk": "reserved",
+    "pdk": "reserved",
+    "pid": "DemoPlayer"
+}

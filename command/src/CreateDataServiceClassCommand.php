@@ -23,19 +23,22 @@ class CreateDataServiceClassCommand extends Command {
     protected function configure() {
         $this->setName('mpx:create-data-service')
             ->setDescription('This command helps to create a data service class from a CSV via stdin.')
-            ->setHelp("This command generates a PHP class from a CSV copied from MPX's documentation. Create the CSV by copying the fields table from an object and converting it to a CSV using a spreadsheet.\n\nhttps://docs.theplatform.com/help/media-media-object is a good example of the table this command expects.")
-            ->addUsage('< command/csv/media-object.csv');
+            ->setHelp("This command generates a PHP class from a CSV copied from MPX's documentation. Create the CSV by copying the fields table from an object and converting it to a CSV using a spreadsheet. The CSV is read through STDIN. \n\nhttps://docs.theplatform.com/help/media-media-object is a good example of the table this command expects.")
+            ->addUsage('Lullabot\Mpx\DataService\Media\Media < command/csv/media-object.csv')
+            ->addArgument('fully-qualified-class-name', \Symfony\Component\Console\Input\InputArgument::REQUIRED, 'The fully-qualified class name to generate. Do not include the leading slash, and wrap the class name in single-quotes to handle shell escaping.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-
         $handle = fopen('php://stdin', 'r');
         $index = 0;
 
-        echo "<?php\n\n";
+        $output->write("<?php\n\n");
 
-        $namespace = new PhpNamespace('Lullabot\Mpx\DataService\Media');
-        $class = $namespace->addClass('Media');
+        // Extract the containing class namespace and the class name.
+        $parts = explode('\\', $input->getArgument('fully-qualified-class-name'));
+        $namespace = new PhpNamespace(implode('\\', array_slice($parts, 0, -1)));
+        $class = $namespace->addClass(end($parts));
+
         $class->addImplement(CreateKeyInterface::class);
 
         // Loop over each row, which corresponds to each property.
@@ -65,7 +68,7 @@ class CreateDataServiceClassCommand extends Command {
             // Add a get method for the property.
             $get = $class->addMethod('get' . ucfirst($property->getName()));
             $get->setVisibility('public');
-            $get->addComment('Returns ' . $description);
+            $get->addComment('Returns ' . lcfirst($description));
             $get->addComment('');
             $get->addComment('@return ' . $data_type);
 
@@ -86,14 +89,14 @@ class CreateDataServiceClassCommand extends Command {
             // Add a set method for the property.
             $set = $class->addMethod('set' . ucfirst($property->getName()));
             $set->setVisibility('public');
-            $set->addComment('Set ' . $description);
+            $set->addComment('Set ' . lcfirst($description));
             $set->addComment('');
             $set->addComment('@param ' . $data_type);
             $set->addParameter($field_name);
             $set->addBody('$this->' . $field_name . ' = ' . '$' . $field_name . ';');
         }
 
-        print $namespace;
+        $output->write((string) $namespace);
         fclose($handle);
 
     }
