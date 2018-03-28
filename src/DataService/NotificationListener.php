@@ -106,18 +106,19 @@ class NotificationListener
      * This method always filters to the object type defined in the discovered
      * data service passed in the constructor, such as 'Media'.
      *
-     * @see https://docs.theplatform.com/help/media-media-data-service-api-reference
+     * @see  https://docs.theplatform.com/help/media-media-data-service-api-reference
      *
      * @todo Add support for a configurable timeout?
      *
-     * @see \Lullabot\Mpx\DataService\NotificationListener::sync
-     * @see \Lullabot\Mpx\DataService\Notification
+     * @see  \Lullabot\Mpx\DataService\NotificationListener::sync
+     * @see  \Lullabot\Mpx\DataService\Notification
      *
-     * @param int $since The last sync ID.
+     * @param int $since   The last sync ID.
+     * @param int $maximum (optional) The maximum number of notifications to return. Defaults to 500.
      *
      * @return \GuzzleHttp\Promise\PromiseInterface A promise returning an array of Notifications.
      */
-    public function listen(int $since)
+    public function listen(int $since, int $maximum = 500)
     {
         return $this->session->requestAsync('GET', $this->uri, [
             'query' => [
@@ -127,6 +128,7 @@ class NotificationListener
                 'form' => 'cjson',
                 'schema' => '1.10',
                 'filter' => $this->service->getAnnotation()->getObjectType(),
+                'size' => $maximum,
             ],
         ])->then(function (ResponseInterface $response) {
             // First, we need an encoder that filters out null values.

@@ -18,8 +18,8 @@ class NotificationListenerTest extends FunctionalTestBase
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
         $listener = new NotificationListener($this->session, $service, 'lullabot/mpx-php');
         /** @var \Lullabot\Mpx\DataService\Notification[] $notifications */
-        $notifications = $listener->listen(-1)->wait();
-        $this->assertNotEmpty($notifications);
+        $notifications = $listener->listen(-1, 2)->wait();
+        $this->assertCount(2, $notifications);
         foreach ($notifications as $notification) {
             $this->assertInstanceOf(Media::class, $notification->getEntry());
         }
