@@ -9,6 +9,11 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Resolve all URLs for a given service.
  *
+ * In general, ResolveDomain should be used instead, as it can return all
+ * services at once. However, it requires an Account context, so if you do not
+ * have one available use this instead.
+ *
+ * @see \Lullabot\Mpx\Service\AccessManagement\ResolveDomain
  * @see https://docs.theplatform.com/help/wsf-resolveallurls-method
  */
 class ResolveAllUrls
