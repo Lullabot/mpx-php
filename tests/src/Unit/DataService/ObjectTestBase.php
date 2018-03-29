@@ -2,8 +2,12 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
+use Lullabot\Mpx\Encoder\CJsonEncoder;
+use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
+use Lullabot\Mpx\Normalizer\UriNormalizer;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -54,8 +58,16 @@ abstract class ObjectTestBase extends TestCase
      */
     protected function loadFixture($fixture)
     {
-        $encoders = [new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
+        $encoders = [new CJsonEncoder()];
+
+        // Attempt normalizing each key in this order, including denormalizing recursively.
+        $normalizers = [
+            new UnixMicrosecondNormalizer(),
+            new UriNormalizer(),
+            new ObjectNormalizer(null, null, null, new ReflectionExtractor()),
+            new ArrayDenormalizer(),
+        ];
+
         $this->serializer = new Serializer($normalizers, $encoders);
 
         $data = file_get_contents(__DIR__."/../../../fixtures/$fixture");
@@ -70,25 +82,24 @@ abstract class ObjectTestBase extends TestCase
     protected function assertObjectClass($class, string $field, $expected)
     {
         // This significantly improves test performance as we only deserialize a single field at a time.
+        $value = $this->decoded[$field];
         $filtered = [
             $field => $this->decoded[$field],
         ];
 
-        // @todo This is a total hack as MPX returns JSON with null values. Replace by omitting in the normalizer.
-        $filtered = array_filter(
-            $filtered,
-            function ($value) {
-                return null !== $value;
-            }
-        );
         $data = json_encode($filtered);
 
-        $player = $this->serializer->deserialize($data, $class, 'json');
+        $object = $this->serializer->deserialize($data, $class, 'json');
 
         $method = 'get'.ucfirst($field);
         if (!$expected) {
             $expected = $filtered[$field];
         }
-        $this->assertEquals($expected, $player->$method());
+
+        if ('' === $expected) {
+            $this->assertEmpty((string) $object->$method());
+        } else {
+            $this->assertEquals($expected, $object->$method());
+        }
     }
 }

@@ -195,7 +195,7 @@ class Account
      *
      * @return bool
      */
-    public function getDisabled(): \boolean
+    public function getDisabled(): bool
     {
         return $this->disabled;
     }
@@ -298,7 +298,7 @@ class Account
      *
      * @return bool
      */
-    public function getLocked(): \boolean
+    public function getLocked(): bool
     {
         return $this->locked;
     }

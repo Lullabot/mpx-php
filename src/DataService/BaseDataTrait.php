@@ -9,8 +9,6 @@ use Psr\Http\Message\UriInterface;
  */
 trait BaseDataTrait
 {
-    use ConversionTrait;
-
     /**
      * The date and time that this object was created.
      *
@@ -59,11 +57,11 @@ trait BaseDataTrait
     /**
      * Set The date and time that this object was created.
      *
-     * @param \DateTime|int
+     * @param \DateTime
      */
     public function setAdded($added)
     {
-        $this->added = $this->convertDateTime($added);
+        $this->added = $added;
     }
 
     /**
@@ -79,11 +77,11 @@ trait BaseDataTrait
     /**
      * Set The id of the user that created this object.
      *
-     * @param UriInterface|string
+     * @param UriInterface
      */
     public function setAddedByUserId($addedByUserId)
     {
-        $this->addedByUserId = $this->convertUri($addedByUserId);
+        $this->addedByUserId = $addedByUserId;
     }
 
     /**
@@ -103,7 +101,7 @@ trait BaseDataTrait
      */
     public function setId($id)
     {
-        $this->id = $this->convertUri($id);
+        $this->id = $id;
     }
 
     /**
@@ -123,6 +121,6 @@ trait BaseDataTrait
      */
     public function setOwnerId($ownerId)
     {
-        $this->ownerId = $this->convertUri($ownerId);
+        $this->ownerId = $ownerId;
     }
 }
