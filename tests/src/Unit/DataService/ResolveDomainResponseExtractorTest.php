@@ -15,7 +15,6 @@ use Symfony\Component\PropertyInfo\Type;
  */
 class ResolveDomainResponseExtractorTest extends TestCase
 {
-
     /**
      * @covers ::getTypes
      */
@@ -30,5 +29,16 @@ class ResolveDomainResponseExtractorTest extends TestCase
         $this->assertEquals(Type::BUILTIN_TYPE_STRING, $type->getCollectionKeyType()->getBuiltinType());
         $this->assertEquals('object', $type->getCollectionValueType()->getBuiltinType());
         $this->assertEquals(Uri::class, $type->getCollectionValueType()->getClassName());
+    }
+
+    /**
+     * @covers ::getTypes
+     */
+    public function testInvalidProperty()
+    {
+        $extractor = new ResolveDomainResponseExtractor();
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('This extractor only supports resolveDomainResponse properties.');
+        $extractor->getTypes('', 'not-valid');
     }
 }
