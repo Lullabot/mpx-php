@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService\Player;
 
 use Lullabot\Mpx\DataService\Player\Player;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
 /**
  * Tests the Player object.
@@ -22,7 +23,7 @@ class PlayerTest extends ObjectTestBase
     public function setUp()
     {
         parent::setUp();
-        $this->loadFixture('player-object.json');
+        $this->loadFixture('player-object.json', new ReflectionExtractor());
     }
 
     /**
