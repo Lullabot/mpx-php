@@ -40,8 +40,6 @@ class ResolveAllUrls
     /**
      * ResolveAllUrls constructor.
      *
-     * @todo Is there value in storing Responses in all classes?
-     *
      * @param string $service The service that was queried, such as 'Access Data Service'.
      * @param array  $data    The MPX response.
      */
