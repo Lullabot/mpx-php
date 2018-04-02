@@ -58,7 +58,7 @@ class NotificationListener
      *
      * This method always uses the read-only version of a service.
      *
-     * @see https://docs.theplatform.com/help/wsf-subscribing- to -change-notifications#tp-toc2
+     * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications#tp-toc2
      *
      * @param \Lullabot\Mpx\AuthenticatedClient $session  The client to use for authenticated requests.
      * @param DiscoveredDataService             $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
@@ -116,7 +116,7 @@ class NotificationListener
      * @param int $since   The last sync ID.
      * @param int $maximum (optional) The maximum number of notifications to return. Defaults to 500.
      *
-     * @return \GuzzleHttp\Promise\PromiseInterface A promise returning an array of Notifications.
+     * @return \GuzzleHttp\Promise\PromiseInterface A promise returning an array of Notification objects.
      */
     public function listen(int $since, int $maximum = 500)
     {

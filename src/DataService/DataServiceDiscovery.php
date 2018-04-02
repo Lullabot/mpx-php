@@ -65,7 +65,7 @@ class DataServiceDiscovery
     /**
      * Returns all the data services.
      *
-     * @return DiscoveredDataService[] An array of all discovered data services.
+     * @return DiscoveredDataService[] An array of all discovered data services, indexed by service name, object type, and schema version.
      */
     public function getDataServices(): array
     {
