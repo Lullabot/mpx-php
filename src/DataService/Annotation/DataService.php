@@ -48,6 +48,13 @@ class DataService
     public $baseUri;
 
     /**
+     * Is this service only available over HTTP?
+     *
+     * @var bool
+     */
+    public $insecure = false;
+
+    /**
      * Return the service of the data object, such as 'Media Data Service'.
      *
      * @param bool $readonly (optional) Set to true to return the read-only name of the service.
@@ -61,28 +68,6 @@ class DataService
         }
 
         return $this->service;
-    }
-
-    /**
-     * Return the relative path of the data service, such as '/data/Media'.
-     *
-     * @see https://docs.theplatform.com/help/wsf-how-to-find-the-url-of-a-service-in-the-service-registry
-     *
-     * @return string
-     */
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
-    /**
-     * Return the schema version this class implements, such as '1.10'.
-     *
-     * @return string
-     */
-    public function getSchemaVersion(): string
-    {
-        return $this->schemaVersion;
     }
 
     /**

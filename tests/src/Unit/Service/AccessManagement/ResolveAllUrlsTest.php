@@ -35,6 +35,7 @@ class ResolveAllUrlsTest extends TestCase
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'resolveAllUrls.json'),
+            new JsonResponse(200, [], 'resolveAllUrls.json'),
         ]);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface $store */
@@ -47,7 +48,10 @@ class ResolveAllUrlsTest extends TestCase
         /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls $r */
         $r = ResolveAllUrls::load($session, 'Media Data Service')->wait();
         $this->assertEquals('Media Data Service', $r->getService());
-        $this->assertEquals('http://data.media.theplatform.com/media', $r->resolve());
+        $this->assertEquals('https://data.media.theplatform.com/media', (string) $r->resolve());
+
+        $r = ResolveAllUrls::load($session, 'Media Data Service', true)->wait();
+        $this->assertEquals('http://data.media.theplatform.com/media', (string) $r->resolve());
     }
 
     /**
