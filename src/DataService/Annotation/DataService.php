@@ -71,28 +71,6 @@ class DataService
     }
 
     /**
-     * Return the relative path of the data service, such as '/data/Media'.
-     *
-     * @see https://docs.theplatform.com/help/wsf-how-to-find-the-url-of-a-service-in-the-service-registry
-     *
-     * @return string
-     */
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
-    /**
-     * Return the schema version this class implements, such as '1.10'.
-     *
-     * @return string
-     */
-    public function getSchemaVersion(): string
-    {
-        return $this->schemaVersion;
-    }
-
-    /**
      * @return string
      */
     public function getBaseUri(): string
@@ -103,15 +81,5 @@ class DataService
     public function hasBaseUri(): bool
     {
         return (bool) $this->baseUri;
-    }
-
-    /**
-     * Return if this service is only available over HTTP.
-     *
-     * @return bool
-     */
-    public function isInsecure(): bool
-    {
-        return $this->insecure;
     }
 }

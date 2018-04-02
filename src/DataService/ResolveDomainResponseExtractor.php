@@ -11,7 +11,7 @@ use Symfony\Component\PropertyInfo\Type;
  *
  * Unfortunately, PhpDocExtractor's code uses private variables and final
  * classes, so we can't override it to allow string array keys. Since this API
- * only has one key, it is simpler to to just hardcode the property type.
+ * only has one key, it is simpler to just hardcode the property type.
  *
  * @see \Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor
  */
