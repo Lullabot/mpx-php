@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "method": "put",
+    "type": "Media",
+    "entry": {
+      "id": "http://data.media.theplatform.com/media/data/Media/1",
+      "updated": 1521790000000,
+      "ownerId": "http://access.auth.theplatform.com/data/Account/1",
+      "updatedByUserId": "https://identity.auth.theplatform.com/idm/data/User/service/1"
+    }
+  },
+  {
+    "id": 2,
+    "method": "post",
+    "type": "Media",
+    "entry": {
+      "id": "http://data.media.theplatform.com/media/data/Media/2",
+      "updated": 1521791000000,
+      "ownerId": "http://access.auth.theplatform.com/data/Account/2",
+      "updatedByUserId": "https://identity.auth.theplatform.com/idm/data/User/service/2"
+    }
+  }
+]

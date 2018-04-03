@@ -42,7 +42,7 @@ class DataServiceDiscovery
     /**
      * The array of discovered data services.
      *
-     * @var array
+     * @var DiscoveredDataService[]
      */
     private $dataServices = [];
 
@@ -64,8 +64,10 @@ class DataServiceDiscovery
 
     /**
      * Returns all the data services.
+     *
+     * @return DiscoveredDataService[] An array of all discovered data services, indexed by service name, object type, and schema version.
      */
-    public function getDataServices()
+    public function getDataServices(): array
     {
         if (!$this->dataServices) {
             $this->discoverDataServices();
@@ -76,8 +78,6 @@ class DataServiceDiscovery
 
     /**
      * Discovers data services.
-     *
-     * @todo Return a structured class?
      */
     private function discoverDataServices()
     {
@@ -88,16 +88,13 @@ class DataServiceDiscovery
         /** @var SplFileInfo $file */
         foreach ($finder as $file) {
             $class = $this->classForFile($file);
+            /* @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
             $annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), 'Lullabot\Mpx\DataService\Annotation\DataService');
             if (!$annotation) {
                 continue;
             }
 
-            /* @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
-            $this->dataServices[$annotation->getService()][$annotation->getPath()] = [
-                'class' => $class,
-                'annotation' => $annotation,
-            ];
+            $this->dataServices[$annotation->getService()][$annotation->getObjectType()][$annotation->getSchemaVersion()] = new DiscoveredDataService($class, $annotation);
         }
     }
 

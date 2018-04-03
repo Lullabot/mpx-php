@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
 /**
  * Test the Media data object.
@@ -20,7 +21,7 @@ class MediaTest extends ObjectTestBase
     public function setUp()
     {
         parent::setUp();
-        $this->loadFixture('media-object.json');
+        $this->loadFixture('media-object.json', new ReflectionExtractor());
     }
 
     /**

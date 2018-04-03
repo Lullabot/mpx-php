@@ -6,7 +6,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\DataService\Access\Account;
 
 /**
- * An ObjectList represents a list of data service objects from a search query or a notification.
+ * An ObjectList represents a list of data service objects from a search query.
  *
  * @see https://docs.theplatform.com/help/wsf-retrieving-data-objects#tp-toc11
  * @see https://docs.theplatform.com/help/wsf-cjson-format#cJSONformat-cJSONobjectlistpayloads

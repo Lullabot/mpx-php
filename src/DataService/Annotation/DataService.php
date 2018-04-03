@@ -8,12 +8,11 @@ namespace Lullabot\Mpx\DataService\Annotation;
  * Each MPX data service exposes one or more objects. We require annotations
  * on object implementations so calling code can discover what services are
  * currently implemented. In general, there should only be one implementation
- * of a given (path, service, schema) triple.
+ * of a given (objectType, service, schema) triple.
  *
  * @todo Use symfony validation to assert requirements.
  * @todo Mark the required values with @Required
  * @todo Rename to DataServiceObject
- * @todo Can we infer /data/ from path and assume it's always consistent?
  *
  * @see http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/annotations.html
  */
@@ -27,11 +26,11 @@ class DataService
     public $service;
 
     /**
-     * The relative path of the data service, such as '/data/Media'.
+     * The object type in the service, such as 'Media'.
      *
      * @var string
      */
-    public $path;
+    public $objectType;
 
     /**
      * The schema version this class implements, such as '1.10'.
@@ -68,6 +67,28 @@ class DataService
         }
 
         return $this->service;
+    }
+
+    /**
+     * Return the relative objectType of the data service, such as '/data/Media'.
+     *
+     * @see https://docs.theplatform.com/help/wsf-how-to-find-the-url-of-a-service-in-the-service-registry
+     *
+     * @return string
+     */
+    public function getObjectType(): string
+    {
+        return $this->objectType;
+    }
+
+    /**
+     * Return the schema version this class implements, such as '1.10'.
+     *
+     * @return string
+     */
+    public function getSchemaVersion(): string
+    {
+        return $this->schemaVersion;
     }
 
     /**

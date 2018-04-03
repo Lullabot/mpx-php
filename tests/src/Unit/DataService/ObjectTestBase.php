@@ -6,7 +6,7 @@ use Lullabot\Mpx\Encoder\CJsonEncoder;
 use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -55,8 +55,9 @@ abstract class ObjectTestBase extends TestCase
 
     /**
      * @param $fixture
+     * @param $propertyTypeExtractor
      */
-    protected function loadFixture($fixture)
+    protected function loadFixture($fixture, PropertyTypeExtractorInterface $propertyTypeExtractor)
     {
         $encoders = [new CJsonEncoder()];
 
@@ -64,7 +65,7 @@ abstract class ObjectTestBase extends TestCase
         $normalizers = [
             new UnixMicrosecondNormalizer(),
             new UriNormalizer(),
-            new ObjectNormalizer(null, null, null, new ReflectionExtractor()),
+            new ObjectNormalizer(null, null, null, $propertyTypeExtractor),
             new ArrayDenormalizer(),
         ];
 
@@ -82,7 +83,6 @@ abstract class ObjectTestBase extends TestCase
     protected function assertObjectClass($class, string $field, $expected)
     {
         // This significantly improves test performance as we only deserialize a single field at a time.
-        $value = $this->decoded[$field];
         $filtered = [
             $field => $this->decoded[$field],
         ];

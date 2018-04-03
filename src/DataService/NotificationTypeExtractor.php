@@ -6,9 +6,9 @@ use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Type;
 
 /**
- * A property extractor to allow for a ObjectList to have varying 'entries' data types.
+ * A property extractor to extract the type from a notification entry.
  */
-class DataServiceExtractor extends ReflectionExtractor
+class NotificationTypeExtractor extends ReflectionExtractor
 {
     /**
      * The class each entry is, such as \Lullabot\Mpx\DataService\Media\Media.
@@ -32,17 +32,14 @@ class DataServiceExtractor extends ReflectionExtractor
      */
     public function getTypes($class, $property, array $context = [])
     {
-        if ('entries' !== $property) {
+        if ('entry' !== $property) {
             return parent::getTypes($class, $property, $context);
         }
 
         if (!isset($this->class)) {
-            throw new \UnexpectedValueException('setClass() must be called before using this extractor.');
+            throw new \LogicException('setClass() must be called before using this extractor.');
         }
 
-        $collectionKeyType = new Type(Type::BUILTIN_TYPE_INT);
-        $collectionValueType = new Type('object', false, $this->class);
-
-        return [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, $collectionKeyType, $collectionValueType)];
+        return [new Type('object', false, $this->class)];
     }
 }

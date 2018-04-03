@@ -33,9 +33,9 @@ class DataObjectFactory
     /**
      * The class and annotation to load data objects into.
      *
-     * @var array
+     * @var DiscoveredDataService
      */
-    protected $description;
+    protected $dataService;
 
     /**
      * The client to make authenticated API calls.
@@ -49,14 +49,14 @@ class DataObjectFactory
      *
      * @todo Inject the resolveDomain() instead of constructing?
      *
-     * @param array                             $description         The array describing the destination class for this factory.
+     * @param DiscoveredDataService             $dataService         The service to load data from.
      * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
      */
-    public function __construct(array $description, AuthenticatedClient $authenticatedClient)
+    public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient)
     {
         $this->authenticatedClient = $authenticatedClient;
         $this->resolveDomain = new ResolveDomain($this->authenticatedClient);
-        $this->description = $description;
+        $this->dataService = $dataService;
     }
 
     /**
@@ -70,8 +70,7 @@ class DataObjectFactory
      */
     public function loadByNumericId(int $id, Account $account = null, bool $readonly = false)
     {
-        /** @var DataService $annotation */
-        $annotation = $this->description['annotation'];
+        $annotation = $this->dataService->getAnnotation();
         $base = $this->getBaseUri($account, $annotation, $readonly);
 
         $uri = $base.'/'.$id;
@@ -92,7 +91,7 @@ class DataObjectFactory
     public function deserialize(string $class, $data)
     {
         $dataServiceExtractor = new DataServiceExtractor();
-        $dataServiceExtractor->setClass($this->description['class']);
+        $dataServiceExtractor->setClass($this->dataService->getClass());
 
         return $this->getObjectSerializer($dataServiceExtractor)->deserialize($data, $class, 'json');
     }
@@ -105,7 +104,7 @@ class DataObjectFactory
     public function load($uri): PromiseInterface
     {
         /** @var DataService $annotation */
-        $annotation = $this->description['annotation'];
+        $annotation = $this->dataService->getAnnotation();
         $options = [
             'query' => [
                 'schema' => $annotation->schemaVersion,
@@ -115,7 +114,7 @@ class DataObjectFactory
 
         $response = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) {
-                return $this->deserialize($this->description['class'], $response->getBody());
+                return $this->deserialize($this->dataService->getClass(), $response->getBody());
             }
         );
 
@@ -147,8 +146,7 @@ class DataObjectFactory
      */
     public function selectRequest(ByFields $byFields, Account $account): PromiseInterface
     {
-        /** @var DataService $annotation */
-        $annotation = $this->description['annotation'];
+        $annotation = $this->dataService->getAnnotation();
         $options = [
             'query' => $byFields->toQueryParts() + [
                 'schema' => $annotation->schemaVersion,
@@ -197,7 +195,7 @@ class DataObjectFactory
             // HTTPS.
             $insecure = $annotation->insecure && !$readonly;
 
-            $base = $resolved->getUrl($annotation->getService($readonly), $insecure).$annotation->path;
+            $base = $resolved->getUrl($annotation->getService($readonly), $insecure).$annotation->getObjectType();
         }
 
         return $base;
@@ -208,7 +206,7 @@ class DataObjectFactory
         // We need a property extractor that understands the varying types of 'entries'.
         // @todo Should we just make multiple subclasses of ObjectList?
         $dataServiceExtractor = new DataServiceExtractor();
-        $dataServiceExtractor->setClass($this->description['class']);
+        $dataServiceExtractor->setClass($this->dataService->getClass());
 
         return $this->getObjectSerializer($dataServiceExtractor);
     }
