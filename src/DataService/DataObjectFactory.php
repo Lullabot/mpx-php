@@ -107,7 +107,7 @@ class DataObjectFactory
         $annotation = $this->dataService->getAnnotation();
         $options = [
             'query' => [
-                'schema' => $annotation->getSchemaVersion(),
+                'schema' => $annotation->schemaVersion,
                 'form' => 'cjson',
             ],
         ];
@@ -149,7 +149,7 @@ class DataObjectFactory
         $annotation = $this->dataService->getAnnotation();
         $options = [
             'query' => $byFields->toQueryParts() + [
-                'schema' => $annotation->getSchemaVersion(),
+                'schema' => $annotation->schemaVersion,
                 'form' => 'cjson',
                 'count' => true,
             ],
@@ -157,7 +157,7 @@ class DataObjectFactory
 
         $uri = $this->getBaseUri($account, $annotation);
 
-        $request = $this->userSession->requestAsync('GET', $uri, $options)->then(
+        $request = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) use ($byFields, $account) {
                 $data = $response->getBody();
 
@@ -189,7 +189,13 @@ class DataObjectFactory
         // @todo Can we do this by calling ResolveAllUrls?
         if (!($base = $annotation->getBaseUri())) {
             $resolved = $this->resolveDomain->resolve($account);
-            $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getObjectType();
+
+            // Only respect the insecure flag for read-write data services.
+            // All read-only data services are supposed to be available over
+            // HTTPS.
+            $insecure = $annotation->insecure && !$readonly;
+
+            $base = $resolved->getUrl($annotation->getService($readonly), $insecure).$annotation->getObjectType();
         }
 
         return $base;

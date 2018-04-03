@@ -4,6 +4,11 @@ namespace Lullabot\Mpx\Service\AccessManagement;
 
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\Normalizer\UriNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Resolve all service URLs for an account.
@@ -49,8 +54,12 @@ class ResolveDomain
             ],
         ];
 
-        $data = \GuzzleHttp\json_decode($this->authenticatedClient->request('GET', static::RESOLVE_DOMAIN_URL, $options)->getBody(), true);
+        $response = $this->authenticatedClient->request('GET', static::RESOLVE_DOMAIN_URL, $options);
 
-        return new ResolveDomainResponse($data);
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new UriNormalizer(), new ObjectNormalizer(null, null, null, new \Lullabot\Mpx\DataService\ResolveDomainResponseExtractor()), new ArrayDenormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+
+        return $serializer->deserialize($response->getBody(), ResolveDomainResponse::class, 'json');
     }
 }
