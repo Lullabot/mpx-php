@@ -66,7 +66,7 @@ class Range
      *
      * @return Range A new range.
      */
-    public static function nextRange(ObjectList $list)
+    public static function nextRange(ObjectList $list): self
     {
         $range = new self();
         $start = $list->getStartIndex() + $list->getEntryCount();
@@ -79,10 +79,14 @@ class Range
     /**
      * Return an array of query parameters representing this range.
      *
-     * @return array An array with a 'range' key.
+     * @return array An array with a 'range' key, or an empty array if neither start or end is set.
      */
-    public function toQueryParts()
+    public function toQueryParts(): array
     {
+        if (empty($this->startIndex) && empty($this->endIndex)) {
+            return [];
+        }
+
         return ['range' => $this->startIndex.'-'.$this->endIndex];
     }
 }

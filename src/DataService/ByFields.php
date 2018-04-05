@@ -34,10 +34,14 @@ class ByFields
      */
     protected $range;
 
+    /**
+     * ByFields constructor.
+     */
     public function __construct()
     {
         $this->sort = new Sort();
         $this->sort->addSort('id');
+        $this->range = new Range();
     }
 
     /**
