@@ -1183,7 +1183,7 @@ class MediaFile
      *
      * @param PreviousLocation[]
      */
-    public function setPreviousLocations($previousLocations)
+    public function setPreviousLocations(array $previousLocations)
     {
         $this->previousLocations = $previousLocations;
     }
