@@ -1263,7 +1263,7 @@ class MediaFile
      *
      * @param Release[]
      */
-    public function setReleases($releases)
+    public function setReleases(array $releases)
     {
         $this->releases = $releases;
     }

@@ -1,0 +1,21 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+added,,DateTime,The date and time that this object was created
+addedByUserId,,URI,The id of the user that created this object
+adPolicyId,,URI,The id of the AdPolicy object this object is associated with
+approved,,Boolean,Whether this object is approved; if false this object is not visible in feeds
+delivery,,Delivery,The delivery method for this object
+description,,String,The description of this object
+fileId,,URI,The id of the MediaFile object this object is associated with
+guid,,String,An alternate identifier for this object that is unique within the owning account
+id,,URI,The globally unique URI of this object
+locked,,Boolean,Whether this object currently allows updates
+mediaId,,URI,The id of the Media object this object is associated with
+ownerId,,URI,The id of the account that owns this object
+parameters,,String,Optional release URL parameters
+pid,,String,The globally unique public identifier for this object
+restrictionId,,URI,The id of the Restriction object this object is associated with
+title,,String,The generic name of this object
+updated,,DateTime,The date and time this object was last modified
+updatedByUserId,,URI,The id of the user that last modified this object
+url,,URI,The public URL for this object
+version,,Long,"This object's modification version, used for optimistic locking"
