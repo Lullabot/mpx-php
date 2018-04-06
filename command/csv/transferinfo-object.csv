@@ -1,0 +1,7 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+password,,String,The password portion of the credentials required to access the file on the server
+privateKey,,String,The private key for accessing the file on the server
+supportsDownload,,Boolean,Whether the server supports downloads of linked files
+supportsStreaming,,Boolean,Whether the server supports streaming of linked files
+userName,,String,The username portion of the credentials required to access the file on the server
+zones,,String[],A list of local zones that the physical server resides in

@@ -1453,7 +1453,7 @@ class MediaFile
      *
      * @return TransferInfo
      */
-    public function getTransferInfo(): \TransferInfo
+    public function getTransferInfo(): TransferInfo
     {
         return $this->transferInfo;
     }
