@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\CreateKeyInterface;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\BaseDataTrait;
@@ -153,7 +154,7 @@ class Media implements CreateKeyInterface
     /**
      * The streamingUrl of the default thumbnail for this Media.
      *
-     * @var string
+     * @var Uri
      */
     protected $defaultThumbnailUrl;
 
@@ -750,9 +751,9 @@ class Media implements CreateKeyInterface
     /**
      * Returns the streamingUrl of the default thumbnail for this Media.
      *
-     * @return string
+     * @return Uri
      */
-    public function getDefaultThumbnailUrl(): string
+    public function getDefaultThumbnailUrl(): Uri
     {
         return $this->defaultThumbnailUrl;
     }
@@ -760,7 +761,7 @@ class Media implements CreateKeyInterface
     /**
      * Set the streamingUrl of the default thumbnail for this Media.
      *
-     * @param string
+     * @param Uri
      */
     public function setDefaultThumbnailUrl($defaultThumbnailUrl)
     {
