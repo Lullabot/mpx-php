@@ -1,0 +1,60 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+added,,DateTime,The date and time that this object was created
+addedByUserId,,URI,The id of the user that created this object
+allowRelease,,Boolean,"Whether playback is enabled for this file, and whether it can be associated with new Release objects"
+approved,,Boolean,Whether this object is approved
+aspectRatio,,Float,The file's calculated aspect ratio
+assetTypeIds,,URI[],The id values of any AssetType objects associated with this object
+assetTypes,,String[],The names of any AssetType objects associated with this object
+audioChannels,,Integer,The number of audio channels the file has
+audioCodec,,String,The name of the audio codec the file uses
+audioSampleRate,,Integer,"The file's audio sample rate, in hertz (Hz)"
+audioSampleSize,,Integer,"The file's audio sample size, in bits (b)"
+bitrate,,Long,"The file's bitrate, in bits per second (bps)"
+checksums,,Map,The file's checksum values
+closedCaptions,,Boolean,Whether the file contains text tracks
+contentType,,ContentType,The file's content type
+description,,String,The description of this object
+displayAspectRatio,,String,The aspect ratio to display to users
+downloadUrl,,String,The file's download URL
+duration,,Duration,"The duration of the file, in seconds"
+exists,,Boolean,Whether the file exists at the specified location yet
+expression,,Expression,The file's expression type
+failoverSourceUrl,,String,The secondary source URL for the original file
+failoverStreamingUrl,,String,One or more secondary streaming URLs
+filePath,,String,"The path and filename of the file, relative to a managed storage server's root"
+fileSize,,Long,"The file's size, in bytes (B)"
+format,,Format,The file's format
+frameRate,,Float,"The file's frame rate, in frames per second (fps)"
+guid,,String,An alternate identifier for this object that is unique within the owning account
+height,,Integer,"The file's frame height, in pixels"
+id,,URI,The globally unique URI of this object
+isDefault,,Boolean,Whether this file is the default content or thumbnail file for the associated Mediaobject
+isProtected,,Boolean,Whether this file is protected
+isThumbnail,,Boolean,Whether this file is a thumbnail
+language,,String,The ISO 639 language code for the file
+locked,,Boolean,Whether this object currently allows updates
+mediaId,,URI,The id of the Media object this object is associated with
+ownerId,,URI,The id of the account that owns this object
+previousLocations,,PreviousLocation[],Information about the file's location used by the FMS moveFile method
+protectionHeaders,,String,One or more protection system headers
+protectionKey,,String,The DRM or copy protection key
+protectionScheme,,String,The DRM or copy protection scheme
+releases,,Release[],The Release objects associated with this file
+secondaryAudio,,String[],The languages in which secondary audio programming (SAP) is available in the file
+segmentFormat,,String,The format of the streaming content segments
+serverId,,URI,The id of the Server object representing the storage server that this file is on
+sourceMediaFileId,,URI,The id of the source MediaFile object that this file was generated from
+sourceTime,,Duration,"The start time of this excerpt in the source file, in seconds"
+sourceUrl,,String,The original source URL for this file
+storageUrl,,String,The URL of the file's storage location
+streamingUrl,,String,The file's primary streaming URL
+title,,String,The name of this object
+transferInfo,,TransferInfo,The server information required to transfer the file
+transformId,,URI,The id of the encoding template used to generate the file
+updated,,DateTime,The date and time this object was last modified
+updatedByUserId,,URI,The id of the user that last modified this object
+url,,String,The URL of the file
+version,,Long,"This object's modification version, used for optimistic locking"
+videoCodec,,String,The name of this file's video codec
+width,,Integer,"This file's frame width, in pixels"
