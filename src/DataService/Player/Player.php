@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\DataService\Player;
 
 use Lullabot\Mpx\CreateKeyInterface;
+use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\BaseDataTrait;
 use Psr\Http\Message\UriInterface;
 
@@ -17,6 +18,7 @@ use Psr\Http\Message\UriInterface;
 class Player implements CreateKeyInterface
 {
     use BaseDataTrait;
+    use AdPolicyDataTrait;
 
     /**
      * The administrative workflow tags for this object.
@@ -624,26 +626,6 @@ class Player implements CreateKeyInterface
     public function setAdminTags($adminTags)
     {
         $this->adminTags = $adminTags;
-    }
-
-    /**
-     * Returns the identifier for the advertising policy for this object.
-     *
-     * @return UriInterface
-     */
-    public function getAdPolicyId(): UriInterface
-    {
-        return $this->adPolicyId;
-    }
-
-    /**
-     * Set the identifier for the advertising policy for this object.
-     *
-     * @param UriInterface
-     */
-    public function setAdPolicyId($adPolicyId)
-    {
-        $this->adPolicyId = $adPolicyId;
     }
 
     /**
