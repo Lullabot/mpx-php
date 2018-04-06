@@ -12,8 +12,9 @@ class CreateDataServiceClassCommand extends Command {
 
     CONST TYPE_MAP = [
         'String' => 'string',
-        'Boolean' => 'boolean',
+        'Boolean' => 'bool',
         'Long' => 'int',
+        'Integer' => 'int',
         'URI' => '\\' . UriInterface::class,
         'Map' => 'array',
         'DateTime' => '\\' . \DateTime::class,
