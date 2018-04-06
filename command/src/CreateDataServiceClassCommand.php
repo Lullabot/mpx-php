@@ -15,6 +15,7 @@ class CreateDataServiceClassCommand extends Command {
         'Boolean' => 'bool',
         'Long' => 'int',
         'Integer' => 'int',
+        'Float' => 'float',
         'URI' => '\\' . UriInterface::class,
         'Map' => 'array',
         'DateTime' => '\\' . \DateTime::class,
