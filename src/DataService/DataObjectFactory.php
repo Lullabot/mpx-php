@@ -195,7 +195,7 @@ class DataObjectFactory
             // HTTPS.
             $insecure = $annotation->insecure && !$readonly;
 
-            $base = $resolved->getUrl($annotation->getService($readonly), $insecure).$annotation->getObjectType();
+            $base = $resolved->getUrl($annotation->getService($readonly), $insecure).$annotation->getPath();
         }
 
         return $base;

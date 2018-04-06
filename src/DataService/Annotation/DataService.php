@@ -102,4 +102,14 @@ class DataService
     {
         return (bool) $this->baseUri;
     }
+
+    /**
+     * Return the relative path of this object within the data service.
+     *
+     * @return string The relative path, such as '/data/Account'.
+     */
+    public function getPath(): string
+    {
+        return '/data/'.$this->objectType;
+    }
 }
