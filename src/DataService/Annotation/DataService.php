@@ -5,12 +5,11 @@ namespace Lullabot\Mpx\DataService\Annotation;
 /**
  * @Annotation
  *
- * Each MPX data service exposes one or more objects. We require annotations
+ * Each mpx data service exposes one or more objects. We require annotations
  * on object implementations so calling code can discover what services are
  * currently implemented. In general, there should only be one implementation
  * of a given (objectType, service, schema) triple.
  *
- * @todo Use symfony validation to assert requirements.
  * @todo Mark the required values with @Required
  * @todo Rename to DataServiceObject
  *
