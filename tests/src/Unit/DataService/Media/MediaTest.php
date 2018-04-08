@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\AvailabilityWindow;
+use Lullabot\Mpx\DataService\Media\CategoryInfo;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
@@ -66,6 +67,17 @@ class MediaTest extends ObjectTestBase
         $tests['availabilityWindows'] = ['availabilityWindows', [
             $window1,
             $window2,
+        ]];
+
+        $category1 = new CategoryInfo();
+        $category1->setName('thePlatform/Ian Blaine');
+        $category1->setScheme('thePlatform');
+        $category2 = new CategoryInfo();
+        $category2->setName('Technology');
+        $category2->setScheme('urn:cat-scheme');
+        $tests['categories'] = ['categories', [
+            $category1,
+            $category2,
         ]];
 
         return $tests;

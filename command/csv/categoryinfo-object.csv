@@ -1,0 +1,4 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+name,,String,The Category object's fullTitle value
+label,,String,The Category object's label value
+scheme,,String,The Category object's scheme value
