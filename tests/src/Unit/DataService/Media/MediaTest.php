@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
+use Lullabot\Mpx\DataService\DataServiceExtractor;
+use Lullabot\Mpx\DataService\Media\AvailabilityWindow;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
@@ -21,7 +23,9 @@ class MediaTest extends ObjectTestBase
     public function setUp()
     {
         parent::setUp();
-        $this->loadFixture('media-object.json', new ReflectionExtractor());
+        $dataServiceExtractor = new DataServiceExtractor();
+        $dataServiceExtractor->setClass($this->class);
+        $this->loadFixture('media-object.json', $dataServiceExtractor);
     }
 
     /**
@@ -50,6 +54,19 @@ class MediaTest extends ObjectTestBase
         $tests['availableDate'] = ['availableDate', \DateTime::createFromFormat('U.u', '1230796800.000')];
         $tests['expirationDate'] = ['expirationDate', \DateTime::createFromFormat('U.u', '1609401600.000')];
         $tests['pubDate'] = ['pubDate', \DateTime::createFromFormat('U.u', '1256661120.000')];
+
+        $window1 = new AvailabilityWindow();
+        $window1->setTargetAvailableDate(new \DateTime('2015-05-04T07:00:00.000000+0000'));
+        $window1->setTargetExpirationDate(new \DateTime('2015-05-18T07:00:00.000000+0000'));
+        $window1->setTargetAvailabilityTags(['desktop']);
+
+        $window2 = new AvailabilityWindow();
+        $window2->setTargetAvailableDate(new \DateTime('2015-05-04T07:00:00.000000+0000'));
+        $window2->setTargetAvailabilityTags(['mobile']);
+        $tests['availabilityWindows'] = ['availabilityWindows', [
+            $window1,
+            $window2,
+        ]];
 
         return $tests;
     }

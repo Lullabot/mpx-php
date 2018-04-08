@@ -1,0 +1,4 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+targetAvailableDate,,DateTime,The DateTime when this playback availability window begins
+targetExpirationDate,,DateTime,The DateTime when this playback availability window ends
+targetAvailabilityTags,,"String(64,Unicode)[]",The playback availability tags used to identify this playback availability window
