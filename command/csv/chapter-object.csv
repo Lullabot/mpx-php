@@ -1,0 +1,5 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+endTime,,Duration,The time when this chapter ends
+startTime,,Duration,The time when this chapter starts
+thumbnailUrl,,String,A link to the thumbnail image for this chapter
+title,,String,The title of the chapter
