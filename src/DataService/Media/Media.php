@@ -56,7 +56,7 @@ class Media implements CreateKeyInterface
     /**
      * The computed availability of the media for playback.
      *
-     * @var AvailabilityState
+     * @var string
      */
     protected $availabilityState;
 
@@ -471,7 +471,7 @@ class Media implements CreateKeyInterface
     /**
      * Returns the computed availability of the media for playback.
      *
-     * @return AvailabilityState
+     * @return string
      */
     public function getAvailabilityState()
     {
@@ -481,9 +481,9 @@ class Media implements CreateKeyInterface
     /**
      * Set the computed availability of the media for playback.
      *
-     * @param AvailabilityState
+     * @param string
      */
-    public function setAvailabilityState($availabilityState)
+    public function setAvailabilityState(string $availabilityState)
     {
         $this->availabilityState = $availabilityState;
     }
