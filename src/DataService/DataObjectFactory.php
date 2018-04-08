@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
@@ -10,7 +11,10 @@ use Lullabot\Mpx\Encoder\CJsonEncoder;
 use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\PropertyInfo\PropertyInfoCacheExtractor;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -45,18 +49,31 @@ class DataObjectFactory
     protected $authenticatedClient;
 
     /**
+     * Cache to store reflection metadata from implementing clasess.
+     *
+     * @var CacheItemPoolInterface
+     */
+    protected $cacheItemPool;
+
+    /**
      * DataObjectFactory constructor.
      *
      * @todo Inject the resolveDomain() instead of constructing?
      *
      * @param DiscoveredDataService             $dataService         The service to load data from.
      * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
+     * @param CacheItemPoolInterface|null       $cacheItemPool (optional) Cache to store reflection metadata.
      */
-    public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient)
+    public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient, CacheItemPoolInterface $cacheItemPool = null)
     {
         $this->authenticatedClient = $authenticatedClient;
         $this->resolveDomain = new ResolveDomain($this->authenticatedClient);
         $this->dataService = $dataService;
+
+        if (!$cacheItemPool) {
+            $cacheItemPool = new ArrayCachePool();
+        }
+        $this->cacheItemPool = $cacheItemPool;
     }
 
     /**
@@ -90,10 +107,13 @@ class DataObjectFactory
      */
     public function deserialize(string $class, $data)
     {
+        // @todo Is this extractor required?
         $dataServiceExtractor = new DataServiceExtractor();
         $dataServiceExtractor->setClass($this->dataService->getClass());
+        $p = new PropertyInfoExtractor([], [$dataServiceExtractor], [], []);
+        $cached = new PropertyInfoCacheExtractor($p, $this->cacheItemPool);
 
-        return $this->getObjectSerializer($dataServiceExtractor)->deserialize($data, $class, 'json');
+        return $this->getObjectSerializer($cached)->deserialize($data, $class, 'json');
     }
 
     /**
@@ -203,12 +223,14 @@ class DataObjectFactory
 
     private function getEntriesSerializer()
     {
-        // We need a property extractor that understands the varying types of 'entries'.
         // @todo Should we just make multiple subclasses of ObjectList?
+        // We need a property extractor that understands the varying types of 'entries'.
         $dataServiceExtractor = new DataServiceExtractor();
         $dataServiceExtractor->setClass($this->dataService->getClass());
+        $p = new PropertyInfoExtractor([], [$dataServiceExtractor], [], []);
+        $cached = new PropertyInfoCacheExtractor($p, $this->cacheItemPool);
 
-        return $this->getObjectSerializer($dataServiceExtractor);
+        return $this->getObjectSerializer($cached);
     }
 
     /**

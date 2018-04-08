@@ -5,7 +5,6 @@ namespace Lullabot\Mpx\DataService;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlockFactoryInterface;
-use phpDocumentor\Reflection\Types\ContextFactory;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyDescriptionExtractorInterface;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
@@ -13,11 +12,9 @@ use Symfony\Component\PropertyInfo\Type;
 use Symfony\Component\PropertyInfo\Util\PhpDocTypeHelper;
 
 /**
- * Extracts data using a PHPDoc parser.
+ * Extracts data using a PHPDoc parser, using a cached context factory.
  *
- * @author Kévin Dunglas <dunglas@gmail.com>
- *
- * @final since version 3.3
+ * @see \Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor
  */
 class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, PropertyTypeExtractorInterface
 {
@@ -50,7 +47,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         }
 
         $this->docBlockFactory = $docBlockFactory ?: DocBlockFactory::createInstance();
-        $this->contextFactory = new ContextFactory();
+        $this->contextFactory = new CachingContextFactory();
         $this->phpDocTypeHelper = new PhpDocTypeHelper();
         $this->mutatorPrefixes = null !== $mutatorPrefixes ? $mutatorPrefixes : ReflectionExtractor::$defaultMutatorPrefixes;
         $this->accessorPrefixes = null !== $accessorPrefixes ? $accessorPrefixes : ReflectionExtractor::$defaultAccessorPrefixes;
