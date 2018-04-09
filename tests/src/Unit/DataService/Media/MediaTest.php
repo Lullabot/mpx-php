@@ -57,8 +57,8 @@ class MediaTest extends ObjectTestBase
     {
         $object = $this->deserialize($this->class, $field);
         $method = 'get'.ucfirst($field);
-        foreach ($object->$method() as $chapter) {
-            $this->assertInstanceOf($class, $chapter);
+        foreach ($object->$method() as $value) {
+            $this->assertInstanceOf($class, $value);
         }
     }
 
