@@ -39,8 +39,9 @@ class DataObjectFactoryTest extends TestCase
             new JsonResponse(200, [], 'resolveDomain.json'),
             function (\Psr\Http\Message\RequestInterface $request) {
                 $this->assertEquals('/media/data/Media/12345', $request->getUri()->getPath());
+
                 return new JsonResponse(200, [], 'media-object.json');
-            }
+            },
         ]);
         $user = new User('username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
@@ -55,5 +56,4 @@ class DataObjectFactoryTest extends TestCase
         $media = $factory->loadByNumericId(12345, $account)->wait();
         $this->assertInstanceOf(Media::class, $media);
     }
-
 }

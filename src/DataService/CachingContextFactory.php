@@ -45,7 +45,7 @@ final class CachingContextFactory
     /**
      * Build a Context for a namespace in the provided file contents.
      *
-     * @param string $namespace It does not matter if a `\` precedes the namespace name, this method first normalizes.
+     * @param string $namespace    It does not matter if a `\` precedes the namespace name, this method first normalizes.
      * @param string $fileContents the file's contents to retrieve the aliases from with the given namespace.
      *
      * @see Context for more information on Contexts.
@@ -75,17 +75,17 @@ final class CachingContextFactory
                         $braceLevel = 0;
                         $firstBraceFound = false;
                         while ($tokens->valid() && ($braceLevel > 0 || !$firstBraceFound)) {
-                            if ($tokens->current() === '{'
-                                || $tokens->current()[0] === T_CURLY_OPEN
-                                || $tokens->current()[0] === T_DOLLAR_OPEN_CURLY_BRACES) {
+                            if ('{' === $tokens->current()
+                                || T_CURLY_OPEN === $tokens->current()[0]
+                                || T_DOLLAR_OPEN_CURLY_BRACES === $tokens->current()[0]) {
                                 if (!$firstBraceFound) {
                                     $firstBraceFound = true;
                                 }
-                                $braceLevel++;
+                                ++$braceLevel;
                             }
 
-                            if ($tokens->current() === '}') {
-                                $braceLevel--;
+                            if ('}' === $tokens->current()) {
+                                --$braceLevel;
                             }
                             $tokens->next();
                         }
@@ -118,7 +118,7 @@ final class CachingContextFactory
         $this->skipToNextStringOrNamespaceSeparator($tokens);
 
         $name = '';
-        while ($tokens->valid() && ($tokens->current()[0] === T_STRING || $tokens->current()[0] === T_NS_SEPARATOR)
+        while ($tokens->valid() && (T_STRING === $tokens->current()[0] || T_NS_SEPARATOR === $tokens->current()[0])
         ) {
             $name .= $tokens->current()[1];
             $tokens->next();
@@ -144,7 +144,7 @@ final class CachingContextFactory
 
             list($alias, $fqnn) = $this->extractUseStatement($tokens);
             $uses[$alias] = $fqnn;
-            if ($tokens->current()[0] === self::T_LITERAL_END_OF_USE) {
+            if (self::T_LITERAL_END_OF_USE === $tokens->current()[0]) {
                 $continue = false;
             }
         }
@@ -156,12 +156,10 @@ final class CachingContextFactory
      * Fast-forwards the iterator as longs as we don't encounter a T_STRING or T_NS_SEPARATOR token.
      *
      * @param \ArrayIterator $tokens
-     *
-     * @return void
      */
     private function skipToNextStringOrNamespaceSeparator(\ArrayIterator $tokens)
     {
-        while ($tokens->valid() && ($tokens->current()[0] !== T_STRING) && ($tokens->current()[0] !== T_NS_SEPARATOR)) {
+        while ($tokens->valid() && (T_STRING !== $tokens->current()[0]) && (T_NS_SEPARATOR !== $tokens->current()[0])) {
             $tokens->next();
         }
     }
@@ -178,19 +176,19 @@ final class CachingContextFactory
     {
         $result = [''];
         while ($tokens->valid()
-            && ($tokens->current()[0] !== self::T_LITERAL_USE_SEPARATOR)
-            && ($tokens->current()[0] !== self::T_LITERAL_END_OF_USE)
+            && (self::T_LITERAL_USE_SEPARATOR !== $tokens->current()[0])
+            && (self::T_LITERAL_END_OF_USE !== $tokens->current()[0])
         ) {
-            if ($tokens->current()[0] === T_AS) {
+            if (T_AS === $tokens->current()[0]) {
                 $result[] = '';
             }
-            if ($tokens->current()[0] === T_STRING || $tokens->current()[0] === T_NS_SEPARATOR) {
+            if (T_STRING === $tokens->current()[0] || T_NS_SEPARATOR === $tokens->current()[0]) {
                 $result[count($result) - 1] .= $tokens->current()[1];
             }
             $tokens->next();
         }
 
-        if (count($result) == 1) {
+        if (1 == count($result)) {
             $backslashPos = strrpos($result[0], '\\');
 
             if (false !== $backslashPos) {

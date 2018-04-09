@@ -14,7 +14,6 @@ use Psr\Http\Message\UriInterface;
  */
 class MediaFileTest extends FunctionalTestBase
 {
-
     /**
      * Tests querying for the first two media files.
      */

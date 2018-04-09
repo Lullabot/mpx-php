@@ -62,7 +62,7 @@ class DataObjectFactory
      *
      * @param DiscoveredDataService             $dataService         The service to load data from.
      * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
-     * @param CacheItemPoolInterface|null       $cacheItemPool (optional) Cache to store reflection metadata.
+     * @param CacheItemPoolInterface|null       $cacheItemPool       (optional) Cache to store reflection metadata.
      */
     public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient, CacheItemPoolInterface $cacheItemPool = null)
     {

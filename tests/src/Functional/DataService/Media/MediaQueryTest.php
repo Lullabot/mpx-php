@@ -7,13 +7,13 @@ use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Range;
 use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Tests loading Media objects.
  */
 class MediaQueryTest extends FunctionalTestBase
 {
-
     /**
      * Test loading two media objects.
      */

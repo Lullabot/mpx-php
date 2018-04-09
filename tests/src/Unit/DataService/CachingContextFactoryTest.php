@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Lullabot\Mpx\Tests\Unit\DataService {
-
 // Added imports on purpose as mock for the unit tests, please do not remove.
     use Lullabot\Mpx\DataService\CachingContextFactory;
-    use \ReflectionClass;
+    use ReflectionClass;
     use Mockery as m;
     use phpDocumentor;
     use phpDocumentor\Reflection\DocBlock;
@@ -20,7 +21,8 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
         /**
          * @covers ::createFromReflector
          * @covers ::createForNamespace
-         * @uses phpDocumentor\Reflection\Types\Context
+         *
+         * @uses \phpDocumentor\Reflection\Types\Context
          */
         public function testReadsNamespaceFromClassReflection()
         {
@@ -33,7 +35,8 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
         /**
          * @covers ::createFromReflector
          * @covers ::createForNamespace
-         * @uses phpDocumentor\Reflection\Types\Context
+         *
+         * @uses \phpDocumentor\Reflection\Types\Context
          */
         public function testReadsAliasesFromClassReflection()
         {
@@ -56,7 +59,8 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
 
         /**
          * @covers ::createForNamespace
-         * @uses phpDocumentor\Reflection\Types\Context
+         *
+         * @uses \phpDocumentor\Reflection\Types\Context
          */
         public function testReadsNamespaceFromProvidedNamespaceAndContent()
         {
@@ -68,7 +72,8 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
 
         /**
          * @covers ::createForNamespace
-         * @uses phpDocumentor\Reflection\Types\Context
+         *
+         * @uses \phpDocumentor\Reflection\Types\Context
          */
         public function testReadsAliasesFromProvidedNamespaceAndContent()
         {
@@ -91,7 +96,8 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
 
         /**
          * @covers ::createForNamespace
-         * @uses phpDocumentor\Reflection\Types\Context
+         *
+         * @uses \phpDocumentor\Reflection\Types\Context
          */
         public function testTraitUseIsNotDetectedAsNamespaceUse()
         {
@@ -113,7 +119,8 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
 
         /**
          * @covers ::createForNamespace
-         * @uses phpDocumentor\Reflection\Types\Context
+         *
+         * @uses \phpDocumentor\Reflection\Types\Context
          */
         public function testAllOpeningBracesAreCheckedWhenSearchingForEndOfClass()
         {
@@ -188,7 +195,6 @@ PHP
 }
 
 namespace phpDocumentor\Reflection\Types\Mock {
-
     // the following import should not show in the tests above
     use phpDocumentor\Reflection\DocBlock\Description;
 

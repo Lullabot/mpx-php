@@ -4,12 +4,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\AvailabilityWindow;
-use Lullabot\Mpx\DataService\Media\CategoryInfo;
-use Lullabot\Mpx\DataService\Media\Chapter;
-use Lullabot\Mpx\DataService\Media\Credit;
 use Lullabot\Mpx\DataService\Media\Media;
-use Lullabot\Mpx\DataService\Media\MediaFile;
-use Lullabot\Mpx\DataService\Media\Rating;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
 /**
