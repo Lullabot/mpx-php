@@ -1,0 +1,4 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+rating,,String,The content's rating
+scheme,,String,The URI of a rating scheme
+subRatings,,String[],The content's subratings

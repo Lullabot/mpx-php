@@ -2,7 +2,6 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
-use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\AvailabilityWindow;
 use Lullabot\Mpx\DataService\Media\CategoryInfo;
@@ -10,9 +9,8 @@ use Lullabot\Mpx\DataService\Media\Chapter;
 use Lullabot\Mpx\DataService\Media\Credit;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\Media\MediaFile;
-use Lullabot\Mpx\DataService\Media\PreviousLocation;
+use Lullabot\Mpx\DataService\Media\Rating;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
 /**
  * Test the Media data object.
@@ -55,10 +53,11 @@ class MediaTest extends ObjectTestBase
      *
      * @dataProvider instanceOfDataProvider
      */
-    public function testInstanceOf($field, $class) {
+    public function testInstanceOf($field, $class)
+    {
         $object = $this->deserialize($this->class, $field);
         $method = 'get'.ucfirst($field);
-        foreach($object->$method() as $chapter) {
+        foreach ($object->$method() as $chapter) {
             $this->assertInstanceOf($class, $chapter);
         }
     }
@@ -66,7 +65,8 @@ class MediaTest extends ObjectTestBase
     /**
      * Return methods that we only test the instance of each subobject.
      */
-    public function instanceOfDataProvider() {
+    public function instanceOfDataProvider()
+    {
         return [
             ['availabilityWindows', AvailabilityWindow::class],
             ['chapters', Chapter::class],
@@ -74,6 +74,7 @@ class MediaTest extends ObjectTestBase
             ['content', MediaFile::class],
             ['thumbnails', MediaFile::class],
             ['credits', Credit::class],
+            ['ratings', Rating::class],
         ];
     }
 
@@ -97,6 +98,8 @@ class MediaTest extends ObjectTestBase
         unset($tests['content']);
         unset($tests['credits']);
         unset($tests['thumbnails']);
+        unset($tests['ratings']);
+
         return $tests;
     }
 }
