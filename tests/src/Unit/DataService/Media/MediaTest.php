@@ -2,10 +2,15 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\AvailabilityWindow;
 use Lullabot\Mpx\DataService\Media\CategoryInfo;
+use Lullabot\Mpx\DataService\Media\Chapter;
+use Lullabot\Mpx\DataService\Media\Credit;
 use Lullabot\Mpx\DataService\Media\Media;
+use Lullabot\Mpx\DataService\Media\MediaFile;
+use Lullabot\Mpx\DataService\Media\PreviousLocation;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
@@ -43,6 +48,36 @@ class MediaTest extends ObjectTestBase
     }
 
     /**
+     * Test methods with subobjects, where we leave testing of those objects to their own tests.
+     *
+     * @param string $field
+     * @param string $class
+     *
+     * @dataProvider instanceOfDataProvider
+     */
+    public function testInstanceOf($field, $class) {
+        $object = $this->deserialize($this->class, $field);
+        $method = 'get'.ucfirst($field);
+        foreach($object->$method() as $chapter) {
+            $this->assertInstanceOf($class, $chapter);
+        }
+    }
+
+    /**
+     * Return methods that we only test the instance of each subobject.
+     */
+    public function instanceOfDataProvider() {
+        return [
+            ['availabilityWindows', AvailabilityWindow::class],
+            ['chapters', Chapter::class],
+            ['categories', CategoryInfo::class],
+            ['content', MediaFile::class],
+            ['thumbnails', MediaFile::class],
+            ['credits', Credit::class],
+        ];
+    }
+
+    /**
      * @param string $class
      *
      * @return array
@@ -56,30 +91,12 @@ class MediaTest extends ObjectTestBase
         $tests['expirationDate'] = ['expirationDate', \DateTime::createFromFormat('U.u', '1609401600.000')];
         $tests['pubDate'] = ['pubDate', \DateTime::createFromFormat('U.u', '1256661120.000')];
 
-        $window1 = new AvailabilityWindow();
-        $window1->setTargetAvailableDate(new \DateTime('2015-05-04T07:00:00.000000+0000'));
-        $window1->setTargetExpirationDate(new \DateTime('2015-05-18T07:00:00.000000+0000'));
-        $window1->setTargetAvailabilityTags(['desktop']);
-
-        $window2 = new AvailabilityWindow();
-        $window2->setTargetAvailableDate(new \DateTime('2015-05-04T07:00:00.000000+0000'));
-        $window2->setTargetAvailabilityTags(['mobile']);
-        $tests['availabilityWindows'] = ['availabilityWindows', [
-            $window1,
-            $window2,
-        ]];
-
-        $category1 = new CategoryInfo();
-        $category1->setName('thePlatform/Ian Blaine');
-        $category1->setScheme('thePlatform');
-        $category2 = new CategoryInfo();
-        $category2->setName('Technology');
-        $category2->setScheme('urn:cat-scheme');
-        $tests['categories'] = ['categories', [
-            $category1,
-            $category2,
-        ]];
-
+        unset($tests['availabilityWindows']);
+        unset($tests['categories']);
+        unset($tests['chapters']);
+        unset($tests['content']);
+        unset($tests['credits']);
+        unset($tests['thumbnails']);
         return $tests;
     }
 }
