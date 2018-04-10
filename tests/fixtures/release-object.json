@@ -1,0 +1,21 @@
+{
+    "id": "http://data.media.theplatform.com/media/data/Release/2602609",
+    "guid": "ZYmP6QQgCLz0OpNSoiJqnmNDmU_0nTyj",
+    "description": "",
+    "added": 1299624648000,
+    "ownerId": "http://access.auth.theplatform.com/data/Account/55555",
+    "updated": 1299624648000,
+    "addedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mps/9320345",
+    "updatedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mps/9320345",
+    "version": 0,
+    "locked": false,
+    "approved": true,
+    "delivery": "streaming",
+    "mediaId": "http://data.media.theplatform.com/media/data/Media/2602559",
+    "fileId": "http://data.media.theplatform.com/media/data/MediaFile/2602603",
+    "pid": "UIYsTlf6Susa",
+    "parameters": "",
+    "url": "http://link.theplatform.com/s/MTYzMzY5NDE3/UIYsTlf6Susa",
+    "restrictionId": "",
+    "adPolicyId": ""
+}
