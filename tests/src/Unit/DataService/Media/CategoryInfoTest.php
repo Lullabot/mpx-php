@@ -39,14 +39,4 @@ class CategoryInfoTest extends ObjectTestBase
     {
         $this->assertObjectClass($this->class, $field, $expected);
     }
-
-    /**
-     * @param string $class
-     *
-     * @return array
-     */
-    public function getSetMethods()
-    {
-        return parent::getSetMethods();
-    }
 }

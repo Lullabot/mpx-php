@@ -8,7 +8,7 @@ use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
 /**
- * Test the Media data object.
+ * Test the AvailabilityWindow data object.
  *
  * @covers \Lullabot\Mpx\DataService\Media\AvailabilityWindow
  */
