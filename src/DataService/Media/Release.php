@@ -2,6 +2,13 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
+/**
+ * @\Lullabot\Mpx\DataService\Annotation\DataService(
+ *   service="Media Data Service",
+ *   schemaVersion="1.10",
+ *   objectType="Release",
+ * )
+ */
 class Release
 {
     /**
