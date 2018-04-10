@@ -4,7 +4,6 @@ namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\Rating;
-use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
 /**
@@ -40,5 +39,4 @@ class RatingTest extends ObjectTestBase
     {
         $this->assertObjectClass($this->class, $field, $expected);
     }
-
 }

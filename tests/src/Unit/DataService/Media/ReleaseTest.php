@@ -4,7 +4,6 @@ namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\Release;
-use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
 /**
@@ -12,7 +11,8 @@ use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
  *
  * @covers \Lullabot\Mpx\DataService\Media\Release
  */
-class ReleaseTest extends ObjectTestBase {
+class ReleaseTest extends ObjectTestBase
+{
     protected $class = Release::class;
 
     /**
@@ -45,6 +45,7 @@ class ReleaseTest extends ObjectTestBase {
 
         $tests['added'] = ['added', \DateTime::createFromFormat('U.u', '1299624648.000')];
         $tests['updated'] = ['updated', \DateTime::createFromFormat('U.u', '1299624648.000')];
+
         return $tests;
     }
 }
