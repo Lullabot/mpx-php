@@ -22,13 +22,6 @@ trait BaseDataTrait
     protected $addedByUserId;
 
     /**
-     * the identifier for the advertising policy for this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $adPolicyId;
-
-    /**
      * The globally unique URI of this object.
      *
      * @var \Psr\Http\Message\UriInterface

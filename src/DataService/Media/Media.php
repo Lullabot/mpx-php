@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\DataService\Media;
 
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\CreateKeyInterface;
+use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\BaseDataTrait;
 use Psr\Http\Message\UriInterface;
@@ -24,6 +25,7 @@ use Psr\Http\Message\UriInterface;
 class Media implements CreateKeyInterface
 {
     use BaseDataTrait;
+    use AdPolicyDataTrait;
 
     /**
      * The administrative workflow tags for this object.
@@ -367,26 +369,6 @@ class Media implements CreateKeyInterface
      * @var int
      */
     protected $version;
-
-    /**
-     * Returns the id of the AdPolicy associated with this content.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getAdPolicyId(): UriInterface
-    {
-        return $this->adPolicyId;
-    }
-
-    /**
-     * Set the id of the AdPolicy associated with this content.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setAdPolicyId($adPolicyId)
-    {
-        $this->adPolicyId = $adPolicyId;
-    }
 
     /**
      * Returns the administrative workflow tags for this object.
