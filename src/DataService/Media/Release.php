@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
+use Lullabot\Mpx\DataService\BaseDataTrait;
+
 /**
  * @\Lullabot\Mpx\DataService\Annotation\DataService(
  *   service="Media Data Service",
@@ -11,19 +13,7 @@ namespace Lullabot\Mpx\DataService\Media;
  */
 class Release
 {
-    /**
-     * The date and time that this object was created.
-     *
-     * @var \DateTime
-     */
-    protected $added;
-
-    /**
-     * The id of the user that created this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $addedByUserId;
+    use BaseDataTrait;
 
     /**
      * The id of the AdPolicy object this object is associated with.
@@ -89,13 +79,6 @@ class Release
     protected $mediaId;
 
     /**
-     * The id of the account that owns this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $ownerId;
-
-    /**
      * Optional release URL parameters.
      *
      * @var string
@@ -150,46 +133,6 @@ class Release
      * @var int
      */
     protected $version;
-
-    /**
-     * Returns the date and time that this object was created.
-     *
-     * @return \DateTime
-     */
-    public function getAdded(): \DateTime
-    {
-        return $this->added;
-    }
-
-    /**
-     * Set the date and time that this object was created.
-     *
-     * @param \DateTime
-     */
-    public function setAdded($added)
-    {
-        $this->added = $added;
-    }
-
-    /**
-     * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->addedByUserId;
-    }
-
-    /**
-     * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setAddedByUserId($addedByUserId)
-    {
-        $this->addedByUserId = $addedByUserId;
-    }
 
     /**
      * Returns the id of the AdPolicy object this object is associated with.
@@ -312,26 +255,6 @@ class Release
     }
 
     /**
-     * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * Returns whether this object currently allows updates.
      *
      * @return bool
@@ -369,26 +292,6 @@ class Release
     public function setMediaId($mediaId)
     {
         $this->mediaId = $mediaId;
-    }
-
-    /**
-     * Returns the id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getOwnerId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * Set the id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
     }
 
     /**

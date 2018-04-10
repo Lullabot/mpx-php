@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
+use Lullabot\Mpx\DataService\BaseDataTrait;
+
 /**
  * Implements a MediaFile object.
  *
@@ -15,19 +17,7 @@ namespace Lullabot\Mpx\DataService\Media;
  */
 class MediaFile
 {
-    /**
-     * The date and time that this object was created.
-     *
-     * @var \DateTime
-     */
-    protected $added;
-
-    /**
-     * The id of the user that created this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $addedByUserId;
+    use BaseDataTrait;
 
     /**
      * Whether playback is enabled for this file, and whether it can be associated with new Release objects.
@@ -268,13 +258,6 @@ class MediaFile
     protected $mediaId;
 
     /**
-     * The id of the account that owns this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $ownerId;
-
-    /**
      * Information about the file's location used by the FMS moveFile method.
      *
      * @var PreviousLocation[]
@@ -427,46 +410,6 @@ class MediaFile
      * @var int
      */
     protected $width;
-
-    /**
-     * Returns the date and time that this object was created.
-     *
-     * @return \DateTime
-     */
-    public function getAdded(): \DateTime
-    {
-        return $this->added;
-    }
-
-    /**
-     * Set the date and time that this object was created.
-     *
-     * @param \DateTime
-     */
-    public function setAdded($added)
-    {
-        $this->added = $added;
-    }
-
-    /**
-     * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->addedByUserId;
-    }
-
-    /**
-     * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setAddedByUserId($addedByUserId)
-    {
-        $this->addedByUserId = $addedByUserId;
-    }
 
     /**
      * Returns whether playback is enabled for this file, and whether it can be associated with new Release objects.
@@ -1009,26 +952,6 @@ class MediaFile
     }
 
     /**
-     * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * Returns whether this file is the default content or thumbnail file for the associated Media object.
      *
      * @return bool
@@ -1146,26 +1069,6 @@ class MediaFile
     public function setMediaId($mediaId)
     {
         $this->mediaId = $mediaId;
-    }
-
-    /**
-     * Returns the id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getOwnerId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * Set the id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
     }
 
     /**
