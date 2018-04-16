@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\CreateKeyInterface;
 use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\Annotation\DataService;
@@ -57,7 +58,7 @@ class Media implements CreateKeyInterface
     /**
      * The computed availability of the media for playback.
      *
-     * @var AvailabilityState
+     * @var string
      */
     protected $availabilityState;
 
@@ -155,7 +156,7 @@ class Media implements CreateKeyInterface
     /**
      * The streamingUrl of the default thumbnail for this Media.
      *
-     * @var string
+     * @var Uri
      */
     protected $defaultThumbnailUrl;
 
@@ -452,7 +453,7 @@ class Media implements CreateKeyInterface
     /**
      * Returns the computed availability of the media for playback.
      *
-     * @return AvailabilityState
+     * @return string
      */
     public function getAvailabilityState()
     {
@@ -462,9 +463,9 @@ class Media implements CreateKeyInterface
     /**
      * Set the computed availability of the media for playback.
      *
-     * @param AvailabilityState
+     * @param string
      */
-    public function setAvailabilityState($availabilityState)
+    public function setAvailabilityState(string $availabilityState)
     {
         $this->availabilityState = $availabilityState;
     }
@@ -732,9 +733,9 @@ class Media implements CreateKeyInterface
     /**
      * Returns the streamingUrl of the default thumbnail for this Media.
      *
-     * @return string
+     * @return Uri
      */
-    public function getDefaultThumbnailUrl(): string
+    public function getDefaultThumbnailUrl(): Uri
     {
         return $this->defaultThumbnailUrl;
     }
@@ -742,7 +743,7 @@ class Media implements CreateKeyInterface
     /**
      * Set the streamingUrl of the default thumbnail for this Media.
      *
-     * @param string
+     * @param Uri
      */
     public function setDefaultThumbnailUrl($defaultThumbnailUrl)
     {

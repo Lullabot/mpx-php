@@ -1,0 +1,20 @@
+{
+  "ratings": [
+      {
+          "scheme": "urn:mpaa",
+          "rating": "r",
+          "subRatings": [
+
+           ]
+      },
+      {
+          "scheme": "urn:v-chip",
+          "rating": "tv-ma",
+          "subRatings": [
+              "v",
+              "s",
+              "l"
+          ]
+      }
+  ]
+}

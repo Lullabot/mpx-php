@@ -2,7 +2,6 @@
 
 namespace Lullabot\Mpx\Command;
 
-use Lullabot\Mpx\CreateKeyInterface;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Message\UriInterface;
 use Symfony\Component\Console\Command\Command;
@@ -13,8 +12,10 @@ class CreateDataServiceClassCommand extends Command {
 
     CONST TYPE_MAP = [
         'String' => 'string',
-        'Boolean' => 'boolean',
+        'Boolean' => 'bool',
         'Long' => 'int',
+        'Integer' => 'int',
+        'Float' => 'float',
         'URI' => '\\' . UriInterface::class,
         'Map' => 'array',
         'DateTime' => '\\' . \DateTime::class,
@@ -38,8 +39,6 @@ class CreateDataServiceClassCommand extends Command {
         $parts = explode('\\', $input->getArgument('fully-qualified-class-name'));
         $namespace = new PhpNamespace(implode('\\', array_slice($parts, 0, -1)));
         $class = $namespace->addClass(end($parts));
-
-        $class->addImplement(CreateKeyInterface::class);
 
         // Loop over each row, which corresponds to each property.
         while (!feof($handle)) {

@@ -1,0 +1,4 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+role,,String,The role that is being credited
+scheme,,String,The role scheme for the credit
+value,,String,The person or entity that is being credited

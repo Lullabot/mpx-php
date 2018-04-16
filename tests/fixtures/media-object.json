@@ -345,6 +345,15 @@
   "availabilityTags": [
   ],
   "availabilityWindows": [
+    {
+      "targetAvailableDate": 1430722800000,
+      "targetExpirationDate": 1431932400000,
+      "targetAvailabilityTags": ["desktop"]
+    },
+    {
+      "targetAvailableDate": 1430722800000,
+      "targetAvailabilityTags": ["mobile"]
+    }
   ],
   "fileSourceMediaId": "http://example.com/reserved-for-future-use",
   "originalMediaIds": [

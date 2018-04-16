@@ -16,7 +16,7 @@ class ResolveDomainTest extends FunctionalTestBase
      */
     public function testResolve()
     {
-        $resolveDomain = new ResolveDomain($this->session);
+        $resolveDomain = new ResolveDomain($this->authenticatedClient);
         $resolved = $resolveDomain->resolve($this->account);
         $this->assertNotEmpty($resolved->getServices());
 

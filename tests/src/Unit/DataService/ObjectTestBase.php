@@ -82,6 +82,28 @@ abstract class ObjectTestBase extends TestCase
      */
     protected function assertObjectClass($class, string $field, $expected)
     {
+        $object = $this->deserialize($class, $field);
+
+        $method = 'get'.ucfirst($field);
+        if (!$expected) {
+            $expected = $this->decoded[$field];
+        }
+
+        if ('' === $expected) {
+            $this->assertEmpty((string) $object->$method());
+        } else {
+            $this->assertEquals($expected, $object->$method());
+        }
+    }
+
+    /**
+     * @param        $class
+     * @param string $field
+     *
+     * @return object
+     */
+    protected function deserialize($class, string $field)
+    {
         // This significantly improves test performance as we only deserialize a single field at a time.
         $filtered = [
             $field => $this->decoded[$field],
@@ -91,15 +113,6 @@ abstract class ObjectTestBase extends TestCase
 
         $object = $this->serializer->deserialize($data, $class, 'json');
 
-        $method = 'get'.ucfirst($field);
-        if (!$expected) {
-            $expected = $filtered[$field];
-        }
-
-        if ('' === $expected) {
-            $this->assertEmpty((string) $object->$method());
-        } else {
-            $this->assertEquals($expected, $object->$method());
-        }
+        return $object;
     }
 }

@@ -2,13 +2,12 @@
 
 namespace Lullabot\Mpx\DataService;
 
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Type;
 
 /**
  * A property extractor to allow for a ObjectList to have varying 'entries' data types.
  */
-class DataServiceExtractor extends ReflectionExtractor
+class DataServiceExtractor extends CachingPhpDocExtractor
 {
     /**
      * The class each entry is, such as \Lullabot\Mpx\DataService\Media\Media.

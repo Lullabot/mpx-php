@@ -1,0 +1,4 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+filePath,,String,The MediaFile filePath value at the time moveFile was called.
+serverId,,URI,The MediaFile serverId value at the time moveFile was called.
+version,,Long,The MediaFile version value at the time moveFile was called.

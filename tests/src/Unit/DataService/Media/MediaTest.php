@@ -2,9 +2,15 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
+use Lullabot\Mpx\DataService\DataServiceExtractor;
+use Lullabot\Mpx\DataService\Media\AvailabilityWindow;
+use Lullabot\Mpx\DataService\Media\CategoryInfo;
+use Lullabot\Mpx\DataService\Media\Chapter;
+use Lullabot\Mpx\DataService\Media\Credit;
 use Lullabot\Mpx\DataService\Media\Media;
+use Lullabot\Mpx\DataService\Media\MediaFile;
+use Lullabot\Mpx\DataService\Media\Rating;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
 /**
  * Test the Media data object.
@@ -21,7 +27,9 @@ class MediaTest extends ObjectTestBase
     public function setUp()
     {
         parent::setUp();
-        $this->loadFixture('media-object.json', new ReflectionExtractor());
+        $dataServiceExtractor = new DataServiceExtractor();
+        $dataServiceExtractor->setClass($this->class);
+        $this->loadFixture('media-object.json', $dataServiceExtractor);
     }
 
     /**
@@ -38,6 +46,39 @@ class MediaTest extends ObjectTestBase
     }
 
     /**
+     * Test methods with subobjects, where we leave testing of those objects to their own tests.
+     *
+     * @param string $field
+     * @param string $class
+     *
+     * @dataProvider instanceOfDataProvider
+     */
+    public function testInstanceOf($field, $class)
+    {
+        $object = $this->deserialize($this->class, $field);
+        $method = 'get'.ucfirst($field);
+        foreach ($object->$method() as $value) {
+            $this->assertInstanceOf($class, $value);
+        }
+    }
+
+    /**
+     * Return methods that we only test the instance of each subobject.
+     */
+    public function instanceOfDataProvider()
+    {
+        return [
+            ['availabilityWindows', AvailabilityWindow::class],
+            ['chapters', Chapter::class],
+            ['categories', CategoryInfo::class],
+            ['content', MediaFile::class],
+            ['thumbnails', MediaFile::class],
+            ['credits', Credit::class],
+            ['ratings', Rating::class],
+        ];
+    }
+
+    /**
      * @param string $class
      *
      * @return array
@@ -50,6 +91,14 @@ class MediaTest extends ObjectTestBase
         $tests['availableDate'] = ['availableDate', \DateTime::createFromFormat('U.u', '1230796800.000')];
         $tests['expirationDate'] = ['expirationDate', \DateTime::createFromFormat('U.u', '1609401600.000')];
         $tests['pubDate'] = ['pubDate', \DateTime::createFromFormat('U.u', '1256661120.000')];
+
+        unset($tests['availabilityWindows']);
+        unset($tests['categories']);
+        unset($tests['chapters']);
+        unset($tests['content']);
+        unset($tests['credits']);
+        unset($tests['thumbnails']);
+        unset($tests['ratings']);
 
         return $tests;
     }

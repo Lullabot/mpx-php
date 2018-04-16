@@ -2,8 +2,6 @@
 
 namespace Lullabot\Mpx\DataService;
 
-use Psr\Http\Message\UriInterface;
-
 /**
  * Trait to handle common properties to data across different services.
  */
@@ -19,21 +17,21 @@ trait BaseDataTrait
     /**
      * The id of the user that created this object.
      *
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $addedByUserId;
 
     /**
      * The globally unique URI of this object.
      *
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $id;
 
     /**
      * The id of the account that owns this object.
      *
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $ownerId;
 
@@ -60,9 +58,9 @@ trait BaseDataTrait
     /**
      * Returns The id of the user that created this object.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getAddedByUserId(): UriInterface
+    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
         return $this->addedByUserId;
     }
@@ -70,7 +68,7 @@ trait BaseDataTrait
     /**
      * Set The id of the user that created this object.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface
      */
     public function setAddedByUserId($addedByUserId)
     {
@@ -80,9 +78,9 @@ trait BaseDataTrait
     /**
      * Returns The globally unique URI of this object.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getId(): UriInterface
+    public function getId(): \Psr\Http\Message\UriInterface
     {
         return $this->id;
     }
@@ -90,7 +88,7 @@ trait BaseDataTrait
     /**
      * Set The globally unique URI of this object.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface
      */
     public function setId($id)
     {
@@ -100,9 +98,9 @@ trait BaseDataTrait
     /**
      * Returns The id of the account that owns this object.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getOwnerId(): UriInterface
+    public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
         return $this->ownerId;
     }
@@ -110,7 +108,7 @@ trait BaseDataTrait
     /**
      * Set The id of the account that owns this object.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface
      */
     public function setOwnerId($ownerId)
     {
