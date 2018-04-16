@@ -34,10 +34,14 @@ class Sort
     /**
      * Return this sort as an array suitable for a Guzzle query.
      *
-     * @return array An array with a 'sort' key.
+     * @return array An array with a 'sort' key, or an empty array if no sorts are set.
      */
     public function toQueryParts()
     {
+        if (empty($this->fields)) {
+            return [];
+        }
+
         return [
             'sort' => implode(',', $this->fields),
         ];
