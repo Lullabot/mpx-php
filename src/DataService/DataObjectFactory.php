@@ -70,6 +70,10 @@ class DataObjectFactory
      */
     public function loadByNumericId(int $id, Account $account = null, bool $readonly = false)
     {
+        if (!$account) {
+            $account = $this->authenticatedClient->getAccount();
+        }
+
         $annotation = $this->dataService->getAnnotation();
         $base = $this->getBaseUri($account, $annotation, $readonly);
 
@@ -125,12 +129,17 @@ class DataObjectFactory
      * Query for MPX data using 'byField' parameters.
      *
      * @param ByFields $byFields The fields and values to filter by. Note these are exact matches.
-     * @param Account  $account  The account context to use in the request.
+     * @param Account  $account  (optional) The account context to use in the request. Defaults to the account
+     *                           associated with the authenticated client.
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
-    public function select(ByFields $byFields, Account $account): ObjectListIterator
+    public function select(ByFields $byFields, Account $account = null): ObjectListIterator
     {
+        if (!$account) {
+            $account = $this->authenticatedClient->getAccount();
+        }
+
         return new ObjectListIterator($this->selectRequest($byFields, $account));
     }
 
@@ -182,7 +191,7 @@ class DataObjectFactory
      *
      * @return string The base URI.
      */
-    private function getBaseUri(Account $account = null, DataService $annotation, bool $readonly = false): string
+    private function getBaseUri(Account $account, DataService $annotation, bool $readonly = false): string
     {
         // Accounts are optional as you need to be able to load an account
         // before you can resolve services.
