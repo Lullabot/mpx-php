@@ -21,4 +21,13 @@ class SortTest extends TestCase
         $sort->addSort('title');
         $this->assertEquals(['sort' => 'id|desc,title'], $sort->toQueryParts());
     }
+
+    /**
+     * @covers ::toQueryParts()
+     */
+    public function testEmptySort()
+    {
+        $sort = new Sort();
+        $this->assertEquals([], $sort->toQueryParts());
+    }
 }

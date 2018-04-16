@@ -47,4 +47,15 @@ class ByFieldsTest extends TestCase
             'range' => '1-10',
         ], $parts);
     }
+
+    /**
+     * Test that a completely empty ByFields object can still be rendered to query parts.
+     *
+     * @covers ::toQueryParts()
+     */
+    public function testNoValues()
+    {
+        $byFields = new ByFields();
+        $this->assertEquals(['sort' => 'id'], $byFields->toQueryParts());
+    }
 }

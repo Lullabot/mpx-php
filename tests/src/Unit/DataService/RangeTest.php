@@ -48,6 +48,15 @@ class RangeTest extends TestCase
     }
 
     /**
+     * @covers ::toQueryParts()
+     */
+    public function testEmpty()
+    {
+        $range = new Range();
+        $this->assertEquals([], $range->toQueryParts());
+    }
+
+    /**
      * @covers ::setStartIndex
      */
     public function testBadStartIndex()
