@@ -27,6 +27,11 @@
             <directory suffix="Test.php">./tests/src/Unit</directory>
         </testsuite>
     </testsuites>
+    <testsuites>
+        <testsuite name="Functional">
+            <directory suffix="Test.php">./tests/src/Functional</directory>
+        </testsuite>
+    </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
