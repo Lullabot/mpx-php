@@ -87,7 +87,7 @@ class Chapter
     /**
      * Set a link to the thumbnail image for this chapter.
      *
-     * @param Uri
+     * @param Uri $thumbnailUrl The URL of the thumbnail.
      */
     public function setThumbnailUrl(Uri $thumbnailUrl)
     {

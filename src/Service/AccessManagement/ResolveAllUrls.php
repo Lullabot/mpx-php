@@ -58,7 +58,7 @@ class ResolveAllUrls
 
         $this->resolvedUrls = $data['resolveAllUrlsResponse'];
 
-        array_walk($this->resolvedUrls, function (&$value, $key) use ($insecure) {
+        array_walk($this->resolvedUrls, function (&$value) use ($insecure) {
             $value = new Uri($value);
             if (!$insecure) {
                 $value = $value->withScheme('https');
