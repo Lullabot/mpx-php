@@ -68,7 +68,7 @@ class DataServiceManager
      *
      * @throws \RuntimeException
      *
-     * @return object
+     * @return ObjectInterface
      */
     public function create($name)
     {

@@ -42,7 +42,7 @@ class ObjectList implements \ArrayAccess, \Iterator
     protected $entryCount;
 
     /**
-     * @var object[]
+     * @var ObjectInterface[]
      */
     protected $entries = [];
 
@@ -144,7 +144,7 @@ class ObjectList implements \ArrayAccess, \Iterator
     }
 
     /**
-     * @return object[]
+     * @return ObjectInterface[]
      */
     public function getEntries(): array
     {
@@ -152,7 +152,7 @@ class ObjectList implements \ArrayAccess, \Iterator
     }
 
     /**
-     * @param object[] $entries
+     * @param ObjectInterface[] $entries
      */
     public function setEntries(array $entries)
     {

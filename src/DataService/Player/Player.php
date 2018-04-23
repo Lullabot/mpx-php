@@ -2,22 +2,21 @@
 
 namespace Lullabot\Mpx\DataService\Player;
 
-use Lullabot\Mpx\CreateKeyInterface;
+use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\AdPolicyDataTrait;
-use Lullabot\Mpx\DataService\BaseDataTrait;
+use Lullabot\Mpx\DataService\ObjectBase;
 use Psr\Http\Message\UriInterface;
 
 /**
- * @\Lullabot\Mpx\DataService\Annotation\DataService(
+ * @DataService(
  *     service="Player Data Service",
  *     objectType="Player",
  *     schemaVersion="1.6",
  *     insecure=true,
  * )
  */
-class Player implements CreateKeyInterface
+class Player extends ObjectBase
 {
-    use BaseDataTrait;
     use AdPolicyDataTrait;
 
     /**
@@ -2286,43 +2285,5 @@ class Player implements CreateKeyInterface
     public function setWidth($width)
     {
         $this->width = $width;
-    }
-
-    /**
-     * Returns the name of the field containing the canonical identifier, such as 'id'.
-     *
-     * @return string The ID key.
-     */
-    public function getIdKey(): string
-    {
-        return 'id';
-    }
-
-    /**
-     * Returns an array of all defined compound keys.
-     *
-     * For example, a Media object would return @code [['ownerId', 'guid']] @endcode.
-     *
-     * @see https://docs.theplatform.com/help/media-media-object
-     *
-     * @return array[] An array of compound keys, each compound key as an array.
-     */
-    public function getCompoundKeys(): array
-    {
-        return [];
-    }
-
-    /**
-     * Returns an array of all custom keys.
-     *
-     * Typically, such keys are created by setting isUnique on the field.
-     *
-     * @see https://docs.theplatform.com/help/wsf-working-with-custom-fields#Workingwithcustomfields-Uniquecustomvalues
-     *
-     * @return string[] An array of custom keys.
-     */
-    public function getCustomKeys(): array
-    {
-        // TODO: Implement getCustomKeys() method.
     }
 }

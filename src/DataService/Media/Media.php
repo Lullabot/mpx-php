@@ -3,10 +3,9 @@
 namespace Lullabot\Mpx\DataService\Media;
 
 use GuzzleHttp\Psr7\Uri;
-use Lullabot\Mpx\CreateKeyInterface;
 use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\Annotation\DataService;
-use Lullabot\Mpx\DataService\BaseDataTrait;
+use Lullabot\Mpx\DataService\ObjectBase;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -22,9 +21,8 @@ use Psr\Http\Message\UriInterface;
  *   objectType="Media",
  * )
  */
-class Media implements CreateKeyInterface
+class Media extends ObjectBase
 {
-    use BaseDataTrait;
     use AdPolicyDataTrait;
 
     /**
@@ -1349,32 +1347,5 @@ class Media implements CreateKeyInterface
     public function setVersion($version)
     {
         $this->version = $version;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getIdKey(): string
-    {
-        return 'id';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCompoundKeys(): array
-    {
-        return [
-            ['ownerId', 'guid'],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCustomKeys(): array
-    {
-        // @todo Implement getCustomKeys() method.
-        return [];
     }
 }

@@ -3,9 +3,9 @@
 namespace Lullabot\Mpx\DataService;
 
 /**
- * Trait to handle common properties to data across different services.
+ * Base class for common data used by all mpx objects.
  */
-trait BaseDataTrait
+abstract class ObjectBase implements ObjectInterface
 {
     /**
      * The date and time that this object was created.
