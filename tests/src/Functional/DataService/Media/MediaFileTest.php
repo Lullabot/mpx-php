@@ -31,7 +31,7 @@ class MediaFileTest extends FunctionalTestBase
 
         foreach ($results as $index => $result) {
             $this->assertInstanceOf(UriInterface::class, $result->getId());
-            if ($index > 2) {
+            if ($index + 1 > 2) {
                 break;
             }
         }

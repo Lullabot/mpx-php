@@ -34,7 +34,7 @@ class PlayerQueryTest extends FunctionalTestBase
             // Loading the object by itself.
             $reload = $dof->load($result->getId());
             $this->assertEquals($result, $reload->wait());
-            if ($index > 2) {
+            if ($index + 1 > 2) {
                 break;
             }
         }
