@@ -36,9 +36,7 @@ abstract class ObjectBase implements ObjectInterface
     protected $ownerId;
 
     /**
-     * Returns The date and time that this object was created.
-     *
-     * @return \DateTime
+     * {@inheritdoc}
      */
     public function getAdded(): \DateTime
     {
@@ -46,9 +44,7 @@ abstract class ObjectBase implements ObjectInterface
     }
 
     /**
-     * Set The date and time that this object was created.
-     *
-     * @param \DateTime
+     * {@inheritdoc}
      */
     public function setAdded($added)
     {
@@ -56,9 +52,7 @@ abstract class ObjectBase implements ObjectInterface
     }
 
     /**
-     * Returns The id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -66,9 +60,7 @@ abstract class ObjectBase implements ObjectInterface
     }
 
     /**
-     * Set The id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function setAddedByUserId($addedByUserId)
     {
@@ -76,9 +68,7 @@ abstract class ObjectBase implements ObjectInterface
     }
 
     /**
-     * Returns The globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function getId(): \Psr\Http\Message\UriInterface
     {
@@ -86,9 +76,7 @@ abstract class ObjectBase implements ObjectInterface
     }
 
     /**
-     * Set The globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function setId($id)
     {
@@ -96,9 +84,7 @@ abstract class ObjectBase implements ObjectInterface
     }
 
     /**
-     * Returns The id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
@@ -106,9 +92,7 @@ abstract class ObjectBase implements ObjectInterface
     }
 
     /**
-     * Set The id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function setOwnerId($ownerId)
     {
