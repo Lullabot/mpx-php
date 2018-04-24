@@ -4,11 +4,12 @@ namespace Lullabot\Mpx\DataService\Player;
 
 use Lullabot\Mpx\CreateKeyInterface;
 use Lullabot\Mpx\DataService\AdPolicyDataTrait;
+use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\BaseDataTrait;
 use Psr\Http\Message\UriInterface;
 
 /**
- * @\Lullabot\Mpx\DataService\Annotation\DataService(
+ * @DataService(
  *     service="Player Data Service",
  *     objectType="Player",
  *     schemaVersion="1.6",
