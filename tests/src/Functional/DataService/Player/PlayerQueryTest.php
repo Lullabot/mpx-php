@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\Tests\Functional\DataService\Media;
+namespace Lullabot\Mpx\Tests\Functional\DataService\Player;
 
 use Lullabot\Mpx\DataService\ByFields;
 use Lullabot\Mpx\DataService\DataObjectFactory;
@@ -10,18 +10,17 @@ use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
 use Psr\Http\Message\UriInterface;
 
 /**
- * Tests loading of media files.
+ * Tests loading Player objects.
  */
-class MediaFileTest extends FunctionalTestBase
+class PlayerQueryTest extends FunctionalTestBase
 {
     /**
-     * Tests querying for the first two media files.
+     * Test loading two player objects.
      */
-    public function testQueryMediaFile()
+    public function testQueryPlayer()
     {
         $manager = DataServiceManager::basicDiscovery();
-        $service = $manager->getDataService('Media Data Service', 'MediaFile', '1.10');
-        $dof = new DataObjectFactory($service, $this->authenticatedClient);
+        $dof = new DataObjectFactory($manager->getDataService('Player Data Service', 'Player', '1.6'), $this->authenticatedClient);
         $filter = new ByFields();
         $range = new Range();
         $range->setStartIndex(1)
@@ -31,6 +30,10 @@ class MediaFileTest extends FunctionalTestBase
 
         foreach ($results as $index => $result) {
             $this->assertInstanceOf(UriInterface::class, $result->getId());
+
+            // Loading the object by itself.
+            $reload = $dof->load($result->getId());
+            $this->assertEquals($result, $reload->wait());
             if ($index + 1 > 2) {
                 break;
             }
