@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Psr\Http\Message\UriInterface;
+
 /**
  * Base class for common data used by all mpx objects.
  */
@@ -78,7 +80,7 @@ abstract class ObjectBase implements ObjectInterface
     /**
      * {@inheritdoc}
      */
-    public function setId($id)
+    public function setId(UriInterface $id)
     {
         $this->id = $id;
     }

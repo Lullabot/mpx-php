@@ -4,6 +4,8 @@ namespace Lullabot\Mpx\DataService\Access;
 
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\DataService\ObjectBase;
+use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -14,22 +16,8 @@ use Psr\Http\Message\UriInterface;
  *   objectType="Account"
  * )
  */
-class Account
+class Account extends ObjectBase implements PublicIdentifierInterface
 {
-    /**
-     * The date and time that this object was created.
-     *
-     * @var \DateTime
-     */
-    protected $added;
-
-    /**
-     * The id of the user that created this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $addedByUserId;
-
     /**
      * The description of this object.
      *
@@ -66,25 +54,11 @@ class Account
     protected $guid;
 
     /**
-     * The globally unique URI of this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $id;
-
-    /**
      * Whether this object currently allows updates.
      *
      * @var bool
      */
     protected $locked;
-
-    /**
-     * The id of the account that owns this account.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $ownerId;
 
     /**
      * A public identifier for the account.
@@ -131,46 +105,6 @@ class Account
     protected $version;
 
     /**
-     * Returns the date and time that this object was created.
-     *
-     * @return \DateTime
-     */
-    public function getAdded(): \DateTime
-    {
-        return $this->added;
-    }
-
-    /**
-     * Set the date and time that this object was created.
-     *
-     * @param \DateTime
-     */
-    public function setAdded($added)
-    {
-        $this->added = $added;
-    }
-
-    /**
-     * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getAddedByUserId(): UriInterface
-    {
-        return $this->addedByUserId;
-    }
-
-    /**
-     * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setAddedByUserId($addedByUserId)
-    {
-        $this->addedByUserId = $addedByUserId;
-    }
-
-    /**
      * Returns the description of this object.
      *
      * @return string
@@ -191,7 +125,7 @@ class Account
     }
 
     /**
-     * Returns Whether this account is disabled.
+     * Returns whether this account is disabled.
      *
      * @return bool
      */
@@ -201,7 +135,7 @@ class Account
     }
 
     /**
-     * Set Whether this account is disabled.
+     * Set whether this account is disabled.
      *
      * @param bool
      */
@@ -271,29 +205,6 @@ class Account
     }
 
     /**
-     * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getId(): UriInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface|string
-     */
-    public function setId($id)
-    {
-        if (is_string($id)) {
-            $id = new Uri($id);
-        }
-        $this->id = $id;
-    }
-
-    /**
      * Returns Whether this object currently allows updates.
      *
      * @return bool
@@ -311,26 +222,6 @@ class Account
     public function setLocked($locked)
     {
         $this->locked = $locked;
-    }
-
-    /**
-     * Returns the id of the account that owns this account.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getOwnerId(): UriInterface
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * Set the id of the account that owns this account.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
     }
 
     /**
