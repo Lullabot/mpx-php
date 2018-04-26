@@ -1,0 +1,14 @@
+{
+  "totalResults" : 1,
+  "entries" : [
+    {
+      "ownerId" : "urn:theplatform:auth:root",
+      "title" : "customer root account",
+      "id" : "http://access.auth.theplatform.com/data/Account/55555"
+    }
+  ],
+  "startIndex" : 1,
+  "entryCount" : 1,
+  "itemsPerPage" : 1
+}
+
