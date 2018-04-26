@@ -14,10 +14,4 @@ interface PublicIdentifierInterface
      */
     public function getPid(): string;
 
-    /**
-     * Set the public identifier for this mpx object.
-     *
-     * @param string
-     */
-    public function setPid($pid);
 }
