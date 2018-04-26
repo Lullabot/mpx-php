@@ -25,12 +25,12 @@ class Notification
     protected $type;
 
     /**
-     * @var object
+     * @var ObjectInterface
      */
     protected $entry;
 
     /**
-     * @return object
+     * @return ObjectInterface
      */
     public function getEntry()
     {
@@ -38,7 +38,7 @@ class Notification
     }
 
     /**
-     * @param object $entry
+     * @param ObjectInterface $entry
      */
     public function setEntry($entry)
     {

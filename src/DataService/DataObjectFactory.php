@@ -107,7 +107,7 @@ class DataObjectFactory
      * @param string $class The full class name to create.
      * @param string $data  The JSON string to deserialize.
      *
-     * @return object
+     * @return ObjectInterface
      */
     public function deserialize(string $class, $data)
     {

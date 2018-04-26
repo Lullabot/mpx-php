@@ -2,23 +2,22 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
-use Lullabot\Mpx\DataService\BaseDataTrait;
+use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\DataService\ObjectBase;
 
 /**
  * Implements a MediaFile object.
  *
  * @see https://docs.theplatform.com/help/media-mediafile-object
  *
- * @\Lullabot\Mpx\DataService\Annotation\DataService(
+ * @DataService(
  *     service="Media Data Service",
  *     objectType="MediaFile",
  *     schemaVersion="1.10"
  * )
  */
-class MediaFile
+class MediaFile extends ObjectBase
 {
-    use BaseDataTrait;
-
     /**
      * Whether playback is enabled for this file, and whether it can be associated with new Release objects.
      *

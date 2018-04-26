@@ -2,19 +2,18 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
-use Lullabot\Mpx\DataService\BaseDataTrait;
+use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\DataService\ObjectBase;
 
 /**
- * @\Lullabot\Mpx\DataService\Annotation\DataService(
+ * @DataService(
  *   service="Media Data Service",
  *   schemaVersion="1.10",
  *   objectType="Release",
  * )
  */
-class Release
+class Release extends ObjectBase
 {
-    use BaseDataTrait;
-
     /**
      * The id of the AdPolicy object this object is associated with.
      *

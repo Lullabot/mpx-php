@@ -3,9 +3,9 @@
 namespace Lullabot\Mpx\DataService;
 
 /**
- * Trait to handle common properties to data across different services.
+ * Base class for common data used by all mpx objects.
  */
-trait BaseDataTrait
+abstract class ObjectBase implements ObjectInterface
 {
     /**
      * The date and time that this object was created.
@@ -36,9 +36,7 @@ trait BaseDataTrait
     protected $ownerId;
 
     /**
-     * Returns The date and time that this object was created.
-     *
-     * @return \DateTime
+     * {@inheritdoc}
      */
     public function getAdded(): \DateTime
     {
@@ -46,9 +44,7 @@ trait BaseDataTrait
     }
 
     /**
-     * Set The date and time that this object was created.
-     *
-     * @param \DateTime
+     * {@inheritdoc}
      */
     public function setAdded($added)
     {
@@ -56,9 +52,7 @@ trait BaseDataTrait
     }
 
     /**
-     * Returns The id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -66,9 +60,7 @@ trait BaseDataTrait
     }
 
     /**
-     * Set The id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function setAddedByUserId($addedByUserId)
     {
@@ -76,9 +68,7 @@ trait BaseDataTrait
     }
 
     /**
-     * Returns The globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function getId(): \Psr\Http\Message\UriInterface
     {
@@ -86,9 +76,7 @@ trait BaseDataTrait
     }
 
     /**
-     * Set The globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function setId($id)
     {
@@ -96,9 +84,7 @@ trait BaseDataTrait
     }
 
     /**
-     * Returns The id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
@@ -106,9 +92,7 @@ trait BaseDataTrait
     }
 
     /**
-     * Set The id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
+     * {@inheritdoc}
      */
     public function setOwnerId($ownerId)
     {
