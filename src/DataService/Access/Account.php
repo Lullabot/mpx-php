@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\DataService\Access;
 
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\DataService\IdInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -14,7 +15,7 @@ use Psr\Http\Message\UriInterface;
  *   objectType="Account"
  * )
  */
-class Account
+class Account implements IdInterface
 {
     /**
      * The date and time that this object was created.

@@ -50,7 +50,7 @@ class DataObjectFactory
     protected $authenticatedClient;
 
     /**
-     * Cache to store reflection metadata from implementing clasess.
+     * Cache to store reflection metadata from implementing classes.
      *
      * @var CacheItemPoolInterface
      */
@@ -81,12 +81,12 @@ class DataObjectFactory
      * Load a data object from MPX, returning a promise to it.
      *
      * @param int             $id       The numeric ID to load.
-     * @param ObjectInterface $account
+     * @param IdInterface $account
      * @param bool            $readonly (optional) Load from the read-only service.
      *
      * @return PromiseInterface
      */
-    public function loadByNumericId(int $id, ObjectInterface $account = null, bool $readonly = false)
+    public function loadByNumericId(int $id, IdInterface $account = null, bool $readonly = false)
     {
         $annotation = $this->dataService->getAnnotation();
         $base = $this->getBaseUri($annotation, $account, $readonly);
@@ -104,7 +104,7 @@ class DataObjectFactory
      * @param string $class The full class name to create.
      * @param string $data  The JSON string to deserialize.
      *
-     * @return ObjectInterface
+     * @return IdInterface
      */
     public function deserialize(string $class, $data)
     {
@@ -162,12 +162,12 @@ class DataObjectFactory
      * @see \Lullabot\Mpx\DataService\DataObjectFactory::select
      *
      * @param ByFields        $byFields The fields and values to filter by. Note these are exact matches.
-     * @param ObjectInterface $account  (optional) The account context to use in the request. Note that most requests require
+     * @param IdInterface $account  (optional) The account context to use in the request. Note that most requests require
      *                                  an account context.
      *
      * @return PromiseInterface A promise to return an ObjectList.
      */
-    public function selectRequest(ByFields $byFields, ObjectInterface $account = null): PromiseInterface
+    public function selectRequest(ByFields $byFields, IdInterface $account = null): PromiseInterface
     {
         $annotation = $this->dataService->getAnnotation();
         $options = [
@@ -202,12 +202,12 @@ class DataObjectFactory
      * @todo This should cache resolved URLs.
      *
      * @param DataService     $annotation The annotation data is being loaded for.
-     * @param ObjectInterface $account    (optional) The account to use for service resolution.
+     * @param IdInterface $account    (optional) The account to use for service resolution.
      * @param bool            $readonly   (optional) Load from the read-only service.
      *
      * @return string The base URI.
      */
-    private function getBaseUri(DataService $annotation, ObjectInterface $account = null, bool $readonly = false): string
+    private function getBaseUri(DataService $annotation, IdInterface $account = null, bool $readonly = false): string
     {
         // Accounts are optional as you need to be able to load an account
         // before you can resolve services.

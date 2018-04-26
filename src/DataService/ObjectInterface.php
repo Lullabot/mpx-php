@@ -5,7 +5,7 @@ namespace Lullabot\Mpx\DataService;
 /**
  * Defines an interface object properties common to all mpx objects.
  */
-interface ObjectInterface
+interface ObjectInterface extends IdInterface
 {
     /**
      * Returns the date and time that this object was created.
@@ -34,20 +34,6 @@ interface ObjectInterface
      * @param \Psr\Http\Message\UriInterface
      */
     public function setAddedByUserId($addedByUserId);
-
-    /**
-     * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getId(): \Psr\Http\Message\UriInterface;
-
-    /**
-     * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setId($id);
 
     /**
      * Returns the id of the account that owns this object.
