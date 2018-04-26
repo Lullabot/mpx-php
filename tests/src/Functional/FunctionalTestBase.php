@@ -5,6 +5,7 @@ namespace Lullabot\Mpx\Tests\Functional;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Concat\Http\Middleware\Logger;
 use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
@@ -51,9 +52,9 @@ abstract class FunctionalTestBase extends TestCase
 
         $username = getenv('MPX_USERNAME');
         $password = getenv('MPX_PASSWORD');
-        $account = getenv('MPX_ACCOUNT');
+        $account_id = getenv('MPX_ACCOUNT');
 
-        if (empty($username) || empty($password) || empty($account)) {
+        if (empty($username) || empty($password) || empty($account_id)) {
             $this->markTestSkipped(
                 'MPX_USER, MPX_PASSWORD, and MPX_ACCOUNT must be defined as environment variables or in phpunit.xml for functional tests.'
             );
@@ -90,6 +91,6 @@ abstract class FunctionalTestBase extends TestCase
         );
 
         $this->account = new Account();
-        $this->account->setId($account);
+        $this->account->setId(new Uri($account_id));
     }
 }
