@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\DataService\Media;
 
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
+use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 
 /**
  * Implements a MediaFile object.

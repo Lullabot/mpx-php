@@ -5,6 +5,7 @@ namespace Lullabot\Mpx\DataService\Player;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\ObjectBase;
+use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -15,7 +16,7 @@ use Psr\Http\Message\UriInterface;
  *     insecure=true,
  * )
  */
-class Player extends ObjectBase
+class Player extends ObjectBase implements PublicIdentifierInterface
 {
     use AdPolicyDataTrait;
 

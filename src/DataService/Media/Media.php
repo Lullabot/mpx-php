@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
+use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -21,7 +22,7 @@ use Psr\Http\Message\UriInterface;
  *   objectType="Media",
  * )
  */
-class Media extends ObjectBase
+class Media extends ObjectBase implements PublicIdentifierInterface
 {
     use AdPolicyDataTrait;
 

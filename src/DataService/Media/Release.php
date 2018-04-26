@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\DataService\Media;
 
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
+use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 
 /**
  * @DataService(
@@ -12,7 +13,7 @@ use Lullabot\Mpx\DataService\ObjectBase;
  *   objectType="Release",
  * )
  */
-class Release extends ObjectBase
+class Release extends ObjectBase implements PublicIdentifierInterface
 {
     /**
      * The id of the AdPolicy object this object is associated with.
