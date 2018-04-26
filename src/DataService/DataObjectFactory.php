@@ -88,10 +88,6 @@ class DataObjectFactory
      */
     public function loadByNumericId(int $id, Account $account = null, bool $readonly = false)
     {
-        if (!$account) {
-            $account = $this->authenticatedClient->getAccount();
-        }
-
         $annotation = $this->dataService->getAnnotation();
         $base = $this->getBaseUri($annotation, $account, $readonly);
 
