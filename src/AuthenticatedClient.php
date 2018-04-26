@@ -5,7 +5,6 @@ namespace Lullabot\Mpx;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
-use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Http\Message\RequestInterface;
@@ -79,21 +78,6 @@ class AuthenticatedClient implements ClientInterface
     public function getConfig($option = null)
     {
         return $this->client->getConfig($option);
-    }
-
-    /**
-     * Return the mpx Account associated with this authenticated client.
-     *
-     * Normally this is the root mpx account. The account object is not completely loaded, and only contains an id.
-     *
-     * @return Account An mpx Account.
-     */
-    public function getAccount(): Account
-    {
-        $account = new Account();
-        $account->setId($this->user->acquireToken()->getUserId());
-
-        return $account;
     }
 
     /**
