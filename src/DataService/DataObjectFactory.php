@@ -79,9 +79,9 @@ class DataObjectFactory
     /**
      * Load a data object from MPX, returning a promise to it.
      *
-     * @param int             $id       The numeric ID to load.
+     * @param int         $id       The numeric ID to load.
      * @param IdInterface $account
-     * @param bool            $readonly (optional) Load from the read-only service.
+     * @param bool        $readonly (optional) Load from the read-only service.
      *
      * @return PromiseInterface
      */
@@ -144,9 +144,9 @@ class DataObjectFactory
     /**
      * Query for MPX data using 'byField' parameters.
      *
-     * @param ByFields $byFields The fields and values to filter by. Note these are exact matches.
-     * @param IdInterface  $account  (optional) The account context to use in the request. Defaults to the account
-     *                           associated with the authenticated client.
+     * @param ByFields    $byFields The fields and values to filter by. Note these are exact matches.
+     * @param IdInterface $account  (optional) The account context to use in the request. Defaults to the account
+     *                              associated with the authenticated client.
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
@@ -160,9 +160,9 @@ class DataObjectFactory
      *
      * @see \Lullabot\Mpx\DataService\DataObjectFactory::select
      *
-     * @param ByFields        $byFields The fields and values to filter by. Note these are exact matches.
+     * @param ByFields    $byFields The fields and values to filter by. Note these are exact matches.
      * @param IdInterface $account  (optional) The account context to use in the request. Note that most requests require
-     *                                  an account context.
+     *                              an account context.
      *
      * @return PromiseInterface A promise to return an ObjectList.
      */
@@ -200,9 +200,9 @@ class DataObjectFactory
      *
      * @todo This should cache resolved URLs.
      *
-     * @param DataService     $annotation The annotation data is being loaded for.
+     * @param DataService $annotation The annotation data is being loaded for.
      * @param IdInterface $account    (optional) The account to use for service resolution.
-     * @param bool            $readonly   (optional) Load from the read-only service.
+     * @param bool        $readonly   (optional) Load from the read-only service.
      *
      * @return string The base URI.
      */
