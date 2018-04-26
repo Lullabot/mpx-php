@@ -284,13 +284,10 @@ class Account implements IdInterface
     /**
      * Set the globally unique URI of this object.
      *
-     * @param \Psr\Http\Message\UriInterface|string
+     * @param \Psr\Http\Message\UriInterface
      */
-    public function setId($id)
+    public function setId(UriInterface $id)
     {
-        if (is_string($id)) {
-            $id = new Uri($id);
-        }
         $this->id = $id;
     }
 
