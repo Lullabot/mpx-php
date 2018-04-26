@@ -2,7 +2,6 @@
 
 namespace Lullabot\Mpx\DataService\Access;
 
-use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;

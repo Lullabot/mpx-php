@@ -13,5 +13,4 @@ interface PublicIdentifierInterface
      * @return string
      */
     public function getPid(): string;
-
 }

@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
  */
 class UrlTest extends TestCase
 {
-
     /**
      * Tests generating a URI object.
      *
@@ -28,13 +27,13 @@ class UrlTest extends TestCase
     public function testToUri()
     {
         $account = new Account();
-        $account->setPid("account-pid");
+        $account->setPid('account-pid');
 
         $player = new Player();
-        $player->setPid("player-pid");
+        $player->setPid('player-pid');
 
         $media = new Media();
-        $media->setPid("media-pid");
+        $media->setPid('media-pid');
         $player_url = new Url($account, $player, $media);
 
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media-pid', (string) $player_url->toUri());
