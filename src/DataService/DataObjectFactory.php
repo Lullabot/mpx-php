@@ -5,7 +5,6 @@ namespace Lullabot\Mpx\DataService;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\AuthenticatedClient;
-use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\Encoder\CJsonEncoder;
 use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
@@ -146,12 +145,12 @@ class DataObjectFactory
      * Query for MPX data using 'byField' parameters.
      *
      * @param ByFields $byFields The fields and values to filter by. Note these are exact matches.
-     * @param Account  $account  (optional) The account context to use in the request. Defaults to the account
+     * @param IdInterface  $account  (optional) The account context to use in the request. Defaults to the account
      *                           associated with the authenticated client.
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
-    public function select(ByFields $byFields, Account $account = null): ObjectListIterator
+    public function select(ByFields $byFields, IdInterface $account = null): ObjectListIterator
     {
         return new ObjectListIterator($this->selectRequest($byFields, $account));
     }
