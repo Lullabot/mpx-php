@@ -204,9 +204,9 @@ class ObjectList implements \ArrayAccess, \Iterator
      * Set the objects needed to generate a next request.
      *
      * @param DataObjectFactory $dataObjectFactory The factory used to load the next ObjectList.
-     * @param Account           $account           (optional) The account context to use for the request.
+     * @param IdInterface       $account           (optional) The account context to use for the request.
      */
-    public function setDataObjectFactory(DataObjectFactory $dataObjectFactory, Account $account = null)
+    public function setDataObjectFactory(DataObjectFactory $dataObjectFactory, IdInterface $account = null)
     {
         $this->dataObjectFactory = $dataObjectFactory;
         $this->account = $account;
