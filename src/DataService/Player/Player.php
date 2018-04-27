@@ -12,7 +12,6 @@ use Psr\Http\Message\UriInterface;
  *     service="Player Data Service",
  *     objectType="Player",
  *     schemaVersion="1.6",
- *     insecure=true,
  * )
  */
 class Player extends ObjectBase
