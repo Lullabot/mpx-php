@@ -7,6 +7,7 @@ use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\DataService\PublicIdentifierTrait;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -25,6 +26,7 @@ use Psr\Http\Message\UriInterface;
 class Media extends ObjectBase implements PublicIdentifierInterface
 {
     use AdPolicyDataTrait;
+    use PublicIdentifierTrait;
 
     /**
      * The administrative workflow tags for this object.
@@ -249,13 +251,6 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      * @var \Psr\Http\Message\UriInterface[]
      */
     protected $originalOwnerIds;
-
-    /**
-     * The globally unique public identifier for this media.
-     *
-     * @var string
-     */
-    protected $pid;
 
     /**
      * The ID of the Program that represents this media. The GUID URI is recommended.
@@ -1007,26 +1002,6 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     public function setOriginalOwnerIds($originalOwnerIds)
     {
         $this->originalOwnerIds = $originalOwnerIds;
-    }
-
-    /**
-     * Returns the globally unique public identifier for this media.
-     *
-     * @return string
-     */
-    public function getPid(): string
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Set the globally unique public identifier for this media.
-     *
-     * @param string
-     */
-    public function setPid($pid)
-    {
-        $this->pid = $pid;
     }
 
     /**

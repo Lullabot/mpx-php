@@ -2,9 +2,11 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
+use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\DataService\PublicIdentifierTrait;
 
 /**
  * @DataService(
@@ -15,12 +17,8 @@ use Lullabot\Mpx\DataService\PublicIdentifierInterface;
  */
 class Release extends ObjectBase implements PublicIdentifierInterface
 {
-    /**
-     * The id of the AdPolicy object this object is associated with.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $adPolicyId;
+    use AdPolicyDataTrait;
+    use PublicIdentifierTrait;
 
     /**
      * Whether this object is approved; if false this object is not visible in feeds.
@@ -84,13 +82,6 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      * @var string
      */
     protected $parameters;
-
-    /**
-     * The globally unique public identifier for this object.
-     *
-     * @var string
-     */
-    protected $pid;
 
     /**
      * The id of the Restriction object this object is associated with.
@@ -312,26 +303,6 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     public function setParameters($parameters)
     {
         $this->parameters = $parameters;
-    }
-
-    /**
-     * Returns the globally unique public identifier for this object.
-     *
-     * @return string
-     */
-    public function getPid(): string
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Set the globally unique public identifier for this object.
-     *
-     * @param string
-     */
-    public function setPid($pid)
-    {
-        $this->pid = $pid;
     }
 
     /**

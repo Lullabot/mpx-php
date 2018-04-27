@@ -5,6 +5,7 @@ namespace Lullabot\Mpx\DataService\Access;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\DataService\PublicIdentifierTrait;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -17,6 +18,8 @@ use Psr\Http\Message\UriInterface;
  */
 class Account extends ObjectBase implements PublicIdentifierInterface
 {
+    use PublicIdentifierTrait;
+
     /**
      * The description of this object.
      *
@@ -58,13 +61,6 @@ class Account extends ObjectBase implements PublicIdentifierInterface
      * @var bool
      */
     protected $locked;
-
-    /**
-     * A public identifier for the account.
-     *
-     * @var string
-     */
-    protected $pid;
 
     /**
      * The account's region.
@@ -221,32 +217,6 @@ class Account extends ObjectBase implements PublicIdentifierInterface
     public function setLocked($locked)
     {
         $this->locked = $locked;
-    }
-
-    /**
-     * Returns A public identifier for the account.
-     *
-     * @return string
-     */
-    public function getPid(): string
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Set A public identifier for the account.
-     *
-     * @param string
-     */
-    public function setPid($pid)
-    {
-        if (strlen($pid) > 64) {
-            throw new \InvalidArgumentException('Public Identifiers must not be longer than 64 characters.');
-        }
-        if ('ASCII' != mb_check_encoding($pid)) {
-            throw new \InvalidArgumentException('Public Identifiers must be ASCII encoded strings.');
-        }
-        $this->pid = $pid;
     }
 
     /**
