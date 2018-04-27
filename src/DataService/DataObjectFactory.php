@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\DataService;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\Annotation\DataService;
@@ -13,6 +14,7 @@ use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use Symfony\Component\PropertyInfo\PropertyInfoCacheExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
@@ -94,7 +96,7 @@ class DataObjectFactory
         $annotation = $this->dataService->getAnnotation();
         $base = $this->getBaseUri($account, $annotation, $readonly);
 
-        $uri = $base.'/'.$id;
+        $uri = new Uri($base.'/'.$id);
 
         return $this->load($uri);
     }
@@ -121,11 +123,14 @@ class DataObjectFactory
     }
 
     /**
-     * @param $uri
+     * Load an object from mpx.
      *
-     * @return PromiseInterface
+     * @param \Psr\Http\Message\UriInterface $uri The URI to load from. This URI will always be converted to https,
+     *                                            making it safe to use directly from the ID of an mpx object.
+     *
+     * @return PromiseInterface A promise to return a \Lullabot\Mpx\DataService\ObjectInterface.
      */
-    public function load($uri): PromiseInterface
+    public function load(UriInterface $uri): PromiseInterface
     {
         /** @var DataService $annotation */
         $annotation = $this->dataService->getAnnotation();
@@ -135,6 +140,10 @@ class DataObjectFactory
                 'form' => 'cjson',
             ],
         ];
+
+        if ('http' == $uri->getScheme()) {
+            $uri = $uri->withScheme('https');
+        }
 
         $response = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) {
@@ -219,12 +228,7 @@ class DataObjectFactory
         if (!($base = $annotation->getBaseUri())) {
             $resolved = $this->resolveDomain->resolve($account);
 
-            // Only respect the insecure flag for read-write data services.
-            // All read-only data services are supposed to be available over
-            // HTTPS.
-            $insecure = $annotation->insecure && !$readonly;
-
-            $base = $resolved->getUrl($annotation->getService($readonly), $insecure).$annotation->getPath();
+            $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getPath();
         }
 
         return $base;
