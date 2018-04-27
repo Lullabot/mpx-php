@@ -2,8 +2,10 @@
 
 namespace Lullabot\Mpx\DataService\Access;
 
-use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\DataService\ObjectBase;
+use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\DataService\PublicIdentifierTrait;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -14,21 +16,9 @@ use Psr\Http\Message\UriInterface;
  *   objectType="Account"
  * )
  */
-class Account
+class Account extends ObjectBase implements PublicIdentifierInterface
 {
-    /**
-     * The date and time that this object was created.
-     *
-     * @var \DateTime
-     */
-    protected $added;
-
-    /**
-     * The id of the user that created this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $addedByUserId;
+    use PublicIdentifierTrait;
 
     /**
      * The description of this object.
@@ -66,32 +56,11 @@ class Account
     protected $guid;
 
     /**
-     * The globally unique URI of this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $id;
-
-    /**
      * Whether this object currently allows updates.
      *
      * @var bool
      */
     protected $locked;
-
-    /**
-     * The id of the account that owns this account.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $ownerId;
-
-    /**
-     * A public identifier for the account.
-     *
-     * @var string
-     */
-    protected $pid;
 
     /**
      * The account's region.
@@ -131,46 +100,6 @@ class Account
     protected $version;
 
     /**
-     * Returns the date and time that this object was created.
-     *
-     * @return \DateTime
-     */
-    public function getAdded(): \DateTime
-    {
-        return $this->added;
-    }
-
-    /**
-     * Set the date and time that this object was created.
-     *
-     * @param \DateTime
-     */
-    public function setAdded($added)
-    {
-        $this->added = $added;
-    }
-
-    /**
-     * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getAddedByUserId(): UriInterface
-    {
-        return $this->addedByUserId;
-    }
-
-    /**
-     * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setAddedByUserId($addedByUserId)
-    {
-        $this->addedByUserId = $addedByUserId;
-    }
-
-    /**
      * Returns the description of this object.
      *
      * @return string
@@ -191,7 +120,7 @@ class Account
     }
 
     /**
-     * Returns Whether this account is disabled.
+     * Returns whether this account is disabled.
      *
      * @return bool
      */
@@ -201,7 +130,7 @@ class Account
     }
 
     /**
-     * Set Whether this account is disabled.
+     * Set whether this account is disabled.
      *
      * @param bool
      */
@@ -271,29 +200,6 @@ class Account
     }
 
     /**
-     * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getId(): UriInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface|string
-     */
-    public function setId($id)
-    {
-        if (is_string($id)) {
-            $id = new Uri($id);
-        }
-        $this->id = $id;
-    }
-
-    /**
      * Returns Whether this object currently allows updates.
      *
      * @return bool
@@ -311,52 +217,6 @@ class Account
     public function setLocked($locked)
     {
         $this->locked = $locked;
-    }
-
-    /**
-     * Returns the id of the account that owns this account.
-     *
-     * @return \Psr\Http\Message\UriInterface
-     */
-    public function getOwnerId(): UriInterface
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * Set the id of the account that owns this account.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
-    }
-
-    /**
-     * Returns A public identifier for the account.
-     *
-     * @return string
-     */
-    public function getPid(): string
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Set A public identifier for the account.
-     *
-     * @param string
-     */
-    public function setPid($pid)
-    {
-        if (strlen($pid) > 64) {
-            throw new \InvalidArgumentException('Public Identifiers must not be longer than 64 characters.');
-        }
-        if ('ASCII' != mb_check_encoding($pid)) {
-            throw new \InvalidArgumentException('Public Identifiers must be ASCII encoded strings.');
-        }
-        $this->pid = $pid;
     }
 
     /**

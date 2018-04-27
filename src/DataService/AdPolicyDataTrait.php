@@ -12,7 +12,7 @@ trait AdPolicyDataTrait
     /**
      * The identifier for the advertising policy for this object.
      *
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $adPolicyId;
 
@@ -31,7 +31,7 @@ trait AdPolicyDataTrait
      *
      * @param \Psr\Http\Message\UriInterface
      */
-    public function setAdPolicyId($adPolicyId)
+    public function setAdPolicyId(UriInterface $adPolicyId)
     {
         $this->adPolicyId = $adPolicyId;
     }

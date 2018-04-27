@@ -5,6 +5,8 @@ namespace Lullabot\Mpx\DataService\Player;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\ObjectBase;
+use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\DataService\PublicIdentifierTrait;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -14,9 +16,10 @@ use Psr\Http\Message\UriInterface;
  *     schemaVersion="1.6",
  * )
  */
-class Player extends ObjectBase
+class Player extends ObjectBase implements PublicIdentifierInterface
 {
     use AdPolicyDataTrait;
+    use PublicIdentifierTrait;
 
     /**
      * The administrative workflow tags for this object.
@@ -395,13 +398,6 @@ class Player extends ObjectBase
      * @var string
      */
     protected $pdk;
-
-    /**
-     * The public identifier for this player when requested through the Player Service.
-     *
-     * @var string
-     */
-    protected $pid;
 
     /**
      * Indicates if the player should automatically play the next release when one finishes.
@@ -1684,26 +1680,6 @@ class Player extends ObjectBase
     public function setPdk($pdk)
     {
         $this->pdk = $pdk;
-    }
-
-    /**
-     * Returns the public identifier for this player when requested through the Player Service.
-     *
-     * @return string
-     */
-    public function getPid(): string
-    {
-        return $this->pid;
-    }
-
-    /**
-     * Set the public identifier for this player when requested through the Player Service.
-     *
-     * @param string
-     */
-    public function setPid($pid)
-    {
-        $this->pid = $pid;
     }
 
     /**

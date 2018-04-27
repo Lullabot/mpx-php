@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Psr\Http\Message\UriInterface;
+
 /**
  * Defines an interface object properties common to all mpx objects.
  */
@@ -24,42 +26,42 @@ interface ObjectInterface
     /**
      * Returns the id of the user that created this object.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getAddedByUserId(): \Psr\Http\Message\UriInterface;
+    public function getAddedByUserId(): UriInterface;
 
     /**
      * Set the id of the user that created this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setAddedByUserId($addedByUserId);
 
     /**
      * Returns the globally unique URI of this object.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getId(): \Psr\Http\Message\UriInterface;
+    public function getId(): UriInterface;
 
     /**
      * Set the globally unique URI of this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
-    public function setId($id);
+    public function setId(UriInterface $id);
 
     /**
      * Returns the id of the account that owns this object.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return UriInterface
      */
-    public function getOwnerId(): \Psr\Http\Message\UriInterface;
+    public function getOwnerId(): UriInterface;
 
     /**
      * Set the id of the account that owns this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param UriInterface
      */
     public function setOwnerId($ownerId);
 }
