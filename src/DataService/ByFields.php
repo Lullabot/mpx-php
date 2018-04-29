@@ -9,6 +9,10 @@ namespace Lullabot\Mpx\DataService;
  * specified. Since sorting may be inconsistent across pages, this class will
  * automatically sort by 'id' if no sort is specified.
  *
+ * By default, pages are set to 100 items per page. This matches well with
+ * memory consumption (where PHP leaks memory at the default 500 items mpx
+ * returns) and CPU use.
+ *
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-a-byfield-query-parameter
  */
 class ByFields
@@ -42,6 +46,8 @@ class ByFields
         $this->sort = new Sort();
         $this->sort->addSort('id');
         $this->range = new Range();
+        $this->range->setStartIndex(1);
+        $this->range->setEndIndex(101);
     }
 
     /**

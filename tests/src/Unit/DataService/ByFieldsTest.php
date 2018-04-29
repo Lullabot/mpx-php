@@ -56,6 +56,6 @@ class ByFieldsTest extends TestCase
     public function testNoValues()
     {
         $byFields = new ByFields();
-        $this->assertEquals(['sort' => 'id'], $byFields->toQueryParts());
+        $this->assertEquals(['sort' => 'id', 'range' => '1-101'], $byFields->toQueryParts());
     }
 }
