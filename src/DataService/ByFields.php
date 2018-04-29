@@ -47,7 +47,7 @@ class ByFields
         $this->sort->addSort('id');
         $this->range = new Range();
         $this->range->setStartIndex(1);
-        $this->range->setEndIndex(101);
+        $this->range->setEndIndex(100);
     }
 
     /**
