@@ -5,6 +5,7 @@ namespace Lullabot\Mpx\Tests\Functional;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Concat\Http\Middleware\Logger;
 use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
@@ -90,6 +91,6 @@ abstract class FunctionalTestBase extends TestCase
         );
 
         $this->account = new Account();
-        $this->account->setId($account);
+        $this->account->setId(new Uri($account));
     }
 }
