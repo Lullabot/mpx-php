@@ -30,6 +30,7 @@ class MpxExceptionFactory
         MpxExceptionTrait::validateData($data);
 
         $altered = $response->withStatus($data['responseCode'], $data['title']);
+
         return self::createException($request, $altered, $previous, $ctx);
     }
 
@@ -49,17 +50,17 @@ class MpxExceptionFactory
         MpxExceptionTrait::validateNotificationData($data);
 
         $altered = $response->withStatus($data[0]['entry']['responseCode'], $data[0]['entry']['title']);
+
         return self::createException($request, $altered, $previous, $ctx);
     }
 
     /**
      * Create a client or server exception.
      *
-     * @param RequestInterface $request
+     * @param RequestInterface  $request
      * @param ResponseInterface $altered
-     *
-     * @param \Exception $previous
-     * @param array $ctx
+     * @param \Exception        $previous
+     * @param array             $ctx
      *
      * @return ClientException|ServerException
      */

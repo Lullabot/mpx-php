@@ -79,8 +79,8 @@ class MpxExceptionFactoryTest extends TestCase
                     'isException' => true,
                     'title' => 'Internal error',
                     'description' => 'It is totally the worst',
-                ]
-            ]
+                ],
+            ],
         ];
         $response = new Response(200, [], json_encode($data));
 

@@ -124,8 +124,8 @@ class MpxExceptionTraitTest extends TestCase
                     'description' => 'Authentication credentials invalid',
                     'correlationId' => 'correlation-id',
                     'serverStackTrace' => 'stack-trace',
-                ]
-            ]
+                ],
+            ],
         ];
         $trait->setNotificationData($data);
         $this->assertEquals($data[0]['entry']['title'], $trait->getTitle());
