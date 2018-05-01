@@ -91,6 +91,17 @@ trait MpxExceptionTrait
     }
 
     /**
+     * Set data from a notification exception.
+     *
+     * @param array $data The notification exception data.
+     */
+    public function setNotificationData(array $data)
+    {
+        static::validateNotificationData($data);
+        $this->data = $data[0]['entry'];
+    }
+
+    /**
      * Validate required data in the MPX error.
      *
      * @param array $data The array of data returned by MPX.
@@ -118,6 +129,30 @@ trait MpxExceptionTrait
     }
 
     /**
+     * Validate required data in the MPX notification error.
+     *
+     * @param array $data The array of data returned by MPX.
+     *
+     * @throws \InvalidArgumentException Thrown if a required key in $data is missing.
+     *
+     * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications#tp-toc25
+     */
+    public static function validateNotificationData($data)
+    {
+        $required = [
+            'type',
+            'entry',
+        ];
+        foreach ($required as $key) {
+            if (empty($data[0][$key])) {
+                throw new \InvalidArgumentException(sprintf('Required key %s is missing.', $key));
+            }
+        }
+
+        static::validateData($data[0]['entry']);
+    }
+
+    /**
      * Parse a response into the exception.
      *
      * @param \Psr\Http\Message\ResponseInterface $response The response exception.
@@ -127,8 +162,8 @@ trait MpxExceptionTrait
     protected function parseResponse(ResponseInterface $response): string
     {
         $data = \GuzzleHttp\json_decode($response->getBody(), true);
-        $this->setData($data);
-        $message = sprintf('HTTP %s Error %s: %s', $response->getStatusCode(), $data['title'], $data['description']);
+        isset($data[0]) ? $this->setNotificationData($data) : $this->setData($data);
+        $message = sprintf('HTTP %s Error %s: %s', $response->getStatusCode(), $this->data['title'], $this->data['description']);
 
         return $message;
     }

@@ -21,6 +21,7 @@ class MpxExceptionTraitTest extends TestCase
      * @covers ::getCorrelationId
      * @covers ::getServerStackTrace
      * @covers ::getData
+     * @covers ::validateData
      */
     public function testGet()
     {
@@ -105,6 +106,36 @@ class MpxExceptionTraitTest extends TestCase
     }
 
     /**
+     * Test setting Notification exceptions.
+     *
+     * @covers ::setNotificationData
+     * @covers ::validateNotificationData
+     */
+    public function testSetNotificationData()
+    {
+        $trait = $this->getMockForTrait(MpxExceptionTrait::class);
+        $data = [
+            [
+                'type' => 'Exception',
+                'entry' => [
+                    'responseCode' => 403,
+                    'isException' => true,
+                    'title' => 'Access denied',
+                    'description' => 'Authentication credentials invalid',
+                    'correlationId' => 'correlation-id',
+                    'serverStackTrace' => 'stack-trace',
+                ]
+            ]
+        ];
+        $trait->setNotificationData($data);
+        $this->assertEquals($data[0]['entry']['title'], $trait->getTitle());
+        $this->assertEquals($data[0]['entry']['description'], $trait->getDescription());
+        $this->assertEquals('correlation-id', $trait->getCorrelationId());
+        $this->assertEquals('stack-trace', $trait->getServerStackTrace());
+        $this->assertEquals($data[0]['entry'], $trait->getData());
+    }
+
+    /**
      * Test validating an invalid MPX error.
      *
      * @param array  $data The data that is missing a required valid.
@@ -119,6 +150,23 @@ class MpxExceptionTraitTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
         MpxExceptionTrait::validateData($data);
+    }
+
+    /**
+     * Test validating an invalid MPX notification error.
+     *
+     * @param array  $data The data that is missing a required valid.
+     * @param string $key  The key that is missing from $data.
+     *
+     * @dataProvider validateNotificationDataProvider
+     *
+     * @covers ::validateNotificationData
+     */
+    public function testValidateInvalidNotificationData($data, $key)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
+        MpxExceptionTrait::validateNotificationData($data);
     }
 
     /**
@@ -140,6 +188,33 @@ class MpxExceptionTraitTest extends TestCase
             array_pop($required);
 
             return [$required, $key];
+        }, $required);
+
+        return $data;
+    }
+
+    /**
+     * Data provider for testing notification error validation.
+     *
+     * @return array An array with an invalid error and the missing key.
+     */
+    public function validateNotificationDataProvider()
+    {
+        $required = [
+            'type' => 'Exception',
+            'entry' => [
+                'responseCode' => 503,
+                'isException' => 1,
+                'title' => 'the title',
+                'description' => 'the description',
+            ],
+        ];
+        $data = array_map(function ($value) use (&$required) {
+            end($required);
+            $key = key($required);
+            array_pop($required);
+
+            return [[$required], $key];
         }, $required);
 
         return $data;
