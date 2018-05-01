@@ -87,6 +87,15 @@ class Range
             return [];
         }
 
+        // @todo PHP appears to leak memory in both json_decode() and unserialize() with large result sets. Our best
+        // guess is that some amount of data causes PHP to allocate larger chunks, and perhaps that class of memory
+        // isn't ever a candidate for garbage collection. In general, paging over result sets (like in
+        // \Lullabot\Mpx\Tests\Functional\DataService\Media\MediaQueryTest) should use a constant amount of memory per
+        // page. 250 comes from tests on macOS with PHP 7.2 - going to 300 results causes an obvious memory leak.
+        if ($this->endIndex - $this->startIndex > 250) {
+            @trigger_error('PHP may leak memory with large result pages. Consider reducing the number of results per page.', E_USER_DEPRECATED);
+        }
+
         return ['range' => $this->startIndex.'-'.$this->endIndex];
     }
 }
