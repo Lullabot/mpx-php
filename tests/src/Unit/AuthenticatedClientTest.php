@@ -191,28 +191,6 @@ class AuthenticatedClientTest extends TestCase
     }
 
     /**
-     * @covers ::getAccount()
-     */
-    public function testGetAccount()
-    {
-        $client = $this->getMockClient([
-            new JsonResponse(200, [], 'signin-success.json'),
-        ]);
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
-            ->getMock();
-        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-
-        $logger = $this->fetchTokenLogger(1);
-
-        $user = new User('USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
-        $userSession->setLogger($logger);
-        $authenticatedClient = new AuthenticatedClient($client, $userSession);
-        $this->assertEquals('https://identity.auth.theplatform.com/idm/data/User/mpx/1', $authenticatedClient->getAccount()->getId()->__toString());
-    }
-
-    /**
      * @covers ::getConfig()
      */
     public function testGetConfig()

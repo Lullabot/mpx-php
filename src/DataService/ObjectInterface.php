@@ -7,7 +7,7 @@ use Psr\Http\Message\UriInterface;
 /**
  * Defines an interface object properties common to all mpx objects.
  */
-interface ObjectInterface
+interface ObjectInterface extends IdInterface
 {
     /**
      * Returns the date and time that this object was created.
@@ -36,20 +36,6 @@ interface ObjectInterface
      * @param UriInterface
      */
     public function setAddedByUserId($addedByUserId);
-
-    /**
-     * Returns the globally unique URI of this object.
-     *
-     * @return UriInterface
-     */
-    public function getId(): UriInterface;
-
-    /**
-     * Set the globally unique URI of this object.
-     *
-     * @param UriInterface
-     */
-    public function setId(UriInterface $id);
 
     /**
      * Returns the id of the account that owns this object.

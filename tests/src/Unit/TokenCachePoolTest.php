@@ -40,8 +40,10 @@ class TokenCachePoolTest extends TestCase
     /**
      * Test getting and setting the token from the cache.
      *
+     * @covers ::__construct()
      * @covers ::setToken
      * @covers ::getToken
+     * @covers ::cacheKey()
      */
     public function testGetSetToken()
     {
@@ -71,6 +73,7 @@ class TokenCachePoolTest extends TestCase
      *
      * @covers ::deleteToken
      * @covers ::getToken
+     * @covers ::cacheKey()
      */
     public function testDeleteToken()
     {

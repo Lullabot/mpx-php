@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\Service\AccessManagement;
 
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\DataService\IdInterface;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -40,11 +41,11 @@ class ResolveDomain
     /**
      * Resolve all URLs for an account.
      *
-     * @param Account $account The account to resolve service URLs for.
+     * @param IdInterface $account The account to resolve service URLs for.
      *
      * @return ResolveDomainResponse A response with the service URLs.
      */
-    public function resolve(Account $account)
+    public function resolve(IdInterface $account)
     {
         $options = [
             'query' => [
