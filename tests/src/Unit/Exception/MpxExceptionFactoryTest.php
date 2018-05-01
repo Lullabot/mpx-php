@@ -16,6 +16,7 @@ class MpxExceptionFactoryTest extends TestCase
 {
     /**
      * @covers ::create
+     * @covers ::createException()
      */
     public function testCreateClientException()
     {
@@ -38,6 +39,7 @@ class MpxExceptionFactoryTest extends TestCase
 
     /**
      * @covers ::create
+     * @covers ::createException()
      */
     public function testCreateServerException()
     {
@@ -56,5 +58,35 @@ class MpxExceptionFactoryTest extends TestCase
         $this->assertInstanceOf(ServerException::class, $exception);
         $this->assertEquals($data['responseCode'], $exception->getResponse()->getStatusCode());
         $this->assertEquals($data['title'], $exception->getResponse()->getReasonPhrase());
+    }
+
+    /**
+     * Test creating an exception from a notification error.
+     *
+     * @covers ::createFromNotificationException()
+     * @covers ::createException()
+     */
+    public function testCreateFromNotificationException()
+    {
+        /** @var \Psr\Http\Message\RequestInterface $request */
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->getMock();
+        $data = [
+            [
+                'type' => 'Exception',
+                'entry' => [
+                    'responseCode' => 503,
+                    'isException' => true,
+                    'title' => 'Internal error',
+                    'description' => 'It is totally the worst',
+                ],
+            ],
+        ];
+        $response = new Response(200, [], json_encode($data));
+
+        $exception = MpxExceptionFactory::createFromNotificationException($request, $response);
+        $this->assertInstanceOf(ServerException::class, $exception);
+        $this->assertEquals($data[0]['entry']['responseCode'], $exception->getResponse()->getStatusCode());
+        $this->assertEquals($data[0]['entry']['title'], $exception->getResponse()->getReasonPhrase());
     }
 }

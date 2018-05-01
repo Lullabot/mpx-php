@@ -74,6 +74,33 @@ class MiddlewareTest extends TestCase
     }
 
     /**
+     * Tests throwing mpx notification errors.
+     *
+     * @covers ::mpxErrors()
+     */
+    public function testNotificationException()
+    {
+        /** @var \Psr\Http\Message\RequestInterface $request */
+        $request = $this->getMockBuilder(RequestInterface::class)
+            ->getMock();
+        $body = json_encode([
+            [
+                'type' => 'Exception',
+                'entry' => [
+                    'isException' => true,
+                    'responseCode' => 404,
+                    'title' => 'ObjectNotFoundException',
+                    'description' => 'Sequence 1234 is no longer available',
+                ],
+            ],
+        ]);
+        $response = new Response(200, ['Content-Type' => 'application/json'], $body);
+        $this->expectException(MpxExceptionInterface::class);
+        $this->expectExceptionMessage('Sequence 1234 is no longer available');
+        $this->getResponse($request, $response, Middleware::mpxErrors());
+    }
+
+    /**
      * Get the response from the MPX error handler.
      *
      * @param \Psr\Http\Message\RequestInterface  $request
