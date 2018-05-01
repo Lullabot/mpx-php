@@ -6,11 +6,11 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
-use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\Encoder\CJsonEncoder;
 use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
+use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -51,7 +51,7 @@ class DataObjectFactory
     protected $authenticatedClient;
 
     /**
-     * Cache to store reflection metadata from implementing clasess.
+     * Cache to store reflection metadata from implementing classes.
      *
      * @var CacheItemPoolInterface
      */
@@ -81,20 +81,16 @@ class DataObjectFactory
     /**
      * Load a data object from MPX, returning a promise to it.
      *
-     * @param int                                      $id       The numeric ID to load.
-     * @param \Lullabot\Mpx\DataService\Access\Account $account
-     * @param bool                                     $readonly (optional) Load from the read-only service.
+     * @param int         $id       The numeric ID to load.
+     * @param IdInterface $account
+     * @param bool        $readonly (optional) Load from the read-only service.
      *
      * @return PromiseInterface
      */
-    public function loadByNumericId(int $id, Account $account = null, bool $readonly = false)
+    public function loadByNumericId(int $id, IdInterface $account = null, bool $readonly = false)
     {
-        if (!$account) {
-            $account = $this->authenticatedClient->getAccount();
-        }
-
         $annotation = $this->dataService->getAnnotation();
-        $base = $this->getBaseUri($account, $annotation, $readonly);
+        $base = $this->getBaseUri($annotation, $account, $readonly);
 
         $uri = new Uri($base.'/'.$id);
 
@@ -109,7 +105,7 @@ class DataObjectFactory
      * @param string $class The full class name to create.
      * @param string $data  The JSON string to deserialize.
      *
-     * @return ObjectInterface
+     * @return IdInterface
      */
     public function deserialize(string $class, $data)
     {
@@ -157,18 +153,14 @@ class DataObjectFactory
     /**
      * Query for MPX data using 'byField' parameters.
      *
-     * @param ByFields $byFields The fields and values to filter by. Note these are exact matches.
-     * @param Account  $account  (optional) The account context to use in the request. Defaults to the account
-     *                           associated with the authenticated client.
+     * @param ByFields    $byFields The fields and values to filter by. Note these are exact matches.
+     * @param IdInterface $account  (optional) The account context to use in the request. Defaults to the account
+     *                              associated with the authenticated client.
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
-    public function select(ByFields $byFields, Account $account = null): ObjectListIterator
+    public function select(ByFields $byFields, IdInterface $account = null): ObjectListIterator
     {
-        if (!$account) {
-            $account = $this->authenticatedClient->getAccount();
-        }
-
         return new ObjectListIterator($this->selectRequest($byFields, $account));
     }
 
@@ -177,12 +169,13 @@ class DataObjectFactory
      *
      * @see \Lullabot\Mpx\DataService\DataObjectFactory::select
      *
-     * @param ByFields $byFields The fields and values to filter by. Note these are exact matches.
-     * @param Account  $account  The account context to use in the request.
+     * @param ByFields    $byFields The fields and values to filter by. Note these are exact matches.
+     * @param IdInterface $account  (optional) The account context to use in the request. Note that most requests require
+     *                              an account context.
      *
      * @return PromiseInterface A promise to return an ObjectList.
      */
-    public function selectRequest(ByFields $byFields, Account $account): PromiseInterface
+    public function selectRequest(ByFields $byFields, IdInterface $account = null): PromiseInterface
     {
         $annotation = $this->dataService->getAnnotation();
         $options = [
@@ -193,7 +186,7 @@ class DataObjectFactory
             ],
         ];
 
-        $uri = $this->getBaseUri($account, $annotation);
+        $uri = $this->getBaseUri($annotation, $account);
 
         $request = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) use ($byFields, $account) {
@@ -214,18 +207,27 @@ class DataObjectFactory
     /**
      * Get the base URI from an annotation or service registry.
      *
-     * @param Account     $account    The account to use for service resolution.
+     * @todo This should cache resolved URLs.
+     *
      * @param DataService $annotation The annotation data is being loaded for.
+     * @param IdInterface $account    (optional) The account to use for service resolution.
      * @param bool        $readonly   (optional) Load from the read-only service.
      *
      * @return string The base URI.
      */
-    private function getBaseUri(Account $account, DataService $annotation, bool $readonly = false): string
+    private function getBaseUri(DataService $annotation, IdInterface $account = null, bool $readonly = false): string
     {
         // Accounts are optional as you need to be able to load an account
         // before you can resolve services.
-        // @todo Can we do this by calling ResolveAllUrls?
         if (!($base = $annotation->getBaseUri())) {
+            // If no account is specified, we must use the ResolveAllUrls service instead.
+            if (!$account) {
+                /** @var ResolveAllUrls $urls */
+                $urls = ResolveAllUrls::load($this->authenticatedClient, $annotation->getService($readonly))->wait();
+
+                return $urls->resolve().$annotation->getPath();
+            }
+
             $resolved = $this->resolveDomain->resolve($account);
 
             $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getPath();

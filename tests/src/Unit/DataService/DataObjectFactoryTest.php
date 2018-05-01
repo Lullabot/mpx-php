@@ -6,9 +6,11 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\DataService\ByFields;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Media\Media;
+use Lullabot\Mpx\DataService\ObjectList;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
@@ -90,5 +92,36 @@ class DataObjectFactoryTest extends TestCase
         $account->setId(new Uri('http://example.com/1'));
         $media = $factory->loadByNumericId(12345, $account)->wait();
         $this->assertInstanceOf(Media::class, $media);
+    }
+
+    /**
+     * Tests fetching a list of objects.
+     *
+     * @covers ::selectRequest()
+     */
+    public function testSelectRequest()
+    {
+        $manager = DataServiceManager::basicDiscovery();
+        $service = $manager->getDataService('Access Data Service', 'Account', '1.0');
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(200, [], 'select-account.json'),
+        ]);
+        $user = new User('username', 'password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $authenticatedClient = new AuthenticatedClient($client, $session);
+        $factory = new DataObjectFactory($service, $authenticatedClient);
+        /** @var ObjectList $objectList */
+        $objectList = $factory->selectRequest(new ByFields())->wait();
+        $this->assertEquals(1, $objectList->getEntryCount());
+        $this->assertEquals(1, $objectList->getItemsPerPage());
+        $this->assertEquals(1, $objectList->getStartIndex());
+        $this->assertEquals(1, $objectList->getTotalResults());
+        $account = $objectList->current();
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals('http://access.auth.theplatform.com/data/Account/55555', $account->getId());
     }
 }

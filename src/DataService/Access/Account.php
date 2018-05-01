@@ -6,6 +6,7 @@ use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Lullabot\Mpx\DataService\PublicIdentifierTrait;
+use Lullabot\Mpx\DataService\IdInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -16,7 +17,7 @@ use Psr\Http\Message\UriInterface;
  *   objectType="Account"
  * )
  */
-class Account extends ObjectBase implements PublicIdentifierInterface
+class Account extends ObjectBase implements PublicIdentifierInterface, IdInterface
 {
     use PublicIdentifierTrait;
 

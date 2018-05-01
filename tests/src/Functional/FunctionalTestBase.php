@@ -52,9 +52,9 @@ abstract class FunctionalTestBase extends TestCase
 
         $username = getenv('MPX_USERNAME');
         $password = getenv('MPX_PASSWORD');
-        $account = getenv('MPX_ACCOUNT');
+        $account_id = getenv('MPX_ACCOUNT');
 
-        if (empty($username) || empty($password) || empty($account)) {
+        if (empty($username) || empty($password) || empty($account_id)) {
             $this->markTestSkipped(
                 'MPX_USER, MPX_PASSWORD, and MPX_ACCOUNT must be defined as environment variables or in phpunit.xml for functional tests.'
             );
@@ -91,6 +91,6 @@ abstract class FunctionalTestBase extends TestCase
         );
 
         $this->account = new Account();
-        $this->account->setId(new Uri($account));
+        $this->account->setId(new Uri($account_id));
     }
 }
