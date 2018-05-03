@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\ByFields;
@@ -206,5 +207,30 @@ class ObjectListTest extends TestCase
         $this->list->rewind();
         $this->assertEquals(0, $this->list->key());
         $this->assertEquals($first, $this->list->current());
+    }
+
+    /**
+     * Tests yielding lists.
+     */
+    public function testYieldLists()
+    {
+        $this->list->setEntries([new \stdClass()]);
+        $this->list->setStartIndex(30);
+        $this->list->setEntryCount(10);
+        $this->list->setItemsPerPage(10);
+        $this->list->setTotalResults(30);
+        /** @var DataObjectFactory $dof */
+        $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
+        $account = new Account();
+        $this->list->setDataObjectFactory($dof, $account);
+        $this->list->setByFields(new ByFields());
+        $y = $this->list->yieldLists();
+        foreach ($y as $l) {
+            $this->assertInstanceOf(PromiseInterface::class, $l);
+            if (Promise::FULFILLED == $l->getState()) {
+                $list = $l->wait();
+                $this->assertEquals($this->list, $list);
+            }
+        }
     }
 }

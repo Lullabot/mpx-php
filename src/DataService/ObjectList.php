@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\DataService\Access\Account;
 
@@ -248,6 +249,34 @@ class ObjectList implements \ArrayAccess, \Iterator
         $byFields->setRange($range);
 
         return $this->dataObjectFactory->selectRequest($byFields, $this->account);
+    }
+
+    /**
+     * Yield select requests for all pages of this object list.
+     *
+     * @return \Generator A generator returning promises to object lists.
+     */
+    public function yieldLists(): \Generator
+    {
+        if (!isset($this->dataObjectFactory)) {
+            throw new \LogicException('setDataObjectFactory must be called before calling nextList.');
+        }
+
+        if (!isset($this->byFields)) {
+            throw new \LogicException('setByFields must be called before calling nextList.');
+        }
+
+        // We need to yield ourselves first.
+        $thisList = new Promise();
+        $thisList->resolve($this);
+        yield $thisList;
+
+        $ranges = Range::nextRanges($this);
+        foreach ($ranges as $range) {
+            $byFields = clone $this->byFields;
+            $byFields->setRange($range);
+            yield $this->dataObjectFactory->selectRequest($byFields, $this->account);
+        }
     }
 
     /**
