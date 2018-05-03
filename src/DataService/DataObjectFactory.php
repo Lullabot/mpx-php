@@ -186,7 +186,7 @@ class DataObjectFactory
             ],
         ];
 
-        $uri = $this->getBaseUri($annotation, $account);
+        $uri = $this->getBaseUri($annotation, $account, true);
 
         $request = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) use ($byFields, $account) {
