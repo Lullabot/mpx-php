@@ -77,4 +77,30 @@ class RangeTest extends TestCase
         $this->expectExceptionMessage('The end index must be 1 or greater.');
         $range->setEndIndex(0);
     }
+
+    /**
+     * Tests generating all ranges in the result set.
+     *
+     * @covers ::nextRanges()
+     */
+    public function testNextRanges()
+    {
+        $list = new ObjectList();
+        $start = rand(1, getrandmax());
+        $entryCount = rand(1, 10);
+        $list->setStartIndex($start);
+        $list->setEntryCount($entryCount);
+        $list->setItemsPerPage($entryCount);
+        $pages = rand(1, 10);
+        $list->setTotalResults($entryCount * $pages);
+        $ranges = Range::nextRanges($list);
+
+        $this->assertEquals($pages, count($ranges));
+
+        foreach ($ranges as $range) {
+            $start += $entryCount;
+            $end = $start + $entryCount - 1;
+            $this->assertEquals("$start-$end", $range->toQueryParts()['range']);
+        }
+    }
 }

@@ -77,6 +77,33 @@ class Range
     }
 
     /**
+     * Given an object list, return the ranges for each subsequent page.
+     *
+     * @param ObjectList $list The list to generate ranges for.
+     *
+     * @return static[] An array of Range objects.
+     */
+    public static function nextRanges(ObjectList $list): array
+    {
+        $ranges = [];
+        $startIndex = $list->getStartIndex() + $list->getEntryCount();
+        $endIndex = $startIndex + $list->getItemsPerPage() - 1;
+        $finalIndex = $startIndex + $list->getTotalResults() - 1;
+
+        while ($startIndex <= $finalIndex) {
+            $range = new self();
+            $range->setStartIndex($startIndex)
+                ->setEndIndex($endIndex);
+
+            $startIndex = $startIndex + $list->getEntryCount();
+            $endIndex = min($startIndex - 1 + $list->getItemsPerPage(), $finalIndex);
+            $ranges[] = $range;
+        }
+
+        return $ranges;
+    }
+
+    /**
      * Return an array of query parameters representing this range.
      *
      * @return array An array with a 'range' key, or an empty array if neither start or end is set.
