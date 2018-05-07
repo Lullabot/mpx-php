@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Add a method to yield pages in lists #107
+
 ### Changed
 
 ### Removed
