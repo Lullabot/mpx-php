@@ -78,7 +78,8 @@ class ObjectListTest extends TestCase
     public function testHasNext()
     {
         $this->list->setEntries([new \stdClass()]);
-        $this->list->setEntryCount(10);
+        $this->list->setStartIndex(1);
+        $this->list->setEntryCount(11);
         $this->list->setItemsPerPage(10);
         $this->assertTrue($this->list->hasNext());
 
@@ -99,7 +100,7 @@ class ObjectListTest extends TestCase
 
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(30);
-        $this->list->setEntryCount(10);
+        $this->list->setEntryCount(50);
         $this->list->setItemsPerPage(10);
 
         /** @var DataObjectFactory $dof */
@@ -118,7 +119,7 @@ class ObjectListTest extends TestCase
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(30);
-        $this->list->setEntryCount(10);
+        $this->list->setEntryCount(40);
         $this->list->setItemsPerPage(10);
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('setDataObjectFactory must be called before calling nextList.');
@@ -132,7 +133,7 @@ class ObjectListTest extends TestCase
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(30);
-        $this->list->setEntryCount(10);
+        $this->list->setEntryCount(60);
         $this->list->setItemsPerPage(10);
 
         /** @var DataObjectFactory $dof */
