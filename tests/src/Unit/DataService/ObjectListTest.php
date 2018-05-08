@@ -113,6 +113,24 @@ class ObjectListTest extends TestCase
     }
 
     /**
+     * Test that a single item list has no next list.
+     */
+    public function testSingleItemList()
+    {
+        $this->list->setEntries([new \stdClass()]);
+        $this->list->setStartIndex(1);
+        $this->list->setEntryCount(1);
+        $this->list->setItemsPerPage(1);
+
+        /** @var DataObjectFactory $dof */
+        $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
+        $account = new Account();
+        $this->list->setDataObjectFactory($dof, $account);
+        $this->list->setByFields(new ByFields());
+        $this->assertFalse($this->list->nextList());
+    }
+
+    /**
      * Test that an exception is thrown if a DataObjectFactory is not set.
      */
     public function testNextListNoDof()
