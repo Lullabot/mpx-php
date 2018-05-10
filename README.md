@@ -59,6 +59,17 @@ print "The loaded media is:\n";
 var_dump($media);
 ```
 
+## Test client
+
+thePlatform provides a
+[Media Data Service Web Client](https://data.media.theplatform.com/media/client)
+that can be used for quick testing of Media Data Service APIs. Unfortunately,
+the client can not be used for other data service APIs. To test those, see the
+functional tests in
+[tests/src/Functional](https://github.com/Lullabot/mpx-php/tree/master/tests/src/Functional)
+and the configuration in
+[phpunit.xml.dist](https://github.com/Lullabot/mpx-php/blob/master/phpunit.xml.dist).
+
 ## Logging
 
 This library will log API actions that are transparent to the calling code. For
