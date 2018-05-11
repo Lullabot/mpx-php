@@ -54,7 +54,7 @@ class ResolveDomain extends ResolveBase
         $response = $this->authenticatedClient->request('GET', static::RESOLVE_DOMAIN_URL, $options);
 
         $encoders = [new JsonEncoder()];
-        $normalizers = [new UriNormalizer(), new ObjectNormalizer(null, null, null, new \Lullabot\Mpx\DataService\ResolveDomainResponseExtractor()), new ArrayDenormalizer()];
+        $normalizers = [new UriNormalizer(), new ObjectNormalizer(null, null, null, new ResolveDomainResponseExtractor()), new ArrayDenormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
 
         $response = $serializer->deserialize($response->getBody(), ResolveDomainResponse::class, 'json');

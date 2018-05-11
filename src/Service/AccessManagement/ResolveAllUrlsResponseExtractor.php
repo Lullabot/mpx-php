@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\DataService;
+namespace Lullabot\Mpx\Service\AccessManagement;
 
 use GuzzleHttp\Psr7\Uri;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
