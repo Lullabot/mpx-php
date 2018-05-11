@@ -3,7 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
 use Lullabot\Mpx\Encoder\CJsonEncoder;
-use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
+use Lullabot\Mpx\Normalizer\UnixMillisecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
@@ -63,7 +63,7 @@ abstract class ObjectTestBase extends TestCase
 
         // Attempt normalizing each key in this order, including denormalizing recursively.
         $normalizers = [
-            new UnixMicrosecondNormalizer(),
+            new UnixMillisecondNormalizer(),
             new UriNormalizer(),
             new ObjectNormalizer(null, null, null, $propertyTypeExtractor),
             new ArrayDenormalizer(),
