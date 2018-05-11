@@ -30,6 +30,7 @@ class ResolveAllUrlsTest extends TestCase
      *
      * @covers ::resolve
      * @covers ::cacheKey
+     * @covers \Lullabot\Mpx\Service\AccessManagement\ResolveBase::saveCache
      */
     public function testLoad()
     {
@@ -56,6 +57,8 @@ class ResolveAllUrlsTest extends TestCase
         $cache->method('getItem')
             ->with('6b590e46fe8d31b3d8cc0aa9c7282c4f')
             ->willReturn($item);
+
+        $cache->expects($this->once())->method('save');
 
         $resolver = new ResolveAllUrls($session, $cache);
         $r = $resolver->resolve('Media Data Service');
