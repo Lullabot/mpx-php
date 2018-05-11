@@ -110,6 +110,14 @@ MPX authentication token that is returned by the platform after [sign in](https:
 ### Lullabot\Mpx\TokenCachePool
 Cache of user authentication tokens. This class is a wrapper around a \Psr\Cache\CacheItemPoolInterface object.
 
+## mpx Support
+
+This library is not supported by thePlatform. If you need help with the
+library, open an issue here in GitHub. If you need help with the mpx service
+itself, see the
+[mpx support portal](https://theplatform.service-now.com/support_portal/) to
+file a support request.
+
 ## Known issues
 
 [#2001 in Guzzle](https://github.com/guzzle/guzzle/pull/2001) forces processing
