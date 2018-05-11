@@ -60,22 +60,21 @@ class DataObjectFactory
     /**
      * DataObjectFactory constructor.
      *
-     * @todo Inject the resolveDomain() instead of constructing?
-     *
      * @param DiscoveredDataService             $dataService         The service to load data from.
      * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
-     * @param CacheItemPoolInterface|null       $cacheItemPool       (optional) Cache to store reflection metadata.
+     * @param CacheItemPoolInterface|null       $cacheItemPool       (optional) Cache to store API metadata.
      */
     public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient, CacheItemPoolInterface $cacheItemPool = null)
     {
         $this->authenticatedClient = $authenticatedClient;
-        $this->resolveDomain = new ResolveDomain($this->authenticatedClient);
         $this->dataService = $dataService;
 
         if (!$cacheItemPool) {
             $cacheItemPool = new ArrayCachePool();
         }
         $this->cacheItemPool = $cacheItemPool;
+
+        $this->resolveDomain = new ResolveDomain($this->authenticatedClient, $this->cacheItemPool);
     }
 
     /**

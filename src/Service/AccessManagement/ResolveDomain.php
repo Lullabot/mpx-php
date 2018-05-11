@@ -93,6 +93,12 @@ class ResolveDomain
         $response = $serializer->deserialize($response->getBody(), ResolveDomainResponse::class, 'json');
         $item = new CacheItem($key);
         $item->set($response);
+
+        // thePlatform provides no guidance on how long we can cache this for.
+        // Since many of their examples and other mpx clients hardcode these
+        // values, we assume 30 days and that they will implement redirects or
+        // domain aliases if required.
+        $item->expiresAfter(new \DateInterval('P30D'));
         $this->cache->save($item);
 
         return $response;
