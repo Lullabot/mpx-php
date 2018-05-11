@@ -9,11 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Add a method to yield pages in lists #107
+- Service URLs are now cached when loading objects and listening for
+  notifications. #144
 
 ### Changed
 
 - Fix nextList returning true for single-item lists #108
 - Fix broken range calculations for the end of a list of ranges #113
+- `\Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls` now follows what
+  `\Lullabot\Mpx\Service\AccessManagement\ResolveDomain` does and has chagned
+  it's API as a result. #144
 
 ### Removed
 

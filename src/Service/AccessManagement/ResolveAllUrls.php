@@ -36,6 +36,8 @@ class ResolveAllUrls extends ResolveBase
      * Fetch URLs and return the response.
      *
      * @param string $service The service to find URLs for, such as 'Media Data Service'.
+     *
+     * @return ResolveAllUrlsResponse
      */
     public function resolve(string $service): ResolveAllUrlsResponse
     {
