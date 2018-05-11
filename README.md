@@ -13,16 +13,16 @@
 ## Example
 
 Here is a complete example showing how to load an account and media items from
-MPX. Most implementations would not contain all of this code in a single class.
+MPX. Most implementations should not contain all of this code in a single class.
 Instead, create functions, classes, or services to bridge the clients, caches,
-and locks into your application.
+and locks into your application. For an example of how to do this, see the
+[media_mpx module for Drupal 8](https://github.com/Lullabot/media_mpx).
 
 A runnable version of this code is in a test at
 `\Lullabot\Mpx\Tests\Functional\ReadmeTest::testExample()`.
 
 ```php
 <?php
-
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Uri;
