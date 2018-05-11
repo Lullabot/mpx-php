@@ -53,7 +53,7 @@ class UserSession
     /**
      * The user to authenticate as.
      *
-     * @var User
+     * @var UserInterface
      */
     protected $user;
 
@@ -62,12 +62,12 @@ class UserSession
      *
      * @see \Psr\Log\NullLogger To disable logging of token requests.
      *
-     * @param User           $user           The user to authenticate as.
+     * @param UserInterface  $user           The user to authenticate as.
      * @param Client         $client         The client used to access MPX.
      * @param StoreInterface $store          The lock backend to store locks in.
      * @param TokenCachePool $tokenCachePool The cache of authentication tokens.
      */
-    public function __construct(User $user, Client $client, StoreInterface $store, TokenCachePool $tokenCachePool)
+    public function __construct(UserInterface $user, Client $client, StoreInterface $store, TokenCachePool $tokenCachePool)
     {
         $this->user = $user;
         $this->client = $client;
@@ -240,7 +240,7 @@ class UserSession
      *
      * @return User
      */
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
