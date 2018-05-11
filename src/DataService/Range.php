@@ -87,7 +87,7 @@ class Range
     {
         $ranges = [];
 
-        // The end index of the next list.
+        // The end index of the next list. We do this here in case there are no further ranges to return.
         $endIndex = $list->getStartIndex() + $list->getItemsPerPage() - 1;
 
         // The last index of the final list.
@@ -96,6 +96,8 @@ class Range
         while ($endIndex < $finalEndIndex) {
             // The start index of the next list.
             $startIndex = ($startIndex ?? $list->getStartIndex()) + $list->getEntryCount();
+
+            // We need to be sure we never return an end range greater than the total count of objects.
             $endIndex = min($startIndex + $list->getItemsPerPage() - 1, $finalEndIndex);
 
             $range = new self();
