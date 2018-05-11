@@ -220,6 +220,7 @@ class DataObjectFactory
             // If no account is specified, we must use the ResolveAllUrls service instead.
             if (!$account) {
                 $resolver = new ResolveAllUrls($this->authenticatedClient, $this->cacheItemPool);
+
                 return $resolver->resolve($annotation->getService($readonly))->resolve().$annotation->getPath();
             }
 
