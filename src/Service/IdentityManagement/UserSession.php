@@ -130,7 +130,7 @@ class UserSession
             'Retrieved a new MPX token {token} for user {username} that expires on {date}.',
             [
                 'token' => $token->getValue(),
-                'username' => $this->user->getUsername(),
+                'username' => $this->user->getMpxUsername(),
                 'date' => date(DATE_ISO8601, $token->getExpiration()),
             ]
         );
@@ -171,7 +171,7 @@ class UserSession
     {
         $factory = new Factory($this->store);
         $factory->setLogger($this->logger);
-        $lock = $factory->createLock($this->user->getUsername(), 10);
+        $lock = $factory->createLock($this->user->getMpxUsername(), 10);
 
         // Blocking means this will throw an exception on failure.
         $lock->acquire(true);
@@ -214,8 +214,8 @@ class UserSession
     {
         $options = [];
         $options['auth'] = [
-            $this->user->getUsername(),
-            $this->user->getPassword(),
+            $this->user->getMpxUsername(),
+            $this->user->getMpxPassword(),
         ];
 
         // @todo Make this a class constant.
