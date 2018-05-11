@@ -206,8 +206,6 @@ class DataObjectFactory
     /**
      * Get the base URI from an annotation or service registry.
      *
-     * @todo This should cache resolved URLs.
-     *
      * @param DataService $annotation The annotation data is being loaded for.
      * @param IdInterface $account    (optional) The account to use for service resolution.
      * @param bool        $readonly   (optional) Load from the read-only service.
@@ -221,10 +219,8 @@ class DataObjectFactory
         if (!($base = $annotation->getBaseUri())) {
             // If no account is specified, we must use the ResolveAllUrls service instead.
             if (!$account) {
-                /** @var ResolveAllUrls $urls */
-                $urls = ResolveAllUrls::load($this->authenticatedClient, $annotation->getService($readonly))->wait();
-
-                return $urls->resolve().$annotation->getPath();
+                $resolver = new ResolveAllUrls($this->authenticatedClient, $this->cacheItemPool);
+                return $resolver->resolve($annotation->getService($readonly))->resolve().$annotation->getPath();
             }
 
             $resolved = $this->resolveDomain->resolve($account);
