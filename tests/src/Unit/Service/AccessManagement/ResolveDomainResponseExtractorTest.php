@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\Tests\Unit\DataService;
+namespace Lullabot\Mpx\Tests\Unit\Service\AccessManagement;
 
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomainResponseExtractor;
