@@ -23,7 +23,7 @@ class ResolveAllUrlsResponseExtractor implements PropertyTypeExtractorInterface
     public function getTypes($class, $property, array $context = [])
     {
         if ('resolveAllUrlsResponse' != $property) {
-            throw new \InvalidArgumentException('This extractor only supports resolveDomainResponse properties.');
+            throw new \InvalidArgumentException('This extractor only supports resolveAllUrlsResponse properties.');
         }
 
         $collectionKeyType = new Type(Type::BUILTIN_TYPE_STRING);
