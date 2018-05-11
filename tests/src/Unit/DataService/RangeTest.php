@@ -118,8 +118,8 @@ class RangeTest extends TestCase
         $list->setTotalResults(79425);
         $ranges = Range::nextRanges($list);
         $this->assertCount(39712, $ranges);
-        $this->assertEquals("3-4", reset($ranges)->toQueryParts()['range']);
-        $this->assertEquals("79425-79425", end($ranges)->toQueryParts()['range']);
+        $this->assertEquals('3-4', reset($ranges)->toQueryParts()['range']);
+        $this->assertEquals('79425-79425', end($ranges)->toQueryParts()['range']);
     }
 
     /**

@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Fix nextlist returning true for single-item lists #108
+- Fix nextList returning true for single-item lists #108
+- Fix broken range calculations for the end of a list of ranges #113
 
 ### Removed
 
