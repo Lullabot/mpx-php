@@ -3,11 +3,8 @@
 namespace Lullabot\Mpx\Service\AccessManagement;
 
 use Cache\Adapter\Common\CacheItem;
-use Cache\Adapter\PHPArray\ArrayCachePool;
-use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\IdInterface;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
-use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -18,7 +15,7 @@ use Symfony\Component\Serializer\Serializer;
  *
  * @see https://docs.theplatform.com/help/wsf-resolvedomain-method
  */
-class ResolveDomain
+class ResolveDomain extends ResolveBase
 {
     /**
      * The method endpoint (this is not a true REST service).
@@ -29,36 +26,6 @@ class ResolveDomain
      * The schema version of resolveDomain.
      */
     const SCHEMA_VERSION = '1.0';
-
-    /**
-     * The client used to access mpx.
-     *
-     * @var \Lullabot\Mpx\AuthenticatedClient
-     */
-    private $authenticatedClient;
-
-    /**
-     * The cache used to store resolveDomain responses.
-     *
-     * @var CacheItemPoolInterface
-     */
-    private $cache;
-
-    /**
-     * ResolveDomain constructor.
-     *
-     * @param AuthenticatedClient         $authenticatedClient The client used to access mpx.
-     * @param CacheItemPoolInterface|null $cache               (optional) The cache to store responses in. Defaults to an array cache.
-     */
-    public function __construct(AuthenticatedClient $authenticatedClient, CacheItemPoolInterface $cache = null)
-    {
-        $this->authenticatedClient = $authenticatedClient;
-
-        if (!$cache) {
-            $cache = new ArrayCachePool();
-        }
-        $this->cache = $cache;
-    }
 
     /**
      * Resolve all URLs for an account.
