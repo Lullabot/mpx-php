@@ -86,17 +86,21 @@ class Range
     public static function nextRanges(ObjectList $list): array
     {
         $ranges = [];
-        $startIndex = $list->getStartIndex() + $list->getEntryCount();
-        $endIndex = $startIndex + $list->getItemsPerPage() - 1;
-        $finalIndex = $startIndex + $list->getTotalResults() - 1;
 
-        while ($startIndex <= $finalIndex) {
+        // The end index of the next list.
+        $endIndex = $list->getStartIndex() + $list->getItemsPerPage() - 1;
+
+        // The last index of the final list.
+        $finalEndIndex = $list->getTotalResults();
+
+        while ($endIndex < $finalEndIndex) {
+            // The start index of the next list.
+            $startIndex = ($startIndex ?? $list->getStartIndex()) + $list->getEntryCount();
+            $endIndex = min($startIndex + $list->getItemsPerPage() - 1, $finalEndIndex);
+
             $range = new self();
             $range->setStartIndex($startIndex)
                 ->setEndIndex($endIndex);
-
-            $startIndex = $startIndex + $list->getEntryCount();
-            $endIndex = min($startIndex - 1 + $list->getItemsPerPage(), $finalIndex);
             $ranges[] = $range;
         }
 

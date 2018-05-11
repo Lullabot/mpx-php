@@ -91,15 +91,15 @@ class RangeTest extends TestCase
         $list->setStartIndex($start);
         $list->setEntryCount($entryCount);
         $list->setItemsPerPage($entryCount);
-        $pages = rand(1, 10);
-        $list->setTotalResults($entryCount * $pages);
+        $remainingPages = rand(1, 10);
+        $list->setTotalResults($start + ($entryCount * $remainingPages));
         $ranges = Range::nextRanges($list);
 
-        $this->assertEquals($pages, count($ranges));
+        $this->assertEquals($remainingPages, count($ranges));
 
         foreach ($ranges as $range) {
             $start += $entryCount;
-            $end = $start + $entryCount - 1;
+            $end = min($start + $entryCount - 1, $list->getTotalResults());
             $this->assertEquals("$start-$end", $range->toQueryParts()['range']);
         }
     }
