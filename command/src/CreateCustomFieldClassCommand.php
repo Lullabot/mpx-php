@@ -67,6 +67,10 @@ EOD;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+        if (!extension_loaded('intl')) {
+            throw new \RuntimeException('The intl extension is required to run this command.');
+        }
+
         $helper = $this->getHelper('question');
         if (!$username = getenv('MPX_USERNAME')) {
             $question = new Question('Enter the mpx user name, such as mpx/you@example.com: ');
