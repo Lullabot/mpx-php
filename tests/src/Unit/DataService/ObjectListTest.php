@@ -79,14 +79,15 @@ class ObjectListTest extends TestCase
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(1);
-        $this->list->setEntryCount(11);
+        $this->list->setEntryCount(10);
         $this->list->setItemsPerPage(10);
+        $this->list->setTotalResults(20);
         $this->assertTrue($this->list->hasNext());
 
-        $this->list->setItemsPerPage(11);
+        $this->list->setTotalResults(10);
         $this->assertFalse($this->list->hasNext());
 
-        $this->list->setItemsPerPage(10);
+        $this->list->setTotalResults(11);
         $this->list->setEntries([]);
         $this->assertFalse($this->list->hasNext());
     }
@@ -100,8 +101,9 @@ class ObjectListTest extends TestCase
 
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(30);
-        $this->list->setEntryCount(50);
+        $this->list->setEntryCount(10);
         $this->list->setItemsPerPage(10);
+        $this->list->setTotalResults(50);
 
         /** @var DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
@@ -137,8 +139,9 @@ class ObjectListTest extends TestCase
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(30);
-        $this->list->setEntryCount(40);
+        $this->list->setEntryCount(10);
         $this->list->setItemsPerPage(10);
+        $this->list->setTotalResults(50);
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('setDataObjectFactory must be called before calling nextList.');
         $this->list->nextList();
@@ -151,8 +154,9 @@ class ObjectListTest extends TestCase
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(30);
-        $this->list->setEntryCount(60);
+        $this->list->setEntryCount(10);
         $this->list->setItemsPerPage(10);
+        $this->list->setTotalResults(50);
 
         /** @var DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
