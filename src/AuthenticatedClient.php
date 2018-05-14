@@ -16,7 +16,7 @@ class AuthenticatedClient implements ClientInterface
      *
      * @var UserSession
      */
-    protected $user;
+    protected $userSession;
 
     /**
      * The client used to access MPX.
@@ -37,7 +37,7 @@ class AuthenticatedClient implements ClientInterface
     public function __construct(Client $client, UserSession $userSession)
     {
         $this->client = $client;
-        $this->user = $userSession;
+        $this->userSession = $userSession;
     }
 
     /**
@@ -93,7 +93,7 @@ class AuthenticatedClient implements ClientInterface
         if (!isset($options['query'])) {
             $options['query'] = [];
         }
-        $token = $this->user->acquireToken(null, $reset);
+        $token = $this->userSession->acquireToken(null, $reset);
         $options['query'] += [
             'token' => $token->getValue(),
         ];
