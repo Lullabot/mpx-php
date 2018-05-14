@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fix broken range calculations for the end of a list of ranges #113
 - `\Lullabot\Mpx\Service\IdentityManagement\UserInterface` has been added to
   simplify bridging user configuration from applications. #116
+- Fix using the number of entries in the current page instead of the total #118
 
 ### Removed
 
