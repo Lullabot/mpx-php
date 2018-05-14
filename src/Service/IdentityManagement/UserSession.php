@@ -53,7 +53,7 @@ class UserSession
     /**
      * The user to authenticate as.
      *
-     * @var User
+     * @var UserInterface
      */
     protected $user;
 
@@ -62,12 +62,12 @@ class UserSession
      *
      * @see \Psr\Log\NullLogger To disable logging of token requests.
      *
-     * @param User           $user           The user to authenticate as.
+     * @param UserInterface  $user           The user to authenticate as.
      * @param Client         $client         The client used to access MPX.
      * @param StoreInterface $store          The lock backend to store locks in.
      * @param TokenCachePool $tokenCachePool The cache of authentication tokens.
      */
-    public function __construct(User $user, Client $client, StoreInterface $store, TokenCachePool $tokenCachePool)
+    public function __construct(UserInterface $user, Client $client, StoreInterface $store, TokenCachePool $tokenCachePool)
     {
         $this->user = $user;
         $this->client = $client;
@@ -130,7 +130,7 @@ class UserSession
             'Retrieved a new MPX token {token} for user {username} that expires on {date}.',
             [
                 'token' => $token->getValue(),
-                'username' => $this->user->getUsername(),
+                'username' => $this->user->getMpxUsername(),
                 'date' => date(DATE_ISO8601, $token->getExpiration()),
             ]
         );
@@ -171,7 +171,7 @@ class UserSession
     {
         $factory = new Factory($this->store);
         $factory->setLogger($this->logger);
-        $lock = $factory->createLock($this->user->getUsername(), 10);
+        $lock = $factory->createLock($this->user->getMpxUsername(), 10);
 
         // Blocking means this will throw an exception on failure.
         $lock->acquire(true);
@@ -214,8 +214,8 @@ class UserSession
     {
         $options = [];
         $options['auth'] = [
-            $this->user->getUsername(),
-            $this->user->getPassword(),
+            $this->user->getMpxUsername(),
+            $this->user->getMpxPassword(),
         ];
 
         // @todo Make this a class constant.
@@ -240,7 +240,7 @@ class UserSession
      *
      * @return User
      */
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }

@@ -8,7 +8,7 @@ namespace Lullabot\Mpx\Service\IdentityManagement;
  * @see http://help.theplatform.com/display/wsf2/Identity+management+service+API+reference
  * @see http://help.theplatform.com/display/wsf2/User+operations
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var string
@@ -37,7 +37,7 @@ class User
      *
      * @return string
      */
-    public function getUsername()
+    public function getMpxUsername()
     {
         return $this->username;
     }
@@ -47,7 +47,7 @@ class User
      *
      * @return string
      */
-    public function getPassword()
+    public function getMpxPassword()
     {
         return $this->password;
     }

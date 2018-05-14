@@ -87,6 +87,6 @@ class TokenCachePool
      */
     private function cacheKey(UserSession $userSession): string
     {
-        return md5($userSession->getUser()->getUsername());
+        return md5($userSession->getUser()->getMpxUsername());
     }
 }
