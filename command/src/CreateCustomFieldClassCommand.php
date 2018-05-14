@@ -117,15 +117,19 @@ EOD;
 
             $property = $class->addProperty($field->getFieldName());
             $property->setVisibility('protected');
-            $property->setComment($field->getDescription());
-            $property->addComment('');
+            if (!empty($field->getDescription())) {
+                $property->setComment($field->getDescription());
+                $property->addComment('');
+            }
             $dataType = static::TYPE_MAP[$field->getDataType()];
             $property->addComment('@var '.$dataType);
 
             $get = $class->addMethod('get' . ucfirst($property->getName()));
             $get->setVisibility('public');
-            $get->addComment('Returns ' . lcfirst($field->getDescription()));
-            $get->addComment('');
+            if (!empty($field->getDescription())) {
+                $get->addComment('Returns ' . lcfirst($field->getDescription()));
+                $get->addComment('');
+            }
             $get->addComment('@return ' . $dataType);
 
             // If the property is a typed array, PHP will only let us use
@@ -145,8 +149,10 @@ EOD;
             // Add a set method for the property.
             $set = $class->addMethod('set' . ucfirst($property->getName()));
             $set->setVisibility('public');
-            $set->addComment('Set ' . lcfirst($field->getDescription()));
-            $set->addComment('');
+            if (!empty($field->getDescription())) {
+                $set->addComment('Set ' . lcfirst($field->getDescription()));
+                $set->addComment('');
+            }
             $set->addComment('@param ' . $field->getDataType());
             $set->addParameter($field->getFieldName());
             $set->addBody('$this->' . $field->getFieldName() . ' = ' . '$' . $field->getFieldName() . ';');
