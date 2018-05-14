@@ -119,7 +119,11 @@ EOD;
                 $classNames[$mpxNamespace] = $className;
                 $namespaceClasses[$mpxNamespace] = $namespace;
 
-                $class->addComment('Custom fields for namespace at '.$mpxNamespace);
+                $class->addComment('@CustomField(');
+                $class->addComment('    namespace="'.$mpxNamespace.'",');
+                $class->addComment('    service="'.$input->getArgument('data-service').'",');
+                $class->addComment('    objectType="'.$input->getArgument('data-object').'",');
+                $class->addComment(')');
             }
             else {
                 $namespace = $namespaceClasses[$mpxNamespace];
