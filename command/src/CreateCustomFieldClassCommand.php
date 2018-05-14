@@ -89,8 +89,8 @@ EOD;
             $userSession
         );
         $manager = DataServiceManager::basicDiscovery();
-        $mediaDataService = $manager->getDataService($input->getArgument('data-service'), $input->getArgument('data-object'), $input->getArgument('schema'));
-        $dof = new DataObjectFactory($mediaDataService->getAnnotation()->getFieldDataService(), $authenticatedClient);
+        $dataService = $manager->getDataService($input->getArgument('data-service'), $input->getArgument('data-object'), $input->getArgument('schema'));
+        $dof = new DataObjectFactory($dataService->getAnnotation()->getFieldDataService(), $authenticatedClient);
         $filter = new ByFields();
         /** @var Field[] $results */
         $results = $dof->select($filter);
@@ -99,7 +99,14 @@ EOD;
         $classNames = [];
 
         $nf = new \NumberFormatter("en", \NumberFormatter::SPELLOUT);
+        $output->writeln('Generating classes for all custom fields:');
         foreach ($results as $field) {
+            $output->writeln($field->getNamespace().':'.$field->getFieldName());
+
+            // The response does not contain complete field data, so we reload it.
+            /** @var Field $field */
+            $field = $dof->load($field->getId())->wait();
+
             $mpxNamespace = (string)$field->getNamespace();
             if (!isset($namespaceClasses[$mpxNamespace])) {
                 $className = 'CustomFieldClass'.ucfirst(str_replace('-', '', $nf->format(count($namespaceClasses) + 1)));
