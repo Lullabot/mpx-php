@@ -32,7 +32,10 @@ class DataObjectFactoryTest extends TestCase
     /**
      * Tests loading a URI to an mpx object.
      *
+     * @covers ::__construct()
      * @covers ::load()
+     * @covers ::getObjectSerializer()
+     * @covers ::deserialize()
      */
     public function testLoad()
     {
@@ -101,6 +104,7 @@ class DataObjectFactoryTest extends TestCase
      *
      * @covers ::selectRequest()
      * @covers ::getBaseUri()
+     * @covers ::getEntriesSerializer()
      */
     public function testSelectRequest()
     {
