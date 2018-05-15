@@ -50,4 +50,20 @@ interface ObjectInterface extends IdInterface
      * @param UriInterface
      */
     public function setOwnerId($ownerId);
+
+    /**
+     * Return custom fields attached to this object.
+     *
+     * @param string $namespace The namespace of the fields to retrieve.
+     *
+     * @return CustomFieldInterface
+     */
+    public function getCustomFields($namespace);
+
+    /**
+     * Set the custom fields attached to this data object.
+     *
+     * @param CustomFieldInterface[] $customFields The array of custom field implementations, keyed by their namespace.
+     */
+    public function setCustomFields(array $customFields);
 }
