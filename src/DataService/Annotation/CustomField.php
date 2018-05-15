@@ -3,7 +3,13 @@
 namespace Lullabot\Mpx\DataService\Annotation;
 
 /**
+ * Annotation definition for custom field classes.
+ *
+ * All classes with this annotation must implement \Lullabot\Mpx\DataService\CustomFieldInterface.
+ *
  * @Annotation
+ *
+ * @see \Lullabot\Mpx\DataService\CustomFieldInterface
  */
 class CustomField
 {
