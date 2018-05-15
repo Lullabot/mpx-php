@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\Encoder\CJsonEncoder;
+use Lullabot\Mpx\Normalizer\CustomFieldsNormalizer;
 use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
@@ -112,6 +113,17 @@ class DataObjectFactory
         // @todo Is this extractor required?
         $dataServiceExtractor = new DataServiceExtractor();
         $dataServiceExtractor->setClass($this->dataService->getClass());
+        $dataServiceExtractor->setCustomFields($this->dataService->getCustomFields());
+
+        // The serializer treats the $xmlns as it's own separate property, and
+        // there is no way to access it from within the extractor. We can't
+        // alter $context in the CJsonEncoder as it is not passed by reference.
+        // @todo This feels like a bit of a hack.
+        $decoded = \GuzzleHttp\json_decode($data, true);
+        if (isset($decoded['$xmlns'])) {
+            $dataServiceExtractor->setNamespaceMapping($decoded['$xmlns']);
+        }
+
         $p = new PropertyInfoExtractor([], [$dataServiceExtractor], [], []);
         $cached = new PropertyInfoCacheExtractor($p, $this->cacheItemPool);
 
@@ -259,9 +271,11 @@ class DataObjectFactory
         $encoders = [new CJsonEncoder()];
 
         // Attempt normalizing each key in this order, including denormalizing recursively.
+        $customFieldsNormalizer = new CustomFieldsNormalizer($this->dataService->getCustomFields());
         $normalizers = [
             new UnixMicrosecondNormalizer(),
             new UriNormalizer(),
+            $customFieldsNormalizer,
             new ObjectNormalizer(
                 null, null, null,
                 $dataServiceExtractor
@@ -269,6 +283,9 @@ class DataObjectFactory
             new ArrayDenormalizer(),
         ];
 
-        return new Serializer($normalizers, $encoders);
+        $serializer = new Serializer($normalizers, $encoders);
+        $customFieldsNormalizer->setSerializer($serializer);
+
+        return $serializer;
     }
 }
