@@ -108,7 +108,7 @@ class DataObjectFactory
      *
      * @return IdInterface
      */
-    public function deserialize(string $class, $data)
+    protected function deserialize(string $class, $data)
     {
         // @todo Is this extractor required?
         $dataServiceExtractor = new DataServiceExtractor();
