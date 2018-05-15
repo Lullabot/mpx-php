@@ -47,19 +47,28 @@ class DataServiceDiscovery
     private $dataServices = [];
 
     /**
+     * The manager used to discover custom field implementations.
+     *
+     * @var CustomFieldManager
+     */
+    private $customFieldManager;
+
+    /**
      * DataServiceDiscovery constructor.
      *
-     * @param string $namespace The namespace of the plugins.
-     * @param string $directory The directory of the plugins.
-     * @param $rootDir
+     * @param string                              $namespace          The namespace of the plugins.
+     * @param string                              $directory          The directory of the plugins.
+     * @param                                     $rootDir
      * @param \Doctrine\Common\Annotations\Reader $annotationReader
+     * @param CustomFieldManager                  $customFieldManager
      */
-    public function __construct($namespace, $directory, $rootDir, Reader $annotationReader)
+    public function __construct($namespace, $directory, $rootDir, Reader $annotationReader, CustomFieldManager $customFieldManager)
     {
         $this->namespace = $namespace;
         $this->annotationReader = $annotationReader;
         $this->directory = $directory;
         $this->rootDir = $rootDir;
+        $this->customFieldManager = $customFieldManager;
     }
 
     /**
@@ -94,7 +103,14 @@ class DataServiceDiscovery
                 continue;
             }
 
-            $this->dataServices[$annotation->getService()][$annotation->getObjectType()][$annotation->getSchemaVersion()] = new DiscoveredDataService($class, $annotation);
+            // Now that we have a new data service, we need to attach any
+            // custom field implementations.
+            $fields = $this->customFieldManager->getCustomFields();
+            $customFields = [];
+            if (isset($fields[$annotation->getService()][$annotation->getObjectType()])) {
+                $customFields = $fields[$annotation->getService()][$annotation->getObjectType()];
+            }
+            $this->dataServices[$annotation->getService()][$annotation->getObjectType()][$annotation->getSchemaVersion()] = new DiscoveredDataService($class, $annotation, $customFields);
         }
     }
 
