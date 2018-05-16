@@ -63,7 +63,7 @@ class ResolveAllUrlsTest extends TestCase
         $resolver = new ResolveAllUrls($session, $cache);
         $r = $resolver->resolve('Media Data Service');
         $this->assertEquals('Media Data Service', $r->getService());
-        $this->assertEquals('https://data.media.theplatform.com/media', (string) $r->resolve());
+        $this->assertEquals('https://data.media.theplatform.com/media', (string) $r->getUrl());
     }
 
     /**

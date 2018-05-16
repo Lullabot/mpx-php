@@ -221,7 +221,7 @@ class DataObjectFactory
             if (!$account) {
                 $resolver = new ResolveAllUrls($this->authenticatedClient, $this->cacheItemPool);
 
-                return $resolver->resolve($annotation->getService($readonly))->resolve().$annotation->getPath();
+                return $resolver->resolve($annotation->getService($readonly))->getUrl().$annotation->getPath();
             }
 
             $resolved = $this->resolveDomain->resolve($account);

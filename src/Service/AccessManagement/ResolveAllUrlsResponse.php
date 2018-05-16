@@ -50,11 +50,13 @@ class ResolveAllUrlsResponse
     }
 
     /**
+     * Return the resolved URL for this service.
+     *
      * @param bool $insecure (optional) Set to true to request the insecure version of this service.
      *
      * @return UriInterface
      */
-    public function resolve(bool $insecure = false): UriInterface
+    public function getUrl(bool $insecure = false): UriInterface
     {
         $url = $this->resolveAllUrlsResponse[array_rand($this->resolveAllUrlsResponse)];
 

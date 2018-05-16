@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `\Lullabot\Mpx\Service\IdentityManagement\UserInterface` has been added to
   simplify bridging user configuration from applications. #116
 - `\Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls` now follows what
-  `\Lullabot\Mpx\Service\AccessManagement\ResolveDomain` does and has chagned
+  `\Lullabot\Mpx\Service\AccessManagement\ResolveDomain` does and has changed
   it's API as a result. #144
 
 ### Removed

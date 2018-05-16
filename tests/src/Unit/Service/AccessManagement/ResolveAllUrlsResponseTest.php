@@ -25,7 +25,7 @@ class ResolveAllUrlsResponseTest extends TestCase
             new Uri('http://www.example.com'),
         ]);
 
-        $this->assertEquals('https://www.example.com', $response->resolve());
-        $this->assertEquals('http://www.example.com', $response->resolve(true));
+        $this->assertEquals('https://www.example.com', $response->getUrl());
+        $this->assertEquals('http://www.example.com', $response->getUrl(true));
     }
 }

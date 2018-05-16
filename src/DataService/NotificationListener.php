@@ -81,7 +81,7 @@ class NotificationListener
         $resolver = new ResolveAllUrls($this->authenticatedClient, $cacheItemPool);
 
         $response = $resolver->resolve($this->service->getAnnotation()->getService(true));
-        $this->uri = $response->resolve().'/notify';
+        $this->uri = $response->getUrl().'/notify';
     }
 
     /**
