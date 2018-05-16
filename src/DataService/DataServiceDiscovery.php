@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\DataService;
 
 use Doctrine\Common\Annotations\Reader;
+use Lullabot\Mpx\DataService\Annotation\DataService;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -105,11 +106,7 @@ class DataServiceDiscovery
 
             // Now that we have a new data service, we need to attach any
             // custom field implementations.
-            $fields = $this->customFieldManager->getCustomFields();
-            $customFields = [];
-            if (isset($fields[$annotation->getService()][$annotation->getObjectType()])) {
-                $customFields = $fields[$annotation->getService()][$annotation->getObjectType()];
-            }
+            $customFields = $this->getCustomFields($annotation);
             $this->dataServices[$annotation->getService()][$annotation->getObjectType()][$annotation->getSchemaVersion()] = new DiscoveredDataService($class, $annotation, $customFields);
         }
     }
@@ -130,5 +127,23 @@ class DataServiceDiscovery
         $class = $this->namespace.'\\'.$subnamespace.$file->getBasename('.php');
 
         return $class;
+    }
+
+    /**
+     * Return the array of custom fields for an annotation.
+     *
+     * @param DataService $annotation The Data Service annotation being discovered.
+     *
+     * @return DiscoveredCustomField[] An array of custom field definitions.
+     */
+    private function getCustomFields(DataService $annotation): array
+    {
+        $fields = $this->customFieldManager->getCustomFields();
+        $customFields = [];
+        if (isset($fields[$annotation->getService()][$annotation->getObjectType()])) {
+            $customFields = $fields[$annotation->getService()][$annotation->getObjectType()];
+        }
+
+        return $customFields;
     }
 }
