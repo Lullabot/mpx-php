@@ -57,9 +57,9 @@ class ResolveDomain extends ResolveBase
         $normalizers = [new UriNormalizer(), new ObjectNormalizer(null, null, null, new ResolveDomainResponseExtractor()), new ArrayDenormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
 
-        $response = $serializer->deserialize($response->getBody(), ResolveDomainResponse::class, 'json');
+        $resolved = $serializer->deserialize($response->getBody(), ResolveDomainResponse::class, 'json');
         $item = new CacheItem($key);
-        $item->set($response);
+        $item->set($resolved);
 
         // thePlatform provides no guidance on how long we can cache this for.
         // Since many of their examples and other mpx clients hardcode these
@@ -68,6 +68,6 @@ class ResolveDomain extends ResolveBase
         $item->expiresAfter(new \DateInterval('P30D'));
         $this->cache->save($item);
 
-        return $response;
+        return $resolved;
     }
 }
