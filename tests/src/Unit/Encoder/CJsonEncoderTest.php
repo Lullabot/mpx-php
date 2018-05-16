@@ -32,17 +32,17 @@ class CJsonEncoderTest extends TestCase
         $decoded = $encoder->decode(json_encode($data), 'json');
         $this->assertEquals(
             [
-                [
+                'http://example.com/ns1' => [
                     'namespace' => 'http://example.com/ns1',
                     'data' => [
-                            'kittens' => 'Highly recommended',
-                        ],
+                        'kittens' => 'Highly recommended',
+                    ],
                 ],
-                [
+                'http://example.com/ns2' => [
                     'namespace' => 'http://example.com/ns2',
                     'data' => [
-                            'puppies' => 'Also worth considering',
-                        ],
+                        'puppies' => 'Also worth considering',
+                    ],
                 ],
             ], $decoded['customFields']);
     }
@@ -79,13 +79,13 @@ class CJsonEncoderTest extends TestCase
                         'prefix1$kittens' => 'Highly recommended',
                         'prefix2$puppies' => 'Also worth considering',
                         'customFields' => [
-                            0 => [
+                            'http://example.com/ns1' => [
                                 'namespace' => 'http://example.com/ns1',
                                 'data' => [
                                     'kittens' => 'Highly recommended',
                                 ],
                             ],
-                            1 => [
+                            'http://example.com/ns2' => [
                                 'namespace' => 'http://example.com/ns2',
                                 'data' => [
                                     'puppies' => 'Also worth considering',
@@ -97,13 +97,13 @@ class CJsonEncoderTest extends TestCase
                         'prefix2$puppies' => 'Highly recommended',
                         'prefix1$kittens' => 'Also worth considering',
                         'customFields' => [
-                            0 => [
+                            'http://example.com/ns1' => [
                                 'namespace' => 'http://example.com/ns1',
                                 'data' => [
                                     'kittens' => 'Also worth considering',
                                 ],
                             ],
-                            1 => [
+                            'http://example.com/ns2' => [
                                 'namespace' => 'http://example.com/ns2',
                                 'data' => [
                                     'puppies' => 'Highly recommended',

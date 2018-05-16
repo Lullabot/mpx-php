@@ -87,9 +87,10 @@ class DataServiceExtractor extends CachingPhpDocExtractor
             return [new Type('object', false, $discoveredCustomField->getClass())];
         }
 
-        if ($property == 'customFields') {
+        if ('customFields' == $property) {
             $collectionKeyType = new Type(Type::BUILTIN_TYPE_STRING);
             $collectionValueType = new Type('object', false, CustomFieldInterface::class);
+
             return [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, $collectionKeyType, $collectionValueType)];
         }
 
