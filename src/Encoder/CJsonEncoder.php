@@ -20,6 +20,7 @@ class CJsonEncoder extends JsonEncoder
         }
 
         $this->cleanup($decoded);
+
         return $decoded;
     }
 
@@ -62,12 +63,13 @@ class CJsonEncoder extends JsonEncoder
     {
         // @todo This is O(namespaces * entries) and can be optimized.
         foreach ($decoded['$xmlns'] as $prefix => $namespace) {
-            if (isset($decoded['entries'])) {
-                foreach ($decoded['entries'] as &$entry) {
-                    $this->decodeObject($prefix, $namespace, $entry);
-                }
-            } else {
+            if (!isset($decoded['entries'])) {
                 $this->decodeObject($prefix, $namespace, $decoded);
+                continue;
+            }
+
+            foreach ($decoded['entries'] as &$entry) {
+                $this->decodeObject($prefix, $namespace, $entry);
             }
         }
     }
