@@ -8,13 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Add a method to yield pages in lists #107
 - Service URLs are now cached when loading objects and listening for
   notifications. #144
 
 ### Changed
 
-- Fix nextList returning true for single-item lists #108
 - Fix broken range calculations for the end of a list of ranges #113
 - `\Lullabot\Mpx\Service\IdentityManagement\UserInterface` has been added to
   simplify bridging user configuration from applications. #116
@@ -24,7 +22,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - The UnixMicrosecondNormalizer class has been renamed to
   UnixMillisecondNormalizer #115
 
-### Removed
+## [0.1.1] - 2018-05-16
+
+### Added
+
+- Add a method to yield pages in lists #107
+
+### Changed
+
+- Fix nextList returning true for single-item lists #108
 
 ## [0.1.0] - 2018-05-04
 
