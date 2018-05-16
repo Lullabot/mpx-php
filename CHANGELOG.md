@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Service URLs are now cached when loading objects and listening for
+  notifications. #144
+
+### Changed
+
+- Fix broken range calculations for the end of a list of ranges #113
+- `\Lullabot\Mpx\Service\IdentityManagement\UserInterface` has been added to
+  simplify bridging user configuration from applications. #116
+- `\Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls` now follows what
+  `\Lullabot\Mpx\Service\AccessManagement\ResolveDomain` does and has changed
+  it's API as a result. #144
+- The UnixMicrosecondNormalizer class has been renamed to
+  UnixMillisecondNormalizer #115
+
 ## [0.1.1] - 2018-05-16
 
 ### Added
@@ -12,9 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Fix nextlist returning true for single-item lists #108
-
-### Removed
+- Fix nextList returning true for single-item lists #108
 
 ## [0.1.0] - 2018-05-04
 

@@ -91,16 +91,50 @@ class RangeTest extends TestCase
         $list->setStartIndex($start);
         $list->setEntryCount($entryCount);
         $list->setItemsPerPage($entryCount);
-        $pages = rand(1, 10);
-        $list->setTotalResults($entryCount * $pages);
+        $remainingPages = rand(1, 10);
+        $list->setTotalResults($start + ($entryCount * $remainingPages));
         $ranges = Range::nextRanges($list);
 
-        $this->assertEquals($pages, count($ranges));
+        $this->assertEquals($remainingPages, count($ranges));
 
         foreach ($ranges as $range) {
             $start += $entryCount;
-            $end = $start + $entryCount - 1;
+            $end = min($start + $entryCount - 1, $list->getTotalResults());
             $this->assertEquals("$start-$end", $range->toQueryParts()['range']);
         }
+    }
+
+    /**
+     * Tests that we return the right number of ranges when the last range is not a complete page.
+     *
+     * @covers ::nextRanges()
+     */
+    public function testPartialEndRange()
+    {
+        $list = new ObjectList();
+        $list->setStartIndex(1);
+        $list->setItemsPerpage(2);
+        $list->setEntryCount(2);
+        $list->setTotalResults(79425);
+        $ranges = Range::nextRanges($list);
+        $this->assertCount(39712, $ranges);
+        $this->assertEquals('3-4', reset($ranges)->toQueryParts()['range']);
+        $this->assertEquals('79425-79425', end($ranges)->toQueryParts()['range']);
+    }
+
+    /**
+     * Test that no ranges are returned if we are already on the last page.
+     *
+     * @covers ::nextRanges()
+     */
+    public function testNextOnLastRange()
+    {
+        $list = new ObjectList();
+        $list->setStartIndex(11);
+        $list->setItemsPerPage(10);
+        $list->setEntryCount(10);
+        $list->setTotalResults(20);
+        $ranges = Range::nextRanges($list);
+        $this->assertCount(0, $ranges);
     }
 }

@@ -6,9 +6,9 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 /**
- * Normalize a microsecond timestamp into a date object.
+ * Normalize a millisecond timestamp into a date object.
  */
-class UnixMicrosecondNormalizer extends DateTimeNormalizer
+class UnixMillisecondNormalizer extends DateTimeNormalizer
 {
     /**
      * {@inheritdoc}
@@ -16,7 +16,7 @@ class UnixMicrosecondNormalizer extends DateTimeNormalizer
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         if (!is_int($data)) {
-            throw new NotNormalizableValueException('The data is not an integer, you should pass an integer representing the unix time in microseconds.');
+            throw new NotNormalizableValueException('The data is not an integer, you should pass an integer representing the unix time in milliseconds.');
         }
 
         $seconds = floor($data / 1000);
