@@ -15,7 +15,9 @@ class CJsonEncoder extends JsonEncoder
     public function decode($data, $format, array $context = [])
     {
         $decoded = parent::decode($data, $format, $context);
-        $decoded = $this->decodeCustomFields($decoded);
+        if (isset($decoded['$xmlns'])) {
+            $decoded = $this->decodeCustomFields($decoded);
+        }
 
         return $this->cleanup($decoded);
     }
@@ -59,16 +61,14 @@ class CJsonEncoder extends JsonEncoder
      */
     protected function decodeCustomFields($decoded)
     {
-        if (isset($decoded['$xmlns'])) {
-            // @todo This is O(namespaces * entries) and can be optimized.
-            foreach ($decoded['$xmlns'] as $prefix => $namespace) {
-                if (isset($decoded['entries'])) {
-                    foreach ($decoded['entries'] as &$entry) {
-                        $this->decodeObject($prefix, $namespace, $entry);
-                    }
-                } else {
-                    $this->decodeObject($prefix, $namespace, $decoded);
+        // @todo This is O(namespaces * entries) and can be optimized.
+        foreach ($decoded['$xmlns'] as $prefix => $namespace) {
+            if (isset($decoded['entries'])) {
+                foreach ($decoded['entries'] as &$entry) {
+                    $this->decodeObject($prefix, $namespace, $entry);
                 }
+            } else {
+                $this->decodeObject($prefix, $namespace, $decoded);
             }
         }
 
