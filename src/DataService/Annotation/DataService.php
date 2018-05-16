@@ -2,6 +2,9 @@
 
 namespace Lullabot\Mpx\DataService\Annotation;
 
+use Lullabot\Mpx\DataService\DiscoveredDataService;
+use Lullabot\Mpx\DataService\Field;
+
 /**
  * @Annotation
  *
@@ -104,5 +107,25 @@ class DataService
     public function getPath(): string
     {
         return '/data/'.$this->objectType;
+    }
+
+    /**
+     * Return a discovered data service for custom fields.
+     *
+     * Custom fields break the conventions set by all other data services in
+     * that they support CRUD operations, but have paths that are the child of
+     * another object type. As well, they have schemas, but thePlatform has no
+     * documentation of their history. To simplify the implementation, we do
+     * not support discoverable classes for field definitions.
+     *
+     * @return DiscoveredDataService A data service suitable for using with a DataObjectFactory.
+     */
+    public function getFieldDataService(): DiscoveredDataService
+    {
+        $service = clone $this;
+        $service->objectType .= '/Field';
+        $service->schemaVersion = '1.2';
+
+        return new DiscoveredDataService(Field::class, $service);
     }
 }
