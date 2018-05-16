@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\DataService;
+namespace Lullabot\Mpx\Service\AccessManagement;
 
 use GuzzleHttp\Psr7\Uri;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
@@ -15,15 +15,15 @@ use Symfony\Component\PropertyInfo\Type;
  *
  * @see \Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor
  */
-class ResolveDomainResponseExtractor implements PropertyTypeExtractorInterface
+class ResolveAllUrlsResponseExtractor implements PropertyTypeExtractorInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getTypes($class, $property, array $context = [])
     {
-        if ('resolveDomainResponse' != $property) {
-            throw new \InvalidArgumentException('This extractor only supports resolveDomainResponse properties.');
+        if ('resolveAllUrlsResponse' != $property) {
+            throw new \InvalidArgumentException('This extractor only supports resolveAllUrlsResponse properties.');
         }
 
         $collectionKeyType = new Type(Type::BUILTIN_TYPE_STRING);
