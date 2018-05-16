@@ -142,6 +142,16 @@ Drupal, it should already provide that functionality. If not, see
 `\Lullabot\Mpx\DataService\CustomFieldManager::basicDiscovery` for an example
 that can be adapted in many cases.
 
+Once the classes are available, they will be automatically used when loading
+mpx objects. For example, to retrieve fields for the above namespace on a
+Media object, call:
+
+```php
+$dof = new DataObjectFactory($manager->getDataService('Media Data Service', 'Media', '1.10'), $this->authenticatedClient);
+$media = $dof->load(new Uri('http://data.media.theplatform.com/media/data/Media/12345'))->wait();
+$fields = $media->getCustomFields('http://access.auth.theplatform.com/data/Account/555555'):
+```
+
 ## Overview of main classes
 
 ### Lullabot\Mpx\Client
