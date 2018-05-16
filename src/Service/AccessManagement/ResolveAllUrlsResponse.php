@@ -4,6 +4,19 @@ namespace Lullabot\Mpx\Service\AccessManagement;
 
 use Psr\Http\Message\UriInterface;
 
+/**
+ * This class represents a response from mpx's resolveAllUrls API.
+ *
+ * In concept, this class is similar to all Data Service classes in that it is
+ * used as a destination class for the Serializer. Note that these methods are
+ * not part of a Data Service, so common assumptions like paths, schemas, and
+ * data structures do not directly apply.
+ *
+ * In general, use resolveDomain instead as it is more efficient.
+ *
+ * @see \Lullabot\Mpx\Service\AccessManagement\ResolveDomain
+ * @see https://docs.theplatform.com/help/wsf-resolveallurls-method
+ */
 class ResolveAllUrlsResponse
 {
     /**
