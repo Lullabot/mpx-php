@@ -1,0 +1,27 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+added,,DateTime,"The date and time that this object was created
+ This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field"
+addedByUserId,,URI,The id of the user that created this object
+allowedValues,,dataType[],The allowed values for this custom field
+dataStructure,,DataStructure,The data structure of this custom field
+dataType,,DataType,The data type of this custom field
+defaultValue,,dataType,The default value for this custom field
+description,,String,The description of this object
+fieldName,,String,The node name for this custom field in XML and JSON
+guid,,String,An alternate identifier for this object that is unique within the owning account
+id,,URI,The globally unique URI of this object
+includeInTextSearch,,Boolean,Whether this custom field is indexed for search
+isUnique,,Boolean,Whether this custom field stores unique values and functions as a create key
+length,,Integer,The maximum string length or the number of decimal positions allowed in this custom field's value
+locked,,Boolean,Whether this object currently allows updates
+namespace,,String,The namespace this custom field belongs to
+namespacePrefix,,String,An XML namespace prefix for this field
+notifyAlways,,Boolean,Whether this custom field is always available in change notifications
+notifyChanges,,Boolean,Whether this custom field is available on change in update notifications
+notifyDelete,,Boolean,Whether this custom field is available in delete notifications
+ownerId,,URI,The id of the account that owns this object
+searchFieldName,,String,The name that this custom field is indexed under
+title,,String,The name of this object
+updated,,DateTime,The date and time this object was last modified
+updatedByUserId,,URI,The id of the user that last modified this object
+version,,Long,"This object's modification version, used for optimistic locking"
