@@ -60,22 +60,21 @@ class DataObjectFactory
     /**
      * DataObjectFactory constructor.
      *
-     * @todo Inject the resolveDomain() instead of constructing?
-     *
      * @param DiscoveredDataService             $dataService         The service to load data from.
      * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
-     * @param CacheItemPoolInterface|null       $cacheItemPool       (optional) Cache to store reflection metadata.
+     * @param CacheItemPoolInterface|null       $cacheItemPool       (optional) Cache to store API metadata.
      */
     public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient, CacheItemPoolInterface $cacheItemPool = null)
     {
         $this->authenticatedClient = $authenticatedClient;
-        $this->resolveDomain = new ResolveDomain($this->authenticatedClient);
         $this->dataService = $dataService;
 
         if (!$cacheItemPool) {
             $cacheItemPool = new ArrayCachePool();
         }
         $this->cacheItemPool = $cacheItemPool;
+
+        $this->resolveDomain = new ResolveDomain($this->authenticatedClient, $this->cacheItemPool);
     }
 
     /**
@@ -207,8 +206,6 @@ class DataObjectFactory
     /**
      * Get the base URI from an annotation or service registry.
      *
-     * @todo This should cache resolved URLs.
-     *
      * @param DataService $annotation The annotation data is being loaded for.
      * @param IdInterface $account    (optional) The account to use for service resolution.
      * @param bool        $readonly   (optional) Load from the read-only service.
@@ -222,10 +219,9 @@ class DataObjectFactory
         if (!($base = $annotation->getBaseUri())) {
             // If no account is specified, we must use the ResolveAllUrls service instead.
             if (!$account) {
-                /** @var ResolveAllUrls $urls */
-                $urls = ResolveAllUrls::load($this->authenticatedClient, $annotation->getService($readonly))->wait();
+                $resolver = new ResolveAllUrls($this->authenticatedClient, $this->cacheItemPool);
 
-                return $urls->resolve().$annotation->getPath();
+                return $resolver->resolve($annotation->getService($readonly))->getUrl().$annotation->getPath();
             }
 
             $resolved = $this->resolveDomain->resolve($account);
