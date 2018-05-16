@@ -76,29 +76,67 @@ class DataServiceExtractor extends CachingPhpDocExtractor
      */
     public function getTypes($class, $property, array $context = [])
     {
-        // First, check to see if this is a custom field.
+        // First, check to see if this object is a custom field.
         if (isset($this->xmlns[$property])) {
-            $ns = $this->xmlns[$property];
-
-            if (!$discoveredCustomField = $this->customFields[$ns]) {
-                throw new LogicException(sprintf('No custom field class was found for %s. setCustomFields() must be called before using this extractor.', $ns));
-            }
-
-            return [new Type('object', false, $discoveredCustomField->getClass())];
+            return $this->customFieldInstance($property);
         }
 
+        // Check if this is an array of custom field objects.
         if ('customFields' == $property) {
-            $collectionKeyType = new Type(Type::BUILTIN_TYPE_STRING);
-            $collectionValueType = new Type('object', false, CustomFieldInterface::class);
-
-            return [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, $collectionKeyType, $collectionValueType)];
+            return $this->customFieldsArrayType();
         }
 
-        // Early return for normal top-level properties.
-        if ('entries' !== $property) {
-            return parent::getTypes($class, $property, $context);
+        if ('entries' == $property) {
+            return $this->entriesType();
         }
 
+        // For all other types rely on the phpdoc extractor.
+        return parent::getTypes($class, $property, $context);
+    }
+
+    /**
+     * Return the type for a custom field class.
+     *
+     * @param string $prefix The prefix of the namespace.
+     *
+     * @return array
+     */
+    private function customFieldInstance($prefix): array
+    {
+        $ns = $this->xmlns[$prefix];
+
+        if (!$discoveredCustomField = $this->customFields[$ns]) {
+            throw new LogicException(
+                sprintf(
+                    'No custom field class was found for %s. setCustomFields() must be called before using this extractor.',
+                    $ns
+                )
+            );
+        }
+
+        return [new Type('object', false, $discoveredCustomField->getClass())];
+    }
+
+    /**
+     * Return the type for an array of custom fields, indexed by a string.
+     *
+     * @return array
+     */
+    private function customFieldsArrayType(): array
+    {
+        $collectionKeyType = new Type(Type::BUILTIN_TYPE_STRING);
+        $collectionValueType = new Type('object', false, CustomFieldInterface::class);
+
+        return [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, $collectionKeyType, $collectionValueType)];
+    }
+
+    /**
+     * Return the type of an array of entries used in an object list.
+     *
+     * @return array
+     */
+    private function entriesType(): array
+    {
         // This is an object list, so handle the 'entries' key.
         if (!isset($this->class)) {
             throw new \UnexpectedValueException('setClass() must be called before using this extractor.');
