@@ -89,15 +89,13 @@ class CustomFieldDiscovery
         foreach ($finder as $file) {
             $class = $this->classForFile($file);
             /* @var \Lullabot\Mpx\DataService\Annotation\CustomField $annotation */
-            $annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), 'Lullabot\Mpx\DataService\Annotation\CustomField');
-            if (!$annotation) {
-                continue;
-            }
-            if (!is_subclass_of($class, CustomFieldInterface::class)) {
-                throw new \RuntimeException(sprintf('%s must implement %s.', $class, CustomFieldInterface::class));
-            }
+            if ($annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), 'Lullabot\Mpx\DataService\Annotation\CustomField')) {
+                if (!is_subclass_of($class, CustomFieldInterface::class)) {
+                    throw new \RuntimeException(sprintf('%s must implement %s.', $class, CustomFieldInterface::class));
+                }
 
-            $this->customFields[$annotation->service][$annotation->objectType][$annotation->namespace] = new DiscoveredCustomField($class, $annotation);
+                $this->customFields[$annotation->service][$annotation->objectType][$annotation->namespace] = new DiscoveredCustomField($class, $annotation);
+            }
         }
     }
 
