@@ -1,0 +1,28 @@
+{
+  "id": "http://data.media.theplatform.com/media/data/Media/Field/12345",
+  "guid": "MwC3WwD7PACqVQBRgADslhWRLfnR4s3w",
+  "title": "uri field",
+  "description": "",
+  "added": 1236030615000,
+  "ownerId": "http://access.auth.theplatform.com/data/Account/55555",
+  "updated": 1236030615000,
+  "addedByUserId": "https://identity.auth.theplatform.com/idm/data/User/mps/82749532",
+  "updatedByUserId": "https://identity.auth.theplatform.com/idm/data/User/mps/82749532",
+  "version": 0,
+  "locked": false,
+  "fieldName": "uriField",
+  "namespace": "http://access.auth.theplatform.com/data/Account/55555",
+  "namespacePrefix": "",
+  "dataType": "URI",
+  "dataStructure": "Single",
+  "defaultValue": "http://www.example.com",
+  "allowedValues": [
+  ],
+  "isUnique": false,
+  "length": 0,
+  "notifyAlways": false,
+  "notifyChanges": false,
+  "notifyDelete": false,
+  "searchFieldName": "uriField",
+  "includeInTextSearch": false
+}
