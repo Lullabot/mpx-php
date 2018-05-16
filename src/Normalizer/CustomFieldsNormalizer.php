@@ -50,6 +50,10 @@ class CustomFieldsNormalizer implements DenormalizerInterface
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         // This is the annotated custom field class defining all custom fields.
+        if (!isset($this->customFields[$data['namespace']])) {
+            return new MissingCustomFieldsClass($data['namespace']);
+        }
+
         $concreteClass = $this->customFields[$data['namespace']]->getClass();
 
         if (!$this->serializer instanceof DenormalizerInterface) {
