@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\DataService;
 
 use Doctrine\Common\Annotations\Reader;
+use Lullabot\Mpx\DataService\Annotation\CustomField;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -89,13 +90,7 @@ class CustomFieldDiscovery
         foreach ($finder as $file) {
             $class = $this->classForFile($file);
             /* @var \Lullabot\Mpx\DataService\Annotation\CustomField $annotation */
-            if ($annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), 'Lullabot\Mpx\DataService\Annotation\CustomField')) {
-                if (!is_subclass_of($class, CustomFieldInterface::class)) {
-                    throw new \RuntimeException(sprintf('%s must implement %s.', $class, CustomFieldInterface::class));
-                }
-
-                $this->customFields[$annotation->service][$annotation->objectType][$annotation->namespace] = new DiscoveredCustomField($class, $annotation);
-            }
+            $this->registerAnnotation($class);
         }
     }
 
@@ -115,5 +110,27 @@ class CustomFieldDiscovery
         $class = $this->namespace.'\\'.$subnamespace.$file->getBasename('.php');
 
         return $class;
+    }
+
+    /**
+     * Register an annotation and it's custom fields.
+     *
+     * @param string $class The class to inspect for a CustomField annotation.
+     */
+    private function registerAnnotation($class)
+    {
+        /** @var CustomField $annotation */
+        if ($annotation = $this->annotationReader->getClassAnnotation(
+            new \ReflectionClass($class),
+            'Lullabot\Mpx\DataService\Annotation\CustomField'
+        )) {
+            if (!is_subclass_of($class, CustomFieldInterface::class)) {
+                throw new \RuntimeException(sprintf('%s must implement %s.', $class, CustomFieldInterface::class));
+            }
+
+            $this->customFields[$annotation->service][$annotation->objectType][$annotation->namespace] = new DiscoveredCustomField(
+                $class, $annotation
+            );
+        }
     }
 }
