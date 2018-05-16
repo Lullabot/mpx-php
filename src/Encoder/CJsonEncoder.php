@@ -60,18 +60,43 @@ class CJsonEncoder extends JsonEncoder
     protected function decodeCustomFields($decoded)
     {
         if (isset($decoded['$xmlns'])) {
+            // @todo This is O(namespaces * entries) and can be optimized.
             foreach ($decoded['$xmlns'] as $prefix => $namespace) {
-                $customFields = ['namespace' => $namespace];
-                foreach ($decoded as $key => $value) {
-                    if (false !== strpos($key, $prefix.'$')) {
-                        $fieldName = substr($key, strlen($prefix) + 1);
-                        $customFields['data'][$fieldName] = $value;
+                if (isset($decoded['entries'])) {
+                    foreach ($decoded['entries'] as &$entry) {
+                        $this->decodeObject($prefix, $namespace, $entry);
                     }
+                } else {
+                    $this->decodeObject($prefix, $namespace, $decoded);
                 }
-                $decoded['customFields'][] = $customFields;
             }
         }
 
         return $decoded;
+    }
+
+    /**
+     * Decodes an object's custom fields.
+     *
+     * @param string $prefix    The prefix of the namespace in the response.
+     * @param string $namespace The namespace identifier.
+     * @param array  $object    The object data to decode.
+     */
+    protected function decodeObject($prefix, $namespace, &$object)
+    {
+        $customFields = ['namespace' => $namespace];
+        foreach ($object as $key => $value) {
+            if (false !== strpos($key, $prefix.'$')) {
+                $fieldName = substr($key, strlen($prefix) + 1);
+                $customFields['data'][$fieldName] = $value;
+            }
+        }
+
+        // In the case of an object-list response, namespaces are included for
+        // all namespaces in any object in the result set. If a given namespace
+        // is not used in a single object, we can skip custom fields entirely.
+        if (!empty($customFields['data'])) {
+            $object['customFields'][] = $customFields;
+        }
     }
 }
