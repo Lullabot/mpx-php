@@ -1777,7 +1777,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @param string
      */
-    public function setPosterImageMetaAssetType($posterImageMetaAssetType)
+    public function setPosterImageMetaAssetType(string $posterImageMetaAssetType)
     {
         $this->posterImageMetaAssetType = $posterImageMetaAssetType;
     }

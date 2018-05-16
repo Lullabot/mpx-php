@@ -28,18 +28,16 @@ class CJsonEncoder extends JsonEncoder
      * Recursively filter an array, removing null and empty string values.
      *
      * @param array &$data The data to filter.
-     *
-     * @return array The filtered array.
      */
     protected function cleanup(array &$data)
     {
         foreach ($data as &$value) {
             if (is_array($value)) {
-                $value = $this->cleanup($value);
+                $this->cleanup($value);
             }
         }
 
-        return array_filter($data, function ($value) {
+        $data = array_filter($data, function ($value) {
             return null !== $value;
         });
     }
