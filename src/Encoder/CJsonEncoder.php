@@ -16,20 +16,21 @@ class CJsonEncoder extends JsonEncoder
     {
         $decoded = parent::decode($data, $format, $context);
         if (isset($decoded['$xmlns'])) {
-            $decoded = $this->decodeCustomFields($decoded);
+            $this->decodeCustomFields($decoded);
         }
 
-        return $this->cleanup($decoded);
+        $this->cleanup($decoded);
+        return $decoded;
     }
 
     /**
      * Recursively filter an array, removing null and empty string values.
      *
-     * @param array $data The data to filter.
+     * @param array &$data The data to filter.
      *
      * @return array The filtered array.
      */
-    protected function cleanup(array $data)
+    protected function cleanup(array &$data)
     {
         foreach ($data as &$value) {
             if (is_array($value)) {
@@ -55,11 +56,9 @@ class CJsonEncoder extends JsonEncoder
      * there is a 'namespace' key with the fully-qualified mpx namespace URI,
      * and a 'data' key with an array of the custom field values.
      *
-     * @param array $decoded The data to decode.
-     *
-     * @return array The decoded data.
+     * @param array &$decoded The data to decode.
      */
-    protected function decodeCustomFields($decoded)
+    protected function decodeCustomFields(&$decoded)
     {
         // @todo This is O(namespaces * entries) and can be optimized.
         foreach ($decoded['$xmlns'] as $prefix => $namespace) {
@@ -71,8 +70,6 @@ class CJsonEncoder extends JsonEncoder
                 $this->decodeObject($prefix, $namespace, $decoded);
             }
         }
-
-        return $decoded;
     }
 
     /**
