@@ -8,7 +8,7 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\Encoder\CJsonEncoder;
-use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
+use Lullabot\Mpx\Normalizer\UnixMillisecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
@@ -256,7 +256,7 @@ class DataObjectFactory
 
         // Attempt normalizing each key in this order, including denormalizing recursively.
         $normalizers = [
-            new UnixMicrosecondNormalizer(),
+            new UnixMillisecondNormalizer(),
             new UriNormalizer(),
             new ObjectNormalizer(
                 null, null, null,

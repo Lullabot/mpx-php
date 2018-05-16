@@ -2,16 +2,16 @@
 
 namespace Lullabot\Mpx\Tests\Unit\Normalizer;
 
-use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
+use Lullabot\Mpx\Normalizer\UnixMillisecondNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 
 /**
- * Test normalizing a microsecond timestamp.
+ * Test normalizing a millisecond timestamp.
  *
- * @coversDefaultClass \Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer
+ * @coversDefaultClass \Lullabot\Mpx\Normalizer\UnixMillisecondNormalizer
  */
-class UnixMicrosecondNormalizerTest extends TestCase
+class UnixMillisecondNormalizerTest extends TestCase
 {
     /**
      * Test denormalizing a variety of timestamps.
@@ -20,7 +20,7 @@ class UnixMicrosecondNormalizerTest extends TestCase
      */
     public function testDenormalize()
     {
-        $normalizer = new UnixMicrosecondNormalizer();
+        $normalizer = new UnixMillisecondNormalizer();
         $normalized = $normalizer->denormalize(0, \DateTime::class);
         $this->assertEquals(0, $normalized->format('U'));
         $normalized = $normalizer->denormalize(1521719898123, \DateTime::class);
@@ -34,9 +34,9 @@ class UnixMicrosecondNormalizerTest extends TestCase
      */
     public function testInvalidData()
     {
-        $normalizer = new UnixMicrosecondNormalizer();
+        $normalizer = new UnixMillisecondNormalizer();
         $this->expectException(NotNormalizableValueException::class);
-        $this->expectExceptionMessage('The data is not an integer, you should pass an integer representing the unix time in microseconds.');
+        $this->expectExceptionMessage('The data is not an integer, you should pass an integer representing the unix time in milliseconds.');
         $normalized = $normalizer->denormalize('0', \DateTime::class);
     }
 }
