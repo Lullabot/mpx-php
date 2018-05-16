@@ -49,7 +49,7 @@ class CreateCustomFieldClassCommand extends Command {
         $help = <<<EOD
 This command generates a PHP class for a custom field implementation.
 
-A mpx username and password is required. They will be requested interactively,
+An mpx username and password is required. They will be requested interactively,
 or MPX_USERNAME and MPX_PASSWORD environment variables will be used.
 
 As mpx provides no way to infer a reasonable class name, each class is named
