@@ -102,12 +102,12 @@ class DataObjectFactory
      *
      * @todo Inject the serializer in the constructor?
      *
-     * @param string $class The full class name to create.
      * @param string $data  The JSON string to deserialize.
+     * @param string $class The full class name to create.
      *
      * @return IdInterface
      */
-    protected function deserialize(string $class, $data)
+    protected function deserialize($data, string $class)
     {
         // @todo Is this extractor required?
         $dataServiceExtractor = new DataServiceExtractor();
@@ -154,7 +154,7 @@ class DataObjectFactory
 
         $response = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) {
-                return $this->deserialize($this->dataService->getClass(), $response->getBody());
+                return $this->deserialize($response->getBody(), $this->dataService->getClass());
             }
         );
 
@@ -204,7 +204,7 @@ class DataObjectFactory
                 $data = $response->getBody();
 
                 /** @var ObjectList $list */
-                $list = $this->getEntriesSerializer()->deserialize($data, ObjectList::class, 'json');
+                $list = $this->deserialize($data, ObjectList::class);
                 $list->setByFields($byFields);
                 $list->setDataObjectFactory($this, $account);
 
@@ -242,18 +242,6 @@ class DataObjectFactory
         }
 
         return $base;
-    }
-
-    private function getEntriesSerializer()
-    {
-        // @todo Should we just make multiple subclasses of ObjectList?
-        // We need a property extractor that understands the varying types of 'entries'.
-        $dataServiceExtractor = new DataServiceExtractor();
-        $dataServiceExtractor->setClass($this->dataService->getClass());
-        $p = new PropertyInfoExtractor([], [$dataServiceExtractor], [], []);
-        $cached = new PropertyInfoCacheExtractor($p, $this->cacheItemPool);
-
-        return $this->getObjectSerializer($cached);
     }
 
     /**

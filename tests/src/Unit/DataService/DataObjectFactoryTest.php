@@ -104,7 +104,6 @@ class DataObjectFactoryTest extends TestCase
      *
      * @covers ::selectRequest()
      * @covers ::getBaseUri()
-     * @covers ::getEntriesSerializer()
      */
     public function testSelectRequest()
     {
