@@ -152,6 +152,9 @@ $media = $dof->load(new Uri('http://data.media.theplatform.com/media/data/Media/
 $fields = $media->getCustomFields('http://access.auth.theplatform.com/data/Account/555555'):
 ```
 
+If a custom field class is not found, a notice will be logged and the empty
+`MissingCustomFieldsClass` will be attached in place of each set of fields.
+
 ## Overview of main classes
 
 ### Lullabot\Mpx\Client
