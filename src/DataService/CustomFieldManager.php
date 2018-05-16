@@ -61,31 +61,4 @@ class CustomFieldManager
 
         throw new \RuntimeException('Custom field not found.');
     }
-
-    /**
-     * Creates a custom field.
-     *
-     * @param string $name
-     *
-     * @throws \RuntimeException
-     *
-     * @return ObjectInterface
-     *
-     * @todo Not called.
-     */
-    public function create($name)
-    {
-        $services = $this->discovery->getCustomFields();
-        // @todo This is broken.
-        if (array_key_exists($name, $services)) {
-            $class = $services[$name]['class'];
-            if (!class_exists($class)) {
-                throw new \RuntimeException('Custom field class does not exist.');
-            }
-
-            return new $class();
-        }
-
-        throw new \RuntimeException('Custom field does not exist.');
-    }
 }

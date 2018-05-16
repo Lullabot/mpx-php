@@ -66,29 +66,4 @@ class DataServiceManager
 
         throw new \RuntimeException('Data service not found.');
     }
-
-    /**
-     * Creates a data service.
-     *
-     * @param string $name
-     *
-     * @throws \RuntimeException
-     *
-     * @return ObjectInterface
-     */
-    public function create($name)
-    {
-        $services = $this->discovery->getDataServices();
-        // @todo This is broken.
-        if (array_key_exists($name, $services)) {
-            $class = $services[$name]['class'];
-            if (!class_exists($class)) {
-                throw new \RuntimeException('Data service class does not exist.');
-            }
-
-            return new $class();
-        }
-
-        throw new \RuntimeException('Data service does not exist.');
-    }
 }
