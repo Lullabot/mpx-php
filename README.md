@@ -91,6 +91,57 @@ If your application does not wish to log these actions at all, use
 `\Psr\Log\NullLogger` for any constructors that require a
 `\Psr\Log\LoggerInterface`.
 
+## Implementing custom mpx fields
+
+mpx data service objects can have up to 100 custom fields defined per account.
+These fields can contain a variety of data types, with multiple namespaces of
+custom fields applying to a single object. This library allows for developers
+to create structured classes in their own application code that are discovered
+and used automatically.
+
+### 1. Use the console tool to create initial classes
+
+This CLI tool uses the mpx Field API to generate matching classes. Consider
+adding descriptions for each custom field in mpx, as these will be used
+automatically in doc comments. Run `bin/console help mpx:create-custom-field`
+for up-to-date documentation on this command.
+
+For example, to generate classes for all custom fields attached to a Media
+object:
+
+1. Clone this repository.
+1. `$ composer install`
+1. `$ bin/console mpx:create-custom-field 'Php\Namespace\For\These\Classes' 'Media Data Service' 'Media' '1.10'`
+1. Enter your username and password. Progress will be shown for each field that is found.
+
+As the mpx API has no data useful in creating class names, classes for each
+field namespace will be created with names like `CustomFieldClassOne.php`. It
+is highly suggested that these classes are renamed to match the fields they
+contain.
+
+Each generated class will contain an `@CustomField` annotation:
+
+```php
+/**
+ * @CustomField(
+ *     namespace="http://access.auth.theplatform.com/data/Account/555555",
+ *     service="Media Data Service",
+ *     objectType="Media",
+ * )
+ */
+```
+
+This is what the library uses to determine which class corresponds to a given
+namespace. Note that **custom fields do not have schema versions**. Be careful
+when deleting or changing data types on existing fields.
+
+These custom fields should live in your application code. As such, you will
+need to provide a way to discover the classes since different applications
+have different source code structures. If you're using a module for a CMS like
+Drupal, it should already provide that functionality. If not, see
+`\Lullabot\Mpx\DataService\CustomFieldManager::basicDiscovery` for an example
+that can be adapted in many cases.
+
 ## Overview of main classes
 
 ### Lullabot\Mpx\Client
