@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `\Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls` now follows what
   `\Lullabot\Mpx\Service\AccessManagement\ResolveDomain` does and has changed
   it's API as a result. #144
+- The UnixMicrosecondNormalizer class has been renamed to
+  UnixMillisecondNormalizer #115
 
 ### Removed
 

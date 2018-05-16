@@ -3,7 +3,7 @@
 namespace Lullabot\Mpx\DataService;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use Lullabot\Mpx\Normalizer\UnixMicrosecondNormalizer;
+use Lullabot\Mpx\Normalizer\UnixMillisecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
@@ -145,7 +145,7 @@ class NotificationListener
             $extractor = new NotificationTypeExtractor();
             $extractor->setClass($this->service->getClass());
             $normalizers = [
-                new UnixMicrosecondNormalizer(),
+                new UnixMillisecondNormalizer(),
                 new UriNormalizer(),
                 new ObjectNormalizer(null, null, null, $extractor),
                 new ArrayDenormalizer(),
