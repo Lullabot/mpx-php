@@ -93,7 +93,7 @@ class CJsonEncoder extends JsonEncoder
         // all namespaces in any object in the result set. If a given namespace
         // is not used in a single object, we can skip custom fields entirely.
         if (!empty($customFields['data'])) {
-            $object['customFields'][] = $customFields;
+            $object['customFields'][$namespace] = $customFields;
         }
     }
 }
