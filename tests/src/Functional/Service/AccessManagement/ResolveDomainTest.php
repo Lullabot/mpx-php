@@ -8,11 +8,15 @@ use Psr\Http\Message\UriInterface;
 
 /**
  * Test calling resolveDomain.
+ *
+ * @coversDefaultClass \Lullabot\Mpx\Service\AccessManagement\ResolveDomain
  */
 class ResolveDomainTest extends FunctionalTestBase
 {
     /**
      * Tests that resolving domains returns an array.
+     *
+     * @covers \Lullabot\Mpx\Service\AccessManagement\ResolveBase
      */
     public function testResolve()
     {

@@ -2,11 +2,13 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Normalizer\UnixMillisecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -60,21 +62,26 @@ class NotificationListener
      *
      * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications#tp-toc2
      *
-     * @param \Lullabot\Mpx\AuthenticatedClient $session  The client to use for authenticated requests.
-     * @param DiscoveredDataService             $service  The name of the service to listen to notifications on, such as 'Media Data Service'.
-     * @param string                            $clientId A string to identify this client in debugging.
+     * @param \Lullabot\Mpx\AuthenticatedClient $session       The client to use for authenticated requests.
+     * @param DiscoveredDataService             $service       The name of the service to listen to notifications on, such as 'Media Data Service'.
+     * @param string                            $clientId      A string to identify this client in debugging.
+     * @param CacheItemPoolInterface|null       $cacheItemPool (optional) The cache for API metadata.
      */
-    public function __construct(AuthenticatedClient $session, DiscoveredDataService $service, string $clientId)
+    public function __construct(AuthenticatedClient $session, DiscoveredDataService $service, string $clientId, CacheItemPoolInterface $cacheItemPool = null)
     {
         $this->clientId = $clientId;
         $this->authenticatedClient = $session;
         $this->service = $service;
 
-        $this->resolveDomain = new ResolveDomain($this->authenticatedClient);
+        if (!$cacheItemPool) {
+            $cacheItemPool = new ArrayCachePool();
+        }
 
-        /** @var ResolveAllUrls $resolver */
-        $resolver = ResolveAllUrls::load($this->authenticatedClient, $this->service->getAnnotation()->getService(true))->wait();
-        $this->uri = $resolver->resolve().'/notify';
+        $this->resolveDomain = new ResolveDomain($this->authenticatedClient, $cacheItemPool);
+        $resolver = new ResolveAllUrls($this->authenticatedClient, $cacheItemPool);
+
+        $response = $resolver->resolve($this->service->getAnnotation()->getService(true));
+        $this->uri = $response->getUrl().'/notify';
     }
 
     /**

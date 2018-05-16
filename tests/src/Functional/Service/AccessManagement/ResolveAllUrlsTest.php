@@ -16,7 +16,8 @@ class ResolveAllUrlsTest extends FunctionalTestBase
     public function testResolve()
     {
         /** @var ResolveAllUrls $resolved */
-        $resolved = ResolveAllUrls::load($this->authenticatedClient, 'Media Data Service')->wait();
+        $resolver = new ResolveAllUrls($this->authenticatedClient);
+        $resolved = $resolver->resolve('Media Data Service');
         $this->assertInternalType('string', $resolved->getService());
     }
 }

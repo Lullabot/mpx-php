@@ -1,9 +1,9 @@
 <?php
 
-namespace Lullabot\Mpx\Tests\Unit\DataService;
+namespace Lullabot\Mpx\Tests\Unit\Service\AccessManagement;
 
 use GuzzleHttp\Psr7\Uri;
-use Lullabot\Mpx\DataService\ResolveDomainResponseExtractor;
+use Lullabot\Mpx\Service\AccessManagement\ResolveDomainResponseExtractor;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomainResponse;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PropertyInfo\Type;
@@ -11,7 +11,7 @@ use Symfony\Component\PropertyInfo\Type;
 /**
  * Tests mapping resolve domain array responses to strings and URIs.
  *
- * @coversDefaultClass \Lullabot\Mpx\DataService\ResolveDomainResponseExtractor
+ * @coversDefaultClass \Lullabot\Mpx\Service\AccessManagement\ResolveDomainResponseExtractor
  */
 class ResolveDomainResponseExtractorTest extends TestCase
 {
