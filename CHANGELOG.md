@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support for loading custom fields, including denormalizing into custom
   classes not shipped with this library. See the README for detailed
   documentation. #120
+- Add a discovery interface for Custom Fields. #122
 
 ### Changed
 
