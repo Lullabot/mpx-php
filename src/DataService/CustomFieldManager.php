@@ -9,11 +9,16 @@ use Lullabot\Mpx\DataService\Annotation\CustomField;
 class CustomFieldManager
 {
     /**
-     * @var \Lullabot\Mpx\DataService\CustomFieldDiscovery
+     * @var \Lullabot\Mpx\DataService\CustomFieldDiscoveryInterface
      */
     private $discovery;
 
-    public function __construct(CustomFieldDiscovery $discovery)
+    /**
+     * CustomFieldManager constructor.
+     *
+     * @param CustomFieldDiscoveryInterface $discovery The class used to discover custom field implementations.
+     */
+    public function __construct(CustomFieldDiscoveryInterface $discovery)
     {
         $this->discovery = $discovery;
     }
@@ -50,9 +55,9 @@ class CustomFieldManager
      * @param string $objectType
      * @param string $namespace
      *
-     * @return CustomField
+     * @return DiscoveredCustomField
      */
-    public function getCustomField(string $name, string $objectType, string $namespace)
+    public function getCustomField(string $name, string $objectType, string $namespace): DiscoveredCustomField
     {
         $services = $this->discovery->getCustomFields();
         if (isset($services[$name][$objectType][$namespace])) {
