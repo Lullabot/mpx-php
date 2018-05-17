@@ -137,6 +137,8 @@ class ObjectList implements \ArrayAccess, \Iterator
     }
 
     /**
+     * Set the number of entries in the current list.
+     *
      * @param int $entryCount
      */
     public function setEntryCount(int $entryCount)
@@ -220,7 +222,7 @@ class ObjectList implements \ArrayAccess, \Iterator
      */
     public function hasNext(): bool
     {
-        return !empty($this->entries) && ($this->getStartIndex() + $this->getItemsPerPage() - 1 < $this->getEntryCount());
+        return !empty($this->entries) && ($this->getStartIndex() + $this->getItemsPerPage() - 1 < $this->getTotalResults());
     }
 
     /**
