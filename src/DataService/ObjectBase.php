@@ -100,4 +100,20 @@ abstract class ObjectBase implements ObjectInterface
     {
         $this->ownerId = $ownerId;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMpxId(): UriInterface
+    {
+        return $this->getId();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMpxId(UriInterface $id)
+    {
+        $this->setId($id);
+    }
 }
