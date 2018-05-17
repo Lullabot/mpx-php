@@ -50,6 +50,8 @@ abstract class ObjectTestBase extends TestCase
             $tests[$property->getName()] = [$property->getName()];
         }
 
+        unset($tests['customFields']);
+
         return $tests;
     }
 

@@ -28,7 +28,7 @@ class DataService
     public $service;
 
     /**
-     * The object type in the service, such as 'Media'.
+     * The object type of the service, such as 'Media'.
      *
      * @var string
      */

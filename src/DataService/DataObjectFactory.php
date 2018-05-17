@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\Encoder\CJsonEncoder;
+use Lullabot\Mpx\Normalizer\CustomFieldsNormalizer;
 use Lullabot\Mpx\Normalizer\UnixMillisecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
@@ -101,16 +102,27 @@ class DataObjectFactory
      *
      * @todo Inject the serializer in the constructor?
      *
-     * @param string $class The full class name to create.
      * @param string $data  The JSON string to deserialize.
+     * @param string $class The full class name to create.
      *
      * @return IdInterface
      */
-    public function deserialize(string $class, $data)
+    protected function deserialize($data, string $class)
     {
         // @todo Is this extractor required?
         $dataServiceExtractor = new DataServiceExtractor();
         $dataServiceExtractor->setClass($this->dataService->getClass());
+        $dataServiceExtractor->setCustomFields($this->dataService->getCustomFields());
+
+        // The serializer treats the $xmlns as it's own separate property, and
+        // there is no way to access it from within the extractor. We can't
+        // alter $context in the CJsonEncoder as it is not passed by reference.
+        // @todo This feels like a bit of a hack.
+        $decoded = \GuzzleHttp\json_decode($data, true);
+        if (isset($decoded['$xmlns'])) {
+            $dataServiceExtractor->setNamespaceMapping($decoded['$xmlns']);
+        }
+
         $p = new PropertyInfoExtractor([], [$dataServiceExtractor], [], []);
         $cached = new PropertyInfoCacheExtractor($p, $this->cacheItemPool);
 
@@ -142,7 +154,7 @@ class DataObjectFactory
 
         $response = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) {
-                return $this->deserialize($this->dataService->getClass(), $response->getBody());
+                return $this->deserialize($response->getBody(), $this->dataService->getClass());
             }
         );
 
@@ -192,7 +204,7 @@ class DataObjectFactory
                 $data = $response->getBody();
 
                 /** @var ObjectList $list */
-                $list = $this->getEntriesSerializer()->deserialize($data, ObjectList::class, 'json');
+                $list = $this->deserialize($data, ObjectList::class);
                 $list->setByFields($byFields);
                 $list->setDataObjectFactory($this, $account);
 
@@ -232,18 +244,6 @@ class DataObjectFactory
         return $base;
     }
 
-    private function getEntriesSerializer()
-    {
-        // @todo Should we just make multiple subclasses of ObjectList?
-        // We need a property extractor that understands the varying types of 'entries'.
-        $dataServiceExtractor = new DataServiceExtractor();
-        $dataServiceExtractor->setClass($this->dataService->getClass());
-        $p = new PropertyInfoExtractor([], [$dataServiceExtractor], [], []);
-        $cached = new PropertyInfoCacheExtractor($p, $this->cacheItemPool);
-
-        return $this->getObjectSerializer($cached);
-    }
-
     /**
      * @param PropertyTypeExtractorInterface $dataServiceExtractor
      *
@@ -255,9 +255,11 @@ class DataObjectFactory
         $encoders = [new CJsonEncoder()];
 
         // Attempt normalizing each key in this order, including denormalizing recursively.
+        $customFieldsNormalizer = new CustomFieldsNormalizer($this->dataService->getCustomFields());
         $normalizers = [
             new UnixMillisecondNormalizer(),
             new UriNormalizer(),
+            $customFieldsNormalizer,
             new ObjectNormalizer(
                 null, null, null,
                 $dataServiceExtractor
@@ -265,6 +267,9 @@ class DataObjectFactory
             new ArrayDenormalizer(),
         ];
 
-        return new Serializer($normalizers, $encoders);
+        $serializer = new Serializer($normalizers, $encoders);
+        $customFieldsNormalizer->setSerializer($serializer);
+
+        return $serializer;
     }
 }

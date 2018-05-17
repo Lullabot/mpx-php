@@ -11,6 +11,7 @@ use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\ObjectList;
+use Lullabot\Mpx\DataService\ObjectListIterator;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
@@ -31,7 +32,10 @@ class DataObjectFactoryTest extends TestCase
     /**
      * Tests loading a URI to an mpx object.
      *
+     * @covers ::__construct()
      * @covers ::load()
+     * @covers ::getObjectSerializer()
+     * @covers ::deserialize()
      */
     public function testLoad()
     {
@@ -65,6 +69,7 @@ class DataObjectFactoryTest extends TestCase
      * Tests the correct path when loading by ID.
      *
      * @covers ::loadByNumericId()
+     * @covers ::getBaseUri()
      */
     public function testLoadByNumericId()
     {
@@ -98,6 +103,7 @@ class DataObjectFactoryTest extends TestCase
      * Tests fetching a list of objects.
      *
      * @covers ::selectRequest()
+     * @covers ::getBaseUri()
      */
     public function testSelectRequest()
     {
@@ -123,5 +129,54 @@ class DataObjectFactoryTest extends TestCase
         $account = $objectList->current();
         $this->assertInstanceOf(Account::class, $account);
         $this->assertEquals('http://access.auth.theplatform.com/data/Account/55555', $account->getId());
+    }
+
+    /**
+     * @covers ::select()
+     */
+    public function testSelect()
+    {
+        $manager = DataServiceManager::basicDiscovery();
+        $service = $manager->getDataService('Access Data Service', 'Account', '1.0');
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(200, [], 'select-account.json'),
+        ]);
+        $user = new User('username', 'password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $authenticatedClient = new AuthenticatedClient($client, $session);
+        $factory = new DataObjectFactory($service, $authenticatedClient);
+        $iterator = $factory->select(new ByFields());
+        $this->assertInstanceOf(ObjectListIterator::class, $iterator);
+    }
+
+    /**
+     * Tests loading an object without specifying an account.
+     *
+     * @covers ::getBaseUri()
+     */
+    public function testNullAccount()
+    {
+        $manager = DataServiceManager::basicDiscovery();
+        $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(200, [], 'resolveAllUrls.json'),
+            new JsonResponse(200, [], 'media-object.json'),
+        ]);
+        $user = new User('username', 'password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $authenticatedClient = new AuthenticatedClient($client, $session);
+        $factory = new DataObjectFactory($service, $authenticatedClient);
+        /** @var ObjectList $objectList */
+        $media = $factory->loadByNumericId(2602559)->wait();
+        $this->assertInstanceOf(Media::class, $media);
+        $this->assertEquals('http://data.media.theplatform.com/media/data/Media/2602559', $media->getId());
     }
 }

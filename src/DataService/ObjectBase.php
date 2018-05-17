@@ -38,6 +38,11 @@ abstract class ObjectBase implements ObjectInterface
     protected $ownerId;
 
     /**
+     * @var CustomFieldInterface[]
+     */
+    protected $customFields;
+
+    /**
      * {@inheritdoc}
      */
     public function getAdded(): \DateTime
@@ -99,5 +104,21 @@ abstract class ObjectBase implements ObjectInterface
     public function setOwnerId($ownerId)
     {
         $this->ownerId = $ownerId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCustomFields($namespace)
+    {
+        return $this->customFields[$namespace];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCustomFields(array $customFields)
+    {
+        $this->customFields = $customFields;
     }
 }

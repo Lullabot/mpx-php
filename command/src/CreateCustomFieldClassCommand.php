@@ -6,6 +6,7 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\CustomFieldInterface;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Field;
@@ -118,8 +119,13 @@ EOD;
                 $class = $namespace->addClass($className);
                 $classNames[$mpxNamespace] = $className;
                 $namespaceClasses[$mpxNamespace] = $namespace;
+                $class->addImplement(CustomFieldInterface::class);
 
-                $class->addComment('Custom fields for namespace at '.$mpxNamespace);
+                $class->addComment('@CustomField(');
+                $class->addComment('    namespace="'.$mpxNamespace.'",');
+                $class->addComment('    service="'.$input->getArgument('data-service').'",');
+                $class->addComment('    objectType="'.$input->getArgument('data-object').'",');
+                $class->addComment(')');
             }
             else {
                 $namespace = $namespaceClasses[$mpxNamespace];

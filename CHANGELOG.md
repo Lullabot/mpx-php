@@ -9,7 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Service URLs are now cached when loading objects and listening for
-  notifications. #144
+  notifications. #114
+- Support for loading custom fields, including denormalizing into custom
+  classes not shipped with this library. See the README for detailed
+  documentation. #120
 
 ### Changed
 
@@ -22,6 +25,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - The UnixMicrosecondNormalizer class has been renamed to
   UnixMillisecondNormalizer #115
 - Fix using the number of entries in the current page instead of the total #118
+- The deserialize method on DataObjectFactory is now protected #120
+- create() methods that were broken and unused were removed in the plugin
+  managers #120
 
 ## [0.1.1] - 2018-05-16
 
