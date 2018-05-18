@@ -121,7 +121,7 @@ EOD;
                 $namespaceClasses[$mpxNamespace] = $namespace;
                 $class->addImplement(CustomFieldInterface::class);
 
-                $class->addComment('@CustomField(');
+                $class->addComment('@\Lullabot\Mpx\DataService\Annotation\CustomField(');
                 $class->addComment('    namespace="'.$mpxNamespace.'",');
                 $class->addComment('    service="'.$input->getArgument('data-service').'",');
                 $class->addComment('    objectType="'.$input->getArgument('data-object').'",');
@@ -139,6 +139,9 @@ EOD;
                 $property->addComment('');
             }
             $dataType = static::TYPE_MAP[$field->getDataType()];
+            if ('Single' != $field->getDataStructure()) {
+                $dataType .= '[]';
+            }
             $property->addComment('@var '.$dataType);
 
             $get = $class->addMethod('get' . ucfirst($property->getName()));

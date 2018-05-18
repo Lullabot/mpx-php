@@ -10,7 +10,7 @@ use Symfony\Component\Finder\SplFileInfo;
 /**
  * Class to discover Custom Field implementations.
  */
-class CustomFieldDiscovery
+class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
 {
     /**
      * The namespace to search within, such as '\Lullabot\Mpx'.
@@ -64,9 +64,7 @@ class CustomFieldDiscovery
     }
 
     /**
-     * Returns all the data services.
-     *
-     * @return DiscoveredCustomField[] An array of all discovered data services, indexed by service name, object type, and namespace.
+     * {@inheritdoc}
      */
     public function getCustomFields(): array
     {
