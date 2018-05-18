@@ -139,6 +139,9 @@ EOD;
                 $property->addComment('');
             }
             $dataType = static::TYPE_MAP[$field->getDataType()];
+            if ('Single' != $field->getDataStructure()) {
+                $dataType .= '[]';
+            }
             $property->addComment('@var '.$dataType);
 
             $get = $class->addMethod('get' . ucfirst($property->getName()));
