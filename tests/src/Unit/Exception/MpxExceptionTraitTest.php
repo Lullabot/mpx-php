@@ -184,7 +184,6 @@ class MpxExceptionTraitTest extends TestCase
             'responseCode' => 503,
             'isException' => 1,
             'title' => 'the title',
-            'description' => 'the description',
         ];
         $data = array_map(function ($value) use (&$required) {
             end($required);

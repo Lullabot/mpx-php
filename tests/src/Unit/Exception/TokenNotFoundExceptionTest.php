@@ -21,9 +21,9 @@ class TokenNotFoundExceptionTest extends TestCase
         $userSession = $this->getMockBuilder(UserSession::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $userSession->method('getUser')->willReturn(new User('username', 'correct-password'));
+        $userSession->method('getUser')->willReturn(new User('mpx/username', 'correct-password'));
 
         $e = new TokenNotFoundException($userSession);
-        $this->assertEquals('Token not found for username.', $e->getMessage());
+        $this->assertEquals('Token not found for mpx/username.', $e->getMessage());
     }
 }

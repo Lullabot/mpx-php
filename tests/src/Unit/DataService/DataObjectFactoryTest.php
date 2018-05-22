@@ -51,7 +51,7 @@ class DataObjectFactoryTest extends TestCase
                 return new JsonResponse(200, [], 'media-object.json');
             },
         ]);
-        $user = new User('username', 'password');
+        $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
@@ -85,7 +85,7 @@ class DataObjectFactoryTest extends TestCase
                 return new JsonResponse(200, [], 'media-object.json');
             },
         ]);
-        $user = new User('username', 'password');
+        $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
@@ -113,7 +113,7 @@ class DataObjectFactoryTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'select-account.json'),
         ]);
-        $user = new User('username', 'password');
+        $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
@@ -142,7 +142,7 @@ class DataObjectFactoryTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'select-account.json'),
         ]);
-        $user = new User('username', 'password');
+        $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
@@ -167,7 +167,7 @@ class DataObjectFactoryTest extends TestCase
             new JsonResponse(200, [], 'resolveAllUrls.json'),
             new JsonResponse(200, [], 'media-object.json'),
         ]);
-        $user = new User('username', 'password');
+        $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
