@@ -25,6 +25,7 @@ class MpxExceptionTraitTest extends TestCase
      */
     public function testGet()
     {
+        /** @var MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             'responseCode' => 403,
@@ -50,6 +51,7 @@ class MpxExceptionTraitTest extends TestCase
      */
     public function testNoCorrelationId()
     {
+        /** @var MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             'responseCode' => 403,
@@ -72,6 +74,7 @@ class MpxExceptionTraitTest extends TestCase
      */
     public function testNoServerStackTrace()
     {
+        /** @var MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             'responseCode' => 403,
@@ -113,6 +116,7 @@ class MpxExceptionTraitTest extends TestCase
      */
     public function testSetNotificationData()
     {
+        /** @var MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             [
