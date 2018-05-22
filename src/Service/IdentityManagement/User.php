@@ -28,7 +28,7 @@ class User implements UserInterface
      */
     public function __construct($username, $password)
     {
-        if (strpos($username, '/') === FALSE) {
+        if (false === strpos($username, '/')) {
             throw new \InvalidArgumentException(sprintf('The mpx user name %s must contain a leading directory such as "mpx/"', $username));
         }
 
