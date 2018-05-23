@@ -26,6 +26,14 @@ class AuthenticatedClient implements ClientInterface
     protected $client;
 
     /**
+     * The duration for authentication tokens to last for, or null for no
+     * specific expiry.
+     *
+     * @var int
+     */
+    protected $duration;
+
+    /**
      * Construct a new AuthenticatedClient.
      *
      * Note that the authentication is not actually established until
@@ -81,6 +89,16 @@ class AuthenticatedClient implements ClientInterface
     }
 
     /**
+     * Set the duration for token lifetimes.
+     *
+     * @param int|null $duration The duration in seconds, or null to not use a specific lifetime.
+     */
+    public function setTokenDuration(int $duration = null)
+    {
+        $this->duration = $duration;
+    }
+
+    /**
      * Merge authentication headers into request options.
      *
      * @param array $options The array of request options.
@@ -93,7 +111,7 @@ class AuthenticatedClient implements ClientInterface
         if (!isset($options['query'])) {
             $options['query'] = [];
         }
-        $token = $this->userSession->acquireToken(null, $reset);
+        $token = $this->userSession->acquireToken($this->duration, $reset);
         $options['query'] += [
             'token' => $token->getValue(),
         ];
