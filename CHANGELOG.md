@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Add `\Lullabot\Mpx\AuthenticatedClient::setTokenDuration` to set a limit for
-  token lifetimes.
+  token lifetimes #125
 
 ## [0.2.0] - 2018-05-18
 
