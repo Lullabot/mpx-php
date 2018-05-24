@@ -192,7 +192,7 @@ class AuthenticatedClientTest extends TestCase
     }
 
     /**
-     * @covers ::getConfig()
+     * @covers ::getConfig
      */
     public function testGetConfig()
     {
@@ -214,8 +214,8 @@ class AuthenticatedClientTest extends TestCase
     /**
      * Test setting a duration for renewed tokens.
      *
-     * @covers ::setTokenDuration()
-     * @covers ::mergeAuth()
+     * @covers ::setTokenDuration
+     * @covers ::mergeAuth
      */
     public function testTokenDuration()
     {

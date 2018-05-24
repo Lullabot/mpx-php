@@ -32,10 +32,10 @@ class DataObjectFactoryTest extends TestCase
     /**
      * Tests loading a URI to an mpx object.
      *
-     * @covers ::__construct()
-     * @covers ::load()
-     * @covers ::getObjectSerializer()
-     * @covers ::deserialize()
+     * @covers ::__construct
+     * @covers ::load
+     * @covers ::getObjectSerializer
+     * @covers ::deserialize
      */
     public function testLoad()
     {
@@ -68,8 +68,8 @@ class DataObjectFactoryTest extends TestCase
     /**
      * Tests the correct path when loading by ID.
      *
-     * @covers ::loadByNumericId()
-     * @covers ::getBaseUri()
+     * @covers ::loadByNumericId
+     * @covers ::getBaseUri
      */
     public function testLoadByNumericId()
     {
@@ -102,8 +102,8 @@ class DataObjectFactoryTest extends TestCase
     /**
      * Tests fetching a list of objects.
      *
-     * @covers ::selectRequest()
-     * @covers ::getBaseUri()
+     * @covers ::selectRequest
+     * @covers ::getBaseUri
      */
     public function testSelectRequest()
     {
@@ -132,7 +132,7 @@ class DataObjectFactoryTest extends TestCase
     }
 
     /**
-     * @covers ::select()
+     * @covers ::select
      */
     public function testSelect()
     {
@@ -156,7 +156,7 @@ class DataObjectFactoryTest extends TestCase
     /**
      * Tests loading an object without specifying an account.
      *
-     * @covers ::getBaseUri()
+     * @covers ::getBaseUri
      */
     public function testNullAccount()
     {

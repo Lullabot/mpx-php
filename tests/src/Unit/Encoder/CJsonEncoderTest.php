@@ -13,9 +13,9 @@ class CJsonEncoderTest extends TestCase
     /**
      * Tests decoding custom fields into their own key.
      *
-     * @covers ::decode()
-     * @covers ::decodeCustomFields()
-     * @covers ::decodeObject()
+     * @covers ::decode
+     * @covers ::decodeCustomFields
+     * @covers ::decodeObject
      */
     public function testDecodeCustomFields()
     {

@@ -26,8 +26,8 @@ class CustomFieldsNormalizerTest extends TestCase
     /**
      * Tests denormalizing custom data from a single namespace.
      *
-     * @covers ::__construct()
-     * @covers ::denormalize()
+     * @covers ::__construct
+     * @covers ::denormalize
      */
     public function testDenormalize()
     {
@@ -62,7 +62,7 @@ class CustomFieldsNormalizerTest extends TestCase
     /**
      * Tests when an appropriate serializer has not been injected.
      *
-     * @covers ::denormalize()
+     * @covers ::denormalize
      */
     public function testNotDeormalizable()
     {
@@ -87,7 +87,7 @@ class CustomFieldsNormalizerTest extends TestCase
     /**
      * Tests when no custom field class is available.
      *
-     * @covers ::denormalize()
+     * @covers ::denormalize
      */
     public function testMissingCustomFieldsClass()
     {
@@ -105,7 +105,7 @@ class CustomFieldsNormalizerTest extends TestCase
     /**
      * Tests in what cases this is a valid normalizer.
      *
-     * @covers ::supportsDenormalization()
+     * @covers ::supportsDenormalization
      */
     public function testSupportsDenormalization()
     {

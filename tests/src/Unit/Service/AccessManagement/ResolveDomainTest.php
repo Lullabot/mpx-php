@@ -30,8 +30,8 @@ class ResolveDomainTest extends TestCase
     /**
      * Tests basic resolution.
      *
-     * @covers ::__construct()
-     * @covers ::resolve()
+     * @covers ::__construct
+     * @covers ::resolve
      */
     public function testResolve()
     {
@@ -59,8 +59,8 @@ class ResolveDomainTest extends TestCase
     /**
      * Tests cache hits and misses.
      *
-     * @covers ::__construct()
-     * @covers ::resolve()
+     * @covers ::__construct
+     * @covers ::resolve
      */
     public function testResolveCache()
     {

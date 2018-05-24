@@ -18,11 +18,11 @@ class UrlTest extends TestCase
     /**
      * Tests generating a URI object.
      *
-     * @covers ::__construct()
-     * @covers ::toUri()
-     * @covers ::setPlayAll()
-     * @covers ::setAutoplay()
-     * @covers ::__toString()
+     * @covers ::__construct
+     * @covers ::toUri
+     * @covers ::setPlayAll
+     * @covers ::setAutoplay
+     * @covers ::__toString
      */
     public function testToUri()
     {
