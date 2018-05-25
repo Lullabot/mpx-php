@@ -280,4 +280,23 @@ class ObjectListTest extends TestCase
         $this->expectExceptionMessage('setByFields must be called before calling nextList.');
         $this->list->yieldLists()->current();
     }
+
+    /**
+     * Test setting the JSON representation.
+     */
+    public function testGetJson()
+    {
+        $json = ['key' => 'value'];
+        $this->list->setJson(json_encode($json));
+        $this->assertEquals($json, $this->list->getJson());
+    }
+
+    /**
+     * Test an exception is thrown when no JSON is available.
+     */
+    public function testNoJson()
+    {
+        $this->expectException(\LogicException::class);
+        $this->list->getJson();
+    }
 }
