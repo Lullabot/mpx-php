@@ -51,6 +51,7 @@ abstract class ObjectTestBase extends TestCase
         }
 
         unset($tests['customFields']);
+        unset($tests['json']);
 
         return $tests;
     }
