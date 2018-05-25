@@ -126,7 +126,7 @@ class DataObjectFactoryTest extends TestCase
         $this->assertEquals(1, $objectList->getItemsPerPage());
         $this->assertEquals(1, $objectList->getStartIndex());
         $this->assertEquals(1, $objectList->getTotalResults());
-        $account = $objectList->current();
+        $account = $objectList[0];
         $this->assertInstanceOf(Account::class, $account);
         $this->assertEquals('http://access.auth.theplatform.com/data/Account/55555', $account->getId());
     }
