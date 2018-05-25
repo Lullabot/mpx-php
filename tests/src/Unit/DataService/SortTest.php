@@ -23,7 +23,7 @@ class SortTest extends TestCase
     }
 
     /**
-     * @covers ::toQueryParts()
+     * @covers ::toQueryParts
      */
     public function testEmptySort()
     {

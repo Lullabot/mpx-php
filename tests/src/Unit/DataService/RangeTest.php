@@ -48,7 +48,7 @@ class RangeTest extends TestCase
     }
 
     /**
-     * @covers ::toQueryParts()
+     * @covers ::toQueryParts
      */
     public function testEmpty()
     {
@@ -81,7 +81,7 @@ class RangeTest extends TestCase
     /**
      * Tests generating all ranges in the result set.
      *
-     * @covers ::nextRanges()
+     * @covers ::nextRanges
      */
     public function testNextRanges()
     {
@@ -107,7 +107,7 @@ class RangeTest extends TestCase
     /**
      * Tests that we return the right number of ranges when the last range is not a complete page.
      *
-     * @covers ::nextRanges()
+     * @covers ::nextRanges
      */
     public function testPartialEndRange()
     {
@@ -125,7 +125,7 @@ class RangeTest extends TestCase
     /**
      * Test that no ranges are returned if we are already on the last page.
      *
-     * @covers ::nextRanges()
+     * @covers ::nextRanges
      */
     public function testNextOnLastRange()
     {

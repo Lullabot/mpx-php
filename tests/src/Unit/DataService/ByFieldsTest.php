@@ -51,7 +51,7 @@ class ByFieldsTest extends TestCase
     /**
      * Test that a completely empty ByFields object can still be rendered to query parts.
      *
-     * @covers ::toQueryParts()
+     * @covers ::toQueryParts
      */
     public function testNoValues()
     {
