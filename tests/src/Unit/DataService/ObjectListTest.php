@@ -241,7 +241,7 @@ class ObjectListTest extends TestCase
         $this->list->setStartIndex(30);
         $this->list->setEntryCount(10);
         $this->list->setItemsPerPage(10);
-        $this->list->setTotalResults(30);
+        $this->list->setTotalResults(50);
         /** @var DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
