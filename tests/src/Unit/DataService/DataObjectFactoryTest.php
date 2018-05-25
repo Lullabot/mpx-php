@@ -105,6 +105,7 @@ class DataObjectFactoryTest extends TestCase
      *
      * @covers ::selectRequest
      * @covers ::getBaseUri
+     * @covers ::deserializeObjectList
      */
     public function testSelectRequest()
     {
@@ -137,6 +138,7 @@ class DataObjectFactoryTest extends TestCase
      *
      * @covers ::selectRequest
      * @covers ::getBaseUri
+     * @covers ::deserializeObjectList
      */
     public function testSelectRequestNS()
     {
