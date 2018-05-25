@@ -43,10 +43,9 @@ class DataObjectFactoryTest extends TestCase
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
-            new JsonResponse(200, [], 'resolveDomain.json'),
             function (\Psr\Http\Message\RequestInterface $request) {
                 $this->assertEquals('https', $request->getUri()->getScheme());
-                $this->assertEquals('/media/data/Media/12345', $request->getUri()->getPath());
+                $this->assertEquals('/media/data/Media/2602559', $request->getUri()->getPath());
 
                 return new JsonResponse(200, [], 'media-object.json');
             },
@@ -61,8 +60,10 @@ class DataObjectFactoryTest extends TestCase
 
         $account = new Account();
         $account->setId(new Uri('http://example.com/1'));
-        $media = $factory->load(new Uri('http://data.media.theplatform.com/media/data/Media/12345'))->wait();
+        $id = new Uri('http://data.media.theplatform.com/media/data/Media/2602559');
+        $media = $factory->load($id)->wait();
         $this->assertInstanceOf(Media::class, $media);
+        $this->assertEquals($id, $media->getId());
     }
 
     /**
