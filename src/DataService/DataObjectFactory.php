@@ -211,6 +211,16 @@ class DataObjectFactory
 
                 /** @var ObjectList $list */
                 $list = $this->deserialize($data, ObjectList::class);
+
+                // Set the json representation of each entry in the list.
+                $decoded = \GuzzleHttp\json_decode($data, true);
+                foreach ($list as $index => $item) {
+                    $entry = $decoded['entries'][$index];
+                    if (isset($decoded['$xmlns'])) {
+                        $entry['$xmlns'] = $decoded['$xmlns'];
+                    }
+                    $item->setJson(\GuzzleHttp\json_encode($entry));
+                }
                 $list->setByFields($byFields);
                 $list->setDataObjectFactory($this, $account);
 
