@@ -130,6 +130,32 @@ class DataObjectFactoryTest extends TestCase
         $this->assertInstanceOf(Account::class, $account);
         $this->assertEquals('http://access.auth.theplatform.com/data/Account/55555', $account->getId());
     }
+/**
+     * Tests setting the namespace on subentries JSON representation.
+     *
+     * @covers ::selectRequest
+     * @covers ::getBaseUri
+     */
+    public function testSelectRequestNS()
+    {
+        $manager = DataServiceManager::basicDiscovery();
+        $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(200, [], 'resolveAllUrls.json'),
+            new JsonResponse(200, [], 'select-media.json'),
+        ]);
+        $user = new User('username', 'password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $authenticatedClient = new AuthenticatedClient($client, $session);
+        $factory = new DataObjectFactory($service, $authenticatedClient);
+        /** @var ObjectList $objectList */
+        $objectList = $factory->selectRequest(new ByFields())->wait();
+        $this->assertEquals(['prefix1' => 'http://www.example.com/xml'], $objectList[0]->getJson()['$xmlns']);
+    }
 
     /**
      * @covers ::select

@@ -1,0 +1,375 @@
+{
+  "totalResults" : 1,
+  "$xmlns": {
+    "prefix1": "http://www.example.com/xml"
+  },
+  "entries" : [
+    {
+      "prefix1$series": "A series",
+      "id": "http://data.media.theplatform.com/media/data/Media/2602559",
+      "guid": "zYO7XMrWyix_9UCMurLYEWJPrWYHavMM",
+      "title": "thePlatform's History",
+      "author": "thePlatform",
+      "description": "Our CEO Ian Blaine discusses a bit of thePlatform's history",
+      "added": 1299622592000,
+      "ownerId": "http://access.auth.theplatform.com/data/Account/55555",
+      "updated": 1299624648000,
+      "addedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/58590342",
+      "updatedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/58590342",
+      "version": 0,
+      "locked": false,
+      "availableDate": 1230796800000,
+      "expirationDate": 1609401600000,
+      "categories": [
+        {
+          "name": "thePlatform/Ian Blaine",
+          "scheme": "thePlatform",
+          "label": ""
+        },
+        {
+          "name": "Technology",
+          "scheme": "urn:cat-scheme",
+          "label": ""
+        }
+      ],
+      "copyright": "thePlatform",
+      "copyrightUrl": "http://theplatform.com/about/terms_of_service",
+      "credits": [
+        {
+          "role": "producer",
+          "scheme": "urn:ebu",
+          "value": "thePlatform"
+        },
+        {
+          "role": "director",
+          "scheme": "urn:ebu",
+          "value": "Steve Mack"
+        },
+        {
+          "role": "actor",
+          "scheme": "urn:ebu",
+          "value": "Ian Blaine"
+        },
+        {
+          "role": "author",
+          "scheme": "urn:ebu",
+          "value": "Melissa Tennant"
+        }
+      ],
+      "keywords": "thePlatform",
+      "ratings": [
+        {
+          "scheme": "urn:simple",
+          "rating": "non-adult"
+        }
+      ],
+      "countries": [
+        "cx"
+      ],
+      "excludeCountries": true,
+      "text": "",
+      "content": [
+        {
+          "audioChannels": 0,
+          "audioSampleRate": 0,
+          "bitrate": 30307523,
+          "checksums": {
+            "md5": "e2cac7082f0afc5f008c64a039880d27"
+          },
+          "contentType": "video",
+          "duration": 55.289,
+          "expression": "full",
+          "fileSize": 210243584,
+          "frameRate": 29.97,
+          "format": "AVI",
+          "height": 480,
+          "isDefault": false,
+          "language": "en",
+          "sourceTime": 0.0,
+          "url": "ftp://storage.theplatform.com/content/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_544309.avi",
+          "width": 720,
+          "id": "http://data.media.theplatform.com/media/data/MediaFile/2602561",
+          "guid": "qK6s9oXNUNkp7UP41_IV_QK5P2xmV3ml",
+          "ownerId": "http://access.auth.theplatform.com/data/Account/55555",
+          "added": 1299623075000,
+          "updated": 1299623887000,
+          "addedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/716262360",
+          "updatedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/716262360",
+          "version": 1,
+          "locked": false,
+          "description": "",
+          "title": "ian_1_flexible_544309.avi",
+          "allowRelease": true,
+          "assetTypeIds": [
+            "http://data.media.theplatform.com/media/data/AssetType/2128951"
+          ],
+          "assetTypes": [
+            "mezzanine"
+          ],
+          "audioCodec": "",
+          "audioSampleSize": 0,
+          "downloadUrl": "",
+          "exists": true,
+          "failoverStreamingUrl": "",
+          "failoverSourceUrl": "",
+          "filePath": "thePlatform_Documentation_-_SA/3/494/ian_1_flexible_544309.avi",
+          "isProtected": false,
+          "isThumbnail": false,
+          "mediaId": "http://data.media.theplatform.com/media/data/Media/2602559",
+          "protectionKey": "",
+          "releases": [
+
+          ],
+          "serverId": "http://data.media.theplatform.com/media/data/Server/2600877",
+          "sourceMediaFileId": "",
+          "sourceUrl": "ftp://ftp2.edgecastcdn.net/mps/thePlatform_Documentation/16/897/ian_1_flexible_544309.avi",
+          "storageUrl": "ftp://storage.theplatform.com/content/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_544309.avi",
+          "streamingUrl": "",
+          "transformId": "",
+          "videoCodec": "",
+          "approved": true,
+          "protectionScheme": "",
+          "aspectRatio": 1.5,
+          "previousLocations": [
+
+          ]
+        },
+        {
+          "audioChannels": 0,
+          "audioSampleRate": 0,
+          "bitrate": 600000,
+          "checksums": {
+            "md5": "26ac0a3e10717af6e7e881bddf73eef2"
+          },
+          "contentType": "video",
+          "duration": 55.333,
+          "expression": "full",
+          "fileSize": 4843251,
+          "frameRate": 0.0,
+          "format": "FLV",
+          "height": 420,
+          "isDefault": false,
+          "language": "en",
+          "sourceTime": 0.0,
+          "url": "http://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible.flv",
+          "width": 560,
+          "id": "http://data.media.theplatform.com/media/data/MediaFile/2602603",
+          "guid": "d5xGaKF2JxmLf53QSL99DW4O6C8U6oni",
+          "ownerId": "http://access.auth.theplatform.com/data/Account/55555",
+          "added": 1299623178000,
+          "updated": 1299624648000,
+          "addedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/716262360",
+          "updatedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/716262360",
+          "version": 1,
+          "locked": false,
+          "description": "",
+          "title": "ian_1_flexible.flv",
+          "allowRelease": true,
+          "assetTypeIds": [
+            "http://data.media.theplatform.com/media/data/AssetType/2128950"
+          ],
+          "assetTypes": [
+            "video"
+          ],
+          "audioCodec": "",
+          "audioSampleSize": 0,
+          "downloadUrl": "",
+          "exists": true,
+          "failoverStreamingUrl": "",
+          "failoverSourceUrl": "",
+          "filePath": "thePlatform_Documentation_-_SA/3/494/ian_1_flexible.flv",
+          "isProtected": false,
+          "isThumbnail": false,
+          "mediaId": "http://data.media.theplatform.com/media/data/Media/2602559",
+          "protectionKey": "",
+          "releases": [
+            {
+              "id": "http://data.media.theplatform.com/media/data/Release/2602609",
+              "guid": "ZYmP6QQgCLz0OpNSoiJqnmNDmU_0nTyj",
+              "ownerId": "http://access.auth.theplatform.com/data/Account/55555",
+              "added": 1299624648000,
+              "updated": 1299624648000,
+              "addedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/9320345",
+              "updatedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/9320345",
+              "version": 0,
+              "locked": false,
+              "description": "",
+              "approved": true,
+              "delivery": "streaming",
+              "mediaId": "http://data.media.theplatform.com/media/data/Media/2602559",
+              "fileId": "http://data.media.theplatform.com/media/data/MediaFile/2602603",
+              "pid": "UIYsTlf6Susa",
+              "parameters": "",
+              "url": "http://link.theplatform.com/s/MTYzMzY5NDE3/UIYsTlf6Susa",
+              "restrictionId": "",
+              "adPolicyId": ""
+            }
+          ],
+          "serverId": "http://data.media.theplatform.com/media/data/Server/2602560",
+          "sourceMediaFileId": "",
+          "sourceUrl": "ftp://ftp2.edgecastcdn.net/mps/thePlatform_Documentation/226/426/ian_1_flexible.flv",
+          "storageUrl": "ftp://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible.flv",
+          "streamingUrl": "http://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible.flv",
+          "transformId": "",
+          "videoCodec": "",
+          "approved": true,
+          "protectionScheme": "",
+          "aspectRatio": 1.33,
+          "previousLocations": [
+
+          ]
+        }
+      ],
+      "thumbnails": [
+        {
+          "audioChannels": 0,
+          "audioSampleRate": 0,
+          "bitrate": 0,
+          "checksums": {
+            "md5": "a9b5fdea0070fcabf0bbbabfd96f9036"
+          },
+          "contentType": "image",
+          "duration": 0.0,
+          "expression": "full",
+          "fileSize": 25819,
+          "frameRate": 0.0,
+          "format": "JPEG",
+          "height": 240,
+          "isDefault": true,
+          "language": "",
+          "sourceTime": 0.0,
+          "url": "http://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_320x240.jpg",
+          "width": 320,
+          "id": "http://data.media.theplatform.com/media/data/MediaFile/2602653",
+          "guid": "D5JgEa2oXlnAdZ8jsKEpLXmYoRll8NV0",
+          "ownerId": "http://access.auth.theplatform.com/data/Account/55555",
+          "added": 1299623213000,
+          "updated": 1299624193000,
+          "addedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/716262360",
+          "updatedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mpx/716262360",
+          "version": 1,
+          "locked": false,
+          "description": "",
+          "title": "ian_1_flexible_320x240.jpg",
+          "allowRelease": true,
+          "assetTypeIds": [
+            "http://data.media.theplatform.com/media/data/AssetType/2128952"
+          ],
+          "assetTypes": [
+            "thumbnail"
+          ],
+          "audioCodec": "",
+          "audioSampleSize": 0,
+          "downloadUrl": "",
+          "exists": true,
+          "failoverStreamingUrl": "",
+          "failoverSourceUrl": "",
+          "filePath": "thePlatform_Documentation_-_SA/3/494/ian_1_flexible_320x240.jpg",
+          "isProtected": false,
+          "isThumbnail": true,
+          "mediaId": "http://data.media.theplatform.com/media/data/Media/2602559",
+          "protectionKey": "",
+          "releases": [
+
+          ],
+          "serverId": "http://data.media.theplatform.com/media/data/Server/2602560",
+          "sourceMediaFileId": "",
+          "sourceUrl": "ftp://ftp2.edgecastcdn.net/mps/thePlatform_Documentation/226/426/ian_1_flexible_320x240.jpg",
+          "storageUrl": "ftp://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_320x240.jpg",
+          "streamingUrl": "http://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_320x240.jpg",
+          "transformId": "",
+          "videoCodec": "",
+          "approved": true,
+          "protectionScheme": "",
+          "aspectRatio": 1.33,
+          "previousLocations": [
+
+          ]
+        }
+      ],
+      "adminTags": [
+        "corp site content"
+      ],
+      "approved": true,
+      "categoryIds": [
+        "http://data.media.theplatform.com/media/data/Category/2127592",
+        "http://data.media.theplatform.com/media/data/Category/2127590"
+      ],
+      "chapters": [
+        {
+          "startTime": 0.0,
+          "endTime": 21.8,
+          "title": "Chapter 1",
+          "thumbnailUrl": ""
+        },
+        {
+          "startTime": 21.9,
+          "endTime": 55.0,
+          "title": "Chapter 2",
+          "thumbnailUrl": ""
+        }
+      ],
+      "link": "http://www.theplatform.com/about/",
+      "pubDate": 1256661120000,
+      "titleLocalized": {
+        "en-us": "thePlatform's History",
+        "es-mx": "Historia de thePlatform"
+      },
+      "descriptionLocalized": {
+
+      },
+      "authorLocalized": {
+
+      },
+      "copyrightLocalized": {
+
+      },
+      "copyrightUrlLocalized": {
+
+      },
+      "keywordsLocalized": {
+
+      },
+      "linkLocalized": {
+
+      },
+      "textLocalized": {
+
+      },
+      "defaultThumbnailUrl": "ftp://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_320x240.jpg",
+      "originalOwnerIds": [
+
+      ],
+      "provider": "",
+      "providerId": "",
+      "restrictionId": "",
+      "adPolicyId": "",
+      "programId": "",
+      "seriesId": "",
+      "availabilityState": "available",
+      "pid": "Zy1n9JQPy6hw",
+      "publicUrl": "",
+      "availabilityTags": [
+      ],
+      "availabilityWindows": [
+        {
+          "targetAvailableDate": 1430722800000,
+          "targetExpirationDate": 1431932400000,
+          "targetAvailabilityTags": ["desktop"]
+        },
+        {
+          "targetAvailableDate": 1430722800000,
+          "targetAvailabilityTags": ["mobile"]
+        }
+      ],
+      "fileSourceMediaId": "http://example.com/reserved-for-future-use",
+      "originalMediaIds": [
+        "http://example.com/media-url"
+      ]
+    }
+  ],
+  "startIndex" : 1,
+  "entryCount" : 1,
+  "itemsPerPage" : 1
+}
+
