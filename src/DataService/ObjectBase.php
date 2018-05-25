@@ -7,7 +7,7 @@ use Psr\Http\Message\UriInterface;
 /**
  * Base class for common data used by all mpx objects.
  */
-abstract class ObjectBase implements ObjectInterface, JsonInterface
+abstract class ObjectBase implements ObjectInterface
 {
     /**
      * The date and time that this object was created.
