@@ -105,7 +105,7 @@ class DataObjectFactory
      * @param string $data  The JSON string to deserialize.
      * @param string $class The full class name to create.
      *
-     * @return IdInterface
+     * @return mixed An object matching the $class parameter.
      */
     protected function deserialize($data, string $class)
     {
