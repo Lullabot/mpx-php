@@ -33,7 +33,14 @@ class PlayerQueryTest extends FunctionalTestBase
 
             // Loading the object by itself.
             $reload = $dof->load($result->getId());
-            $this->assertEquals($result, $reload->wait());
+            $item = $reload->wait();
+
+            // We need to override the JSON strings. While the strings may be
+            // functionally identical, the namespace prefixes in the responses
+            // can change between requests.
+            $result->setJson('{}');
+            $item->setJson('{}');
+            $this->assertEquals($result, $item);
             if ($index + 1 > 2) {
                 break;
             }
