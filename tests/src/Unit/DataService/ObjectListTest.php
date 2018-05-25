@@ -256,4 +256,28 @@ class ObjectListTest extends TestCase
             }
         }
     }
+
+    /**
+     * Tests when no data object factory is set.
+     */
+    public function testNoDataObjectFactory()
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('setDataObjectFactory must be called before calling nextList.');
+        $this->list->yieldLists()->current();
+    }
+
+    /**
+     * Tests when no ByFields object is set.
+     */
+    public function testNoByFields()
+    {
+        /** @var DataObjectFactory $dof */
+        $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
+        $account = new Account();
+        $this->list->setDataObjectFactory($dof, $account);
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('setByFields must be called before calling nextList.');
+        $this->list->yieldLists()->current();
+    }
 }
