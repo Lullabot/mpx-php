@@ -126,7 +126,13 @@ class DataObjectFactory
         $p = new PropertyInfoExtractor([], [$dataServiceExtractor], [], []);
         $cached = new PropertyInfoCacheExtractor($p, $this->cacheItemPool);
 
-        return $this->getObjectSerializer($cached)->deserialize($data, $class, 'json');
+        $object = $this->getObjectSerializer($cached)->deserialize($data, $class, 'json');
+
+        if ($object instanceof JsonInterface) {
+            $object->setJson($data);
+        }
+
+        return $object;
     }
 
     /**
