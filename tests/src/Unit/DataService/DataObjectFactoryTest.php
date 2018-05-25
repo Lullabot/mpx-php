@@ -131,7 +131,8 @@ class DataObjectFactoryTest extends TestCase
         $this->assertInstanceOf(Account::class, $account);
         $this->assertEquals('http://access.auth.theplatform.com/data/Account/55555', $account->getId());
     }
-/**
+
+    /**
      * Tests setting the namespace on subentries JSON representation.
      *
      * @covers ::selectRequest
