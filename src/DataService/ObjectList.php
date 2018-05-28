@@ -12,7 +12,7 @@ use Lullabot\Mpx\DataService\Access\Account;
  * @see https://docs.theplatform.com/help/wsf-retrieving-data-objects#tp-toc11
  * @see https://docs.theplatform.com/help/wsf-cjson-format#cJSONformat-cJSONobjectlistpayloads
  */
-class ObjectList implements \ArrayAccess, \Iterator
+class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
 {
     /**
      * An array of namespaces in the results.
@@ -79,6 +79,13 @@ class ObjectList implements \ArrayAccess, \Iterator
      * @var Account
      */
     protected $account;
+
+    /**
+     * The original JSON of this object list.
+     *
+     * @var array
+     */
+    protected $json;
 
     /**
      * @return string[]
@@ -351,5 +358,25 @@ class ObjectList implements \ArrayAccess, \Iterator
     public function next()
     {
         ++$this->position;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setJson(string $json)
+    {
+        $this->json = \GuzzleHttp\json_decode($json, true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getJson()
+    {
+        if (!$this->json) {
+            throw new \LogicException('This object has no original JSON representation available');
+        }
+
+        return $this->json;
     }
 }

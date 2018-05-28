@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Add `\Lullabot\Mpx\AuthenticatedClient::setTokenDuration` to set a limit for
   token lifetimes #125
+- Add a method / interface for fetching the raw JSON response #126
 
 ## [0.2.0] - 2018-05-18
 

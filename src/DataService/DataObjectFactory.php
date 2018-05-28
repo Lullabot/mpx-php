@@ -105,7 +105,7 @@ class DataObjectFactory
      * @param string $data  The JSON string to deserialize.
      * @param string $class The full class name to create.
      *
-     * @return IdInterface
+     * @return mixed An object matching the $class parameter.
      */
     protected function deserialize($data, string $class)
     {
@@ -126,7 +126,13 @@ class DataObjectFactory
         $p = new PropertyInfoExtractor([], [$dataServiceExtractor], [], []);
         $cached = new PropertyInfoCacheExtractor($p, $this->cacheItemPool);
 
-        return $this->getObjectSerializer($cached)->deserialize($data, $class, 'json');
+        $object = $this->getObjectSerializer($cached)->deserialize($data, $class, 'json');
+
+        if ($object instanceof JsonInterface) {
+            $object->setJson($data);
+        }
+
+        return $object;
     }
 
     /**
@@ -201,18 +207,42 @@ class DataObjectFactory
 
         $request = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
             function (ResponseInterface $response) use ($byFields, $account) {
-                $data = $response->getBody();
-
-                /** @var ObjectList $list */
-                $list = $this->deserialize($data, ObjectList::class);
-                $list->setByFields($byFields);
-                $list->setDataObjectFactory($this, $account);
-
-                return $list;
+                return $this->deserializeObjectList($response, $byFields, $account);
             }
         );
 
         return $request;
+    }
+
+    /**
+     * Deserialize an object list response.
+     *
+     * @param ResponseInterface $response The response to deserialize.
+     * @param ByFields          $byFields The fields used to limit the response.
+     * @param IdInterface       $account  (optional) The account used to fetch the object list.
+     *
+     * @return ObjectList The deserialized list.
+     */
+    private function deserializeObjectList(ResponseInterface $response, ByFields $byFields, IdInterface $account = null): ObjectList
+    {
+        $data = $response->getBody();
+
+        /** @var ObjectList $list */
+        $list = $this->deserialize($data, ObjectList::class);
+
+        // Set the json representation of each entry in the list.
+        $decoded = \GuzzleHttp\json_decode($data, true);
+        foreach ($list as $index => $item) {
+            $entry = $decoded['entries'][$index];
+            if (isset($decoded['$xmlns'])) {
+                $entry['$xmlns'] = $decoded['$xmlns'];
+            }
+            $item->setJson(\GuzzleHttp\json_encode($entry));
+        }
+        $list->setByFields($byFields);
+        $list->setDataObjectFactory($this, $account);
+
+        return $list;
     }
 
     /**

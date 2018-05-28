@@ -43,6 +43,13 @@ abstract class ObjectBase implements ObjectInterface
     protected $customFields;
 
     /**
+     * The original JSON representation of this object.
+     *
+     * @var array
+     */
+    protected $json;
+
+    /**
      * {@inheritdoc}
      */
     public function getAdded(): \DateTime
@@ -120,5 +127,25 @@ abstract class ObjectBase implements ObjectInterface
     public function setCustomFields(array $customFields)
     {
         $this->customFields = $customFields;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setJson(string $json)
+    {
+        $this->json = \GuzzleHttp\json_decode($json, true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getJson()
+    {
+        if (!$this->json) {
+            throw new \LogicException('This object has no original JSON representation available');
+        }
+
+        return $this->json;
     }
 }
