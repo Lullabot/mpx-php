@@ -43,10 +43,9 @@ class DataObjectFactoryTest extends TestCase
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
-            new JsonResponse(200, [], 'resolveDomain.json'),
             function (\Psr\Http\Message\RequestInterface $request) {
                 $this->assertEquals('https', $request->getUri()->getScheme());
-                $this->assertEquals('/media/data/Media/12345', $request->getUri()->getPath());
+                $this->assertEquals('/media/data/Media/2602559', $request->getUri()->getPath());
 
                 return new JsonResponse(200, [], 'media-object.json');
             },
@@ -61,8 +60,10 @@ class DataObjectFactoryTest extends TestCase
 
         $account = new Account();
         $account->setId(new Uri('http://example.com/1'));
-        $media = $factory->load(new Uri('http://data.media.theplatform.com/media/data/Media/12345'))->wait();
+        $id = new Uri('http://data.media.theplatform.com/media/data/Media/2602559');
+        $media = $factory->load($id)->wait();
         $this->assertInstanceOf(Media::class, $media);
+        $this->assertEquals($id, $media->getId());
     }
 
     /**
@@ -104,6 +105,7 @@ class DataObjectFactoryTest extends TestCase
      *
      * @covers ::selectRequest
      * @covers ::getBaseUri
+     * @covers ::deserializeObjectList
      */
     public function testSelectRequest()
     {
@@ -126,9 +128,37 @@ class DataObjectFactoryTest extends TestCase
         $this->assertEquals(1, $objectList->getItemsPerPage());
         $this->assertEquals(1, $objectList->getStartIndex());
         $this->assertEquals(1, $objectList->getTotalResults());
-        $account = $objectList->current();
+        $account = $objectList[0];
         $this->assertInstanceOf(Account::class, $account);
         $this->assertEquals('http://access.auth.theplatform.com/data/Account/55555', $account->getId());
+    }
+
+    /**
+     * Tests setting the namespace on subentries JSON representation.
+     *
+     * @covers ::selectRequest
+     * @covers ::getBaseUri
+     * @covers ::deserializeObjectList
+     */
+    public function testSelectRequestNS()
+    {
+        $manager = DataServiceManager::basicDiscovery();
+        $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(200, [], 'resolveAllUrls.json'),
+            new JsonResponse(200, [], 'select-media.json'),
+        ]);
+        $user = new User('username', 'password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $authenticatedClient = new AuthenticatedClient($client, $session);
+        $factory = new DataObjectFactory($service, $authenticatedClient);
+        /** @var ObjectList $objectList */
+        $objectList = $factory->selectRequest(new ByFields())->wait();
+        $this->assertEquals(['prefix1' => 'http://www.example.com/xml'], $objectList[0]->getJson()['$xmlns']);
     }
 
     /**

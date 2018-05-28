@@ -7,7 +7,7 @@ use Psr\Http\Message\UriInterface;
 /**
  * Defines an interface object properties common to all mpx objects.
  */
-interface ObjectInterface extends IdInterface
+interface ObjectInterface extends IdInterface, JsonInterface
 {
     /**
      * Returns the date and time that this object was created.

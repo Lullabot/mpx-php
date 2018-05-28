@@ -241,7 +241,7 @@ class ObjectListTest extends TestCase
         $this->list->setStartIndex(30);
         $this->list->setEntryCount(10);
         $this->list->setItemsPerPage(10);
-        $this->list->setTotalResults(30);
+        $this->list->setTotalResults(50);
         /** @var DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
@@ -255,5 +255,48 @@ class ObjectListTest extends TestCase
                 $this->assertEquals($this->list, $list);
             }
         }
+    }
+
+    /**
+     * Tests when no data object factory is set.
+     */
+    public function testNoDataObjectFactory()
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('setDataObjectFactory must be called before calling nextList.');
+        $this->list->yieldLists()->current();
+    }
+
+    /**
+     * Tests when no ByFields object is set.
+     */
+    public function testNoByFields()
+    {
+        /** @var DataObjectFactory $dof */
+        $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
+        $account = new Account();
+        $this->list->setDataObjectFactory($dof, $account);
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('setByFields must be called before calling nextList.');
+        $this->list->yieldLists()->current();
+    }
+
+    /**
+     * Test setting the JSON representation.
+     */
+    public function testGetJson()
+    {
+        $json = ['key' => 'value'];
+        $this->list->setJson(json_encode($json));
+        $this->assertEquals($json, $this->list->getJson());
+    }
+
+    /**
+     * Test an exception is thrown when no JSON is available.
+     */
+    public function testNoJson()
+    {
+        $this->expectException(\LogicException::class);
+        $this->list->getJson();
     }
 }
