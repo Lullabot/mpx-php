@@ -36,9 +36,7 @@ class ByFieldsTest extends TestCase
             ->setEndIndex(10);
         $byFields->setRange($range);
 
-        $sort = new Sort();
-        $sort->addSort('id');
-        $byFields->setSort($sort);
+        $byFields->sort()->addSort('id');
 
         $parts = $byFields->toQueryParts();
         $this->assertEquals([

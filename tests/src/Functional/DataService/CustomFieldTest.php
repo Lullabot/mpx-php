@@ -6,7 +6,6 @@ use Lullabot\Mpx\DataService\ByFields;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Field;
-use Lullabot\Mpx\DataService\Range;
 use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
 
 /**
@@ -23,10 +22,9 @@ class CustomFieldTest extends FunctionalTestBase
         $mediaDataService = $manager->getDataService('Media Data Service', 'Media', '1.10');
         $dof = new DataObjectFactory($mediaDataService->getAnnotation()->getFieldDataService(), $this->authenticatedClient);
         $filter = new ByFields();
-        $range = new Range();
-        $range->setStartIndex(1)
+        $filter->range()
+            ->setStartIndex(1)
             ->setEndIndex(2);
-        $filter->setRange($range);
         $results = $dof->select($filter, $this->account);
         foreach ($results as $index => $field) {
             $this->assertInstanceOf(Field::class, $field);
