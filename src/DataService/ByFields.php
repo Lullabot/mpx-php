@@ -55,30 +55,66 @@ class ByFields
      *
      * @param string $field The field to filter on.
      * @param string $value The value to filter by.
+     *
+     * @return self Fluent return.
      */
-    public function addField(string $field, string $value)
+    public function addField(string $field, string $value): self
     {
         $this->fields[$field] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Add a range and return it for setting start and end indexes.
+     *
+     * @return Range The range that was added.
+     */
+    public function range(): Range
+    {
+        $this->range = new Range();
+
+        return $this->range;
     }
 
     /**
      * Set a range to apply to this request. MPX will default to a 1-500 range.
      *
      * @param Range $range The range object to add.
+     *
+     * @return self Fluent return.
      */
-    public function setRange(Range $range)
+    public function setRange(Range $range): self
     {
         $this->range = $range;
+
+        return $this;
     }
 
     /**
      * Set a sort to apply to this request.
      *
      * @param Sort $sort The sort object to add.
+     *
+     * @return self Fluent return.
      */
-    public function setSort(Sort $sort)
+    public function setSort(Sort $sort): self
     {
         $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Add and return a sort to order this request.
+     *
+     * @return Sort The sort to apply to this request.
+     */
+    public function sort(): Sort
+    {
+        $this->sort = new Sort();
+
+        return $this->sort;
     }
 
     /**
