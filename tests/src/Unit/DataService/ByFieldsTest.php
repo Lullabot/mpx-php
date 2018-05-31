@@ -56,4 +56,28 @@ class ByFieldsTest extends TestCase
         $byFields = new ByFields();
         $this->assertEquals(['sort' => 'id', 'range' => '1-100'], $byFields->toQueryParts());
     }
+
+    /**
+     * Test the range return.
+     *
+     * @covers ::range
+     */
+    public function testRange()
+    {
+        $byFields = new ByFields();
+        $range = $byFields->range();
+        $this->assertSame($range, $byFields->getRange());
+    }
+
+    /**
+     * Test the sort return.
+     *
+     * @covers ::sort
+     */
+    public function testSort()
+    {
+        $byFields = new ByFields();
+        $sort = $byFields->sort();
+        $this->assertSame($sort, $byFields->getSort());
+    }
 }
