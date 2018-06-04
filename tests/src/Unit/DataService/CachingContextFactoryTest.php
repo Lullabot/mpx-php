@@ -7,7 +7,6 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
     use Lullabot\Mpx\DataService\CachingContextFactory;
     use ReflectionClass;
     use Mockery as m;
-    use phpDocumentor;
     use phpDocumentor\Reflection\DocBlock;
     use phpDocumentor\Reflection\DocBlock\Tag;
     use PHPUnit\Framework\TestCase; // yes, the slash is part of the test
