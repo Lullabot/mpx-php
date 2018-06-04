@@ -62,7 +62,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
@@ -104,7 +104,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(2);
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
@@ -143,7 +143,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
@@ -180,7 +180,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
@@ -279,7 +279,7 @@ class AuthenticatedClientTest extends TestCase
                     $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
                     $this->assertArraySubset([
                         'token' => 'TOKEN-VALUE',
-                        'username' => 'USER-NAME',
+                        'username' => 'mpx/USER-NAME',
                     ], $context);
                     $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
                 });

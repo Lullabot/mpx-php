@@ -8,8 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Usernames are now validated to have a leading directory component, such as
+  `mpx/` #124
 - Added `range()` and `sort()` methods to simplify ByFields usage.
 - Made `$byFields` optional in `select()` and `selectRequest()`.
+
+### Changed
+
+- The `description` field on mpx exceptions is now optional, as it is only
+  included in client errors and not server errors #124
 
 ## [0.3.0] - 2018-05-28
 

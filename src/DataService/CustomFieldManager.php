@@ -4,7 +4,6 @@ namespace Lullabot\Mpx\DataService;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Lullabot\Mpx\DataService\Annotation\CustomField;
 
 class CustomFieldManager
 {

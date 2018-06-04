@@ -42,7 +42,7 @@ class NotificationListenerTest extends TestCase
                 ],
             ]),
         ]);
-        $user = new User('username', 'password');
+        $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
@@ -68,7 +68,7 @@ class NotificationListenerTest extends TestCase
             new JsonResponse(200, [], 'resolveAllUrls.json'),
             new JsonResponse(200, [], 'notification.json'),
         ]);
-        $user = new User('username', 'password');
+        $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();

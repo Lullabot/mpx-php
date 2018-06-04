@@ -42,7 +42,7 @@ class Middleware
                         $data = \GuzzleHttp\json_decode($response->getBody(), true);
 
                         // Notification responses have a different exception format.
-                        if (isset($data[0]) && isset($data[0]['type']) && $data[0]['type'] == 'Exception') {
+                        if (isset($data[0]) && isset($data[0]['type']) && 'Exception' == $data[0]['type']) {
                             throw MpxExceptionFactory::createFromNotificationException($request, $response);
                         }
 
