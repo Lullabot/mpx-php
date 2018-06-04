@@ -33,7 +33,7 @@ class TokenCachePoolTest extends TestCase
         $this->user = $this->getMockBuilder(UserSession::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->user->method('getUser')->willReturn(new User('username', 'password'));
+        $this->user->method('getUser')->willReturn(new User('mpx/username', 'password'));
         $this->token = new Token('https://example.com/idm/data/User/mpx/123456', 'value', time() + 60);
     }
 

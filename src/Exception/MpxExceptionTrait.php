@@ -34,6 +34,10 @@ trait MpxExceptionTrait
      */
     public function getDescription(): string
     {
+        if (!isset($this->data['description'])) {
+            throw new \OutOfBoundsException('description is not included in this error.');
+        }
+
         return $this->data['description'];
     }
 
@@ -119,8 +123,15 @@ trait MpxExceptionTrait
             'responseCode',
             'isException',
             'title',
-            'description',
         ];
+
+        // The error description is only returned for client errors. According
+        // to thePlatform support, the documentation is wrong about description
+        // always being included.
+        if (isset($data['responseCode']) && $data['responseCode'] >= 400 && $data['responseCode'] < 500) {
+            $required[] = 'description';
+        }
+
         foreach ($required as $key) {
             if (empty($data[$key])) {
                 throw new \InvalidArgumentException(sprintf('Required key %s is missing.', $key));
@@ -163,7 +174,10 @@ trait MpxExceptionTrait
     {
         $data = \GuzzleHttp\json_decode($response->getBody(), true);
         isset($data[0]) ? $this->setNotificationData($data) : $this->setData($data);
-        $message = sprintf('HTTP %s Error %s: %s', $response->getStatusCode(), $this->data['title'], $this->data['description']);
+        $message = sprintf('HTTP %s Error %s', $response->getStatusCode(), $this->data['title']);
+        if (isset($this->data['description'])) {
+            $message .= sprintf(': %s', $this->getDescription());
+        }
 
         return $message;
     }

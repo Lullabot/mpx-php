@@ -43,7 +43,7 @@ class ResolveAllUrlsTest extends TestCase
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $session = new AuthenticatedClient($client, $userSession);
 
@@ -80,7 +80,7 @@ class ResolveAllUrlsTest extends TestCase
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $session = new AuthenticatedClient($client, $userSession);
 

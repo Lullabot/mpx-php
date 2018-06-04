@@ -44,7 +44,7 @@ class ResolveDomainTest extends TestCase
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $account = new Account();
@@ -73,7 +73,7 @@ class ResolveDomainTest extends TestCase
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $account = new Account();
