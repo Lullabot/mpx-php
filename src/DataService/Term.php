@@ -251,7 +251,7 @@ class Term
             $value .= $this->plusMinus;
         }
 
-        $value .= str_replace(array_keys(self::ESCAPE_CHARACTERS), self::ESCAPE_CHARACTERS, $this->value);
+        $value .= '"' . str_replace(array_keys(self::ESCAPE_CHARACTERS), self::ESCAPE_CHARACTERS, $this->value).'"';
 
         if (isset($this->boost)) {
             $value .= '^' . $this->boost;

@@ -96,26 +96,26 @@ class TermTest extends TestCase
     public function testToString()
     {
         $term = new Term('value');
-        $this->assertEquals('value', (string) $term);
+        $this->assertEquals('"value"', (string) $term);
         $term = new Term('value', 'field');
-        $this->assertEquals('field:value', (string) $term);
+        $this->assertEquals('field:"value"', (string) $term);
         $term = new Term('value', 'field', 'namespace');
-        $this->assertEquals('namespace$field:value', (string) $term);
+        $this->assertEquals('namespace$field:"value"', (string) $term);
 
         $term->setMatchType('exact');
-        $this->assertEquals('namespace$field.exact:value', (string) $term);
+        $this->assertEquals('namespace$field.exact:"value"', (string) $term);
 
         $term->require();
-        $this->assertEquals('namespace$field.exact:+value', (string) $term);
+        $this->assertEquals('namespace$field.exact:+"value"', (string) $term);
 
         $term->exclude();
-        $this->assertEquals('namespace$field.exact:-value', (string) $term);
+        $this->assertEquals('namespace$field.exact:-"value"', (string) $term);
 
         $term->optional();
-        $this->assertEquals('namespace$field.exact:value', (string) $term);
+        $this->assertEquals('namespace$field.exact:"value"', (string) $term);
 
         $term->setBoost(5);
-        $this->assertEquals('namespace$field.exact:value^5', (string) $term);
+        $this->assertEquals('namespace$field.exact:"value"^5', (string) $term);
     }
 
     /**
@@ -132,10 +132,10 @@ class TermTest extends TestCase
     public function escapeDataProvider() {
         $cases = [];
         foreach (Term::ESCAPE_CHARACTERS as $escape => $replace) {
-            $cases['escaping ' . $escape] = ['value' . $escape, 'value' . $replace];
+            $cases['escaping ' . $escape] = ['value' . $escape, '"value' . $replace . '"'];
         }
 
-        $cases['escaping multiple characters'] = ['value\+', 'value\\\\\\+'];
+        $cases['escaping multiple characters'] = ['value\+', '"value\\\\\\+"'];
         return $cases;
     }
 
