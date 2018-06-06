@@ -1,11 +1,11 @@
 <?php
 
-namespace Lullabot\Mpx\DataService;
+namespace Lullabot\Mpx\DataService\QQuery;
 
 /**
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter
  */
-class QQuery
+class Q
 {
 
     /**

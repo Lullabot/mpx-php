@@ -1,6 +1,8 @@
 <?php
 
-namespace Lullabot\Mpx\DataService;
+namespace Lullabot\Mpx\DataService\QQuery;
+
+use Lullabot\Mpx\DataService\QQuery\Q;
 
 /**
  * Class Term
@@ -251,8 +253,8 @@ class Term
         return $value;
     }
 
-    public function toQuery(): QQuery
+    public function toQuery(): Q
     {
-        return new QQuery($this);
+        return new Q($this);
     }
 }

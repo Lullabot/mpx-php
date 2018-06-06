@@ -1,8 +1,8 @@
 <?php
 
-namespace Lullabot\Mpx\Tests\Unit\DataService;
+namespace Lullabot\Mpx\Tests\Unit\DataService\QQuery;
 
-use Lullabot\Mpx\DataService\Term;
+use Lullabot\Mpx\DataService\QQuery\Term;
 use PHPUnit\Framework\TestCase;
 
 class TermTest extends TestCase
