@@ -238,18 +238,7 @@ class Term implements QueryPartsInterface, TermInterface
             $value .= $this->plusMinus;
         }
 
-        if (isset($this->field)) {
-            $field = '';
-            if (isset($this->namespace)) {
-                $field = $this->namespace.'$';
-            }
-            $field .= $this->field;
-
-            if (isset($this->matchType)) {
-                $field .= '.'.$this->matchType;
-            }
-            $value .= $field.':';
-        }
+        $value = $this->renderField($value);
 
         $value .= '"'.str_replace(array_keys(self::ESCAPE_CHARACTERS), self::ESCAPE_CHARACTERS, $this->value).'"';
 
@@ -279,5 +268,30 @@ class Term implements QueryPartsInterface, TermInterface
         return [
             'q' => (string) $this,
         ];
+    }
+
+    /**
+     * Add the field specification to the term string.
+     *
+     * @param string $value The current term value.
+     *
+     * @return string The value with the attached field, if set.
+     */
+    private function renderField(string $value): string
+    {
+        if (isset($this->field)) {
+            $field = '';
+            if (isset($this->namespace)) {
+                $field = $this->namespace.'$';
+            }
+            $field .= $this->field;
+
+            if (isset($this->matchType)) {
+                $field .= '.'.$this->matchType;
+            }
+            $value .= $field.':';
+        }
+
+        return $value;
     }
 }
