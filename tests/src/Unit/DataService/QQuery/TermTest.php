@@ -93,10 +93,10 @@ class TermTest extends TestCase
         $this->assertEquals('namespace$field.exact:"value"', (string) $term);
 
         $term->require();
-        $this->assertEquals('namespace$field.exact:+"value"', (string) $term);
+        $this->assertEquals('+namespace$field.exact:"value"', (string) $term);
 
         $term->exclude();
-        $this->assertEquals('namespace$field.exact:-"value"', (string) $term);
+        $this->assertEquals('-namespace$field.exact:"value"', (string) $term);
 
         $term->optional();
         $this->assertEquals('namespace$field.exact:"value"', (string) $term);

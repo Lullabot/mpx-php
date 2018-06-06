@@ -234,6 +234,10 @@ class Term implements QueryPartsInterface, TermInterface
     public function __toString(): string
     {
         $value = '';
+        if ($this->plusMinus) {
+            $value .= $this->plusMinus;
+        }
+
         if (isset($this->field)) {
             $field = '';
             if (isset($this->namespace)) {
@@ -244,11 +248,7 @@ class Term implements QueryPartsInterface, TermInterface
             if (isset($this->matchType)) {
                 $field .= '.'.$this->matchType;
             }
-            $value = $field.':';
-        }
-
-        if ($this->plusMinus) {
-            $value .= $this->plusMinus;
+            $value .= $field.':';
         }
 
         $value .= '"'.str_replace(array_keys(self::ESCAPE_CHARACTERS), self::ESCAPE_CHARACTERS, $this->value).'"';
