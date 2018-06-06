@@ -5,6 +5,8 @@ namespace Lullabot\Mpx\DataService\QQuery;
 use Lullabot\Mpx\DataService\QueryPartsInterface;
 
 /**
+ * Represents terms grouped with AND, OR, and parenthesis.
+ *
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter
  */
 class TermGroup implements QueryPartsInterface, TermInterface
@@ -68,9 +70,7 @@ class TermGroup implements QueryPartsInterface, TermInterface
     public function toQueryParts(): array
     {
         return [
-            'q' => [
-                (string) $this,
-            ],
+            'q' => (string) $this,
         ];
     }
 }

@@ -5,8 +5,9 @@ namespace Lullabot\Mpx\DataService\QQuery;
 use Lullabot\Mpx\DataService\QueryPartsInterface;
 
 /**
- * Class Term.
+ * A Term used within a Q Query.
  *
+ * @see TermGroup
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter
  */
 class Term implements QueryPartsInterface, TermInterface
@@ -270,12 +271,13 @@ class Term implements QueryPartsInterface, TermInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function toQueryParts(): array
     {
         return [
-            'q' => [
-                (string) $this,
-            ],
+            'q' => (string) $this,
         ];
     }
 }

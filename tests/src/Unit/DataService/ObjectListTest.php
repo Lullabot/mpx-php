@@ -58,7 +58,7 @@ class ObjectListTest extends TestCase
             ['entryCount', rand(1, getrandmax())],
             ['entries', [new \stdClass()]],
             ['totalResults', rand(1, getrandmax())],
-            ['byFields', new ObjectListQuery()],
+            ['objectListQuery', new ObjectListQuery()],
         ];
     }
 
@@ -68,8 +68,8 @@ class ObjectListTest extends TestCase
     public function testGetByFieldsMissing()
     {
         $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('This object list does not have byFields set.');
-        $this->list->getByFields();
+        $this->expectExceptionMessage('This object list does not have an ObjectListQuery set.');
+        $this->list->getObjectListQuery();
     }
 
     /**
@@ -109,7 +109,7 @@ class ObjectListTest extends TestCase
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof, $account);
-        $this->list->setByFields(new ObjectListQuery());
+        $this->list->setObjectListQuery(new ObjectListQuery());
 
         $this->assertInstanceOf(PromiseInterface::class, $this->list->nextList());
     }
@@ -128,7 +128,7 @@ class ObjectListTest extends TestCase
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof, $account);
-        $this->list->setByFields(new ObjectListQuery());
+        $this->list->setObjectListQuery(new ObjectListQuery());
         $this->assertFalse($this->list->nextList());
     }
 
@@ -246,7 +246,7 @@ class ObjectListTest extends TestCase
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof, $account);
-        $this->list->setByFields(new ObjectListQuery());
+        $this->list->setObjectListQuery(new ObjectListQuery());
         $y = $this->list->yieldLists();
         foreach ($y as $l) {
             $this->assertInstanceOf(PromiseInterface::class, $l);

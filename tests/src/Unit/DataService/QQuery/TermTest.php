@@ -5,6 +5,11 @@ namespace Lullabot\Mpx\Tests\Unit\DataService\QQuery;
 use Lullabot\Mpx\DataService\QQuery\Term;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Tests creating terms for Q queries.
+ *
+ * @covers \Lullabot\Mpx\DataService\QQuery\Term
+ */
 class TermTest extends TestCase
 {
     public function testGetNamespace()
@@ -58,9 +63,7 @@ class TermTest extends TestCase
     {
         $term = new Term('value', 'field');
         $this->assertEquals([
-            'q' => [
-                'field:"value"',
-            ],
+            'q' => 'field:"value"',
         ], $term->toQueryParts());
     }
 

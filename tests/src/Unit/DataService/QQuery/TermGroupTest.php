@@ -6,6 +6,11 @@ use Lullabot\Mpx\DataService\QQuery\TermGroup;
 use Lullabot\Mpx\DataService\QQuery\Term;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Tests grouping terms with AND, OR, and parenthesis.
+ *
+ * @covers \Lullabot\Mpx\DataService\QQuery\TermGroup
+ */
 class TermGroupTest extends TestCase
 {
     public function testToString()

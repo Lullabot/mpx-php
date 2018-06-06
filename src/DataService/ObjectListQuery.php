@@ -2,14 +2,12 @@
 
 namespace Lullabot\Mpx\DataService;
 
-use MongoDB\Driver\Query;
-
 /**
  * A collection of fields to filter a request by.
  *
- * Results from a ByFields query are paged, and MPX enforces paging if none is
- * specified. Since sorting may be inconsistent across pages, this class will
- * automatically sort by 'id' if no sort is specified.
+ * Results from an ObjectListQuery query are paged, and mpx enforces paging if
+ * none is specified. Since sorting may be inconsistent across pages, this class
+ * will automatically sort by 'id' if no sort is specified.
  *
  * By default, pages are set to 100 items per page. This matches well with
  * memory consumption (where PHP leaks memory at the default 500 items mpx
@@ -93,7 +91,6 @@ class ObjectListQuery implements QueryPartsInterface
 
     protected function getFields()
     {
-//        return implode('&', $this->fields);
         $parts = [];
         foreach ($this->fields as $field) {
             $parts = array_merge($parts, $field->toQueryParts());
