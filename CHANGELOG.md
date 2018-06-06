@@ -10,11 +10,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Usernames are now validated to have a leading directory component, such as
   `mpx/` #124
+- `select()` now supports "Q Queries", which are slower but more expressive
+  filters for mpx requests #129
+- `\Lullabot\Mpx\DataService\QueryPartsInterface` has been added to allow other
+  code to provide query parameters for select requests #129
 
 ### Changed
 
 - The `description` field on mpx exceptions is now optional, as it is only
   included in client errors and not server errors #124
+- `\Lullabot\Mpx\DataService\ByFields` has been split into two classes.
+  `ByFields` now exclusively deals with `by<Field>` parameters. A new
+  `\Lullabot\Mpx\DataService\ObjectListQuery` class handles ranges, sorts,
+  and filters. #129
+- `select()` and `selectRequest()` in DataObjectFactory now take a
+  `ObjectListQuery` parameter instead of a `ByFields` parameter #129
 
 ## [0.3.0] - 2018-05-28
 

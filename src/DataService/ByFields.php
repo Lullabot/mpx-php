@@ -2,6 +2,11 @@
 
 namespace Lullabot\Mpx\DataService;
 
+/**
+ * Class for 'by<Field>' filters on requests.
+ *
+ * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-a-byfield-query-parameter
+ */
 class ByFields implements QueryPartsInterface
 {
     /**
@@ -16,8 +21,10 @@ class ByFields implements QueryPartsInterface
      *
      * @param string $field The field to filter on.
      * @param string $value The value to filter by.
+     *
+     * @return ByFields
      */
-    public function addField(string $field, string $value)
+    public function addField(string $field, string $value): self
     {
         $this->fields[$field] = $value;
 
