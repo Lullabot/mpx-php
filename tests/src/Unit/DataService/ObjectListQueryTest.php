@@ -19,7 +19,6 @@ class ObjectListQueryTest extends TestCase
      * Tests creating the ObjectListQuery query array.
      *
      * @covers ::__construct
-     * @covers ::addField
      * @covers ::getFields
      * @covers ::setRange
      * @covers ::getRange
