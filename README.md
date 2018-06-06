@@ -68,6 +68,33 @@ print "The loaded media is:\n";
 var_dump($media);
 ```
 
+## Filtering results by fields and with Q Queries
+
+Calls to `select()` and `selectRequest()` can be filtered by exact-match fields
+as well as with more complex searches.
+
+```php
+<?php
+
+// This skips the setup from above.
+$mediaFactory = new DataObjectFactory($dataServiceManager->getDataService('Media Data Service', 'Media', '1.10'), $authenticatedClient);
+
+// Search for "cats AND dogs" in any field.
+$query = new ObjectListQuery();
+$cats = new Term('cats');
+$termGroup = new TermGroup($cats);
+$termGroup->and(new Term('dogs'));
+$query->add($termGroup);
+
+// Limit to 10 results per page.
+$query->getRange()->setEndIndex(10);
+$results = $mediaFactory->select($query, $account);
+
+foreach ($results as $media) {
+    var_dump($media);
+}
+```
+
 ## Test client
 
 thePlatform provides a
