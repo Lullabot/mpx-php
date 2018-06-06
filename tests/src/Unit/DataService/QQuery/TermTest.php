@@ -139,6 +139,13 @@ class TermTest extends TestCase
         return $cases;
     }
 
+    public function testWrap()
+    {
+        $term = new Term('value');
+        $term->wrapParenthesis();
+        $this->assertEquals('("value")', (string) $term);
+    }
+
     public function testSetNamespace()
     {
 

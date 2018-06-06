@@ -2,14 +2,14 @@
 
 namespace Lullabot\Mpx\DataService\QQuery;
 
-use Lullabot\Mpx\DataService\QQuery\Q;
+use Lullabot\Mpx\DataService\QQuery\TermGroup;
 
 /**
  * Class Term
  * @package Lullabot\Mpx\DataService
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter
  */
-class Term
+class Term implements TermInterface
 {
 
     /**
@@ -58,6 +58,11 @@ class Term
      * @var string
      */
     private $matchType;
+
+    /**
+     * @var bool
+     */
+    private $wrap;
 
     /**
      * @return string
@@ -250,11 +255,25 @@ class Term
             $value .= '^' . $this->boost;
         }
 
+        if ($this->wrap) {
+            $value = '('.$value.')';
+        }
+
         return $value;
     }
 
-    public function toQuery(): Q
+    public function wrapParenthesis($wrap = true): self
     {
-        return new Q($this);
+        $this->wrap = $wrap;
+        return $this;
+    }
+
+    public function toQueryParts(): array
+    {
+        return [
+            'q' => [
+                (string) $this,
+            ],
+        ];
     }
 }
