@@ -6,7 +6,7 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
-use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Range;
@@ -46,7 +46,7 @@ class ReadmeTest extends FunctionalTestBase
         $mediaFactory = new DataObjectFactory($dataServiceManager->getDataService('Media Data Service', 'Media', '1.10'), $authenticatedClient);
 
         // We query mpx for a media item, while the readme assumes the user knows an ID already.
-        $filter = new ByFields();
+        $filter = new ObjectListQuery();
         $range = new Range();
         $range->setStartIndex(1)
             ->setEndIndex(1);

@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Functional\DataService;
 
-use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Field;
@@ -22,7 +22,7 @@ class CustomFieldTest extends FunctionalTestBase
         $manager = DataServiceManager::basicDiscovery();
         $mediaDataService = $manager->getDataService('Media Data Service', 'Media', '1.10');
         $dof = new DataObjectFactory($mediaDataService->getAnnotation()->getFieldDataService(), $this->authenticatedClient);
-        $filter = new ByFields();
+        $filter = new ObjectListQuery();
         $range = new Range();
         $range->setStartIndex(1)
             ->setEndIndex(2);

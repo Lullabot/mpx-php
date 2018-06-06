@@ -5,7 +5,7 @@ namespace Lullabot\Mpx\Command;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
-use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\CustomFieldInterface;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
@@ -96,7 +96,7 @@ EOD;
         $manager = DataServiceManager::basicDiscovery();
         $dataService = $manager->getDataService($input->getArgument('data-service'), $input->getArgument('data-object'), $input->getArgument('schema'));
         $dof = new DataObjectFactory($dataService->getAnnotation()->getFieldDataService(), $authenticatedClient);
-        $filter = new ByFields();
+        $filter = new ObjectListQuery();
         /** @var Field[] $results */
         $results = $dof->select($filter);
 

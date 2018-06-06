@@ -2,17 +2,15 @@
 
 namespace Lullabot\Mpx\DataService\QQuery;
 
-use Lullabot\Mpx\DataService\QQuery\TermGroup;
 use Lullabot\Mpx\DataService\QueryPartsInterface;
 
 /**
- * Class Term
- * @package Lullabot\Mpx\DataService
+ * Class Term.
+ *
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter
  */
 class Term implements QueryPartsInterface, TermInterface
 {
-
     /**
      * Character sequences that must be escaped from term values.
      *
@@ -78,7 +76,7 @@ class Term implements QueryPartsInterface, TermInterface
      *
      * @return Term
      */
-    public function setValue(string $value): Term
+    public function setValue(string $value): self
     {
         $this->value = $value;
 
@@ -98,7 +96,7 @@ class Term implements QueryPartsInterface, TermInterface
      *
      * @return Term
      */
-    public function setField(string $field): Term
+    public function setField(string $field): self
     {
         $this->field = $field;
 
@@ -118,7 +116,7 @@ class Term implements QueryPartsInterface, TermInterface
      *
      * @return Term
      */
-    public function setMatchType(string $matchType): Term
+    public function setMatchType(string $matchType): self
     {
         if (!isset($this->field)) {
             throw new \LogicException();
@@ -142,7 +140,7 @@ class Term implements QueryPartsInterface, TermInterface
      *
      * @return Term
      */
-    public function setBoost(int $boost): Term
+    public function setBoost(int $boost): self
     {
         $this->boost = $boost;
 
@@ -162,7 +160,7 @@ class Term implements QueryPartsInterface, TermInterface
      *
      * @return Term
      */
-    public function setNamespace(string $namespace): Term
+    public function setNamespace(string $namespace): self
     {
         $this->namespace = $namespace;
 
@@ -171,18 +169,20 @@ class Term implements QueryPartsInterface, TermInterface
 
     public function isRequired(): bool
     {
-        return $this->plusMinus == '+';
+        return '+' == $this->plusMinus;
     }
 
-    public function require(): Term
+    public function require(): self
     {
         $this->plusMinus = '+';
+
         return $this;
     }
 
-    public function optional(): Term
+    public function optional(): self
     {
         $this->plusMinus = null;
+
         return $this;
     }
 
@@ -191,7 +191,7 @@ class Term implements QueryPartsInterface, TermInterface
      */
     public function isExclude(): bool
     {
-        return $this->plusMinus == '-';
+        return '-' == $this->plusMinus;
     }
 
     /**
@@ -199,7 +199,7 @@ class Term implements QueryPartsInterface, TermInterface
      *
      * @return Term
      */
-    public function exclude(): Term
+    public function exclude(): self
     {
         $this->plusMinus = '-';
 
@@ -232,28 +232,28 @@ class Term implements QueryPartsInterface, TermInterface
      */
     public function __toString(): string
     {
-        $value = "";
+        $value = '';
         if (isset($this->field)) {
-            $field = "";
+            $field = '';
             if (isset($this->namespace)) {
-                $field = $this->namespace . '$';
+                $field = $this->namespace.'$';
             }
             $field .= $this->field;
 
             if (isset($this->matchType)) {
-                $field .= '.' . $this->matchType;
+                $field .= '.'.$this->matchType;
             }
-            $value = $field . ':';
+            $value = $field.':';
         }
 
         if ($this->plusMinus) {
             $value .= $this->plusMinus;
         }
 
-        $value .= '"' . str_replace(array_keys(self::ESCAPE_CHARACTERS), self::ESCAPE_CHARACTERS, $this->value).'"';
+        $value .= '"'.str_replace(array_keys(self::ESCAPE_CHARACTERS), self::ESCAPE_CHARACTERS, $this->value).'"';
 
         if (isset($this->boost)) {
-            $value .= '^' . $this->boost;
+            $value .= '^'.$this->boost;
         }
 
         if ($this->wrap) {
@@ -266,6 +266,7 @@ class Term implements QueryPartsInterface, TermInterface
     public function wrapParenthesis($wrap = true): self
     {
         $this->wrap = $wrap;
+
         return $this;
     }
 

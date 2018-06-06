@@ -170,13 +170,13 @@ class DataObjectFactory
     /**
      * Query for MPX data using 'byField' parameters.
      *
-     * @param ByFields    $byFields The fields and values to filter by. Note these are exact matches.
-     * @param IdInterface $account  (optional) The account context to use in the request. Defaults to the account
-     *                              associated with the authenticated client.
+     * @param ObjectListQuery $byFields The fields and values to filter by. Note these are exact matches.
+     * @param IdInterface     $account  (optional) The account context to use in the request. Defaults to the account
+     *                                  associated with the authenticated client.
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
-    public function select(ByFields $byFields, IdInterface $account = null): ObjectListIterator
+    public function select(ObjectListQuery $byFields, IdInterface $account = null): ObjectListIterator
     {
         return new ObjectListIterator($this->selectRequest($byFields, $account));
     }
@@ -186,13 +186,13 @@ class DataObjectFactory
      *
      * @see \Lullabot\Mpx\DataService\DataObjectFactory::select
      *
-     * @param ByFields    $byFields The fields and values to filter by. Note these are exact matches.
-     * @param IdInterface $account  (optional) The account context to use in the request. Note that most requests require
-     *                              an account context.
+     * @param ObjectListQuery $byFields The fields and values to filter by. Note these are exact matches.
+     * @param IdInterface     $account  (optional) The account context to use in the request. Note that most requests require
+     *                                  an account context.
      *
      * @return PromiseInterface A promise to return an ObjectList.
      */
-    public function selectRequest(ByFields $byFields, IdInterface $account = null): PromiseInterface
+    public function selectRequest(ObjectListQuery $byFields, IdInterface $account = null): PromiseInterface
     {
         $annotation = $this->dataService->getAnnotation();
         $options = [
@@ -218,12 +218,12 @@ class DataObjectFactory
      * Deserialize an object list response.
      *
      * @param ResponseInterface $response The response to deserialize.
-     * @param ByFields          $byFields The fields used to limit the response.
+     * @param ObjectListQuery   $byFields The fields used to limit the response.
      * @param IdInterface       $account  (optional) The account used to fetch the object list.
      *
      * @return ObjectList The deserialized list.
      */
-    private function deserializeObjectList(ResponseInterface $response, ByFields $byFields, IdInterface $account = null): ObjectList
+    private function deserializeObjectList(ResponseInterface $response, ObjectListQuery $byFields, IdInterface $account = null): ObjectList
     {
         $data = $response->getBody();
 

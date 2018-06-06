@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class TermGroupTest extends TestCase
 {
-
     public function testToString()
     {
         $term = new Term('value');

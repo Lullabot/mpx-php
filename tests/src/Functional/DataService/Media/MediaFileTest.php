@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Functional\DataService\Media;
 
-use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Range;
@@ -22,7 +22,7 @@ class MediaFileTest extends FunctionalTestBase
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'MediaFile', '1.10');
         $dof = new DataObjectFactory($service, $this->authenticatedClient);
-        $filter = new ByFields();
+        $filter = new ObjectListQuery();
         $range = new Range();
         $range->setStartIndex(1)
             ->setEndIndex(2);

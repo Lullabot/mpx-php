@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class TermTest extends TestCase
 {
-
     public function testGetNamespace()
     {
         $term = new Term('value');
@@ -45,52 +44,42 @@ class TermTest extends TestCase
 
     public function testGetBoost()
     {
-
     }
 
     public function testGetMatchType()
     {
-
     }
 
     public function testSetMatchType()
     {
-
     }
 
     public function testSetBoost()
     {
-
     }
 
     public function testToQueryParts()
     {
-
     }
 
     public function testSetValue()
     {
-
     }
 
     public function testIsRequired()
     {
-
     }
 
     public function testSetField()
     {
-
     }
 
     public function testRequire()
     {
-
     }
 
     public function testExclude()
     {
-
     }
 
     public function testToString()
@@ -129,13 +118,15 @@ class TermTest extends TestCase
         $this->assertEquals($escaped, (string) $term);
     }
 
-    public function escapeDataProvider() {
+    public function escapeDataProvider()
+    {
         $cases = [];
         foreach (Term::ESCAPE_CHARACTERS as $escape => $replace) {
-            $cases['escaping ' . $escape] = ['value' . $escape, '"value' . $replace . '"'];
+            $cases['escaping '.$escape] = ['value'.$escape, '"value'.$replace.'"'];
         }
 
         $cases['escaping multiple characters'] = ['value\+', '"value\\\\\\+"'];
+
         return $cases;
     }
 
@@ -148,6 +139,5 @@ class TermTest extends TestCase
 
     public function testSetNamespace()
     {
-
     }
 }

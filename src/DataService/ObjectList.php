@@ -55,7 +55,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     protected $totalResults = 0;
 
     /**
-     * @var ByFields
+     * @var ObjectListQuery
      */
     protected $byFields;
 
@@ -191,9 +191,9 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     }
 
     /**
-     * @return ByFields
+     * @return ObjectListQuery
      */
-    public function getByFields(): ByFields
+    public function getByFields(): ObjectListQuery
     {
         if (!isset($this->byFields)) {
             throw new \LogicException('This object list does not have byFields set.');
@@ -203,9 +203,9 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     }
 
     /**
-     * @param ByFields $byFields
+     * @param ObjectListQuery $byFields
      */
-    public function setByFields(ByFields $byFields)
+    public function setByFields(ObjectListQuery $byFields)
     {
         $this->byFields = $byFields;
     }

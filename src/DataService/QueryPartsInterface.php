@@ -4,7 +4,6 @@ namespace Lullabot\Mpx\DataService;
 
 interface QueryPartsInterface
 {
-
     /**
      * Return an array suitable for use within a Guzzle 'query' parameter.
      *

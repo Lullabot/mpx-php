@@ -3,19 +3,20 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
 use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\Range;
 use Lullabot\Mpx\DataService\Sort;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test a ByFields query.
+ * Test a ObjectListQuery query.
  *
- * @coversDefaultClass  \Lullabot\Mpx\DataService\ByFields
+ * @coversDefaultClass  \Lullabot\Mpx\DataService\ObjectListQuery
  */
-class ByFieldsTest extends TestCase
+class ObjectListQueryTest extends TestCase
 {
     /**
-     * Tests creating the ByFields query array.
+     * Tests creating the ObjectListQuery query array.
      *
      * @covers ::__construct
      * @covers ::addField
@@ -28,19 +29,21 @@ class ByFieldsTest extends TestCase
      */
     public function testToQueryParts()
     {
+        $query = new ObjectListQuery();
         $byFields = new ByFields();
         $byFields->addField('title', 'Most Excellent Video');
+        $query->add($byFields);
 
         $range = new Range();
         $range->setStartIndex(1)
             ->setEndIndex(10);
-        $byFields->setRange($range);
+        $query->setRange($range);
 
         $sort = new Sort();
         $sort->addSort('id');
-        $byFields->setSort($sort);
+        $query->setSort($sort);
 
-        $parts = $byFields->toQueryParts();
+        $parts = $query->toQueryParts();
         $this->assertEquals([
             'byTitle' => 'Most Excellent Video',
             'sort' => 'id',
@@ -49,13 +52,13 @@ class ByFieldsTest extends TestCase
     }
 
     /**
-     * Test that a completely empty ByFields object can still be rendered to query parts.
+     * Test that a completely empty ObjectListQuery object can still be rendered to query parts.
      *
      * @covers ::toQueryParts
      */
     public function testNoValues()
     {
-        $byFields = new ByFields();
+        $byFields = new ObjectListQuery();
         $this->assertEquals(['sort' => 'id', 'range' => '1-100'], $byFields->toQueryParts());
     }
 }

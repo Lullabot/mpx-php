@@ -9,7 +9,6 @@ use Lullabot\Mpx\DataService\QueryPartsInterface;
  */
 class TermGroup implements QueryPartsInterface, TermInterface
 {
-
     /**
      * @var array
      */
@@ -48,12 +47,13 @@ class TermGroup implements QueryPartsInterface, TermInterface
     public function wrapParenthesis($wrap = true): self
     {
         $this->wrap = $wrap;
+
         return $this;
     }
 
     public function __toString()
     {
-        $query = "";
+        $query = '';
         foreach ($this->terms as $term) {
             $query .= implode(' ', $term);
         }
@@ -61,6 +61,7 @@ class TermGroup implements QueryPartsInterface, TermInterface
         if ($this->wrap) {
             $query = '('.$query.')';
         }
+
         return $query;
     }
 
@@ -72,5 +73,4 @@ class TermGroup implements QueryPartsInterface, TermInterface
             ],
         ];
     }
-
 }
