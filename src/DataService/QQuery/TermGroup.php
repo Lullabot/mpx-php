@@ -2,10 +2,12 @@
 
 namespace Lullabot\Mpx\DataService\QQuery;
 
+use Lullabot\Mpx\DataService\QueryPartsInterface;
+
 /**
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter
  */
-class TermGroup implements TermInterface
+class TermGroup implements QueryPartsInterface, TermInterface
 {
 
     /**

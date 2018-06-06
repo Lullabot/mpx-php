@@ -3,13 +3,14 @@
 namespace Lullabot\Mpx\DataService\QQuery;
 
 use Lullabot\Mpx\DataService\QQuery\TermGroup;
+use Lullabot\Mpx\DataService\QueryPartsInterface;
 
 /**
  * Class Term
  * @package Lullabot\Mpx\DataService
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter
  */
-class Term implements TermInterface
+class Term implements QueryPartsInterface, TermInterface
 {
 
     /**

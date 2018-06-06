@@ -15,7 +15,7 @@ namespace Lullabot\Mpx\DataService;
  *
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-a-byfield-query-parameter
  */
-class ByFields
+class ByFields implements QueryPartsInterface
 {
     /**
      * The array of fields and their value to filter by.
@@ -119,7 +119,7 @@ class ByFields
      *
      * @return array The array of query arguments.
      */
-    public function toQueryParts()
+    public function toQueryParts(): array
     {
         return $this->getFields() + $this->getSort()->toQueryParts() + $this->getRange()->toQueryParts();
     }
