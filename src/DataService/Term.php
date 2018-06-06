@@ -219,15 +219,6 @@ class Term
         $this->namespace = $namespace;
     }
 
-    public function toQueryParts(): array
-    {
-        return [
-            'q' => [
-                (string) $this,
-            ],
-        ];
-    }
-
     /**
      * @return string
      */
@@ -258,5 +249,10 @@ class Term
         }
 
         return $value;
+    }
+
+    public function toQuery(): QQuery
+    {
+        return new QQuery($this);
     }
 }
