@@ -84,6 +84,11 @@ class ObjectListQuery implements QueryPartsInterface
         return $this->range;
     }
 
+    /**
+     * Add query parameters to this request.
+     *
+     * @param QueryPartsInterface $queryParts The query components to add to the request.
+     */
     public function add(QueryPartsInterface $queryParts)
     {
         $this->fields[] = $queryParts;
