@@ -44,42 +44,37 @@ class TermTest extends TestCase
 
     public function testGetBoost()
     {
+        $term = new Term('value');
+        $this->assertEquals(5, $term->setBoost(5)->getBoost());
     }
 
     public function testGetMatchType()
     {
-    }
-
-    public function testSetMatchType()
-    {
-    }
-
-    public function testSetBoost()
-    {
+        $term = new Term('value', 'field');
+        $this->assertEquals('exact', $term->setMatchType('exact')->getMatchType());
     }
 
     public function testToQueryParts()
     {
+        $term = new Term('value', 'field');
+        $this->assertEquals([
+            'q' => [
+                'field:"value"',
+            ],
+        ], $term->toQueryParts());
     }
 
     public function testSetValue()
     {
+        $term = new Term('value');
+        $this->assertEquals('value2', $term->setValue('value2')->getValue());
     }
 
     public function testIsRequired()
     {
-    }
-
-    public function testSetField()
-    {
-    }
-
-    public function testRequire()
-    {
-    }
-
-    public function testExclude()
-    {
+        $term = new Term('value');
+        $this->assertFalse($term->require()->isExclude());
+        $this->assertTrue($term->isRequired());
     }
 
     public function testToString()
@@ -139,5 +134,8 @@ class TermTest extends TestCase
 
     public function testSetNamespace()
     {
+        $term = new Term('value', 'field', 'namespace');
+        $this->assertEquals('namespace', $term->getNamespace());
+        $this->assertEquals('namespace2', $term->setNamespace('namespace2')->getNamespace());
     }
 }
