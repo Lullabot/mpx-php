@@ -35,10 +35,13 @@ class AuthenticatedClientTest extends TestCase
      * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
+     * @covers ::__construct
      * @covers ::request
      * @covers ::requestAsync
+     * @covers ::requestAsyncWithRetry
      * @covers ::send
      * @covers ::sendAsync
+     * @covers ::sendAsyncWithRetry
      * @covers ::mergeAuth
      * @covers ::requestWithRetry
      * @covers ::sendWithRetry
