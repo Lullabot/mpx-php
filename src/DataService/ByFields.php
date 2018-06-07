@@ -22,7 +22,7 @@ class ByFields implements QueryPartsInterface
      * @param string $field The field to filter on.
      * @param string $value The value to filter by.
      *
-     * @return ByFields
+     * @return self Fluent return.
      */
     public function addField(string $field, string $value): self
     {

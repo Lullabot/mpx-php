@@ -11,7 +11,6 @@ use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\QQuery\Term;
 use Lullabot\Mpx\DataService\QQuery\TermGroup;
-use Lullabot\Mpx\DataService\Range;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
@@ -50,10 +49,9 @@ class ReadmeTest extends FunctionalTestBase
 
         // We query mpx for a media item, while the readme assumes the user knows an ID already.
         $filter = new ObjectListQuery();
-        $range = new Range();
-        $range->setStartIndex(1)
+        $filter->getRange()
+            ->setStartIndex(1)
             ->setEndIndex(1);
-        $filter->setRange($range);
         $results = $mediaFactory->select($filter, $account);
         foreach ($results as $media) {
             // Replace the ID to the media item to load. You can find it under "History -> ID" in the MPX console.

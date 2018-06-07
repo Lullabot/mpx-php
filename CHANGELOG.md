@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Usernames are now validated to have a leading directory component, such as
   `mpx/` #124
+- Made `$objectListQuery` optional in `select()` and `selectRequest()`.
 - `select()` now supports "Q Queries", which are slower but more expressive
   filters for mpx requests #129
 - `\Lullabot\Mpx\DataService\QueryPartsInterface` has been added to allow other

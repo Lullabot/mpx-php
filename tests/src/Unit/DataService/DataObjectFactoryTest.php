@@ -123,7 +123,7 @@ class DataObjectFactoryTest extends TestCase
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
         /** @var ObjectList $objectList */
-        $objectList = $factory->selectRequest(new ObjectListQuery())->wait();
+        $objectList = $factory->selectRequest()->wait();
         $this->assertEquals(1, $objectList->getEntryCount());
         $this->assertEquals(1, $objectList->getItemsPerPage());
         $this->assertEquals(1, $objectList->getStartIndex());
@@ -157,7 +157,7 @@ class DataObjectFactoryTest extends TestCase
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
         /** @var ObjectList $objectList */
-        $objectList = $factory->selectRequest(new ObjectListQuery())->wait();
+        $objectList = $factory->selectRequest()->wait();
         $this->assertEquals(['prefix1' => 'http://www.example.com/xml'], $objectList[0]->getJson()['$xmlns']);
     }
 

@@ -24,10 +24,9 @@ class MediaQueryTest extends FunctionalTestBase
         $manager = DataServiceManager::basicDiscovery();
         $dof = new DataObjectFactory($manager->getDataService('Media Data Service', 'Media', '1.10'), $this->authenticatedClient);
         $filter = new ObjectListQuery();
-        $range = new Range();
-        $range->setStartIndex(1)
+        $filter->getRange()
+            ->setStartIndex(1)
             ->setEndIndex(2);
-        $filter->setRange($range);
         $results = $dof->select($filter, $this->account);
 
         foreach ($results as $index => $result) {
@@ -62,10 +61,9 @@ class MediaQueryTest extends FunctionalTestBase
         $manager = DataServiceManager::basicDiscovery();
         $dof = new DataObjectFactory($manager->getDataService('Media Data Service', 'Media', '1.10'), $this->authenticatedClient);
         $filter = new ObjectListQuery();
-        $range = new Range();
-        $range->setStartIndex(1)
+        $filter->getRange()
+            ->setStartIndex(1)
             ->setEndIndex(2);
-        $filter->setRange($range);
         /** @var ObjectList $list */
         $list = $dof->selectRequest($filter, $this->account)->wait();
 
