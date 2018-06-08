@@ -6,7 +6,7 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
-use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Media\Media;
@@ -179,7 +179,7 @@ class DataObjectFactoryTest extends TestCase
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
-        $iterator = $factory->select(new ByFields());
+        $iterator = $factory->select(new ObjectListQuery());
         $this->assertInstanceOf(ObjectListIterator::class, $iterator);
     }
 

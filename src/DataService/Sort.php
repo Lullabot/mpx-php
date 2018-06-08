@@ -7,7 +7,7 @@ namespace Lullabot\Mpx\DataService;
  *
  * @see https://docs.theplatform.com/help/wsf-controlling-the-contents-of-the-response-payload#tp-toc19
  */
-class Sort
+class Sort implements QueryPartsInterface
 {
     /**
      * The array of fields and their query value to sort by.
@@ -36,7 +36,7 @@ class Sort
      *
      * @return array An array with a 'sort' key, or an empty array if no sorts are set.
      */
-    public function toQueryParts()
+    public function toQueryParts(): array
     {
         if (empty($this->fields)) {
             return [];

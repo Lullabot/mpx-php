@@ -5,7 +5,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\DataService\Access\Account;
-use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\ObjectList;
 use PHPUnit\Framework\TestCase;
@@ -58,7 +58,7 @@ class ObjectListTest extends TestCase
             ['entryCount', rand(1, getrandmax())],
             ['entries', [new \stdClass()]],
             ['totalResults', rand(1, getrandmax())],
-            ['byFields', new ByFields()],
+            ['objectListQuery', new ObjectListQuery()],
         ];
     }
 
@@ -68,8 +68,8 @@ class ObjectListTest extends TestCase
     public function testGetByFieldsMissing()
     {
         $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('This object list does not have byFields set.');
-        $this->list->getByFields();
+        $this->expectExceptionMessage('This object list does not have an ObjectListQuery set.');
+        $this->list->getObjectListQuery();
     }
 
     /**
@@ -109,7 +109,7 @@ class ObjectListTest extends TestCase
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof, $account);
-        $this->list->setByFields(new ByFields());
+        $this->list->setObjectListQuery(new ObjectListQuery());
 
         $this->assertInstanceOf(PromiseInterface::class, $this->list->nextList());
     }
@@ -128,7 +128,7 @@ class ObjectListTest extends TestCase
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof, $account);
-        $this->list->setByFields(new ByFields());
+        $this->list->setObjectListQuery(new ObjectListQuery());
         $this->assertFalse($this->list->nextList());
     }
 
@@ -246,7 +246,7 @@ class ObjectListTest extends TestCase
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof, $account);
-        $this->list->setByFields(new ByFields());
+        $this->list->setObjectListQuery(new ObjectListQuery());
         $y = $this->list->yieldLists();
         foreach ($y as $l) {
             $this->assertInstanceOf(PromiseInterface::class, $l);
@@ -268,7 +268,7 @@ class ObjectListTest extends TestCase
     }
 
     /**
-     * Tests when no ByFields object is set.
+     * Tests when no ObjectListQuery object is set.
      */
     public function testNoByFields()
     {

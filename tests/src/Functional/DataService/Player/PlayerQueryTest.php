@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Functional\DataService\Player;
 
-use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
@@ -20,8 +20,8 @@ class PlayerQueryTest extends FunctionalTestBase
     {
         $manager = DataServiceManager::basicDiscovery();
         $dof = new DataObjectFactory($manager->getDataService('Player Data Service', 'Player', '1.6'), $this->authenticatedClient);
-        $filter = new ByFields();
-        $filter->range()
+        $filter = new ObjectListQuery();
+        $filter->getRange()
             ->setStartIndex(1)
             ->setEndIndex(2);
         $results = $dof->select($filter, $this->account);

@@ -55,9 +55,9 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     protected $totalResults = 0;
 
     /**
-     * @var ByFields
+     * @var ObjectListQuery
      */
-    protected $byFields;
+    protected $objectListQuery;
 
     /**
      * The position of the array index.
@@ -191,23 +191,23 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     }
 
     /**
-     * @return ByFields
+     * @return ObjectListQuery
      */
-    public function getByFields(): ByFields
+    public function getObjectListQuery(): ObjectListQuery
     {
-        if (!isset($this->byFields)) {
-            throw new \LogicException('This object list does not have byFields set.');
+        if (!isset($this->objectListQuery)) {
+            throw new \LogicException('This object list does not have an ObjectListQuery set.');
         }
 
-        return $this->byFields;
+        return $this->objectListQuery;
     }
 
     /**
-     * @param ByFields $byFields
+     * @param ObjectListQuery $byFields
      */
-    public function setByFields(ByFields $byFields)
+    public function setObjectListQuery(ObjectListQuery $byFields)
     {
-        $this->byFields = $byFields;
+        $this->objectListQuery = $byFields;
     }
 
     /**
@@ -249,11 +249,11 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
             throw new \LogicException('setDataObjectFactory must be called before calling nextList.');
         }
 
-        if (!isset($this->byFields)) {
+        if (!isset($this->objectListQuery)) {
             throw new \LogicException('setByFields must be called before calling nextList.');
         }
 
-        $byFields = clone $this->byFields;
+        $byFields = clone $this->objectListQuery;
         $range = Range::nextRange($this);
         $byFields->setRange($range);
 
@@ -271,7 +271,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
             throw new \LogicException('setDataObjectFactory must be called before calling nextList.');
         }
 
-        if (!isset($this->byFields)) {
+        if (!isset($this->objectListQuery)) {
             throw new \LogicException('setByFields must be called before calling nextList.');
         }
 
@@ -282,7 +282,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
 
         $ranges = Range::nextRanges($this);
         foreach ($ranges as $range) {
-            $byFields = clone $this->byFields;
+            $byFields = clone $this->objectListQuery;
             $byFields->setRange($range);
             yield $this->dataObjectFactory->selectRequest($byFields, $this->account);
         }

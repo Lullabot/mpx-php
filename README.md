@@ -28,7 +28,6 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
-use Lullabot\Mpx\DataService\ByFields;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\Service\IdentityManagement\User;
@@ -67,6 +66,33 @@ $media = $mediaFactory->load(new Uri('http://data.media.theplatform.com/media/da
     ->wait();
 print "The loaded media is:\n";
 var_dump($media);
+```
+
+## Filtering results by fields and with Q Queries
+
+Calls to `select()` and `selectRequest()` can be filtered by exact-match fields
+as well as with more complex searches.
+
+```php
+<?php
+
+// This skips the setup from above.
+$mediaFactory = new DataObjectFactory($dataServiceManager->getDataService('Media Data Service', 'Media', '1.10'), $authenticatedClient);
+
+// Search for "cats AND dogs" in any field.
+$query = new ObjectListQuery();
+$cats = new Term('cats');
+$termGroup = new TermGroup($cats);
+$termGroup->and(new Term('dogs'));
+$query->add($termGroup);
+
+// Limit to 10 results per page.
+$query->getRange()->setEndIndex(10);
+$results = $mediaFactory->select($query, $account);
+
+foreach ($results as $media) {
+    var_dump($media);
+}
 ```
 
 ## Test client

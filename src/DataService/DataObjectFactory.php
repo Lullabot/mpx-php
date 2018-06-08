@@ -168,17 +168,17 @@ class DataObjectFactory
     }
 
     /**
-     * Query for MPX data using 'byField' parameters.
+     * Query for MPX data using with parameters.
      *
-     * @param ByFields    $byFields (optional) The fields and values to filter by. Note these are exact matches.
-     * @param IdInterface $account  (optional) The account context to use in the request. Defaults to the account
-     *                              associated with the authenticated client.
+     * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact matches.
+     * @param IdInterface     $account         (optional) The account context to use in the request. Defaults to the account
+     *                                         associated with the authenticated client.
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
-    public function select(ByFields $byFields = null, IdInterface $account = null): ObjectListIterator
+    public function select(ObjectListQuery $objectListQuery = null, IdInterface $account = null): ObjectListIterator
     {
-        return new ObjectListIterator($this->selectRequest($byFields, $account));
+        return new ObjectListIterator($this->selectRequest($objectListQuery, $account));
     }
 
     /**
@@ -186,21 +186,21 @@ class DataObjectFactory
      *
      * @see \Lullabot\Mpx\DataService\DataObjectFactory::select
      *
-     * @param ByFields    $byFields (optional) The fields and values to filter by. Note these are exact matches.
-     * @param IdInterface $account  (optional) The account context to use in the request. Note that most requests require
-     *                              an account context.
+     * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact matches.
+     * @param IdInterface     $account         (optional) The account context to use in the request. Note that most requests require
+     *                                         an account context.
      *
      * @return PromiseInterface A promise to return an ObjectList.
      */
-    public function selectRequest(ByFields $byFields = null, IdInterface $account = null): PromiseInterface
+    public function selectRequest(ObjectListQuery $objectListQuery = null, IdInterface $account = null): PromiseInterface
     {
-        if (!$byFields) {
-            $byFields = new ByFields();
+        if (!$objectListQuery) {
+            $objectListQuery = new ObjectListQuery();
         }
 
         $annotation = $this->dataService->getAnnotation();
         $options = [
-            'query' => $byFields->toQueryParts() + [
+            'query' => $objectListQuery->toQueryParts() + [
                 'schema' => $annotation->schemaVersion,
                 'form' => 'cjson',
                 'count' => true,
@@ -210,8 +210,8 @@ class DataObjectFactory
         $uri = $this->getBaseUri($annotation, $account, true);
 
         $request = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
-            function (ResponseInterface $response) use ($byFields, $account) {
-                return $this->deserializeObjectList($response, $byFields, $account);
+            function (ResponseInterface $response) use ($objectListQuery, $account) {
+                return $this->deserializeObjectList($response, $objectListQuery, $account);
             }
         );
 
@@ -222,12 +222,12 @@ class DataObjectFactory
      * Deserialize an object list response.
      *
      * @param ResponseInterface $response The response to deserialize.
-     * @param ByFields          $byFields The fields used to limit the response.
+     * @param ObjectListQuery   $byFields The fields used to limit the response.
      * @param IdInterface       $account  (optional) The account used to fetch the object list.
      *
      * @return ObjectList The deserialized list.
      */
-    private function deserializeObjectList(ResponseInterface $response, ByFields $byFields, IdInterface $account = null): ObjectList
+    private function deserializeObjectList(ResponseInterface $response, ObjectListQuery $byFields, IdInterface $account = null): ObjectList
     {
         $data = $response->getBody();
 
@@ -243,7 +243,7 @@ class DataObjectFactory
             }
             $item->setJson(\GuzzleHttp\json_encode($entry));
         }
-        $list->setByFields($byFields);
+        $list->setObjectListQuery($byFields);
         $list->setDataObjectFactory($this, $account);
 
         return $list;
