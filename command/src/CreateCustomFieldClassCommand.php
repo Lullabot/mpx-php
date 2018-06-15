@@ -175,7 +175,7 @@ EOD;
                 $set->addComment('Set ' . lcfirst($field->getDescription()));
                 $set->addComment('');
             }
-            $set->addComment('@param ' . $field->getDataType());
+            $set->addComment('@param ' . static::TYPE_MAP[$field->getDataType()]);
             $set->addParameter($field->getFieldName());
             $set->addBody('$this->' . $field->getFieldName() . ' = ' . '$' . $field->getFieldName() . ';');
         }
