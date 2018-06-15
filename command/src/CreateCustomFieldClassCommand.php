@@ -176,11 +176,19 @@ EOD;
                 $set->addComment('Set ' . lcfirst($field->getDescription()));
                 $set->addComment('');
             }
-            $set->addComment('@param ' . $field->getDataType());
-            $p = $set->addParameter($field->getFieldName());
-            $p->setTypeHint($dataType);
-            if (in_array($dataType, ['int', 'float', 'string', 'bool'])) {
-                $p->setNullable(true);
+            $set->addComment('@param ' . $dataType);
+            $parameter = $set->addParameter($field->getFieldName());
+            $substr = substr($dataType, -2);
+            switch ($substr) {
+                case '[]':
+                    $parameter->setTypeHint('array');
+                    break;
+                default:
+                    $parameter->setTypeHint($dataType);
+                    if (in_array($dataType, ['int', 'float', 'string', 'bool'])) {
+                        $parameter->setNullable(true);
+                    }
+                    break;
             }
             $set->addBody('$this->' . $field->getFieldName() . ' = ' . '$' . $field->getFieldName() . ';');
         }
