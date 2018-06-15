@@ -161,6 +161,9 @@ EOD;
                     break;
                 default:
                     $get->setReturnType($dataType);
+                    if (in_array($dataType, ['int', 'float', 'string', 'bool'])) {
+                        $get->setReturnNullable(true);
+                    }
                     break;
             }
 
