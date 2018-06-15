@@ -177,7 +177,11 @@ EOD;
                 $set->addComment('');
             }
             $set->addComment('@param ' . $field->getDataType());
-            $set->addParameter($field->getFieldName());
+            $p = $set->addParameter($field->getFieldName());
+            $p->setTypeHint($dataType);
+            if (in_array($dataType, ['int', 'float', 'string', 'bool'])) {
+                $p->setNullable(true);
+            }
             $set->addBody('$this->' . $field->getFieldName() . ' = ' . '$' . $field->getFieldName() . ';');
         }
 
