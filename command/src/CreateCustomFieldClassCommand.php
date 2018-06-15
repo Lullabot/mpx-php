@@ -5,6 +5,8 @@ namespace Lullabot\Mpx\Command;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
+use Lullabot\Mpx\DataService\DataType\Image;
+use Lullabot\Mpx\DataService\DataType\Link;
 use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\CustomFieldInterface;
 use Lullabot\Mpx\DataService\DataObjectFactory;
@@ -37,9 +39,9 @@ class CreateCustomFieldClassCommand extends Command {
         'DateTime' => '\\' . \DateTime::class,
         'Duration' => 'int',
         'Decimal' => 'float',
-        'Image' => '\\' . UriInterface::class,
+        'Image' => '\\' . Image::class,
         'Integer' => 'int',
-        'Link' => '\\' . UriInterface::class,
+        'Link' => '\\' . Link::class,
         'String' => 'string',
         'Time' => '\\' . \DateTime::class,
         'URI' => '\\' . UriInterface::class,
