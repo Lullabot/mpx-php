@@ -185,7 +185,9 @@ EOD;
             $classType = reset($array);
             $classFile = new StreamOutput(fopen($classType->getName().'.php', 'w'));
             $classFile->write("<?php\n\n");
-            $classFile->write((string) $namespaceClass);
+            // Replace extra newlines until php-generator supports it.
+            // @see https://github.com/nette/php-generator/pull/30
+            $classFile->write(str_replace("\n\n\n", "\n\n", (string) $namespaceClass));
             fclose($classFile->getStream());
         }
     }
