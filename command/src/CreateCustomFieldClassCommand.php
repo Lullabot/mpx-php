@@ -13,9 +13,8 @@ use Lullabot\Mpx\DataService\Field;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
+use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
-use Psr\Http\Message\UriInterface;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,24 +25,7 @@ use Symfony\Component\Lock\Store\FlockStore;
 /**
  * Command to generate classes for custom mpx fields.
  */
-class CreateCustomFieldClassCommand extends Command {
-
-    /**
-     * Maps custom mpx field types to PHP datatypes.
-     */
-    CONST TYPE_MAP = [
-        'Boolean' => 'bool',
-        'Date' => '\\' . \DateTime::class,
-        'DateTime' => '\\' . \DateTime::class,
-        'Duration' => 'int',
-        'Decimal' => 'float',
-        'Image' => '\\' . UriInterface::class,
-        'Integer' => 'int',
-        'Link' => '\\' . UriInterface::class,
-        'String' => 'string',
-        'Time' => '\\' . \DateTime::class,
-        'URI' => '\\' . UriInterface::class,
-    ];
+class CreateCustomFieldClassCommand extends ClassGenerator {
 
     protected function configure() {
         $help = <<<EOD
@@ -132,19 +114,10 @@ EOD;
                 $class = $namespace->getClasses()[$classNames[$mpxNamespace]];
             }
 
-            $property = $class->addProperty($field->getFieldName());
-            $property->setVisibility('protected');
-            if (!empty($field->getDescription())) {
-                $property->setComment($field->getDescription());
-                $property->addComment('');
-            }
+            $this->addProperty($class, $field);
             $dataType = static::TYPE_MAP[$field->getDataType()];
-            if ('Single' != $field->getDataStructure()) {
-                $dataType .= '[]';
-            }
-            $property->addComment('@var '.$dataType);
 
-            $get = $class->addMethod('get' . ucfirst($property->getName()));
+            $get = $class->addMethod('get' . ucfirst($field->getFieldName()));
             $get->setVisibility('public');
             if (!empty($field->getDescription())) {
                 $get->addComment('Returns ' . lcfirst($field->getDescription()));
@@ -154,23 +127,20 @@ EOD;
 
             // If the property is a typed array, PHP will only let us use
             // array in the return typehint.
-            $substr = substr($dataType, -2);
-            switch ($substr) {
-                case '[]':
-                    $get->setReturnType('array');
-                    break;
-                default:
-                    $get->setReturnType($dataType);
-                    if (in_array($dataType, ['int', 'float', 'string', 'bool'])) {
-                        $get->setReturnNullable(true);
-                    }
-                    break;
+            if ($this->isCollectionType($dataType)) {
+                $get->setReturnType('array');
+            }
+            else {
+                $get->setReturnType($dataType);
+                if ($this->isScalarType($dataType)) {
+                    $get->setReturnNullable(true);
+                }
             }
 
             $get->addBody('return $this->' . $field->getFieldName() . ';');
 
             // Add a set method for the property.
-            $set = $class->addMethod('set' . ucfirst($property->getName()));
+            $set = $class->addMethod('set' . ucfirst($field->getFieldName()));
             $set->setVisibility('public');
             if (!empty($field->getDescription())) {
                 $set->addComment('Set ' . lcfirst($field->getDescription()));
@@ -178,17 +148,15 @@ EOD;
             }
             $set->addComment('@param ' . $dataType);
             $parameter = $set->addParameter($field->getFieldName());
-            $substr = substr($dataType, -2);
-            switch ($substr) {
-                case '[]':
-                    $parameter->setTypeHint('array');
-                    break;
-                default:
-                    $parameter->setTypeHint($dataType);
-                    if (in_array($dataType, ['int', 'float', 'string', 'bool'])) {
-                        $parameter->setNullable(true);
-                    }
-                    break;
+
+            if ($this->isCollectionType($dataType)) {
+                $parameter->setTypeHint('array');
+            }
+            else {
+                $parameter->setTypeHint($dataType);
+                if ($this->isScalarType($dataType)) {
+                    $parameter->setNullable(true);
+                }
             }
             $set->addBody('$this->' . $field->getFieldName() . ' = ' . '$' . $field->getFieldName() . ';');
         }
@@ -201,5 +169,40 @@ EOD;
             $classFile->write((string) $namespaceClass);
             fclose($classFile->getStream());
         }
+    }
+
+    /**
+     * Return if the data type is an array.
+     *
+     * @param string $dataType
+     *
+     * @return bool
+     */
+    protected function isCollectionType($dataType): bool
+    {
+        $substr = substr($dataType, -2);
+
+        return $substr == '[]';
+}
+
+    /**
+     * Add a property to a class.
+     *
+     * @param ClassType $class
+     * @param Field $field
+     */
+    private function addProperty(ClassType $class, Field $field)
+    {
+        $property = $class->addProperty($field->getFieldName());
+        $property->setVisibility('protected');
+        if (!empty($field->getDescription())) {
+            $property->setComment($field->getDescription());
+            $property->addComment('');
+        }
+        $dataType = static::TYPE_MAP[$field->getDataType()];
+        if ('Single' != $field->getDataStructure()) {
+            $dataType .= '[]';
+        }
+        $property->addComment('@var '.$dataType);
     }
 }

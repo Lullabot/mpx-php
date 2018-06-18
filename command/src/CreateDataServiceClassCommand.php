@@ -3,23 +3,10 @@
 namespace Lullabot\Mpx\Command;
 
 use Nette\PhpGenerator\PhpNamespace;
-use Psr\Http\Message\UriInterface;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateDataServiceClassCommand extends Command {
-
-    CONST TYPE_MAP = [
-        'String' => 'string',
-        'Boolean' => 'bool',
-        'Long' => 'int',
-        'Integer' => 'int',
-        'Float' => 'float',
-        'URI' => '\\' . UriInterface::class,
-        'Map' => 'array',
-        'DateTime' => '\\' . \DateTime::class,
-    ];
+class CreateDataServiceClassCommand extends ClassGenerator {
 
     protected function configure() {
         $this->setName('mpx:create-data-service')
