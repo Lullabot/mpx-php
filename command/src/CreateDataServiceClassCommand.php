@@ -89,7 +89,7 @@ class CreateDataServiceClassCommand extends ClassGenerator
             $set->setVisibility('public');
             $set->addComment('Set '.lcfirst($description));
             $set->addComment('');
-            $set->addComment('@param '.$data_type);
+            $set->addComment('@param '.$data_type.' $'.$field_name);
             $parameter = $set->addParameter($field_name);
             $this->setTypeHint($parameter, $data_type);
             $set->addBody('$this->'.$field_name.' = '.'$'.$field_name.';');
