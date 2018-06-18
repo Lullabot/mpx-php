@@ -3,11 +3,9 @@
 namespace Lullabot\Mpx\DataService\Media;
 
 use GuzzleHttp\Psr7\Uri;
-use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
-use Lullabot\Mpx\DataService\PublicIdentifierTrait;
 use Psr\Http\Message\UriInterface;
 
 /**
