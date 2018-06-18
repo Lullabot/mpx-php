@@ -2,11 +2,11 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
-use Lullabot\Mpx\DataService\AdPolicyDataTrait;
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\DataService\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
-use Lullabot\Mpx\DataService\PublicIdentifierTrait;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -18,8 +18,26 @@ use Psr\Http\Message\UriInterface;
  */
 class Release extends ObjectBase implements PublicIdentifierInterface
 {
-    use AdPolicyDataTrait;
-    use PublicIdentifierTrait;
+    /**
+     * The date and time that this object was created.
+     *
+     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     */
+    protected $added;
+
+    /**
+     * The id of the user that created this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $addedByUserId;
+
+    /**
+     * The id of the AdPolicy object this object is associated with.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $adPolicyId;
 
     /**
      * Whether this object is approved; if false this object is not visible in feeds.
@@ -78,11 +96,25 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     protected $mediaId;
 
     /**
+     * The id of the account that owns this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $ownerId;
+
+    /**
      * Optional release URL parameters.
      *
      * @var string
      */
     protected $parameters;
+
+    /**
+     * The globally unique public identifier for this object.
+     *
+     * @var string
+     */
+    protected $pid;
 
     /**
      * The id of the Restriction object this object is associated with.
@@ -101,7 +133,7 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date and time this object was last modified.
      *
-     * @var \DateTime
+     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
      */
     protected $updated;
 
@@ -125,24 +157,54 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      * @var int
      */
     protected $version;
+
     /**
-     * The date and time that this object was created.
+     * Returns the date and time that this object was created.
      *
-     * @var \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
      */
-    protected $added;
+    public function getAdded(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    {
+        if (!$this->added) {
+            return new NullDateTime();
+        }
+
+        return $this->added;
+    }
+
     /**
-     * The id of the user that created this object.
+     * Set the date and time that this object was created.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $added
      */
-    protected $addedByUserId;
+    public function setAdded(\Lullabot\Mpx\DataService\DateTimeFormatInterface $added)
+    {
+        $this->added = $added;
+    }
+
     /**
-     * The id of the account that owns this object.
+     * Returns the id of the user that created this object.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    protected $ownerId;
+    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->addedByUserId) {
+            return new Uri();
+        }
+
+        return $this->addedByUserId;
+    }
+
+    /**
+     * Set the id of the user that created this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $addedByUserId
+     */
+    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
+    {
+        $this->addedByUserId = $addedByUserId;
+    }
 
     /**
      * Returns the id of the AdPolicy object this object is associated with.
@@ -151,15 +213,19 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      */
     public function getAdPolicyId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->adPolicyId) {
+            return new Uri();
+        }
+
         return $this->adPolicyId;
     }
 
     /**
      * Set the id of the AdPolicy object this object is associated with.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $adPolicyId
      */
-    public function setAdPolicyId($adPolicyId)
+    public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId)
     {
         $this->adPolicyId = $adPolicyId;
     }
@@ -169,7 +235,7 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      *
      * @return bool
      */
-    public function getApproved(): bool
+    public function getApproved(): ?bool
     {
         return $this->approved;
     }
@@ -177,9 +243,9 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set whether this object is approved; if false this object is not visible in feeds.
      *
-     * @param bool
+     * @param bool $approved
      */
-    public function setApproved($approved)
+    public function setApproved(?bool $approved)
     {
         $this->approved = $approved;
     }
@@ -189,7 +255,7 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getDelivery(): string
+    public function getDelivery(): ?string
     {
         return $this->delivery;
     }
@@ -197,9 +263,9 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the delivery method for this object.
      *
-     * @param string
+     * @param string $delivery
      */
-    public function setDelivery($delivery)
+    public function setDelivery(?string $delivery)
     {
         $this->delivery = $delivery;
     }
@@ -209,7 +275,7 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -217,9 +283,9 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the description of this object.
      *
-     * @param string
+     * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(?string $description)
     {
         $this->description = $description;
     }
@@ -231,15 +297,19 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      */
     public function getFileId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->fileId) {
+            return new Uri();
+        }
+
         return $this->fileId;
     }
 
     /**
      * Set the id of the MediaFile object this object is associated with.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $fileId
      */
-    public function setFileId($fileId)
+    public function setFileId(\Psr\Http\Message\UriInterface $fileId)
     {
         $this->fileId = $fileId;
     }
@@ -249,7 +319,7 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getGuid(): string
+    public function getGuid(): ?string
     {
         return $this->guid;
     }
@@ -257,11 +327,35 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
      *
-     * @param string
+     * @param string $guid
      */
-    public function setGuid($guid)
+    public function setGuid(?string $guid)
     {
         $this->guid = $guid;
+    }
+
+    /**
+     * Returns the globally unique URI of this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->id) {
+            return new Uri();
+        }
+
+        return $this->id;
+    }
+
+    /**
+     * Set the globally unique URI of this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $id
+     */
+    public function setId(\Psr\Http\Message\UriInterface $id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -269,7 +363,7 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      *
      * @return bool
      */
-    public function getLocked(): bool
+    public function getLocked(): ?bool
     {
         return $this->locked;
     }
@@ -277,9 +371,9 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set whether this object currently allows updates.
      *
-     * @param bool
+     * @param bool $locked
      */
-    public function setLocked($locked)
+    public function setLocked(?bool $locked)
     {
         $this->locked = $locked;
     }
@@ -291,17 +385,45 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      */
     public function getMediaId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->mediaId) {
+            return new Uri();
+        }
+
         return $this->mediaId;
     }
 
     /**
      * Set the id of the Media object this object is associated with.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $mediaId
      */
-    public function setMediaId($mediaId)
+    public function setMediaId(\Psr\Http\Message\UriInterface $mediaId)
     {
         $this->mediaId = $mediaId;
+    }
+
+    /**
+     * Returns the id of the account that owns this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getOwnerId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->ownerId) {
+            return new Uri();
+        }
+
+        return $this->ownerId;
+    }
+
+    /**
+     * Set the id of the account that owns this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $ownerId
+     */
+    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
+    {
+        $this->ownerId = $ownerId;
     }
 
     /**
@@ -309,7 +431,7 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getParameters(): string
+    public function getParameters(): ?string
     {
         return $this->parameters;
     }
@@ -317,11 +439,31 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set optional release URL parameters.
      *
-     * @param string
+     * @param string $parameters
      */
-    public function setParameters($parameters)
+    public function setParameters(?string $parameters)
     {
         $this->parameters = $parameters;
+    }
+
+    /**
+     * Returns the globally unique public identifier for this object.
+     *
+     * @return string
+     */
+    public function getPid(): ?string
+    {
+        return $this->pid;
+    }
+
+    /**
+     * Set the globally unique public identifier for this object.
+     *
+     * @param string $pid
+     */
+    public function setPid(?string $pid)
+    {
+        $this->pid = $pid;
     }
 
     /**
@@ -331,15 +473,19 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      */
     public function getRestrictionId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->restrictionId) {
+            return new Uri();
+        }
+
         return $this->restrictionId;
     }
 
     /**
      * Set the id of the Restriction object this object is associated with.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $restrictionId
      */
-    public function setRestrictionId($restrictionId)
+    public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId)
     {
         $this->restrictionId = $restrictionId;
     }
@@ -349,7 +495,7 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -357,9 +503,9 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the generic name of this object.
      *
-     * @param string
+     * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
     }
@@ -367,19 +513,23 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date and time this object was last modified.
      *
-     * @return \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
      */
-    public function getUpdated(): \DateTime
+    public function getUpdated(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
     {
+        if (!$this->updated) {
+            return new NullDateTime();
+        }
+
         return $this->updated;
     }
 
     /**
      * Set the date and time this object was last modified.
      *
-     * @param \DateTime
+     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $updated
      */
-    public function setUpdated($updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTimeFormatInterface $updated)
     {
         $this->updated = $updated;
     }
@@ -391,15 +541,19 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      */
     public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->updatedByUserId) {
+            return new Uri();
+        }
+
         return $this->updatedByUserId;
     }
 
     /**
      * Set the id of the user that last modified this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
-    public function setUpdatedByUserId($updatedByUserId)
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {
         $this->updatedByUserId = $updatedByUserId;
     }
@@ -411,15 +565,19 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      */
     public function getUrl(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->url) {
+            return new Uri();
+        }
+
         return $this->url;
     }
 
     /**
      * Set the public URL for this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $url
      */
-    public function setUrl($url)
+    public function setUrl(\Psr\Http\Message\UriInterface $url)
     {
         $this->url = $url;
     }
@@ -429,7 +587,7 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getVersion(): int
+    public function getVersion(): ?int
     {
         return $this->version;
     }
@@ -437,74 +595,10 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set this object's modification version, used for optimistic locking.
      *
-     * @param int
+     * @param int $version
      */
-    public function setVersion($version)
+    public function setVersion(?int $version)
     {
         $this->version = $version;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAdded(): \DateTime
-    {
-        return $this->added;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setAdded($added)
-    {
-        $this->added = $added;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->addedByUserId;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setAddedByUserId($addedByUserId)
-    {
-        $this->addedByUserId = $addedByUserId;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setId(UriInterface $id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getOwnerId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
     }
 }
