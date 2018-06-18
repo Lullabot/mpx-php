@@ -2,7 +2,6 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
-use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Field;

@@ -13,11 +13,11 @@ use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
  */
 class UnixMillisecondNormalizer extends DateTimeNormalizer
 {
-    private static $supportedTypes = array(
+    private static $supportedTypes = [
         DateTimeFormatInterface::class => true,
         ConcreteDateTimeInterface::class => true,
         ConcreteDateTime::class => true,
-    );
+    ];
 
     /**
      * {@inheritdoc}
@@ -35,6 +35,7 @@ class UnixMillisecondNormalizer extends DateTimeNormalizer
         $context[self::FORMAT_KEY] = 'U.u';
 
         $date = parent::denormalize($bySeconds, \DateTime::class, $format, $context);
+
         return new ConcreteDateTime($date);
     }
 
