@@ -52,6 +52,9 @@ class CreateDataServiceClassCommand extends ClassGenerator
 
             $property->addComment('');
             $property->addComment('@var '.$data_type);
+            if ($this->isCollectionType($data_type)) {
+                $property->setValue([]);
+            }
 
             // Add a get method for the property.
             $get = $class->addMethod('get'.ucfirst($property->getName()));

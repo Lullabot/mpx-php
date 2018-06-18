@@ -232,5 +232,8 @@ EOD;
             $dataType .= '[]';
         }
         $property->addComment('@var '.$dataType);
+        if ($this->isCollectionType($dataType)) {
+            $property->setValue([]);
+        }
     }
 }
