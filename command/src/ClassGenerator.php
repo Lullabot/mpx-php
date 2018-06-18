@@ -16,6 +16,10 @@ abstract class ClassGenerator extends Command
     public const TYPE_MAP = [
         'AvailabilityState' => 'string',
         'Boolean' => 'bool',
+        'dataType[]' => 'array',
+        'DataStructure' => 'string',
+        'DataType' => 'string',
+        'dataType' => 'string',
         'DateTime' => '\\'.DateTimeFormatInterface::class,
         'Duration' => 'int',
         'Decimal' => 'float',
