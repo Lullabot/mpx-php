@@ -24,8 +24,8 @@ use Symfony\Component\Lock\Store\FlockStore;
 /**
  * Command to generate classes for custom mpx fields.
  */
-class CreateCustomFieldClassCommand extends ClassGenerator {
-
+class CreateCustomFieldClassCommand extends ClassGenerator
+{
     /**
      * @var PhpNamespace[]
      */
@@ -36,7 +36,8 @@ class CreateCustomFieldClassCommand extends ClassGenerator {
      */
     protected $classNames = [];
 
-    protected function configure() {
+    protected function configure()
+    {
         $help = <<<EOD
 This command generates a PHP class for a custom field implementation.
 
@@ -52,13 +53,26 @@ EOD;
             ->setDescription('This command helps to create a custom field class.')
             ->setHelp($help)
             ->addUsage("mpx:create-custom-field 'Lullabot\\Mpx\\CustomField' 'Media Data Service' 'Media' '1.10'")
-            ->addArgument('namespace', InputArgument::REQUIRED, 'The fully-qualified class name to generate. Do not include the leading slash, and wrap the class name in single-quotes to handle shell escaping.')
-            ->addArgument('data-service', InputArgument::REQUIRED, "The data service to generate the class for, such as 'Media Data Service'.")
-            ->addArgument('data-object', InputArgument::REQUIRED, "The object to generate the class for, such as 'Media'")
+            ->addArgument(
+                'namespace',
+                InputArgument::REQUIRED,
+                'The fully-qualified class name to generate. Do not include the leading slash, and wrap the class name in single-quotes to handle shell escaping.'
+            )
+            ->addArgument(
+                'data-service',
+                InputArgument::REQUIRED,
+                "The data service to generate the class for, such as 'Media Data Service'."
+            )
+            ->addArgument(
+                'data-object',
+                InputArgument::REQUIRED,
+                "The object to generate the class for, such as 'Media'"
+            )
             ->addArgument('schema', InputArgument::REQUIRED, "The schema version of the object, such as '1.10'");
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         if (!extension_loaded('intl')) {
             throw new \RuntimeException('The intl extension is required to run this command.');
         }
@@ -81,57 +95,6 @@ EOD;
             $classFile->write((string) $namespaceClass);
             fclose($classFile->getStream());
         }
-    }
-
-    /**
-     * Add a property to a class.
-     *
-     * @param ClassType $class
-     * @param Field $field
-     */
-    private function addProperty(ClassType $class, Field $field)
-    {
-        $property = $class->addProperty($field->getFieldName());
-        $property->setVisibility('protected');
-        if (!empty($field->getDescription())) {
-            $property->setComment($field->getDescription());
-            $property->addComment('');
-        }
-        $dataType = static::TYPE_MAP[$field->getDataType()];
-        if ('Single' != $field->getDataStructure()) {
-            $dataType .= '[]';
-        }
-        $property->addComment('@var '.$dataType);
-    }
-
-    /**
-     * @param InputInterface $input
-     * @param string         $mpxNamespace
-     *
-     * @return ClassType
-     */
-    private function getClass(InputInterface $input, string $mpxNamespace): ClassType
-    {
-        if (!isset($this->namespaceClasses[$mpxNamespace])) {
-            $nf = new \NumberFormatter("en", \NumberFormatter::SPELLOUT);
-            $className = 'CustomFieldClass'.ucfirst(str_replace('-', '', $nf->format(count($this->namespaceClasses) + 1)));
-            $namespace = new PhpNamespace($input->getArgument('namespace'));
-            $class = $namespace->addClass($className);
-            $this->classNames[$mpxNamespace] = $className;
-            $this->namespaceClasses[$mpxNamespace] = $namespace;
-            $class->addImplement(CustomFieldInterface::class);
-
-            $class->addComment('@\Lullabot\Mpx\DataService\Annotation\CustomField(');
-            $class->addComment('    namespace="'.$mpxNamespace.'",');
-            $class->addComment('    service="'.$input->getArgument('data-service').'",');
-            $class->addComment('    objectType="'.$input->getArgument('data-object').'",');
-            $class->addComment(')');
-        } else {
-            $namespace = $this->namespaceClasses[$mpxNamespace];
-            $class = $namespace->getClasses()[$this->classNames[$mpxNamespace]];
-        }
-
-        return $class;
     }
 
     /**
@@ -172,7 +135,7 @@ EOD;
         $dof = new DataObjectFactory($dataService->getAnnotation()->getFieldDataService(), $authenticatedClient);
 
         return $dof;
-}
+    }
 
     /**
      * @param InputInterface $input
@@ -184,7 +147,7 @@ EOD;
         // The response does not contain complete field data, so we reload it.
         $field = $dof->load($field->getId())->wait();
 
-        $mpxNamespace = (string)$field->getNamespace();
+        $mpxNamespace = (string) $field->getNamespace();
         $class = $this->getClass($input, $mpxNamespace);
 
         $this->addProperty($class, $field);
@@ -216,5 +179,58 @@ EOD;
 
         $this->setTypeHint($parameter, $dataType);
         $set->addBody('$this->'.$field->getFieldName().' = '.'$'.$field->getFieldName().';');
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param string         $mpxNamespace
+     *
+     * @return ClassType
+     */
+    private function getClass(InputInterface $input, string $mpxNamespace): ClassType
+    {
+        if (!isset($this->namespaceClasses[$mpxNamespace])) {
+            $nf = new \NumberFormatter('en', \NumberFormatter::SPELLOUT);
+            $className = 'CustomFieldClass'.ucfirst(
+                    str_replace('-', '', $nf->format(count($this->namespaceClasses) + 1))
+                );
+            $namespace = new PhpNamespace($input->getArgument('namespace'));
+            $class = $namespace->addClass($className);
+            $this->classNames[$mpxNamespace] = $className;
+            $this->namespaceClasses[$mpxNamespace] = $namespace;
+            $class->addImplement(CustomFieldInterface::class);
+
+            $class->addComment('@\Lullabot\Mpx\DataService\Annotation\CustomField(');
+            $class->addComment('    namespace="'.$mpxNamespace.'",');
+            $class->addComment('    service="'.$input->getArgument('data-service').'",');
+            $class->addComment('    objectType="'.$input->getArgument('data-object').'",');
+            $class->addComment(')');
+        } else {
+            $namespace = $this->namespaceClasses[$mpxNamespace];
+            $class = $namespace->getClasses()[$this->classNames[$mpxNamespace]];
+        }
+
+        return $class;
+    }
+
+    /**
+     * Add a property to a class.
+     *
+     * @param ClassType $class
+     * @param Field     $field
+     */
+    private function addProperty(ClassType $class, Field $field)
+    {
+        $property = $class->addProperty($field->getFieldName());
+        $property->setVisibility('protected');
+        if (!empty($field->getDescription())) {
+            $property->setComment($field->getDescription());
+            $property->addComment('');
+        }
+        $dataType = static::TYPE_MAP[$field->getDataType()];
+        if ('Single' != $field->getDataStructure()) {
+            $dataType .= '[]';
+        }
+        $property->addComment('@var '.$dataType);
     }
 }

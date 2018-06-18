@@ -9,7 +9,6 @@ use Symfony\Component\Console\Command\Command;
 
 abstract class ClassGenerator extends Command
 {
-
     /**
      * Maps custom mpx field types to PHP datatypes.
      */
@@ -51,7 +50,7 @@ abstract class ClassGenerator extends Command
     {
         $substr = substr($dataType, -2);
 
-        return $substr == '[]';
+        return '[]' == $substr;
     }
 
     /**

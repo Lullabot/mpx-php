@@ -6,9 +6,10 @@ use Nette\PhpGenerator\PhpNamespace;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateDataServiceClassCommand extends ClassGenerator {
-
-    protected function configure() {
+class CreateDataServiceClassCommand extends ClassGenerator
+{
+    protected function configure()
+    {
         $this->setName('mpx:create-data-service')
             ->setDescription('This command helps to create a data service class from a CSV via stdin.')
             ->setHelp("This command generates a PHP class from a CSV copied from MPX's documentation. Create the CSV by copying the fields table from an object and converting it to a CSV using a spreadsheet. The CSV is read through STDIN. \n\nhttps://docs.theplatform.com/help/media-media-object is a good example of the table this command expects.")
@@ -16,7 +17,8 @@ class CreateDataServiceClassCommand extends ClassGenerator {
             ->addArgument('fully-qualified-class-name', \Symfony\Component\Console\Input\InputArgument::REQUIRED, 'The fully-qualified class name to generate. Do not include the leading slash, and wrap the class name in single-quotes to handle shell escaping.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $handle = fopen('php://stdin', 'r');
         $index = 0;
 
@@ -30,11 +32,11 @@ class CreateDataServiceClassCommand extends ClassGenerator {
         // Loop over each row, which corresponds to each property.
         while (!feof($handle)) {
             $row = fgetcsv($handle);
-            if ($index == 0) {
-                $index++;
+            if (0 == $index) {
+                ++$index;
                 continue;
             }
-            $index++;
+            ++$index;
 
             list($field_name, $attributes, $data_type, $description) = $row;
 
@@ -49,14 +51,14 @@ class CreateDataServiceClassCommand extends ClassGenerator {
             $property->setComment($description);
 
             $property->addComment('');
-            $property->addComment('@var ' . $data_type);
+            $property->addComment('@var '.$data_type);
 
             // Add a get method for the property.
-            $get = $class->addMethod('get' . ucfirst($property->getName()));
+            $get = $class->addMethod('get'.ucfirst($property->getName()));
             $get->setVisibility('public');
-            $get->addComment('Returns ' . lcfirst($description));
+            $get->addComment('Returns '.lcfirst($description));
             $get->addComment('');
-            $get->addComment('@return ' . $data_type);
+            $get->addComment('@return '.$data_type);
 
             // If the property is a typed array, PHP will only let us use
             // array in the return typehint.
@@ -70,20 +72,19 @@ class CreateDataServiceClassCommand extends ClassGenerator {
                     break;
             }
 
-            $get->addBody('return $this->' . $field_name . ';');
+            $get->addBody('return $this->'.$field_name.';');
 
             // Add a set method for the property.
-            $set = $class->addMethod('set' . ucfirst($property->getName()));
+            $set = $class->addMethod('set'.ucfirst($property->getName()));
             $set->setVisibility('public');
-            $set->addComment('Set ' . lcfirst($description));
+            $set->addComment('Set '.lcfirst($description));
             $set->addComment('');
-            $set->addComment('@param ' . $data_type);
+            $set->addComment('@param '.$data_type);
             $set->addParameter($field_name);
-            $set->addBody('$this->' . $field_name . ' = ' . '$' . $field_name . ';');
+            $set->addBody('$this->'.$field_name.' = '.'$'.$field_name.';');
         }
 
         $output->write((string) $namespace);
         fclose($handle);
-
     }
 }
