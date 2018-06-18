@@ -12,16 +12,16 @@ interface ObjectInterface extends IdInterface, JsonInterface
     /**
      * Returns the date and time that this object was created.
      *
-     * @return \DateTime
+     * @return DateTimeFormatInterface
      */
-    public function getAdded(): \DateTime;
+    public function getAdded(): DateTimeFormatInterface;
 
     /**
      * Set the date and time that this object was created.
      *
-     * @param \DateTime
+     * @param DateTimeFormatInterface
      */
-    public function setAdded($added);
+    public function setAdded(DateTimeFormatInterface $added);
 
     /**
      * Returns the id of the user that created this object.
