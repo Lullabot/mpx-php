@@ -30,7 +30,7 @@ class CategoryInfo
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -38,9 +38,9 @@ class CategoryInfo
     /**
      * Set the Category object's fullTitle value.
      *
-     * @param string
+     * @param string $name
      */
-    public function setName($name)
+    public function setName(?string $name)
     {
         $this->name = $name;
     }
@@ -50,7 +50,7 @@ class CategoryInfo
      *
      * @return string
      */
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->label;
     }
@@ -58,9 +58,9 @@ class CategoryInfo
     /**
      * Set the Category object's label value.
      *
-     * @param string
+     * @param string $label
      */
-    public function setLabel($label)
+    public function setLabel(?string $label)
     {
         $this->label = $label;
     }
@@ -70,7 +70,7 @@ class CategoryInfo
      *
      * @return string
      */
-    public function getScheme(): string
+    public function getScheme(): ?string
     {
         return $this->scheme;
     }
@@ -78,9 +78,9 @@ class CategoryInfo
     /**
      * Set the Category object's scheme value.
      *
-     * @param string
+     * @param string $scheme
      */
-    public function setScheme($scheme)
+    public function setScheme(?string $scheme)
     {
         $this->scheme = $scheme;
     }
