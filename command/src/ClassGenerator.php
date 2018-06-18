@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\Command;
 
 use Lullabot\Mpx\DataService\DateTimeFormatInterface;
+use Lullabot\Mpx\DataService\Media\TransferInfo;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\Parameter;
 use Psr\Http\Message\UriInterface;
@@ -17,12 +18,15 @@ abstract class ClassGenerator extends Command
         'AvailabilityState' => 'string',
         'Boolean' => 'bool',
         'dataType[]' => 'array',
+        'ContentType' => 'string',
         'DataStructure' => 'string',
         'DataType' => 'string',
         'dataType' => 'string',
+        'Format' => 'string',
         'DateTime' => '\\'.DateTimeFormatInterface::class,
         'Duration' => 'int',
         'Decimal' => 'float',
+        'Expression' => 'string',
         'Float' => 'float',
         'Image' => '\\'.UriInterface::class,
         'Integer' => 'int',
@@ -33,6 +37,7 @@ abstract class ClassGenerator extends Command
         'String (64, Unicode)' => 'string',
         'String(64,Unicode)[]' => 'string[]',
         'String' => 'string',
+        'TransferInfo' => '\\'.TransferInfo::class,
         'URI' => '\\'.UriInterface::class,
     ];
 
