@@ -157,6 +157,30 @@ class Field extends ObjectBase
      * @var int
      */
     protected $version;
+    /**
+     * The date and time that this object was created.
+     *
+     * @var \DateTime
+     */
+    protected $added;
+    /**
+     * The id of the user that created this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $addedByUserId;
+    /**
+     * The globally unique URI of this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $id;
+    /**
+     * The id of the account that owns this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $ownerId;
 
     /**
      * Returns the date and time that this object was created
@@ -638,5 +662,21 @@ class Field extends ObjectBase
     public function setVersion($version)
     {
         $this->version = $version;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId(): \Psr\Http\Message\UriInterface
+    {
+        return $this->id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setId(UriInterface $id)
+    {
+        $this->id = $id;
     }
 }

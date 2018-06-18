@@ -99,6 +99,30 @@ class Account extends ObjectBase implements PublicIdentifierInterface, IdInterfa
      * @var int
      */
     protected $version;
+    /**
+     * The date and time that this object was created.
+     *
+     * @var \DateTime
+     */
+    protected $added;
+    /**
+     * The id of the user that created this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $addedByUserId;
+    /**
+     * The globally unique URI of this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $id;
+    /**
+     * The id of the account that owns this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $ownerId;
 
     /**
      * Returns the description of this object.
@@ -325,5 +349,69 @@ class Account extends ObjectBase implements PublicIdentifierInterface, IdInterfa
     public function setVersion($version)
     {
         $this->version = $version;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAdded(): \DateTime
+    {
+        return $this->added;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setAdded($added)
+    {
+        $this->added = $added;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    {
+        return $this->addedByUserId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setAddedByUserId($addedByUserId)
+    {
+        $this->addedByUserId = $addedByUserId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId(): \Psr\Http\Message\UriInterface
+    {
+        return $this->id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setId(UriInterface $id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOwnerId(): \Psr\Http\Message\UriInterface
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setOwnerId($ownerId)
+    {
+        $this->ownerId = $ownerId;
     }
 }

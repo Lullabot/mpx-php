@@ -7,6 +7,7 @@ use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Lullabot\Mpx\DataService\PublicIdentifierTrait;
+use Psr\Http\Message\UriInterface;
 
 /**
  * @DataService(
@@ -124,6 +125,24 @@ class Release extends ObjectBase implements PublicIdentifierInterface
      * @var int
      */
     protected $version;
+    /**
+     * The date and time that this object was created.
+     *
+     * @var \DateTime
+     */
+    protected $added;
+    /**
+     * The id of the user that created this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $addedByUserId;
+    /**
+     * The id of the account that owns this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $ownerId;
 
     /**
      * Returns the id of the AdPolicy object this object is associated with.
@@ -423,5 +442,69 @@ class Release extends ObjectBase implements PublicIdentifierInterface
     public function setVersion($version)
     {
         $this->version = $version;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAdded(): \DateTime
+    {
+        return $this->added;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setAdded($added)
+    {
+        $this->added = $added;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    {
+        return $this->addedByUserId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setAddedByUserId($addedByUserId)
+    {
+        $this->addedByUserId = $addedByUserId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId(): \Psr\Http\Message\UriInterface
+    {
+        return $this->id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setId(UriInterface $id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOwnerId(): \Psr\Http\Message\UriInterface
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setOwnerId($ownerId)
+    {
+        $this->ownerId = $ownerId;
     }
 }
