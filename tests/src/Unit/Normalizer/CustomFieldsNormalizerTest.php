@@ -4,6 +4,7 @@ namespace Lullabot\Mpx\Tests\Unit\Normalizer;
 
 use Lullabot\Mpx\DataService\Annotation\CustomField;
 use Lullabot\Mpx\DataService\CustomFieldInterface;
+use Lullabot\Mpx\DataService\DateTimeFormatInterface;
 use Lullabot\Mpx\DataService\DiscoveredCustomField;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\ObjectBase;
@@ -121,21 +122,24 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * The date and time that this object was created.
      *
-     * @var \DateTime
+     * @var DateTimeFormatInterface
      */
     protected $added;
+
     /**
      * The id of the user that created this object.
      *
      * @var \Psr\Http\Message\UriInterface
      */
     protected $addedByUserId;
+
     /**
      * The globally unique URI of this object.
      *
      * @var \Psr\Http\Message\UriInterface
      */
     protected $id;
+
     /**
      * The id of the account that owns this object.
      *
@@ -146,7 +150,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getAdded(): \DateTime
+    public function getAdded(): DateTimeFormatInterface
     {
         return $this->added;
     }
@@ -154,7 +158,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setAdded($added)
+    public function setAdded(DateTimeFormatInterface $added)
     {
         $this->added = $added;
     }
@@ -170,7 +174,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setAddedByUserId($addedByUserId)
+    public function setAddedByUserId(UriInterface $addedByUserId)
     {
         $this->addedByUserId = $addedByUserId;
     }
