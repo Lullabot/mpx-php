@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\Command;
 
+use Lullabot\Mpx\DataService\DateTimeFormatInterface;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\Parameter;
 use Psr\Http\Message\UriInterface;
@@ -15,8 +16,7 @@ abstract class ClassGenerator extends Command
     public const TYPE_MAP = [
         'AvailabilityState' => 'string',
         'Boolean' => 'bool',
-        'Date' => '\\'.\DateTime::class,
-        'DateTime' => '\\'.\DateTime::class,
+        'DateTime' => '\\'.DateTimeFormatInterface::class,
         'Duration' => 'int',
         'Decimal' => 'float',
         'Float' => 'float',
@@ -26,7 +26,6 @@ abstract class ClassGenerator extends Command
         'Long' => 'int',
         'Map' => 'array',
         'String' => 'string',
-        'Time' => '\\'.\DateTime::class,
         'URI' => '\\'.UriInterface::class,
     ];
 
