@@ -2,9 +2,10 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\DataService\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
-use Psr\Http\Message\UriInterface;
 
 /**
  * Implements a MediaFile object.
@@ -19,6 +20,20 @@ use Psr\Http\Message\UriInterface;
  */
 class MediaFile extends ObjectBase
 {
+    /**
+     * The date and time that this object was created.
+     *
+     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     */
+    protected $added;
+
+    /**
+     * The id of the user that created this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $addedByUserId;
+
     /**
      * Whether playback is enabled for this file, and whether it can be associated with new Release objects.
      *
@@ -45,14 +60,14 @@ class MediaFile extends ObjectBase
      *
      * @var \Psr\Http\Message\UriInterface[]
      */
-    protected $assetTypeIds;
+    protected $assetTypeIds = [];
 
     /**
      * The names of any AssetType objects associated with this object.
      *
      * @var string[]
      */
-    protected $assetTypes;
+    protected $assetTypes = [];
 
     /**
      * The number of audio channels the file has.
@@ -134,7 +149,7 @@ class MediaFile extends ObjectBase
     /**
      * The duration of the file, in seconds.
      *
-     * @var float
+     * @var int
      */
     protected $duration;
 
@@ -216,7 +231,7 @@ class MediaFile extends ObjectBase
     protected $id;
 
     /**
-     * Whether this file is the default content or thumbnail file for the associated Media object.
+     * Whether this file is the default content or thumbnail file for the associated Mediaobject.
      *
      * @var bool
      */
@@ -258,16 +273,23 @@ class MediaFile extends ObjectBase
     protected $mediaId;
 
     /**
+     * The id of the account that owns this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $ownerId;
+
+    /**
      * Information about the file's location used by the FMS moveFile method.
      *
      * @var PreviousLocation[]
      */
-    protected $previousLocations;
+    protected $previousLocations = [];
 
     /**
      * One or more protection system headers.
      *
-     * @var string[]
+     * @var string
      */
     protected $protectionHeaders;
 
@@ -290,14 +312,14 @@ class MediaFile extends ObjectBase
      *
      * @var Release[]
      */
-    protected $releases;
+    protected $releases = [];
 
     /**
      * The languages in which secondary audio programming (SAP) is available in the file.
      *
      * @var string[]
      */
-    protected $secondaryAudio;
+    protected $secondaryAudio = [];
 
     /**
      * The format of the streaming content segments.
@@ -323,7 +345,7 @@ class MediaFile extends ObjectBase
     /**
      * The start time of this excerpt in the source file, in seconds.
      *
-     * @var float
+     * @var int
      */
     protected $sourceTime;
 
@@ -358,7 +380,7 @@ class MediaFile extends ObjectBase
     /**
      * The server information required to transfer the file.
      *
-     * @var TransferInfo
+     * @var \Lullabot\Mpx\DataService\Media\TransferInfo
      */
     protected $transferInfo;
 
@@ -372,7 +394,7 @@ class MediaFile extends ObjectBase
     /**
      * The date and time this object was last modified.
      *
-     * @var \DateTime
+     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
      */
     protected $updated;
 
@@ -410,31 +432,61 @@ class MediaFile extends ObjectBase
      * @var int
      */
     protected $width;
+
     /**
-     * The date and time that this object was created.
+     * Returns the date and time that this object was created.
      *
-     * @var \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
      */
-    protected $added;
+    public function getAdded(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    {
+        if (!$this->added) {
+            return new NullDateTime();
+        }
+
+        return $this->added;
+    }
+
     /**
-     * The id of the user that created this object.
+     * Set the date and time that this object was created.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $added
      */
-    protected $addedByUserId;
+    public function setAdded(\Lullabot\Mpx\DataService\DateTimeFormatInterface $added)
+    {
+        $this->added = $added;
+    }
+
     /**
-     * The id of the account that owns this object.
+     * Returns the id of the user that created this object.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    protected $ownerId;
+    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->addedByUserId) {
+            return new Uri();
+        }
+
+        return $this->addedByUserId;
+    }
+
+    /**
+     * Set the id of the user that created this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $addedByUserId
+     */
+    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
+    {
+        $this->addedByUserId = $addedByUserId;
+    }
 
     /**
      * Returns whether playback is enabled for this file, and whether it can be associated with new Release objects.
      *
      * @return bool
      */
-    public function getAllowRelease(): bool
+    public function getAllowRelease(): ?bool
     {
         return $this->allowRelease;
     }
@@ -442,9 +494,9 @@ class MediaFile extends ObjectBase
     /**
      * Set whether playback is enabled for this file, and whether it can be associated with new Release objects.
      *
-     * @param bool
+     * @param bool $allowRelease
      */
-    public function setAllowRelease($allowRelease)
+    public function setAllowRelease(?bool $allowRelease)
     {
         $this->allowRelease = $allowRelease;
     }
@@ -454,7 +506,7 @@ class MediaFile extends ObjectBase
      *
      * @return bool
      */
-    public function getApproved(): bool
+    public function getApproved(): ?bool
     {
         return $this->approved;
     }
@@ -462,9 +514,9 @@ class MediaFile extends ObjectBase
     /**
      * Set whether this object is approved.
      *
-     * @param bool
+     * @param bool $approved
      */
-    public function setApproved($approved)
+    public function setApproved(?bool $approved)
     {
         $this->approved = $approved;
     }
@@ -474,7 +526,7 @@ class MediaFile extends ObjectBase
      *
      * @return float
      */
-    public function getAspectRatio(): float
+    public function getAspectRatio(): ?float
     {
         return $this->aspectRatio;
     }
@@ -482,9 +534,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's calculated aspect ratio.
      *
-     * @param float
+     * @param float $aspectRatio
      */
-    public function setAspectRatio($aspectRatio)
+    public function setAspectRatio(?float $aspectRatio)
     {
         $this->aspectRatio = $aspectRatio;
     }
@@ -502,9 +554,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the id values of any AssetType objects associated with this object.
      *
-     * @param \Psr\Http\Message\UriInterface[]
+     * @param \Psr\Http\Message\UriInterface[] $assetTypeIds
      */
-    public function setAssetTypeIds($assetTypeIds)
+    public function setAssetTypeIds(array $assetTypeIds)
     {
         $this->assetTypeIds = $assetTypeIds;
     }
@@ -522,9 +574,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the names of any AssetType objects associated with this object.
      *
-     * @param string[]
+     * @param string[] $assetTypes
      */
-    public function setAssetTypes($assetTypes)
+    public function setAssetTypes(array $assetTypes)
     {
         $this->assetTypes = $assetTypes;
     }
@@ -534,7 +586,7 @@ class MediaFile extends ObjectBase
      *
      * @return int
      */
-    public function getAudioChannels(): int
+    public function getAudioChannels(): ?int
     {
         return $this->audioChannels;
     }
@@ -542,9 +594,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the number of audio channels the file has.
      *
-     * @param int
+     * @param int $audioChannels
      */
-    public function setAudioChannels($audioChannels)
+    public function setAudioChannels(?int $audioChannels)
     {
         $this->audioChannels = $audioChannels;
     }
@@ -554,7 +606,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getAudioCodec(): string
+    public function getAudioCodec(): ?string
     {
         return $this->audioCodec;
     }
@@ -562,9 +614,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the name of the audio codec the file uses.
      *
-     * @param string
+     * @param string $audioCodec
      */
-    public function setAudioCodec($audioCodec)
+    public function setAudioCodec(?string $audioCodec)
     {
         $this->audioCodec = $audioCodec;
     }
@@ -574,7 +626,7 @@ class MediaFile extends ObjectBase
      *
      * @return int
      */
-    public function getAudioSampleRate(): int
+    public function getAudioSampleRate(): ?int
     {
         return $this->audioSampleRate;
     }
@@ -582,9 +634,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's audio sample rate, in hertz (Hz).
      *
-     * @param int
+     * @param int $audioSampleRate
      */
-    public function setAudioSampleRate($audioSampleRate)
+    public function setAudioSampleRate(?int $audioSampleRate)
     {
         $this->audioSampleRate = $audioSampleRate;
     }
@@ -594,7 +646,7 @@ class MediaFile extends ObjectBase
      *
      * @return int
      */
-    public function getAudioSampleSize(): int
+    public function getAudioSampleSize(): ?int
     {
         return $this->audioSampleSize;
     }
@@ -602,9 +654,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's audio sample size, in bits (b).
      *
-     * @param int
+     * @param int $audioSampleSize
      */
-    public function setAudioSampleSize($audioSampleSize)
+    public function setAudioSampleSize(?int $audioSampleSize)
     {
         $this->audioSampleSize = $audioSampleSize;
     }
@@ -614,7 +666,7 @@ class MediaFile extends ObjectBase
      *
      * @return int
      */
-    public function getBitrate(): int
+    public function getBitrate(): ?int
     {
         return $this->bitrate;
     }
@@ -622,9 +674,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's bitrate, in bits per second (bps).
      *
-     * @param int
+     * @param int $bitrate
      */
-    public function setBitrate($bitrate)
+    public function setBitrate(?int $bitrate)
     {
         $this->bitrate = $bitrate;
     }
@@ -642,9 +694,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's checksum values.
      *
-     * @param array
+     * @param array $checksums
      */
-    public function setChecksums($checksums)
+    public function setChecksums(array $checksums)
     {
         $this->checksums = $checksums;
     }
@@ -654,7 +706,7 @@ class MediaFile extends ObjectBase
      *
      * @return bool
      */
-    public function getClosedCaptions(): bool
+    public function getClosedCaptions(): ?bool
     {
         return $this->closedCaptions;
     }
@@ -662,9 +714,9 @@ class MediaFile extends ObjectBase
     /**
      * Set whether the file contains text tracks.
      *
-     * @param bool
+     * @param bool $closedCaptions
      */
-    public function setClosedCaptions($closedCaptions)
+    public function setClosedCaptions(?bool $closedCaptions)
     {
         $this->closedCaptions = $closedCaptions;
     }
@@ -674,7 +726,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getContentType(): string
+    public function getContentType(): ?string
     {
         return $this->contentType;
     }
@@ -682,9 +734,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's content type.
      *
-     * @param string
+     * @param string $contentType
      */
-    public function setContentType($contentType)
+    public function setContentType(?string $contentType)
     {
         $this->contentType = $contentType;
     }
@@ -694,7 +746,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -702,9 +754,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the description of this object.
      *
-     * @param string
+     * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(?string $description)
     {
         $this->description = $description;
     }
@@ -714,7 +766,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getDisplayAspectRatio(): string
+    public function getDisplayAspectRatio(): ?string
     {
         return $this->displayAspectRatio;
     }
@@ -722,9 +774,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the aspect ratio to display to users.
      *
-     * @param string
+     * @param string $displayAspectRatio
      */
-    public function setDisplayAspectRatio($displayAspectRatio)
+    public function setDisplayAspectRatio(?string $displayAspectRatio)
     {
         $this->displayAspectRatio = $displayAspectRatio;
     }
@@ -734,7 +786,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getDownloadUrl(): string
+    public function getDownloadUrl(): ?string
     {
         return $this->downloadUrl;
     }
@@ -742,9 +794,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's download URL.
      *
-     * @param string
+     * @param string $downloadUrl
      */
-    public function setDownloadUrl($downloadUrl)
+    public function setDownloadUrl(?string $downloadUrl)
     {
         $this->downloadUrl = $downloadUrl;
     }
@@ -752,9 +804,9 @@ class MediaFile extends ObjectBase
     /**
      * Returns the duration of the file, in seconds.
      *
-     * @return float
+     * @return int
      */
-    public function getDuration(): float
+    public function getDuration(): ?int
     {
         return $this->duration;
     }
@@ -762,9 +814,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the duration of the file, in seconds.
      *
-     * @param float
+     * @param int $duration
      */
-    public function setDuration(float $duration)
+    public function setDuration(?int $duration)
     {
         $this->duration = $duration;
     }
@@ -774,7 +826,7 @@ class MediaFile extends ObjectBase
      *
      * @return bool
      */
-    public function getExists(): bool
+    public function getExists(): ?bool
     {
         return $this->exists;
     }
@@ -782,9 +834,9 @@ class MediaFile extends ObjectBase
     /**
      * Set whether the file exists at the specified location yet.
      *
-     * @param bool
+     * @param bool $exists
      */
-    public function setExists($exists)
+    public function setExists(?bool $exists)
     {
         $this->exists = $exists;
     }
@@ -794,7 +846,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getExpression(): string
+    public function getExpression(): ?string
     {
         return $this->expression;
     }
@@ -802,9 +854,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's expression type.
      *
-     * @param string
+     * @param string $expression
      */
-    public function setExpression($expression)
+    public function setExpression(?string $expression)
     {
         $this->expression = $expression;
     }
@@ -814,7 +866,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getFailoverSourceUrl(): string
+    public function getFailoverSourceUrl(): ?string
     {
         return $this->failoverSourceUrl;
     }
@@ -822,9 +874,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the secondary source URL for the original file.
      *
-     * @param string
+     * @param string $failoverSourceUrl
      */
-    public function setFailoverSourceUrl($failoverSourceUrl)
+    public function setFailoverSourceUrl(?string $failoverSourceUrl)
     {
         $this->failoverSourceUrl = $failoverSourceUrl;
     }
@@ -834,7 +886,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getFailoverStreamingUrl(): string
+    public function getFailoverStreamingUrl(): ?string
     {
         return $this->failoverStreamingUrl;
     }
@@ -842,9 +894,9 @@ class MediaFile extends ObjectBase
     /**
      * Set one or more secondary streaming URLs.
      *
-     * @param string
+     * @param string $failoverStreamingUrl
      */
-    public function setFailoverStreamingUrl($failoverStreamingUrl)
+    public function setFailoverStreamingUrl(?string $failoverStreamingUrl)
     {
         $this->failoverStreamingUrl = $failoverStreamingUrl;
     }
@@ -854,7 +906,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getFilePath(): string
+    public function getFilePath(): ?string
     {
         return $this->filePath;
     }
@@ -862,9 +914,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the path and filename of the file, relative to a managed storage server's root.
      *
-     * @param string
+     * @param string $filePath
      */
-    public function setFilePath($filePath)
+    public function setFilePath(?string $filePath)
     {
         $this->filePath = $filePath;
     }
@@ -874,7 +926,7 @@ class MediaFile extends ObjectBase
      *
      * @return int
      */
-    public function getFileSize(): int
+    public function getFileSize(): ?int
     {
         return $this->fileSize;
     }
@@ -882,9 +934,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's size, in bytes (B).
      *
-     * @param int
+     * @param int $fileSize
      */
-    public function setFileSize($fileSize)
+    public function setFileSize(?int $fileSize)
     {
         $this->fileSize = $fileSize;
     }
@@ -894,7 +946,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getFormat(): string
+    public function getFormat(): ?string
     {
         return $this->format;
     }
@@ -902,9 +954,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's format.
      *
-     * @param string
+     * @param string $format
      */
-    public function setFormat(string $format)
+    public function setFormat(?string $format)
     {
         $this->format = $format;
     }
@@ -914,7 +966,7 @@ class MediaFile extends ObjectBase
      *
      * @return float
      */
-    public function getFrameRate(): float
+    public function getFrameRate(): ?float
     {
         return $this->frameRate;
     }
@@ -922,9 +974,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's frame rate, in frames per second (fps).
      *
-     * @param float
+     * @param float $frameRate
      */
-    public function setFrameRate($frameRate)
+    public function setFrameRate(?float $frameRate)
     {
         $this->frameRate = $frameRate;
     }
@@ -934,7 +986,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getGuid(): string
+    public function getGuid(): ?string
     {
         return $this->guid;
     }
@@ -942,9 +994,9 @@ class MediaFile extends ObjectBase
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
      *
-     * @param string
+     * @param string $guid
      */
-    public function setGuid($guid)
+    public function setGuid(?string $guid)
     {
         $this->guid = $guid;
     }
@@ -954,7 +1006,7 @@ class MediaFile extends ObjectBase
      *
      * @return int
      */
-    public function getHeight(): int
+    public function getHeight(): ?int
     {
         return $this->height;
     }
@@ -962,29 +1014,53 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's frame height, in pixels.
      *
-     * @param int
+     * @param int $height
      */
-    public function setHeight($height)
+    public function setHeight(?int $height)
     {
         $this->height = $height;
     }
 
     /**
-     * Returns whether this file is the default content or thumbnail file for the associated Media object.
+     * Returns the globally unique URI of this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->id) {
+            return new Uri();
+        }
+
+        return $this->id;
+    }
+
+    /**
+     * Set the globally unique URI of this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $id
+     */
+    public function setId(\Psr\Http\Message\UriInterface $id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Returns whether this file is the default content or thumbnail file for the associated Mediaobject.
      *
      * @return bool
      */
-    public function getIsDefault(): bool
+    public function getIsDefault(): ?bool
     {
         return $this->isDefault;
     }
 
     /**
-     * Set whether this file is the default content or thumbnail file for the associated Media object.
+     * Set whether this file is the default content or thumbnail file for the associated Mediaobject.
      *
-     * @param bool
+     * @param bool $isDefault
      */
-    public function setIsDefault($isDefault)
+    public function setIsDefault(?bool $isDefault)
     {
         $this->isDefault = $isDefault;
     }
@@ -994,7 +1070,7 @@ class MediaFile extends ObjectBase
      *
      * @return bool
      */
-    public function getIsProtected(): bool
+    public function getIsProtected(): ?bool
     {
         return $this->isProtected;
     }
@@ -1002,9 +1078,9 @@ class MediaFile extends ObjectBase
     /**
      * Set whether this file is protected.
      *
-     * @param bool
+     * @param bool $isProtected
      */
-    public function setIsProtected($isProtected)
+    public function setIsProtected(?bool $isProtected)
     {
         $this->isProtected = $isProtected;
     }
@@ -1014,7 +1090,7 @@ class MediaFile extends ObjectBase
      *
      * @return bool
      */
-    public function getIsThumbnail(): bool
+    public function getIsThumbnail(): ?bool
     {
         return $this->isThumbnail;
     }
@@ -1022,9 +1098,9 @@ class MediaFile extends ObjectBase
     /**
      * Set whether this file is a thumbnail.
      *
-     * @param bool
+     * @param bool $isThumbnail
      */
-    public function setIsThumbnail($isThumbnail)
+    public function setIsThumbnail(?bool $isThumbnail)
     {
         $this->isThumbnail = $isThumbnail;
     }
@@ -1034,7 +1110,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -1042,9 +1118,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the ISO 639 language code for the file.
      *
-     * @param string
+     * @param string $language
      */
-    public function setLanguage($language)
+    public function setLanguage(?string $language)
     {
         $this->language = $language;
     }
@@ -1054,7 +1130,7 @@ class MediaFile extends ObjectBase
      *
      * @return bool
      */
-    public function getLocked(): bool
+    public function getLocked(): ?bool
     {
         return $this->locked;
     }
@@ -1062,9 +1138,9 @@ class MediaFile extends ObjectBase
     /**
      * Set whether this object currently allows updates.
      *
-     * @param bool
+     * @param bool $locked
      */
-    public function setLocked($locked)
+    public function setLocked(?bool $locked)
     {
         $this->locked = $locked;
     }
@@ -1076,17 +1152,45 @@ class MediaFile extends ObjectBase
      */
     public function getMediaId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->mediaId) {
+            return new Uri();
+        }
+
         return $this->mediaId;
     }
 
     /**
      * Set the id of the Media object this object is associated with.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $mediaId
      */
-    public function setMediaId($mediaId)
+    public function setMediaId(\Psr\Http\Message\UriInterface $mediaId)
     {
         $this->mediaId = $mediaId;
+    }
+
+    /**
+     * Returns the id of the account that owns this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getOwnerId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->ownerId) {
+            return new Uri();
+        }
+
+        return $this->ownerId;
+    }
+
+    /**
+     * Set the id of the account that owns this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $ownerId
+     */
+    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
+    {
+        $this->ownerId = $ownerId;
     }
 
     /**
@@ -1102,7 +1206,7 @@ class MediaFile extends ObjectBase
     /**
      * Set information about the file's location used by the FMS moveFile method.
      *
-     * @param PreviousLocation[]
+     * @param PreviousLocation[] $previousLocations
      */
     public function setPreviousLocations(array $previousLocations)
     {
@@ -1112,9 +1216,9 @@ class MediaFile extends ObjectBase
     /**
      * Returns one or more protection system headers.
      *
-     * @return string[]
+     * @return string
      */
-    public function getProtectionHeaders(): array
+    public function getProtectionHeaders(): ?string
     {
         return $this->protectionHeaders;
     }
@@ -1122,9 +1226,9 @@ class MediaFile extends ObjectBase
     /**
      * Set one or more protection system headers.
      *
-     * @param string[]
+     * @param string $protectionHeaders
      */
-    public function setProtectionHeaders($protectionHeaders)
+    public function setProtectionHeaders(?string $protectionHeaders)
     {
         $this->protectionHeaders = $protectionHeaders;
     }
@@ -1134,7 +1238,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getProtectionKey(): string
+    public function getProtectionKey(): ?string
     {
         return $this->protectionKey;
     }
@@ -1142,9 +1246,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the DRM or copy protection key.
      *
-     * @param string
+     * @param string $protectionKey
      */
-    public function setProtectionKey($protectionKey)
+    public function setProtectionKey(?string $protectionKey)
     {
         $this->protectionKey = $protectionKey;
     }
@@ -1154,7 +1258,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getProtectionScheme(): string
+    public function getProtectionScheme(): ?string
     {
         return $this->protectionScheme;
     }
@@ -1162,9 +1266,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the DRM or copy protection scheme.
      *
-     * @param string
+     * @param string $protectionScheme
      */
-    public function setProtectionScheme($protectionScheme)
+    public function setProtectionScheme(?string $protectionScheme)
     {
         $this->protectionScheme = $protectionScheme;
     }
@@ -1182,7 +1286,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the Release objects associated with this file.
      *
-     * @param Release[]
+     * @param Release[] $releases
      */
     public function setReleases(array $releases)
     {
@@ -1202,9 +1306,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the languages in which secondary audio programming (SAP) is available in the file.
      *
-     * @param string[]
+     * @param string[] $secondaryAudio
      */
-    public function setSecondaryAudio($secondaryAudio)
+    public function setSecondaryAudio(array $secondaryAudio)
     {
         $this->secondaryAudio = $secondaryAudio;
     }
@@ -1214,7 +1318,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getSegmentFormat(): string
+    public function getSegmentFormat(): ?string
     {
         return $this->segmentFormat;
     }
@@ -1222,9 +1326,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the format of the streaming content segments.
      *
-     * @param string
+     * @param string $segmentFormat
      */
-    public function setSegmentFormat($segmentFormat)
+    public function setSegmentFormat(?string $segmentFormat)
     {
         $this->segmentFormat = $segmentFormat;
     }
@@ -1236,15 +1340,19 @@ class MediaFile extends ObjectBase
      */
     public function getServerId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->serverId) {
+            return new Uri();
+        }
+
         return $this->serverId;
     }
 
     /**
      * Set the id of the Server object representing the storage server that this file is on.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $serverId
      */
-    public function setServerId($serverId)
+    public function setServerId(\Psr\Http\Message\UriInterface $serverId)
     {
         $this->serverId = $serverId;
     }
@@ -1256,15 +1364,19 @@ class MediaFile extends ObjectBase
      */
     public function getSourceMediaFileId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->sourceMediaFileId) {
+            return new Uri();
+        }
+
         return $this->sourceMediaFileId;
     }
 
     /**
      * Set the id of the source MediaFile object that this file was generated from.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $sourceMediaFileId
      */
-    public function setSourceMediaFileId($sourceMediaFileId)
+    public function setSourceMediaFileId(\Psr\Http\Message\UriInterface $sourceMediaFileId)
     {
         $this->sourceMediaFileId = $sourceMediaFileId;
     }
@@ -1272,9 +1384,9 @@ class MediaFile extends ObjectBase
     /**
      * Returns the start time of this excerpt in the source file, in seconds.
      *
-     * @return float
+     * @return int
      */
-    public function getSourceTime(): float
+    public function getSourceTime(): ?int
     {
         return $this->sourceTime;
     }
@@ -1282,9 +1394,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the start time of this excerpt in the source file, in seconds.
      *
-     * @param float
+     * @param int $sourceTime
      */
-    public function setSourceTime(float $sourceTime)
+    public function setSourceTime(?int $sourceTime)
     {
         $this->sourceTime = $sourceTime;
     }
@@ -1294,7 +1406,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getSourceUrl(): string
+    public function getSourceUrl(): ?string
     {
         return $this->sourceUrl;
     }
@@ -1302,9 +1414,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the original source URL for this file.
      *
-     * @param string
+     * @param string $sourceUrl
      */
-    public function setSourceUrl($sourceUrl)
+    public function setSourceUrl(?string $sourceUrl)
     {
         $this->sourceUrl = $sourceUrl;
     }
@@ -1314,7 +1426,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getStorageUrl(): string
+    public function getStorageUrl(): ?string
     {
         return $this->storageUrl;
     }
@@ -1322,9 +1434,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the URL of the file's storage location.
      *
-     * @param string
+     * @param string $storageUrl
      */
-    public function setStorageUrl($storageUrl)
+    public function setStorageUrl(?string $storageUrl)
     {
         $this->storageUrl = $storageUrl;
     }
@@ -1334,7 +1446,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getStreamingUrl(): string
+    public function getStreamingUrl(): ?string
     {
         return $this->streamingUrl;
     }
@@ -1342,9 +1454,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's primary streaming URL.
      *
-     * @param string
+     * @param string $streamingUrl
      */
-    public function setStreamingUrl($streamingUrl)
+    public function setStreamingUrl(?string $streamingUrl)
     {
         $this->streamingUrl = $streamingUrl;
     }
@@ -1354,7 +1466,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -1362,9 +1474,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the name of this object.
      *
-     * @param string
+     * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
     }
@@ -1372,7 +1484,7 @@ class MediaFile extends ObjectBase
     /**
      * Returns the server information required to transfer the file.
      *
-     * @return TransferInfo
+     * @return \Lullabot\Mpx\DataService\Media\TransferInfo
      */
     public function getTransferInfo(): TransferInfo
     {
@@ -1382,9 +1494,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the server information required to transfer the file.
      *
-     * @param TransferInfo
+     * @param \Lullabot\Mpx\DataService\Media\TransferInfo $transferInfo
      */
-    public function setTransferInfo($transferInfo)
+    public function setTransferInfo(TransferInfo $transferInfo)
     {
         $this->transferInfo = $transferInfo;
     }
@@ -1396,15 +1508,19 @@ class MediaFile extends ObjectBase
      */
     public function getTransformId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->transformId) {
+            return new Uri();
+        }
+
         return $this->transformId;
     }
 
     /**
      * Set the id of the encoding template used to generate the file.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $transformId
      */
-    public function setTransformId($transformId)
+    public function setTransformId(\Psr\Http\Message\UriInterface $transformId)
     {
         $this->transformId = $transformId;
     }
@@ -1412,19 +1528,23 @@ class MediaFile extends ObjectBase
     /**
      * Returns the date and time this object was last modified.
      *
-     * @return \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
      */
-    public function getUpdated(): \DateTime
+    public function getUpdated(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
     {
+        if (!$this->updated) {
+            return new NullDateTime();
+        }
+
         return $this->updated;
     }
 
     /**
      * Set the date and time this object was last modified.
      *
-     * @param \DateTime
+     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $updated
      */
-    public function setUpdated($updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTimeFormatInterface $updated)
     {
         $this->updated = $updated;
     }
@@ -1436,15 +1556,19 @@ class MediaFile extends ObjectBase
      */
     public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->updatedByUserId) {
+            return new Uri();
+        }
+
         return $this->updatedByUserId;
     }
 
     /**
      * Set the id of the user that last modified this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
-    public function setUpdatedByUserId($updatedByUserId)
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {
         $this->updatedByUserId = $updatedByUserId;
     }
@@ -1454,7 +1578,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -1462,9 +1586,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the URL of the file.
      *
-     * @param string
+     * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl(?string $url)
     {
         $this->url = $url;
     }
@@ -1474,7 +1598,7 @@ class MediaFile extends ObjectBase
      *
      * @return int
      */
-    public function getVersion(): int
+    public function getVersion(): ?int
     {
         return $this->version;
     }
@@ -1482,9 +1606,9 @@ class MediaFile extends ObjectBase
     /**
      * Set this object's modification version, used for optimistic locking.
      *
-     * @param int
+     * @param int $version
      */
-    public function setVersion($version)
+    public function setVersion(?int $version)
     {
         $this->version = $version;
     }
@@ -1494,7 +1618,7 @@ class MediaFile extends ObjectBase
      *
      * @return string
      */
-    public function getVideoCodec(): string
+    public function getVideoCodec(): ?string
     {
         return $this->videoCodec;
     }
@@ -1502,9 +1626,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the name of this file's video codec.
      *
-     * @param string
+     * @param string $videoCodec
      */
-    public function setVideoCodec($videoCodec)
+    public function setVideoCodec(?string $videoCodec)
     {
         $this->videoCodec = $videoCodec;
     }
@@ -1514,7 +1638,7 @@ class MediaFile extends ObjectBase
      *
      * @return int
      */
-    public function getWidth(): int
+    public function getWidth(): ?int
     {
         return $this->width;
     }
@@ -1522,74 +1646,10 @@ class MediaFile extends ObjectBase
     /**
      * Set this file's frame width, in pixels.
      *
-     * @param int
+     * @param int $width
      */
-    public function setWidth($width)
+    public function setWidth(?int $width)
     {
         $this->width = $width;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAdded(): \DateTime
-    {
-        return $this->added;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setAdded($added)
-    {
-        $this->added = $added;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->addedByUserId;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setAddedByUserId($addedByUserId)
-    {
-        $this->addedByUserId = $addedByUserId;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setId(UriInterface $id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getOwnerId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
     }
 }
