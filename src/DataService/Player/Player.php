@@ -526,7 +526,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @var bool
      */
-    protected $showAirDate;
+    protected $showAirdate;
 
     /**
      * Indicates whether to include the All option in the category list component.
@@ -2125,19 +2125,19 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return bool
      */
-    public function getShowAirDate(): ?bool
+    public function getShowAirdate(): ?bool
     {
-        return $this->showAirDate;
+        return $this->showAirdate;
     }
 
     /**
      * Set indicates whether to display the air date in the release list component.
      *
-     * @param bool $showAirDate
+     * @param bool $showAirdate
      */
-    public function setShowAirDate(?bool $showAirDate)
+    public function setShowAirdate(?bool $showAirdate)
     {
-        $this->showAirDate = $showAirDate;
+        $this->showAirdate = $showAirdate;
     }
 
     /**
