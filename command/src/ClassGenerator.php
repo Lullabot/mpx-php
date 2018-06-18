@@ -25,7 +25,7 @@ abstract class ClassGenerator extends Command
         'Format' => 'string',
         'DateTime' => '\\'.DateTimeFormatInterface::class,
         'Delivery' => 'string',
-        'Duration' => 'int',
+        'Duration' => 'float',
         'Decimal' => 'float',
         'Expression' => 'string',
         'Float' => 'float',

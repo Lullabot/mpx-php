@@ -149,7 +149,7 @@ class MediaFile extends ObjectBase
     /**
      * The duration of the file, in seconds.
      *
-     * @var int
+     * @var float
      */
     protected $duration;
 
@@ -345,7 +345,7 @@ class MediaFile extends ObjectBase
     /**
      * The start time of this excerpt in the source file, in seconds.
      *
-     * @var int
+     * @var float
      */
     protected $sourceTime;
 
@@ -804,9 +804,9 @@ class MediaFile extends ObjectBase
     /**
      * Returns the duration of the file, in seconds.
      *
-     * @return int
+     * @return float
      */
-    public function getDuration(): ?int
+    public function getDuration(): ?float
     {
         return $this->duration;
     }
@@ -814,9 +814,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the duration of the file, in seconds.
      *
-     * @param int $duration
+     * @param float $duration
      */
-    public function setDuration(?int $duration)
+    public function setDuration(?float $duration)
     {
         $this->duration = $duration;
     }
@@ -1384,9 +1384,9 @@ class MediaFile extends ObjectBase
     /**
      * Returns the start time of this excerpt in the source file, in seconds.
      *
-     * @return int
+     * @return float
      */
-    public function getSourceTime(): ?int
+    public function getSourceTime(): ?float
     {
         return $this->sourceTime;
     }
@@ -1394,9 +1394,9 @@ class MediaFile extends ObjectBase
     /**
      * Set the start time of this excerpt in the source file, in seconds.
      *
-     * @param int $sourceTime
+     * @param float $sourceTime
      */
-    public function setSourceTime(?int $sourceTime)
+    public function setSourceTime(?float $sourceTime)
     {
         $this->sourceTime = $sourceTime;
     }
