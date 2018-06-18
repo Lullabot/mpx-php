@@ -25,6 +25,8 @@ abstract class ClassGenerator extends Command
         'Link' => '\\'.UriInterface::class,
         'Long' => 'int',
         'Map' => 'array',
+        'String (64, ASCII)' => 'string',
+        'String (64, Unicode)' => 'string',
         'String' => 'string',
         'URI' => '\\'.UriInterface::class,
     ];
