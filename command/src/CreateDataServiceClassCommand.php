@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\Command;
 
+use Lullabot\Mpx\DataService\DateTimeFormatInterface;
+use Lullabot\Mpx\DataService\NullDateTime;
 use Nette\PhpGenerator\PhpNamespace;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -74,6 +76,12 @@ class CreateDataServiceClassCommand extends ClassGenerator
             // array in the return typehint.
             $this->setReturnType($get, $data_type);
 
+            if ($data_type == '\\'.DateTimeFormatInterface::class) {
+                $namespace->addUse(NullDateTime::class);
+                $get->addBody('if (!$this->'.$field_name.') {');
+                $get->addBody('    return new NullDateTime();');
+                $get->addBody('}');
+            }
             $get->addBody('return $this->'.$field_name.';');
 
             // Add a set method for the property.

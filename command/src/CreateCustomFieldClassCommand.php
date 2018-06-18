@@ -8,7 +8,9 @@ use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\CustomFieldInterface;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
+use Lullabot\Mpx\DataService\DateTimeFormatInterface;
 use Lullabot\Mpx\DataService\Field;
+use Lullabot\Mpx\DataService\NullDateTime;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
@@ -148,7 +150,7 @@ EOD;
         $field = $dof->load($field->getId())->wait();
 
         $mpxNamespace = (string) $field->getNamespace();
-        $class = $this->getClass($input, $mpxNamespace);
+        list($namespace, $class) = $this->getClass($input, $mpxNamespace);
 
         $this->addProperty($class, $field);
         $dataType = static::TYPE_MAP[$field->getDataType()];
@@ -165,6 +167,12 @@ EOD;
         // array in the return typehint.
         $this->setReturnType($get, $dataType);
 
+        if ($dataType == '\\'.DateTimeFormatInterface::class) {
+            $namespace->addUse(NullDateTime::class);
+            $get->addBody('if (!$this->'.$field->getFieldName().') {');
+            $get->addBody('    return new NullDateTime();');
+            $get->addBody('}');
+        }
         $get->addBody('return $this->'.$field->getFieldName().';');
 
         // Add a set method for the property.
@@ -185,9 +193,9 @@ EOD;
      * @param InputInterface $input
      * @param string         $mpxNamespace
      *
-     * @return ClassType
+     * @return array
      */
-    private function getClass(InputInterface $input, string $mpxNamespace): ClassType
+    private function getClass(InputInterface $input, string $mpxNamespace): array
     {
         if (!isset($this->namespaceClasses[$mpxNamespace])) {
             $nf = new \NumberFormatter('en', \NumberFormatter::SPELLOUT);
@@ -210,7 +218,7 @@ EOD;
             $class = $namespace->getClasses()[$this->classNames[$mpxNamespace]];
         }
 
-        return $class;
+        return [$namespace, $class];
     }
 
     /**
