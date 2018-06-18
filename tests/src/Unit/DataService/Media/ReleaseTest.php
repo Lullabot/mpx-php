@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
+use Lullabot\Mpx\DataService\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\Release;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
@@ -43,8 +44,8 @@ class ReleaseTest extends ObjectTestBase
     {
         $tests = parent::getSetMethods();
 
-        $tests['added'] = ['added', \DateTime::createFromFormat('U.u', '1299624648.000')];
-        $tests['updated'] = ['updated', \DateTime::createFromFormat('U.u', '1299624648.000')];
+        $tests['added'] = ['added', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1299624648.000'))];
+        $tests['updated'] = ['updated', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1299624648.000'))];
 
         return $tests;
     }

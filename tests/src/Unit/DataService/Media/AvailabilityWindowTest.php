@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
+use Lullabot\Mpx\DataService\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\AvailabilityWindow;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
@@ -48,8 +49,8 @@ class AvailabilityWindowTest extends ObjectTestBase
     public function getSetMethods()
     {
         $tests = parent::getSetMethods();
-        $tests['targetAvailableDate'] = ['targetAvailableDate', \DateTime::createFromFormat('U.u', '1430722800.000')];
-        $tests['targetExpirationDate'] = ['targetExpirationDate', \DateTime::createFromFormat('U.u', '1431932400.000')];
+        $tests['targetAvailableDate'] = ['targetAvailableDate', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1430722800.000'))];
+        $tests['targetExpirationDate'] = ['targetExpirationDate', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1431932400.000'))];
 
         return $tests;
     }

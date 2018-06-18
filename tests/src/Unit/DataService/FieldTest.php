@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
+use GuzzleHttp\Psr7\Uri;
+use Lullabot\Mpx\DataService\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Field;
 
@@ -46,8 +48,8 @@ class FieldTest extends ObjectTestBase
     public function getSetMethods()
     {
         $tests = parent::getSetMethods();
-        $tests['added'] = ['added', \DateTime::createFromFormat('U.u', '1236030615.000')];
-        $tests['updated'] = ['updated', \DateTime::createFromFormat('U.u', '1236030615.000')];
+        $tests['added'] = ['added', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1236030615.000'))];
+        $tests['updated'] = ['updated', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1236030615.000'))];
 
         return $tests;
     }
