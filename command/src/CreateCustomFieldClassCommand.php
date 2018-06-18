@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\Command;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\CustomFieldInterface;
@@ -16,6 +17,7 @@ use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
+use Psr\Http\Message\UriInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -150,6 +152,8 @@ EOD;
         $field = $dof->load($field->getId())->wait();
 
         $mpxNamespace = (string) $field->getNamespace();
+        /** @var PhpNamespace $namespace */
+        /** @var ClassType $class */
         list($namespace, $class) = $this->getClass($input, $mpxNamespace);
 
         $this->addProperty($class, $field);
@@ -171,6 +175,13 @@ EOD;
             $namespace->addUse(NullDateTime::class);
             $get->addBody('if (!$this->'.$field->getFieldName().') {');
             $get->addBody('    return new NullDateTime();');
+            $get->addBody('}');
+        }
+
+        if ($dataType == '\\'.UriInterface::class) {
+            $namespace->addUse(Uri::class);
+            $get->addBody('if (!$this->'.$field->getFieldName().') {');
+            $get->addBody('    return new Uri();');
             $get->addBody('}');
         }
         $get->addBody('return $this->'.$field->getFieldName().';');

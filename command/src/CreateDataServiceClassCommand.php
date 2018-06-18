@@ -2,9 +2,11 @@
 
 namespace Lullabot\Mpx\Command;
 
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\DateTimeFormatInterface;
 use Lullabot\Mpx\DataService\NullDateTime;
 use Nette\PhpGenerator\PhpNamespace;
+use Psr\Http\Message\UriInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -82,6 +84,14 @@ class CreateDataServiceClassCommand extends ClassGenerator
                 $get->addBody('    return new NullDateTime();');
                 $get->addBody('}');
             }
+
+            if ($data_type == '\\'.UriInterface::class) {
+                $namespace->addUse(Uri::class);
+                $get->addBody('if (!$this->'.$field_name.') {');
+                $get->addBody('    return new Uri();');
+                $get->addBody('}');
+            }
+
             $get->addBody('return $this->'.$field_name.';');
 
             // Add a set method for the property.
