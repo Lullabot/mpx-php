@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService\Access;
 
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\DataService\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
@@ -47,8 +48,8 @@ class AccountTest extends ObjectTestBase
     public function getSetMethods()
     {
         $tests = parent::getSetMethods();
-        $tests['added'] = ['added', \DateTime::createFromFormat('U.u', '1310073366.000')];
-        $tests['updated'] = ['updated', \DateTime::createFromFormat('U.u', '1319652154.000')];
+        $tests['added'] = ['added', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1310073366.000'))];
+        $tests['updated'] = ['updated', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1319652154.000'))];
 
         return $tests;
     }
