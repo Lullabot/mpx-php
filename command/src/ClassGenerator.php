@@ -29,6 +29,8 @@ abstract class ClassGenerator extends Command
         'Expression' => 'string',
         'Float' => 'float',
         'Image' => '\\'.UriInterface::class,
+        'Map<String, String>' => 'array',
+        'Map<String, Integer>' => 'array',
         'Integer' => 'int',
         'Link' => '\\'.UriInterface::class,
         'Long' => 'int',
