@@ -25,8 +25,20 @@ use Psr\Http\Message\UriInterface;
  */
 class Media extends ObjectBase implements PublicIdentifierInterface
 {
-    use AdPolicyDataTrait;
-    use PublicIdentifierTrait;
+
+    /**
+     * The date and time that this object was created.
+     *
+     * @var \DateTime
+     */
+    protected $added;
+
+    /**
+     * The id of the user that created this object.
+     *
+     * @var UriInterface
+     */
+    protected $addedByUserId;
 
     /**
      * The administrative workflow tags for this object.

@@ -13,6 +13,7 @@ abstract class ClassGenerator extends Command
      * Maps custom mpx field types to PHP datatypes.
      */
     public const TYPE_MAP = [
+        'AvailabilityState' => 'string',
         'Boolean' => 'bool',
         'Date' => '\\'.\DateTime::class,
         'DateTime' => '\\'.\DateTime::class,
