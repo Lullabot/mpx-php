@@ -7,7 +7,6 @@ use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
-use Psr\Http\Message\UriInterface;
 
 /**
  * @DataService(

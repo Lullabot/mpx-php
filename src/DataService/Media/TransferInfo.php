@@ -49,14 +49,14 @@ class TransferInfo
      *
      * @var string[]
      */
-    protected $zones;
+    protected $zones = [];
 
     /**
      * Returns the password portion of the credentials required to access the file on the server.
      *
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -64,9 +64,9 @@ class TransferInfo
     /**
      * Set the password portion of the credentials required to access the file on the server.
      *
-     * @param string
+     * @param string $password
      */
-    public function setPassword($password)
+    public function setPassword(?string $password)
     {
         $this->password = $password;
     }
@@ -76,7 +76,7 @@ class TransferInfo
      *
      * @return string
      */
-    public function getPrivateKey(): string
+    public function getPrivateKey(): ?string
     {
         return $this->privateKey;
     }
@@ -84,9 +84,9 @@ class TransferInfo
     /**
      * Set the private key for accessing the file on the server.
      *
-     * @param string
+     * @param string $privateKey
      */
-    public function setPrivateKey($privateKey)
+    public function setPrivateKey(?string $privateKey)
     {
         $this->privateKey = $privateKey;
     }
@@ -96,7 +96,7 @@ class TransferInfo
      *
      * @return bool
      */
-    public function getSupportsDownload(): bool
+    public function getSupportsDownload(): ?bool
     {
         return $this->supportsDownload;
     }
@@ -104,9 +104,9 @@ class TransferInfo
     /**
      * Set whether the server supports downloads of linked files.
      *
-     * @param bool
+     * @param bool $supportsDownload
      */
-    public function setSupportsDownload($supportsDownload)
+    public function setSupportsDownload(?bool $supportsDownload)
     {
         $this->supportsDownload = $supportsDownload;
     }
@@ -116,7 +116,7 @@ class TransferInfo
      *
      * @return bool
      */
-    public function getSupportsStreaming(): bool
+    public function getSupportsStreaming(): ?bool
     {
         return $this->supportsStreaming;
     }
@@ -124,9 +124,9 @@ class TransferInfo
     /**
      * Set whether the server supports streaming of linked files.
      *
-     * @param bool
+     * @param bool $supportsStreaming
      */
-    public function setSupportsStreaming($supportsStreaming)
+    public function setSupportsStreaming(?bool $supportsStreaming)
     {
         $this->supportsStreaming = $supportsStreaming;
     }
@@ -136,7 +136,7 @@ class TransferInfo
      *
      * @return string
      */
-    public function getUserName(): string
+    public function getUserName(): ?string
     {
         return $this->userName;
     }
@@ -144,9 +144,9 @@ class TransferInfo
     /**
      * Set the username portion of the credentials required to access the file on the server.
      *
-     * @param string
+     * @param string $userName
      */
-    public function setUserName($userName)
+    public function setUserName(?string $userName)
     {
         $this->userName = $userName;
     }
@@ -164,9 +164,9 @@ class TransferInfo
     /**
      * Set a list of local zones that the physical server resides in.
      *
-     * @param string[]
+     * @param string[] $zones
      */
-    public function setZones($zones)
+    public function setZones(array $zones)
     {
         $this->zones = $zones;
     }
