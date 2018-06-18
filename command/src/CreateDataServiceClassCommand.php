@@ -39,6 +39,13 @@ class CreateDataServiceClassCommand extends ClassGenerator
             ++$index;
 
             list($field_name, $attributes, $data_type, $description) = $row;
+            if (empty($description)) {
+                continue;
+            }
+
+            if (strrpos($description, '.') !== (strlen($description) - 1)) {
+                $description .= '.';
+            }
 
             // Map MPX documentation datatypes to PHP datatypes.
             foreach (static::TYPE_MAP as $search => $replace) {
