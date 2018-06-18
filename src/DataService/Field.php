@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\DataService;
 
 use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Class representing custom mpx field definitions.

@@ -289,9 +289,9 @@ class MediaFile extends ObjectBase
     /**
      * One or more protection system headers.
      *
-     * @var string
+     * @var string[]
      */
-    protected $protectionHeaders;
+    protected $protectionHeaders = [];
 
     /**
      * The DRM or copy protection key.
@@ -1216,9 +1216,9 @@ class MediaFile extends ObjectBase
     /**
      * Returns one or more protection system headers.
      *
-     * @return string
+     * @return string[]
      */
-    public function getProtectionHeaders(): ?string
+    public function getProtectionHeaders(): array
     {
         return $this->protectionHeaders;
     }
@@ -1226,9 +1226,9 @@ class MediaFile extends ObjectBase
     /**
      * Set one or more protection system headers.
      *
-     * @param string $protectionHeaders
+     * @param string[] $protectionHeaders
      */
-    public function setProtectionHeaders(?string $protectionHeaders)
+    public function setProtectionHeaders(array $protectionHeaders)
     {
         $this->protectionHeaders = $protectionHeaders;
     }
