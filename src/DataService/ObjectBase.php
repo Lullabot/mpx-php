@@ -22,7 +22,7 @@ abstract class ObjectBase implements ObjectInterface
     /**
      * {@inheritdoc}
      */
-    public function getCustomFields($namespace)
+    public function getCustomFields(string $namespace)
     {
         return $this->customFields[$namespace];
     }
