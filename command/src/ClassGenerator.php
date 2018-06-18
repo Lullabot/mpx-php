@@ -27,6 +27,7 @@ abstract class ClassGenerator extends Command
         'Map' => 'array',
         'String (64, ASCII)' => 'string',
         'String (64, Unicode)' => 'string',
+        'String(64,Unicode)[]' => 'string[]',
         'String' => 'string',
         'URI' => '\\'.UriInterface::class,
     ];
