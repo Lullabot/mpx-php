@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - YYYY-MM-DD
+
+### Added
+
+- [#131] Link and Image data types from mpx are now supported. These are
+  typically used in custom fields only.
+- New date classes have been added to handle empty date fields. See the
+  `\Lullabot\Mpx\DataService\DateTime` namespace for details.
+
+### Changed
+
+- PHP 7.1 is now the minimum required PHP version.
+- All scalar properties in mpx data services classes are now nullable.
+- All array properties in mpx data services default to an empty array.
+- All date and time properties now return a
+  `\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface` instead of a
+  `\DateTime` object.
+- It is highly recommended to re-create custom fields classes from the console
+  tool. This will ensure they do not cause unnecessary `\TypeError` exceptions
+  to be thrown.
+- Duration is now generated as a float instead of an integer.
+- All traits for mpx data service objects have been removed to simplify updates
+  using the console tool. This includes `AdPolicyDataTrait` and
+  `PublicIdentifierTrait`.
+
 ## [0.4.0] - 2018-06-08
 
 ### Added
