@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\DataService\DataType;
 
+use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -36,6 +37,10 @@ class Link
      */
     public function getHref(): UriInterface
     {
+        if (!$this->href) {
+            return new Uri();
+        }
+
         return $this->href;
     }
 
@@ -50,7 +55,7 @@ class Link
     /**
      * @return string
      */
-    public function getTarget(): string
+    public function getTarget(): ?string
     {
         return $this->target;
     }
@@ -58,7 +63,7 @@ class Link
     /**
      * @param string $target
      */
-    public function setTarget(string $target)
+    public function setTarget(?string $target)
     {
         $this->target = $target;
     }
@@ -66,7 +71,7 @@ class Link
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -74,7 +79,7 @@ class Link
     /**
      * @param string $title
      */
-    public function setTitle(string $title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
     }
@@ -82,7 +87,7 @@ class Link
     /**
      * @return string
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -90,7 +95,7 @@ class Link
     /**
      * @param string $type
      */
-    public function setType(string $type)
+    public function setType(?string $type)
     {
         $this->type = $type;
     }

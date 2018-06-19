@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\DataService\DataType;
 
+use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -21,6 +22,10 @@ class Image extends Link
      */
     public function getAnchorHref(): UriInterface
     {
+        if (!$this->anchorHref) {
+            return new Uri();
+        }
+
         return $this->anchorHref;
     }
 
