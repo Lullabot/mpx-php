@@ -13,11 +13,11 @@ use PHPUnit\Framework\TestCase;
  */
 class CustomFieldManagerTest extends TestCase
 {
-
     /**
      * Tests getting a single custom field.
      *
      * @covers ::getCustomField
+     * @covers ::__construct
      */
     public function testGetCustomField()
     {
@@ -75,5 +75,14 @@ class CustomFieldManagerTest extends TestCase
             ->willReturn($expected);
         $manager = new CustomFieldManager($discovery);
         $this->assertEquals($expected, $manager->getCustomFields());
+    }
+
+    /**
+     * @covers ::basicDiscovery()
+     */
+    public function testBasicDiscovery()
+    {
+        $discovery = CustomFieldManager::basicDiscovery();
+        $this->assertEmpty($discovery->getCustomFields());
     }
 }

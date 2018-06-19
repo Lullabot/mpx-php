@@ -27,7 +27,7 @@ class CustomFieldManager
      *
      * @return static
      */
-    public static function basicDiscovery()
+    public static function basicDiscovery(): self
     {
         // @todo Check Drupal core for other tags to ignore?
         AnnotationReader::addGlobalIgnoredName('class');
