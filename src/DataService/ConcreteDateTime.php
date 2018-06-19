@@ -2,6 +2,9 @@
 
 namespace Lullabot\Mpx\DataService;
 
+/**
+ * Implements a date and time that is not empty.
+ */
 class ConcreteDateTime implements ConcreteDateTimeInterface
 {
     /**
@@ -15,6 +18,8 @@ class ConcreteDateTime implements ConcreteDateTimeInterface
     }
 
     /**
+     * Construct a new ConcreteDateTime from a time string.
+     *
      * @param string        $time
      * @param \DateTimeZone $timezone
      *
