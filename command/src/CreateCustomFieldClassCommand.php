@@ -5,6 +5,8 @@ namespace Lullabot\Mpx\Command;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
+use Lullabot\Mpx\DataService\DataType\Image;
+use Lullabot\Mpx\DataService\DataType\Link;
 use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\CustomFieldInterface;
 use Lullabot\Mpx\DataService\DataObjectFactory;
@@ -37,9 +39,9 @@ class CreateCustomFieldClassCommand extends Command {
         'DateTime' => '\\' . \DateTime::class,
         'Duration' => 'int',
         'Decimal' => 'float',
-        'Image' => '\\' . UriInterface::class,
+        'Image' => '\\' . Image::class,
         'Integer' => 'int',
-        'Link' => '\\' . UriInterface::class,
+        'Link' => '\\' . Link::class,
         'String' => 'string',
         'Time' => '\\' . \DateTime::class,
         'URI' => '\\' . UriInterface::class,
@@ -173,7 +175,7 @@ EOD;
                 $set->addComment('Set ' . lcfirst($field->getDescription()));
                 $set->addComment('');
             }
-            $set->addComment('@param ' . $field->getDataType());
+            $set->addComment('@param ' . static::TYPE_MAP[$field->getDataType()]);
             $set->addParameter($field->getFieldName());
             $set->addBody('$this->' . $field->getFieldName() . ' = ' . '$' . $field->getFieldName() . ';');
         }
@@ -183,7 +185,9 @@ EOD;
             $classType = reset($array);
             $classFile = new StreamOutput(fopen($classType->getName().'.php', 'w'));
             $classFile->write("<?php\n\n");
-            $classFile->write((string) $namespaceClass);
+            // Replace extra newlines until php-generator supports it.
+            // @see https://github.com/nette/php-generator/pull/30
+            $classFile->write(str_replace("\n\n\n", "\n\n", (string) $namespaceClass));
             fclose($classFile->getStream());
         }
     }
