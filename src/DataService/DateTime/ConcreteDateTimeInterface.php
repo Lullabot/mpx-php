@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\DataService;
+namespace Lullabot\Mpx\DataService\DateTime;
 
 /**
  * Represents a date that is not empty or null.
@@ -12,7 +12,7 @@ namespace Lullabot\Mpx\DataService;
  * @code
  *      $media = new \Lullabot\Mpx\DataService\Media\Media();
  *      $date = $media->getPubDate();
- *      if ($date instanceof \Lullabot\Mpx\DataService\ConcreteDateTimeInterface) {
+ *      if ($date instanceof \Lullabot\Mpx\DataService\DateTime\ConcreteDateTimeInterface) {
  *          $date->getDateTime()->getTimestamp();
  *      }
  * @endcode

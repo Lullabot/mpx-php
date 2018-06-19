@@ -4,7 +4,7 @@ namespace Lullabot\Mpx\Command;
 
 use Lullabot\Mpx\DataService\DataType\Image;
 use Lullabot\Mpx\DataService\DataType\Link;
-use Lullabot\Mpx\DataService\DateTimeFormatInterface;
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
 use Lullabot\Mpx\DataService\Media\TransferInfo;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\Parameter;

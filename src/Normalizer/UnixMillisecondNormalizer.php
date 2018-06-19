@@ -2,9 +2,9 @@
 
 namespace Lullabot\Mpx\Normalizer;
 
-use Lullabot\Mpx\DataService\ConcreteDateTime;
-use Lullabot\Mpx\DataService\ConcreteDateTimeInterface;
-use Lullabot\Mpx\DataService\DateTimeFormatInterface;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTimeInterface;
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 

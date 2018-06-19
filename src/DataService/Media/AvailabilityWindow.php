@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
-use Lullabot\Mpx\DataService\NullDateTime;
+use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 
 /**
  * @see https://docs.theplatform.com/help/media-availabilitywindow-object
@@ -12,14 +12,14 @@ class AvailabilityWindow
     /**
      * The DateTime when this playback availability window begins.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $targetAvailableDate;
 
     /**
      * The DateTime when this playback availability window ends.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $targetExpirationDate;
 
@@ -33,9 +33,9 @@ class AvailabilityWindow
     /**
      * Returns the DateTime when this playback availability window begins.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getTargetAvailableDate(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    public function getTargetAvailableDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
         if (!$this->targetAvailableDate) {
             return new NullDateTime();
@@ -47,9 +47,9 @@ class AvailabilityWindow
     /**
      * Set the DateTime when this playback availability window begins.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $targetAvailableDate
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $targetAvailableDate
      */
-    public function setTargetAvailableDate(\Lullabot\Mpx\DataService\DateTimeFormatInterface $targetAvailableDate)
+    public function setTargetAvailableDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $targetAvailableDate)
     {
         $this->targetAvailableDate = $targetAvailableDate;
     }
@@ -57,9 +57,9 @@ class AvailabilityWindow
     /**
      * Returns the DateTime when this playback availability window ends.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getTargetExpirationDate(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    public function getTargetExpirationDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
         if (!$this->targetExpirationDate) {
             return new NullDateTime();
@@ -71,9 +71,9 @@ class AvailabilityWindow
     /**
      * Set the DateTime when this playback availability window ends.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $targetExpirationDate
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $targetExpirationDate
      */
-    public function setTargetExpirationDate(\Lullabot\Mpx\DataService\DateTimeFormatInterface $targetExpirationDate)
+    public function setTargetExpirationDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $targetExpirationDate)
     {
         $this->targetExpirationDate = $targetExpirationDate;
     }

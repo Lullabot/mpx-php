@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
 use Psr\Http\Message\UriInterface;
 
 /**

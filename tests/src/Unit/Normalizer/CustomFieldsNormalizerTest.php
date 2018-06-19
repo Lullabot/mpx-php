@@ -4,7 +4,7 @@ namespace Lullabot\Mpx\Tests\Unit\Normalizer;
 
 use Lullabot\Mpx\DataService\Annotation\CustomField;
 use Lullabot\Mpx\DataService\CustomFieldInterface;
-use Lullabot\Mpx\DataService\DateTimeFormatInterface;
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
 use Lullabot\Mpx\DataService\DiscoveredCustomField;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\ObjectBase;

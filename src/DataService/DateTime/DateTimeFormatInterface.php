@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\DataService;
+namespace Lullabot\Mpx\DataService\DateTime;
 
 /**
  * Represents a date and time that must be formattable as a string.

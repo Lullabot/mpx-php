@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Player;
 
-use Lullabot\Mpx\DataService\ConcreteDateTime;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\Player\Player;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;

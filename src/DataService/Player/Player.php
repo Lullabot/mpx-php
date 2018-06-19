@@ -4,7 +4,7 @@ namespace Lullabot\Mpx\DataService\Player;
 
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
-use Lullabot\Mpx\DataService\NullDateTime;
+use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 
@@ -20,7 +20,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date and time that this object was created.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $added;
 
@@ -608,7 +608,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date and time this object was last modified.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $updated;
 
@@ -643,9 +643,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date and time that this object was created.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getAdded(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
         if (!$this->added) {
             return new NullDateTime();
@@ -657,9 +657,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the date and time that this object was created.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $added
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
-    public function setAdded(\Lullabot\Mpx\DataService\DateTimeFormatInterface $added)
+    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
     {
         $this->added = $added;
     }
@@ -2367,9 +2367,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date and time this object was last modified.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getUpdated(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
         if (!$this->updated) {
             return new NullDateTime();
@@ -2381,9 +2381,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the date and time this object was last modified.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $updated
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
-    public function setUpdated(\Lullabot\Mpx\DataService\DateTimeFormatInterface $updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
         $this->updated = $updated;
     }

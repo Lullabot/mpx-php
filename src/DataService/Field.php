@@ -3,6 +3,8 @@
 namespace Lullabot\Mpx\DataService;
 
 use GuzzleHttp\Psr7\Uri;
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
+use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -16,7 +18,7 @@ class Field extends ObjectBase
      * The date and time that this object was created
      *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $added;
 
@@ -170,7 +172,7 @@ class Field extends ObjectBase
     /**
      * The date and time this object was last modified.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $updated;
 
@@ -192,7 +194,7 @@ class Field extends ObjectBase
      * Returns the date and time that this object was created
      *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getAdded(): DateTimeFormatInterface
     {
@@ -207,7 +209,7 @@ class Field extends ObjectBase
      * Set the date and time that this object was created
      *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $added
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
     public function setAdded(DateTimeFormatInterface $added)
     {
@@ -649,7 +651,7 @@ class Field extends ObjectBase
     /**
      * Returns the date and time this object was last modified.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getUpdated(): DateTimeFormatInterface
     {
@@ -663,7 +665,7 @@ class Field extends ObjectBase
     /**
      * Set the date and time this object was last modified.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $updated
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
     public function setUpdated(DateTimeFormatInterface $updated)
     {

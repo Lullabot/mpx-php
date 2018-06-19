@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
-use Lullabot\Mpx\DataService\ConcreteDateTime;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\MediaFile;
 use Lullabot\Mpx\DataService\Media\PreviousLocation;

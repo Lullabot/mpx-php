@@ -3,7 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService\Access;
 
 use Lullabot\Mpx\DataService\Access\Account;
-use Lullabot\Mpx\DataService\ConcreteDateTime;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 

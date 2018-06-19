@@ -4,7 +4,7 @@ namespace Lullabot\Mpx\DataService\Media;
 
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
-use Lullabot\Mpx\DataService\NullDateTime;
+use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 
@@ -33,7 +33,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date and time that this object was created.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $added;
 
@@ -96,7 +96,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date that this content becomes available for playback.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $availableDate;
 
@@ -201,7 +201,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date that this content expires and is no longer available for playback.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $expirationDate;
 
@@ -313,7 +313,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * The original release date or airdate of this Media object's content.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $pubDate;
 
@@ -383,7 +383,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date and time this object was last modified.
      *
-     * @var \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $updated;
 
@@ -428,9 +428,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date and time that this object was created.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getAdded(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
         if (!$this->added) {
             return new NullDateTime();
@@ -442,9 +442,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the date and time that this object was created.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $added
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
-    public function setAdded(\Lullabot\Mpx\DataService\DateTimeFormatInterface $added)
+    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
     {
         $this->added = $added;
     }
@@ -616,9 +616,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date that this content becomes available for playback.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getAvailableDate(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    public function getAvailableDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
         if (!$this->availableDate) {
             return new NullDateTime();
@@ -630,9 +630,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the date that this content becomes available for playback.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $availableDate
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $availableDate
      */
-    public function setAvailableDate(\Lullabot\Mpx\DataService\DateTimeFormatInterface $availableDate)
+    public function setAvailableDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $availableDate)
     {
         $this->availableDate = $availableDate;
     }
@@ -920,9 +920,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date that this content expires and is no longer available for playback.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getExpirationDate(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    public function getExpirationDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
         if (!$this->expirationDate) {
             return new NullDateTime();
@@ -934,9 +934,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the date that this content expires and is no longer available for playback.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $expirationDate
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $expirationDate
      */
-    public function setExpirationDate(\Lullabot\Mpx\DataService\DateTimeFormatInterface $expirationDate)
+    public function setExpirationDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $expirationDate)
     {
         $this->expirationDate = $expirationDate;
     }
@@ -1264,9 +1264,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the original release date or airdate of this Media object's content.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getPubDate(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    public function getPubDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
         if (!$this->pubDate) {
             return new NullDateTime();
@@ -1278,9 +1278,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the original release date or airdate of this Media object's content.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $pubDate
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $pubDate
      */
-    public function setPubDate(\Lullabot\Mpx\DataService\DateTimeFormatInterface $pubDate)
+    public function setPubDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $pubDate)
     {
         $this->pubDate = $pubDate;
     }
@@ -1476,9 +1476,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date and time this object was last modified.
      *
-     * @return \Lullabot\Mpx\DataService\DateTimeFormatInterface
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getUpdated(): \Lullabot\Mpx\DataService\DateTimeFormatInterface
+    public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
         if (!$this->updated) {
             return new NullDateTime();
@@ -1490,9 +1490,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the date and time this object was last modified.
      *
-     * @param \Lullabot\Mpx\DataService\DateTimeFormatInterface $updated
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
-    public function setUpdated(\Lullabot\Mpx\DataService\DateTimeFormatInterface $updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
         $this->updated = $updated;
     }

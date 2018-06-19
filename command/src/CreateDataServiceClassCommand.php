@@ -3,8 +3,8 @@
 namespace Lullabot\Mpx\Command;
 
 use GuzzleHttp\Psr7\Uri;
-use Lullabot\Mpx\DataService\DateTimeFormatInterface;
-use Lullabot\Mpx\DataService\NullDateTime;
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
+use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Message\UriInterface;
 use Symfony\Component\Console\Input\InputInterface;

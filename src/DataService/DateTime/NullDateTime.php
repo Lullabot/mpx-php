@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\DataService;
+namespace Lullabot\Mpx\DataService\DateTime;
 
 /**
  * Implements an empty date and time.
