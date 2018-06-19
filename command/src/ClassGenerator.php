@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\Command;
 
+use Lullabot\Mpx\DataService\DataType\Image;
+use Lullabot\Mpx\DataService\DataType\Link;
 use Lullabot\Mpx\DataService\DateTimeFormatInterface;
 use Lullabot\Mpx\DataService\Media\TransferInfo;
 use Nette\PhpGenerator\Method;
@@ -29,11 +31,11 @@ abstract class ClassGenerator extends Command
         'Decimal' => 'float',
         'Expression' => 'string',
         'Float' => 'float',
-        'Image' => '\\'.UriInterface::class,
+        'Image' => '\\' . Image::class,
         'Map<String, String>' => 'array',
         'Map<String, Integer>' => 'array',
         'Integer' => 'int',
-        'Link' => '\\'.UriInterface::class,
+        'Link' => '\\' . Link::class,
         'Long' => 'int',
         'Map' => 'array',
         'String (64, ASCII)' => 'string',
