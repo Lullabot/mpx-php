@@ -5,6 +5,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService;
 use Lullabot\Mpx\DataService\Annotation\CustomField;
 use Lullabot\Mpx\DataService\CustomFieldDiscoveryInterface;
 use Lullabot\Mpx\DataService\CustomFieldManager;
+use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\DiscoveredCustomField;
 use PHPUnit\Framework\TestCase;
 
@@ -82,6 +83,7 @@ class CustomFieldManagerTest extends TestCase
      */
     public function testBasicDiscovery()
     {
+        DataServiceManager::basicDiscovery();
         $discovery = CustomFieldManager::basicDiscovery();
         $this->assertEmpty($discovery->getCustomFields());
     }
