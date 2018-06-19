@@ -206,7 +206,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setOwnerId($ownerId)
+    public function setOwnerId(UriInterface $ownerId)
     {
         $this->ownerId = $ownerId;
     }
