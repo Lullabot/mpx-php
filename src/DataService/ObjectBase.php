@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Psr\Http\Message\UriInterface;
+
 /**
  * Base class for common data used by all mpx objects.
  */
