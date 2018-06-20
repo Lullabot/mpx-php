@@ -50,7 +50,7 @@ abstract class ObjectBase implements ObjectInterface
      */
     public function getJson()
     {
-        if (!$this->json) {
+        if (null === $this->json) {
             throw new \LogicException('This object has no original JSON representation available');
         }
 
