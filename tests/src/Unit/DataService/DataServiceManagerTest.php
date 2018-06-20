@@ -2,13 +2,9 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
-use Lullabot\Mpx\DataService\Annotation\CustomField;
 use Lullabot\Mpx\DataService\Annotation\DataService;
-use Lullabot\Mpx\DataService\CustomFieldDiscoveryInterface;
-use Lullabot\Mpx\DataService\CustomFieldManager;
 use Lullabot\Mpx\DataService\DataServiceDiscovery;
 use Lullabot\Mpx\DataService\DataServiceManager;
-use Lullabot\Mpx\DataService\DiscoveredCustomField;
 use Lullabot\Mpx\DataService\DiscoveredDataService;
 use PHPUnit\Framework\TestCase;
 
