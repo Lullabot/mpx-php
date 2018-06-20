@@ -3,18 +3,21 @@
 namespace Lullabot\Mpx\Command;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
-use Lullabot\Mpx\DataService\ByFields;
+use Lullabot\Mpx\DataService\CustomFieldInterface;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
 use Lullabot\Mpx\DataService\Field;
+use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
+use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Message\UriInterface;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,26 +28,20 @@ use Symfony\Component\Lock\Store\FlockStore;
 /**
  * Command to generate classes for custom mpx fields.
  */
-class CreateCustomFieldClassCommand extends Command {
+class CreateCustomFieldClassCommand extends ClassGenerator
+{
+    /**
+     * @var PhpNamespace[]
+     */
+    protected $namespaceClasses = [];
 
     /**
-     * Maps custom mpx field types to PHP datatypes.
+     * @var string[]
      */
-    CONST TYPE_MAP = [
-        'Boolean' => 'bool',
-        'Date' => '\\' . \DateTime::class,
-        'DateTime' => '\\' . \DateTime::class,
-        'Duration' => 'int',
-        'Decimal' => 'float',
-        'Image' => '\\' . UriInterface::class,
-        'Integer' => 'int',
-        'Link' => '\\' . UriInterface::class,
-        'String' => 'string',
-        'Time' => '\\' . \DateTime::class,
-        'URI' => '\\' . UriInterface::class,
-    ];
+    protected $classNames = [];
 
-    protected function configure() {
+    protected function configure()
+    {
         $help = <<<EOD
 This command generates a PHP class for a custom field implementation.
 
@@ -60,17 +57,58 @@ EOD;
             ->setDescription('This command helps to create a custom field class.')
             ->setHelp($help)
             ->addUsage("mpx:create-custom-field 'Lullabot\\Mpx\\CustomField' 'Media Data Service' 'Media' '1.10'")
-            ->addArgument('namespace', InputArgument::REQUIRED, 'The fully-qualified class name to generate. Do not include the leading slash, and wrap the class name in single-quotes to handle shell escaping.')
-            ->addArgument('data-service', InputArgument::REQUIRED, "The data service to generate the class for, such as 'Media Data Service'.")
-            ->addArgument('data-object', InputArgument::REQUIRED, "The object to generate the class for, such as 'Media'")
+            ->addArgument(
+                'namespace',
+                InputArgument::REQUIRED,
+                'The fully-qualified class name to generate. Do not include the leading slash, and wrap the class name in single-quotes to handle shell escaping.'
+            )
+            ->addArgument(
+                'data-service',
+                InputArgument::REQUIRED,
+                "The data service to generate the class for, such as 'Media Data Service'."
+            )
+            ->addArgument(
+                'data-object',
+                InputArgument::REQUIRED,
+                "The object to generate the class for, such as 'Media'"
+            )
             ->addArgument('schema', InputArgument::REQUIRED, "The schema version of the object, such as '1.10'");
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         if (!extension_loaded('intl')) {
             throw new \RuntimeException('The intl extension is required to run this command.');
         }
 
+        $dof = $this->getDataObjectFactory($input, $output);
+        /** @var Field[] $results */
+        $results = $dof->select();
+
+        $output->writeln('Generating classes for all custom fields:');
+        foreach ($results as $field) {
+            $output->writeln($field->getNamespace().':'.$field->getFieldName());
+            $this->addField($input, $dof, $field);
+        }
+
+        foreach ($this->namespaceClasses as $namespaceClass) {
+            $array = $namespaceClass->getClasses();
+            $classType = reset($array);
+            $classFile = new StreamOutput(fopen($classType->getName().'.php', 'w'));
+            $classFile->write("<?php\n\n");
+            $classFile->write((string) $namespaceClass);
+            fclose($classFile->getStream());
+        }
+    }
+
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return DataObjectFactory
+     */
+    private function getDataObjectFactory(InputInterface $input, OutputInterface $output): DataObjectFactory
+    {
         $helper = $this->getHelper('question');
         if (!$username = getenv('MPX_USERNAME')) {
             $question = new Question('Enter the mpx user name, such as mpx/you@example.com: ');
@@ -93,89 +131,128 @@ EOD;
             $userSession
         );
         $manager = DataServiceManager::basicDiscovery();
-        $dataService = $manager->getDataService($input->getArgument('data-service'), $input->getArgument('data-object'), $input->getArgument('schema'));
+        $dataService = $manager->getDataService(
+            $input->getArgument('data-service'),
+            $input->getArgument('data-object'),
+            $input->getArgument('schema')
+        );
         $dof = new DataObjectFactory($dataService->getAnnotation()->getFieldDataService(), $authenticatedClient);
-        $filter = new ByFields();
-        /** @var Field[] $results */
-        $results = $dof->select($filter);
 
-        $namespaceClasses = [];
-        $classNames = [];
+        return $dof;
+    }
 
-        $nf = new \NumberFormatter("en", \NumberFormatter::SPELLOUT);
-        $output->writeln('Generating classes for all custom fields:');
-        foreach ($results as $field) {
-            $output->writeln($field->getNamespace().':'.$field->getFieldName());
+    /**
+     * @param InputInterface $input
+     * @param                $dof
+     * @param                $field
+     */
+    private function addField(InputInterface $input, DataObjectFactory $dof, Field $field): void
+    {
+        // The response does not contain complete field data, so we reload it.
+        $field = $dof->load($field->getId())->wait();
 
-            // The response does not contain complete field data, so we reload it.
-            /** @var Field $field */
-            $field = $dof->load($field->getId())->wait();
+        $mpxNamespace = (string) $field->getNamespace();
+        /** @var PhpNamespace $namespace */
+        /** @var ClassType $class */
+        list($namespace, $class) = $this->getClass($input, $mpxNamespace);
 
-            $mpxNamespace = (string)$field->getNamespace();
-            if (!isset($namespaceClasses[$mpxNamespace])) {
-                $className = 'CustomFieldClass'.ucfirst(str_replace('-', '', $nf->format(count($namespaceClasses) + 1)));
-                $namespace = new PhpNamespace($input->getArgument('namespace'));
-                $class = $namespace->addClass($className);
-                $classNames[$mpxNamespace] = $className;
-                $namespaceClasses[$mpxNamespace] = $namespace;
+        $this->addProperty($class, $field);
+        $dataType = static::TYPE_MAP[$field->getDataType()];
 
-                $class->addComment('Custom fields for namespace at '.$mpxNamespace);
-            }
-            else {
-                $namespace = $namespaceClasses[$mpxNamespace];
-                $class = $namespace->getClasses()[$classNames[$mpxNamespace]];
-            }
+        $get = $class->addMethod('get'.ucfirst($field->getFieldName()));
+        $get->setVisibility('public');
+        if (!empty($field->getDescription())) {
+            $get->addComment('Returns '.lcfirst($field->getDescription()));
+            $get->addComment('');
+        }
+        $get->addComment('@return '.$dataType);
 
-            $property = $class->addProperty($field->getFieldName());
-            $property->setVisibility('protected');
-            if (!empty($field->getDescription())) {
-                $property->setComment($field->getDescription());
-                $property->addComment('');
-            }
-            $dataType = static::TYPE_MAP[$field->getDataType()];
-            $property->addComment('@var '.$dataType);
+        // If the property is a typed array, PHP will only let us use
+        // array in the return typehint.
+        $this->setReturnType($get, $dataType);
 
-            $get = $class->addMethod('get' . ucfirst($property->getName()));
-            $get->setVisibility('public');
-            if (!empty($field->getDescription())) {
-                $get->addComment('Returns ' . lcfirst($field->getDescription()));
-                $get->addComment('');
-            }
-            $get->addComment('@return ' . $dataType);
-
-            // If the property is a typed array, PHP will only let us use
-            // array in the return typehint.
-            $substr = substr($dataType, -2);
-            switch ($substr) {
-                case '[]':
-                    $get->setReturnType('array');
-                    break;
-                default:
-                    $get->setReturnType($dataType);
-                    break;
-            }
-
-            $get->addBody('return $this->' . $field->getFieldName() . ';');
-
-            // Add a set method for the property.
-            $set = $class->addMethod('set' . ucfirst($property->getName()));
-            $set->setVisibility('public');
-            if (!empty($field->getDescription())) {
-                $set->addComment('Set ' . lcfirst($field->getDescription()));
-                $set->addComment('');
-            }
-            $set->addComment('@param ' . $field->getDataType());
-            $set->addParameter($field->getFieldName());
-            $set->addBody('$this->' . $field->getFieldName() . ' = ' . '$' . $field->getFieldName() . ';');
+        if ($dataType == '\\'.DateTimeFormatInterface::class) {
+            $namespace->addUse(NullDateTime::class);
+            $get->addBody('if (!$this->'.$field->getFieldName().') {');
+            $get->addBody('    return new NullDateTime();');
+            $get->addBody('}');
         }
 
-        foreach ($namespaceClasses as $namespaceClass) {
-            $array = $namespaceClass->getClasses();
-            $classType = reset($array);
-            $classFile = new StreamOutput(fopen($classType->getName().'.php', 'w'));
-            $classFile->write("<?php\n\n");
-            $classFile->write((string) $namespaceClass);
-            fclose($classFile->getStream());
+        if ($dataType == '\\'.UriInterface::class) {
+            $namespace->addUse(Uri::class);
+            $get->addBody('if (!$this->'.$field->getFieldName().') {');
+            $get->addBody('    return new Uri();');
+            $get->addBody('}');
+        }
+        $get->addBody('return $this->'.$field->getFieldName().';');
+
+        // Add a set method for the property.
+        $set = $class->addMethod('set'.ucfirst($field->getFieldName()));
+        $set->setVisibility('public');
+        if (!empty($field->getDescription())) {
+            $set->addComment('Set '.lcfirst($field->getDescription()));
+            $set->addComment('');
+        }
+        $set->addComment('@param '.$dataType);
+        $parameter = $set->addParameter($field->getFieldName());
+
+        $this->setTypeHint($parameter, $dataType);
+        $set->addBody('$this->'.$field->getFieldName().' = '.'$'.$field->getFieldName().';');
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param string         $mpxNamespace
+     *
+     * @return array
+     */
+    private function getClass(InputInterface $input, string $mpxNamespace): array
+    {
+        if (!isset($this->namespaceClasses[$mpxNamespace])) {
+            $nf = new \NumberFormatter('en', \NumberFormatter::SPELLOUT);
+            $className = 'CustomFieldClass'.ucfirst(
+                    str_replace('-', '', $nf->format(count($this->namespaceClasses) + 1))
+                );
+            $namespace = new PhpNamespace($input->getArgument('namespace'));
+            $class = $namespace->addClass($className);
+            $this->classNames[$mpxNamespace] = $className;
+            $this->namespaceClasses[$mpxNamespace] = $namespace;
+            $class->addImplement(CustomFieldInterface::class);
+
+            $class->addComment('@\Lullabot\Mpx\DataService\Annotation\CustomField(');
+            $class->addComment('    namespace="'.$mpxNamespace.'",');
+            $class->addComment('    service="'.$input->getArgument('data-service').'",');
+            $class->addComment('    objectType="'.$input->getArgument('data-object').'",');
+            $class->addComment(')');
+        } else {
+            $namespace = $this->namespaceClasses[$mpxNamespace];
+            $class = $namespace->getClasses()[$this->classNames[$mpxNamespace]];
+        }
+
+        return [$namespace, $class];
+    }
+
+    /**
+     * Add a property to a class.
+     *
+     * @param ClassType $class
+     * @param Field     $field
+     */
+    private function addProperty(ClassType $class, Field $field)
+    {
+        $property = $class->addProperty($field->getFieldName());
+        $property->setVisibility('protected');
+        if (!empty($field->getDescription())) {
+            $property->setComment($field->getDescription());
+            $property->addComment('');
+        }
+        $dataType = static::TYPE_MAP[$field->getDataType()];
+        if ('Single' != $field->getDataStructure()) {
+            $dataType .= '[]';
+        }
+        $property->addComment('@var '.$dataType);
+        if ($this->isCollectionType($dataType)) {
+            $property->setValue([]);
         }
     }
 }

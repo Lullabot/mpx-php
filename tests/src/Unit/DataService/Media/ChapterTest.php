@@ -4,7 +4,6 @@ namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\Chapter;
-use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
 /**

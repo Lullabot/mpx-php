@@ -2,6 +2,9 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use GuzzleHttp\Psr7\Uri;
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
+use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -11,6 +14,21 @@ use Psr\Http\Message\UriInterface;
  */
 class Field extends ObjectBase
 {
+    /**
+     * The date and time that this object was created
+     *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
+     *
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+     */
+    protected $added;
+
+    /**
+     * The id of the user that created this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $addedByUserId;
+
     /**
      * The allowed values for this custom field.
      *
@@ -59,6 +77,13 @@ class Field extends ObjectBase
      * @var string
      */
     protected $guid;
+
+    /**
+     * The globally unique URI of this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $id;
 
     /**
      * Whether this custom field is indexed for search.
@@ -124,6 +149,13 @@ class Field extends ObjectBase
     protected $notifyDelete;
 
     /**
+     * The id of the account that owns this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $ownerId;
+
+    /**
      * The name that this custom field is indexed under.
      *
      * @var string
@@ -140,7 +172,7 @@ class Field extends ObjectBase
     /**
      * The date and time this object was last modified.
      *
-     * @var \DateTime
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $updated;
 
@@ -162,10 +194,14 @@ class Field extends ObjectBase
      * Returns the date and time that this object was created
      *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
      *
-     * @return \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getAdded(): \DateTime
+    public function getAdded(): DateTimeFormatInterface
     {
+        if (!$this->added) {
+            return new NullDateTime();
+        }
+
         return $this->added;
     }
 
@@ -173,9 +209,9 @@ class Field extends ObjectBase
      * Set the date and time that this object was created
      *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
      *
-     * @param \DateTime
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
-    public function setAdded($added)
+    public function setAdded(DateTimeFormatInterface $added)
     {
         $this->added = $added;
     }
@@ -187,15 +223,19 @@ class Field extends ObjectBase
      */
     public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->addedByUserId) {
+            return new Uri();
+        }
+
         return $this->addedByUserId;
     }
 
     /**
      * Set the id of the user that created this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $addedByUserId
      */
-    public function setAddedByUserId($addedByUserId)
+    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
     {
         $this->addedByUserId = $addedByUserId;
     }
@@ -213,9 +253,9 @@ class Field extends ObjectBase
     /**
      * Set the allowed values for this custom field.
      *
-     * @param array
+     * @param array $allowedValues
      */
-    public function setAllowedValues($allowedValues)
+    public function setAllowedValues(array $allowedValues)
     {
         $this->allowedValues = $allowedValues;
     }
@@ -225,7 +265,7 @@ class Field extends ObjectBase
      *
      * @return string
      */
-    public function getDataStructure(): string
+    public function getDataStructure(): ?string
     {
         return $this->dataStructure;
     }
@@ -233,9 +273,9 @@ class Field extends ObjectBase
     /**
      * Set the data structure of this custom field.
      *
-     * @param string
+     * @param string $dataStructure
      */
-    public function setDataStructure($dataStructure)
+    public function setDataStructure(?string $dataStructure)
     {
         $this->dataStructure = $dataStructure;
     }
@@ -245,7 +285,7 @@ class Field extends ObjectBase
      *
      * @return string
      */
-    public function getDataType(): string
+    public function getDataType(): ?string
     {
         return $this->dataType;
     }
@@ -253,9 +293,9 @@ class Field extends ObjectBase
     /**
      * Set the data type of this custom field.
      *
-     * @param string
+     * @param string $dataType
      */
-    public function setDataType($dataType)
+    public function setDataType(?string $dataType)
     {
         $this->dataType = $dataType;
     }
@@ -273,7 +313,7 @@ class Field extends ObjectBase
     /**
      * Set the default value for this custom field.
      *
-     * @param mixed
+     * @param mixed $defaultValue
      */
     public function setDefaultValue($defaultValue)
     {
@@ -285,7 +325,7 @@ class Field extends ObjectBase
      *
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -293,9 +333,9 @@ class Field extends ObjectBase
     /**
      * Set the description of this object.
      *
-     * @param string
+     * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(?string $description)
     {
         $this->description = $description;
     }
@@ -305,7 +345,7 @@ class Field extends ObjectBase
      *
      * @return string
      */
-    public function getFieldName(): string
+    public function getFieldName(): ?string
     {
         return $this->fieldName;
     }
@@ -313,9 +353,9 @@ class Field extends ObjectBase
     /**
      * Set the node name for this custom field in XML and JSON.
      *
-     * @param string
+     * @param string $fieldName
      */
-    public function setFieldName($fieldName)
+    public function setFieldName(?string $fieldName)
     {
         $this->fieldName = $fieldName;
     }
@@ -325,7 +365,7 @@ class Field extends ObjectBase
      *
      * @return string
      */
-    public function getGuid(): string
+    public function getGuid(): ?string
     {
         return $this->guid;
     }
@@ -333,11 +373,35 @@ class Field extends ObjectBase
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
      *
-     * @param string
+     * @param string $guid
      */
-    public function setGuid($guid)
+    public function setGuid(?string $guid)
     {
         $this->guid = $guid;
+    }
+
+    /**
+     * Returns the globally unique URI of this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->id) {
+            return new Uri();
+        }
+
+        return $this->id;
+    }
+
+    /**
+     * Set the globally unique URI of this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $id
+     */
+    public function setId(\Psr\Http\Message\UriInterface $id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -345,7 +409,7 @@ class Field extends ObjectBase
      *
      * @return bool
      */
-    public function getIncludeInTextSearch(): bool
+    public function getIncludeInTextSearch(): ?bool
     {
         return $this->includeInTextSearch;
     }
@@ -353,9 +417,9 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field is indexed for search.
      *
-     * @param bool
+     * @param bool $includeInTextSearch
      */
-    public function setIncludeInTextSearch($includeInTextSearch)
+    public function setIncludeInTextSearch(?bool $includeInTextSearch)
     {
         $this->includeInTextSearch = $includeInTextSearch;
     }
@@ -365,7 +429,7 @@ class Field extends ObjectBase
      *
      * @return bool
      */
-    public function getIsUnique(): bool
+    public function getIsUnique(): ?bool
     {
         return $this->isUnique;
     }
@@ -373,9 +437,9 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field stores unique values and functions as a create key.
      *
-     * @param bool
+     * @param bool $isUnique
      */
-    public function setIsUnique($isUnique)
+    public function setIsUnique(?bool $isUnique)
     {
         $this->isUnique = $isUnique;
     }
@@ -385,7 +449,7 @@ class Field extends ObjectBase
      *
      * @return int
      */
-    public function getLength(): int
+    public function getLength(): ?int
     {
         return $this->length;
     }
@@ -393,9 +457,9 @@ class Field extends ObjectBase
     /**
      * Set the maximum string length or the number of decimal positions allowed in this custom field's value.
      *
-     * @param int
+     * @param int $length
      */
-    public function setLength($length)
+    public function setLength(?int $length)
     {
         $this->length = $length;
     }
@@ -405,7 +469,7 @@ class Field extends ObjectBase
      *
      * @return bool
      */
-    public function getLocked(): bool
+    public function getLocked(): ?bool
     {
         return $this->locked;
     }
@@ -413,9 +477,9 @@ class Field extends ObjectBase
     /**
      * Set whether this object currently allows updates.
      *
-     * @param bool
+     * @param bool $locked
      */
-    public function setLocked($locked)
+    public function setLocked(?bool $locked)
     {
         $this->locked = $locked;
     }
@@ -445,7 +509,7 @@ class Field extends ObjectBase
      *
      * @return string
      */
-    public function getNamespacePrefix(): string
+    public function getNamespacePrefix(): ?string
     {
         return $this->namespacePrefix;
     }
@@ -453,9 +517,9 @@ class Field extends ObjectBase
     /**
      * Set an XML namespace prefix for this field.
      *
-     * @param string
+     * @param string $namespacePrefix
      */
-    public function setNamespacePrefix($namespacePrefix)
+    public function setNamespacePrefix(?string $namespacePrefix)
     {
         $this->namespacePrefix = $namespacePrefix;
     }
@@ -465,7 +529,7 @@ class Field extends ObjectBase
      *
      * @return bool
      */
-    public function getNotifyAlways(): bool
+    public function getNotifyAlways(): ?bool
     {
         return $this->notifyAlways;
     }
@@ -473,9 +537,9 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field is always available in change notifications.
      *
-     * @param bool
+     * @param bool $notifyAlways
      */
-    public function setNotifyAlways($notifyAlways)
+    public function setNotifyAlways(?bool $notifyAlways)
     {
         $this->notifyAlways = $notifyAlways;
     }
@@ -485,7 +549,7 @@ class Field extends ObjectBase
      *
      * @return bool
      */
-    public function getNotifyChanges(): bool
+    public function getNotifyChanges(): ?bool
     {
         return $this->notifyChanges;
     }
@@ -493,9 +557,9 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field is available on change in update notifications.
      *
-     * @param bool
+     * @param bool $notifyChanges
      */
-    public function setNotifyChanges($notifyChanges)
+    public function setNotifyChanges(?bool $notifyChanges)
     {
         $this->notifyChanges = $notifyChanges;
     }
@@ -505,7 +569,7 @@ class Field extends ObjectBase
      *
      * @return bool
      */
-    public function getNotifyDelete(): bool
+    public function getNotifyDelete(): ?bool
     {
         return $this->notifyDelete;
     }
@@ -513,9 +577,9 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field is available in delete notifications.
      *
-     * @param bool
+     * @param bool $notifyDelete
      */
-    public function setNotifyDelete($notifyDelete)
+    public function setNotifyDelete(?bool $notifyDelete)
     {
         $this->notifyDelete = $notifyDelete;
     }
@@ -527,15 +591,19 @@ class Field extends ObjectBase
      */
     public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->ownerId) {
+            return new Uri();
+        }
+
         return $this->ownerId;
     }
 
     /**
      * Set the id of the account that owns this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $ownerId
      */
-    public function setOwnerId($ownerId)
+    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
     {
         $this->ownerId = $ownerId;
     }
@@ -545,7 +613,7 @@ class Field extends ObjectBase
      *
      * @return string
      */
-    public function getSearchFieldName(): string
+    public function getSearchFieldName(): ?string
     {
         return $this->searchFieldName;
     }
@@ -553,9 +621,9 @@ class Field extends ObjectBase
     /**
      * Set the name that this custom field is indexed under.
      *
-     * @param string
+     * @param string $searchFieldName
      */
-    public function setSearchFieldName($searchFieldName)
+    public function setSearchFieldName(?string $searchFieldName)
     {
         $this->searchFieldName = $searchFieldName;
     }
@@ -565,7 +633,7 @@ class Field extends ObjectBase
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -573,9 +641,9 @@ class Field extends ObjectBase
     /**
      * Set the name of this object.
      *
-     * @param string
+     * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
     }
@@ -583,19 +651,23 @@ class Field extends ObjectBase
     /**
      * Returns the date and time this object was last modified.
      *
-     * @return \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getUpdated(): \DateTime
+    public function getUpdated(): DateTimeFormatInterface
     {
+        if (!$this->updated) {
+            return new NullDateTime();
+        }
+
         return $this->updated;
     }
 
     /**
      * Set the date and time this object was last modified.
      *
-     * @param \DateTime
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
-    public function setUpdated($updated)
+    public function setUpdated(DateTimeFormatInterface $updated)
     {
         $this->updated = $updated;
     }
@@ -607,15 +679,19 @@ class Field extends ObjectBase
      */
     public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->updatedByUserId) {
+            return new Uri();
+        }
+
         return $this->updatedByUserId;
     }
 
     /**
      * Set the id of the user that last modified this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
-    public function setUpdatedByUserId($updatedByUserId)
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {
         $this->updatedByUserId = $updatedByUserId;
     }
@@ -625,7 +701,7 @@ class Field extends ObjectBase
      *
      * @return int
      */
-    public function getVersion(): int
+    public function getVersion(): ?int
     {
         return $this->version;
     }
@@ -633,9 +709,9 @@ class Field extends ObjectBase
     /**
      * Set this object's modification version, used for optimistic locking.
      *
-     * @param int
+     * @param int $version
      */
-    public function setVersion($version)
+    public function setVersion(?int $version)
     {
         $this->version = $version;
     }

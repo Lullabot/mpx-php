@@ -33,17 +33,17 @@ class TokenCachePoolTest extends TestCase
         $this->user = $this->getMockBuilder(UserSession::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->user->method('getUser')->willReturn(new User('username', 'password'));
+        $this->user->method('getUser')->willReturn(new User('mpx/username', 'password'));
         $this->token = new Token('https://example.com/idm/data/User/mpx/123456', 'value', time() + 60);
     }
 
     /**
      * Test getting and setting the token from the cache.
      *
-     * @covers ::__construct()
+     * @covers ::__construct
      * @covers ::setToken
      * @covers ::getToken
-     * @covers ::cacheKey()
+     * @covers ::cacheKey
      */
     public function testGetSetToken()
     {
@@ -73,7 +73,7 @@ class TokenCachePoolTest extends TestCase
      *
      * @covers ::deleteToken
      * @covers ::getToken
-     * @covers ::cacheKey()
+     * @covers ::cacheKey
      */
     public function testDeleteToken()
     {

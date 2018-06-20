@@ -46,7 +46,7 @@ class UserSessionTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $token = $userSession->acquireToken();
@@ -77,11 +77,11 @@ class UserSessionTest extends TestCase
         $logger->expects($this->at(0))->method('info')
             ->with('Successfully acquired the "{resource}" lock.');
 
-        $user = new User('USER-NAME', 'incorrect-password');
+        $user = new User('mpx/USER-NAME', 'incorrect-password');
         $userSession = new UserSession($user, $client, $store, new TokenCachePool(new ArrayCachePool()));
         $userSession->setLogger($logger);
         $this->expectException(ClientException::class);
-        $this->expectExceptionMessage("Error com.theplatform.authentication.api.exception.AuthenticationException: Either 'USER-NAME' does not have an account with this site, or the password was incorrect.");
+        $this->expectExceptionMessage("Error com.theplatform.authentication.api.exception.AuthenticationException: Either 'mpx/USER-NAME' does not have an account with this site, or the password was incorrect.");
         $this->expectExceptionCode(401);
         $userSession->acquireToken();
     }
@@ -114,7 +114,7 @@ class UserSessionTest extends TestCase
                 $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
                 $this->assertArraySubset([
                     'token' => 'TOKEN-VALUE',
-                    'username' => 'USER-NAME',
+                    'username' => 'mpx/USER-NAME',
                 ], $context);
                 $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
             });
@@ -127,12 +127,12 @@ class UserSessionTest extends TestCase
                 $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
                 $this->assertArraySubset([
                     'token' => 'TOKEN-VALUE',
-                    'username' => 'USER-NAME',
+                    'username' => 'mpx/USER-NAME',
                 ], $context);
                 $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
             });
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $first_token = $userSession->acquireToken();
@@ -162,7 +162,7 @@ class UserSessionTest extends TestCase
         // We cover logging in other tests.
         $logger = new NullLogger();
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $this->expectException(LockConflictedException::class);
@@ -196,7 +196,7 @@ class UserSessionTest extends TestCase
                     $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
                     $this->assertArraySubset([
                         'token' => 'TOKEN-VALUE',
-                        'username' => 'USER-NAME',
+                        'username' => 'mpx/USER-NAME',
                     ], $context);
                     $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
                 });

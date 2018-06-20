@@ -7,7 +7,7 @@ namespace Lullabot\Mpx\DataService;
  *
  * @see https://docs.theplatform.com/help/wsf-controlling-the-contents-of-the-response-payload#tp-toc18
  */
-class Range
+class Range implements QueryPartsInterface
 {
     /**
      * The start index of this range.

@@ -4,12 +4,73 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased] - YYYY-MM-DD
+
+### Added
+
+- [#131] Link and Image data types from mpx are now supported. These are
+  typically used in custom fields only.
+- New date classes have been added to handle empty date fields. See the
+  `\Lullabot\Mpx\DataService\DateTime` namespace for details.
+
+### Changed
+
+- PHP 7.1 is now the minimum required PHP version.
+- All scalar properties in mpx data services classes are now nullable.
+- All array properties in mpx data services default to an empty array.
+- All date and time properties now return a
+  `\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface` instead of a
+  `\DateTime` object.
+- It is highly recommended to re-create custom fields classes from the console
+  tool. This will ensure they do not cause unnecessary `\TypeError` exceptions
+  to be thrown.
+- Duration is now generated as a float instead of an integer.
+- All traits for mpx data service objects have been removed to simplify updates
+  using the console tool. This includes `AdPolicyDataTrait` and
+  `PublicIdentifierTrait`.
+- Rename IdInterface methods to prevent name and type conflicts #104
+
+## [0.4.0] - 2018-06-08
+
+### Added
+
+- Usernames are now validated to have a leading directory component, such as
+  `mpx/` #124
+- Made `$objectListQuery` optional in `select()` and `selectRequest()`.
+- `select()` now supports "Q Queries", which are slower but more expressive
+  filters for mpx requests #129
+- `\Lullabot\Mpx\DataService\QueryPartsInterface` has been added to allow other
+  code to provide query parameters for select requests #129
+
+### Changed
+
+- The `description` field on mpx exceptions is now optional, as it is only
+  included in client errors and not server errors #124
+- `\Lullabot\Mpx\DataService\ByFields` has been split into two classes.
+  `ByFields` now exclusively deals with `by<Field>` parameters. A new
+  `\Lullabot\Mpx\DataService\ObjectListQuery` class handles ranges, sorts,
+  and filters. #129
+- `select()` and `selectRequest()` in DataObjectFactory now take a
+  `ObjectListQuery` parameter instead of a `ByFields` parameter #129
+
+## [0.3.0] - 2018-05-28
+
+### Added
+
+- Add `\Lullabot\Mpx\AuthenticatedClient::setTokenDuration` to set a limit for
+  token lifetimes #125
+- Add a method / interface for fetching the raw JSON response #126
+
+## [0.2.0] - 2018-05-18
 
 ### Added
 
 - Service URLs are now cached when loading objects and listening for
-  notifications. #144
+  notifications. #114
+- Support for loading custom fields, including denormalizing into custom
+  classes not shipped with this library. See the README for detailed
+  documentation. #120
+- Add a discovery interface for Custom Fields. #122
 
 ### Changed
 
@@ -22,7 +83,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - The UnixMicrosecondNormalizer class has been renamed to
   UnixMillisecondNormalizer #115
 - Fix using the number of entries in the current page instead of the total #118
-- Rename IdInterface methods to prevent name and type conflicts #104
+- The deserialize method on DataObjectFactory is now protected #120
+- create() methods that were broken and unused were removed in the plugin
+  managers #120
 
 ## [0.1.1] - 2018-05-16
 

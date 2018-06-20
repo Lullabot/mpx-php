@@ -16,7 +16,7 @@ class MpxExceptionFactoryTest extends TestCase
 {
     /**
      * @covers ::create
-     * @covers ::createException()
+     * @covers ::createException
      */
     public function testCreateClientException()
     {
@@ -39,7 +39,7 @@ class MpxExceptionFactoryTest extends TestCase
 
     /**
      * @covers ::create
-     * @covers ::createException()
+     * @covers ::createException
      */
     public function testCreateServerException()
     {
@@ -63,8 +63,8 @@ class MpxExceptionFactoryTest extends TestCase
     /**
      * Test creating an exception from a notification error.
      *
-     * @covers ::createFromNotificationException()
-     * @covers ::createException()
+     * @covers ::createFromNotificationException
+     * @covers ::createException
      */
     public function testCreateFromNotificationException()
     {

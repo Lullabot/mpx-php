@@ -20,14 +20,20 @@ class DataServiceManager
     /**
      * Register our annotations, relative to this file.
      *
+     * @param CustomFieldManager $customFieldManager (optional) The manager used to discover custom fields.
+     *
      * @return static
      */
-    public static function basicDiscovery()
+    public static function basicDiscovery(CustomFieldManager $customFieldManager = null)
     {
+        if (!$customFieldManager) {
+            $customFieldManager = CustomFieldManager::basicDiscovery();
+        }
+
         // @todo Check Drupal core for other tags to ignore?
         AnnotationReader::addGlobalIgnoredName('class');
         AnnotationRegistry::registerFile(__DIR__.'/Annotation/DataService.php');
-        $discovery = new DataServiceDiscovery('\\Lullabot\\Mpx', 'src', __DIR__.'/../..', new AnnotationReader());
+        $discovery = new DataServiceDiscovery('\\Lullabot\\Mpx', 'src', __DIR__.'/../..', new AnnotationReader(), $customFieldManager);
 
         return new static($discovery);
     }
@@ -59,30 +65,5 @@ class DataServiceManager
         }
 
         throw new \RuntimeException('Data service not found.');
-    }
-
-    /**
-     * Creates a data service.
-     *
-     * @param string $name
-     *
-     * @throws \RuntimeException
-     *
-     * @return ObjectInterface
-     */
-    public function create($name)
-    {
-        $services = $this->discovery->getDataServices();
-        // @todo This is broken.
-        if (array_key_exists($name, $services)) {
-            $class = $services[$name]['class'];
-            if (!class_exists($class)) {
-                throw new \RuntimeException('Data service class does not exist.');
-            }
-
-            return new $class();
-        }
-
-        throw new \RuntimeException('Data service does not exist.');
     }
 }

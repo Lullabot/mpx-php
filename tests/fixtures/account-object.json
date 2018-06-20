@@ -1,0 +1,25 @@
+{
+  "id": "http://mps.theplatform.com/data/Account/108634",
+  "guid": "BgAJ_wDmqwA2UwCqjUAp4sBN4Dwbc1al",
+  "title": "thePlatform documentation",
+  "description": "Demo account for documentation",
+  "added": 1310073366000,
+  "ownerId": "urn:theplatform:auth:root",
+  "updated": 1319652154000,
+  "addedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mps/2499148",
+  "updatedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mps/2499148",
+  "version": 0,
+  "locked": false,
+  "disabled": false,
+  "featureRoleIds": [
+    "http://access.auth.theplatform.com/access/data/Role/1",
+    "http://access.auth.theplatform.com/data/Role/319336",
+    "http://access.auth.theplatform.com/data/Role/374602",
+    "http://access.auth.theplatform.com/data/Role/389281"
+  ],
+  "domainRoleIds": [
+    "http://access.auth.theplatform.com/data/Role/271914"
+  ],
+  "pid": "abc123",
+  "region": "US1"
+}

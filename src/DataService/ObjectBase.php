@@ -2,103 +2,57 @@
 
 namespace Lullabot\Mpx\DataService;
 
-use Psr\Http\Message\UriInterface;
-
 /**
  * Base class for common data used by all mpx objects.
  */
 abstract class ObjectBase implements ObjectInterface
 {
     /**
-     * The date and time that this object was created.
+     * @var CustomFieldInterface[]
+     */
+    protected $customFields;
+
+    /**
+     * The original JSON representation of this object.
      *
-     * @var \DateTime
+     * @var array
      */
-    protected $added;
-
-    /**
-     * The id of the user that created this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $addedByUserId;
-
-    /**
-     * The globally unique URI of this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $id;
-
-    /**
-     * The id of the account that owns this object.
-     *
-     * @var \Psr\Http\Message\UriInterface
-     */
-    protected $ownerId;
+    protected $json;
 
     /**
      * {@inheritdoc}
      */
-    public function getAdded(): \DateTime
+    public function getCustomFields(string $namespace)
     {
-        return $this->added;
+        return $this->customFields[$namespace];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setAdded($added)
+    public function setCustomFields(array $customFields)
     {
-        $this->added = $added;
+        $this->customFields = $customFields;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    public function setJson(string $json)
     {
-        return $this->addedByUserId;
+        $this->json = \GuzzleHttp\json_decode($json, true);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setAddedByUserId($addedByUserId)
+    public function getJson()
     {
-        $this->addedByUserId = $addedByUserId;
-    }
+        if (!$this->json) {
+            throw new \LogicException('This object has no original JSON representation available');
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setId(UriInterface $id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getOwnerId(): \Psr\Http\Message\UriInterface
-    {
-        return $this->ownerId;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setOwnerId($ownerId)
-    {
-        $this->ownerId = $ownerId;
+        return $this->json;
     }
 
     /**

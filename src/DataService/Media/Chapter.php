@@ -39,7 +39,7 @@ class Chapter
      *
      * @return float
      */
-    public function getEndTime(): float
+    public function getEndTime(): ?float
     {
         return $this->endTime;
     }
@@ -47,9 +47,9 @@ class Chapter
     /**
      * Set the time when this chapter ends.
      *
-     * @param float
+     * @param float $endTime
      */
-    public function setEndTime($endTime)
+    public function setEndTime(?float $endTime)
     {
         $this->endTime = $endTime;
     }
@@ -59,7 +59,7 @@ class Chapter
      *
      * @return float
      */
-    public function getStartTime(): float
+    public function getStartTime(): ?float
     {
         return $this->startTime;
     }
@@ -67,9 +67,9 @@ class Chapter
     /**
      * Set the time when this chapter starts.
      *
-     * @param float
+     * @param float $startTime
      */
-    public function setStartTime($startTime)
+    public function setStartTime(?float $startTime)
     {
         $this->startTime = $startTime;
     }
@@ -99,7 +99,7 @@ class Chapter
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -107,9 +107,9 @@ class Chapter
     /**
      * Set the title of the chapter.
      *
-     * @param string
+     * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
     }

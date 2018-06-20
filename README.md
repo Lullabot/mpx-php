@@ -5,7 +5,7 @@
 
 ## Quick Start
 
-* PHP 7.0+
+* PHP 7.1+
 * Composer
 
 `composer require lullabot/mpx-php`
@@ -28,7 +28,6 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
-use Lullabot\Mpx\DataService\ByFields;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\Service\IdentityManagement\User;
@@ -69,6 +68,33 @@ print "The loaded media is:\n";
 var_dump($media);
 ```
 
+## Filtering results by fields and with Q Queries
+
+Calls to `select()` and `selectRequest()` can be filtered by exact-match fields
+as well as with more complex searches.
+
+```php
+<?php
+
+// This skips the setup from above.
+$mediaFactory = new DataObjectFactory($dataServiceManager->getDataService('Media Data Service', 'Media', '1.10'), $authenticatedClient);
+
+// Search for "cats AND dogs" in any field.
+$query = new ObjectListQuery();
+$cats = new Term('cats');
+$termGroup = new TermGroup($cats);
+$termGroup->and(new Term('dogs'));
+$query->add($termGroup);
+
+// Limit to 10 results per page.
+$query->getRange()->setEndIndex(10);
+$results = $mediaFactory->select($query, $account);
+
+foreach ($results as $media) {
+    var_dump($media);
+}
+```
+
 ## Test client
 
 thePlatform provides a
@@ -90,6 +116,70 @@ API request that resulted in a `401`.
 If your application does not wish to log these actions at all, use
 `\Psr\Log\NullLogger` for any constructors that require a
 `\Psr\Log\LoggerInterface`.
+
+## Implementing custom mpx fields
+
+mpx data service objects can have up to 100 custom fields defined per account.
+These fields can contain a variety of data types, with multiple namespaces of
+custom fields applying to a single object. This library allows for developers
+to create structured classes in their own application code that are discovered
+and used automatically.
+
+### 1. Use the console tool to create initial classes
+
+This CLI tool uses the mpx Field API to generate matching classes. Consider
+adding descriptions for each custom field in mpx, as these will be used
+automatically in doc comments. Run `bin/console help mpx:create-custom-field`
+for up-to-date documentation on this command.
+
+For example, to generate classes for all custom fields attached to a Media
+object:
+
+1. Clone this repository.
+1. `$ composer install`
+1. `$ bin/console mpx:create-custom-field 'Php\Namespace\For\These\Classes' 'Media Data Service' 'Media' '1.10'`
+1. Enter your username and password. Progress will be shown for each field that is found.
+
+As the mpx API has no data useful in creating class names, classes for each
+field namespace will be created with names like `CustomFieldClassOne.php`. It
+is highly suggested that these classes are renamed to match the fields they
+contain.
+
+Each generated class will contain an `@CustomField` annotation:
+
+```php
+/**
+ * @CustomField(
+ *     namespace="http://access.auth.theplatform.com/data/Account/555555",
+ *     service="Media Data Service",
+ *     objectType="Media",
+ * )
+ */
+```
+
+This is what the library uses to determine which class corresponds to a given
+namespace. Note that **custom fields do not have schema versions**. Be careful
+when deleting or changing data types on existing fields.
+
+These custom fields should live in your application code. As such, you will
+need to provide a way to discover the classes since different applications
+have different source code structures. If you're using a module for a CMS like
+Drupal, it should already provide that functionality. If not, see
+`\Lullabot\Mpx\DataService\CustomFieldManager::basicDiscovery` for an example
+that can be adapted in many cases.
+
+Once the classes are available, they will be automatically used when loading
+mpx objects. For example, to retrieve fields for the above namespace on a
+Media object, call:
+
+```php
+$dof = new DataObjectFactory($manager->getDataService('Media Data Service', 'Media', '1.10'), $this->authenticatedClient);
+$media = $dof->load(new Uri('http://data.media.theplatform.com/media/data/Media/12345'))->wait();
+$fields = $media->getCustomFields('http://access.auth.theplatform.com/data/Account/555555'):
+```
+
+If a custom field class is not found, a notice will be logged and the empty
+`MissingCustomFieldsClass` will be attached in place of each set of fields.
 
 ## Overview of main classes
 

@@ -1,4 +1,8 @@
 {
+  "$xmlns": {
+    "prefix1": "http://www.example.com/xml"
+  },
+  "prefix1$series": "A series",
   "id": "http://data.media.theplatform.com/media/data/Media/2602559",
   "guid": "zYO7XMrWyix_9UCMurLYEWJPrWYHavMM",
   "title": "thePlatform's History",

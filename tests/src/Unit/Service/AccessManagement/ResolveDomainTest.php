@@ -30,8 +30,8 @@ class ResolveDomainTest extends TestCase
     /**
      * Tests basic resolution.
      *
-     * @covers ::__construct()
-     * @covers ::resolve()
+     * @covers ::__construct
+     * @covers ::resolve
      */
     public function testResolve()
     {
@@ -44,7 +44,7 @@ class ResolveDomainTest extends TestCase
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $account = new Account();
@@ -59,8 +59,8 @@ class ResolveDomainTest extends TestCase
     /**
      * Tests cache hits and misses.
      *
-     * @covers ::__construct()
-     * @covers ::resolve()
+     * @covers ::__construct
+     * @covers ::resolve
      */
     public function testResolveCache()
     {
@@ -73,7 +73,7 @@ class ResolveDomainTest extends TestCase
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $account = new Account();

@@ -3,12 +3,10 @@
 namespace Lullabot\Mpx\DataService\Media;
 
 use GuzzleHttp\Psr7\Uri;
-use Lullabot\Mpx\DataService\AdPolicyDataTrait;
 use Lullabot\Mpx\DataService\Annotation\DataService;
+use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
-use Lullabot\Mpx\DataService\PublicIdentifierTrait;
-use Psr\Http\Message\UriInterface;
 
 /**
  * Implements the Media endpoint in the Media data service.
@@ -25,15 +23,33 @@ use Psr\Http\Message\UriInterface;
  */
 class Media extends ObjectBase implements PublicIdentifierInterface
 {
-    use AdPolicyDataTrait;
-    use PublicIdentifierTrait;
+    /**
+     * The id of the AdPolicy associated with this content.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $adPolicyId;
+
+    /**
+     * The date and time that this object was created.
+     *
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+     */
+    protected $added;
+
+    /**
+     * The id of the user that created this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $addedByUserId;
 
     /**
      * The administrative workflow tags for this object.
      *
      * @var string[]
      */
-    protected $adminTags;
+    protected $adminTags = [];
 
     /**
      * Whether this content is approved for playback.
@@ -68,19 +84,19 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @var string[]
      */
-    protected $availabilityTags;
+    protected $availabilityTags = [];
 
     /**
      * An array of distinct time frames that identify the playback availability for this media.
      *
      * @var AvailabilityWindow[]
      */
-    protected $availabilityWindows;
+    protected $availabilityWindows = [];
 
     /**
      * The date that this content becomes available for playback.
      *
-     * @var \DateTime
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $availableDate;
 
@@ -89,28 +105,28 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @var CategoryInfo[]
      */
-    protected $categories;
+    protected $categories = [];
 
     /**
      * The id values of the Category objects that this object is associated with.
      *
      * @var \Psr\Http\Message\UriInterface[]
      */
-    protected $categoryIds;
+    protected $categoryIds = [];
 
     /**
      * Chapter information for this content.
      *
      * @var Chapter[]
      */
-    protected $chapters;
+    protected $chapters = [];
 
     /**
      * The content MediaFile objects that this object is associated with.
      *
      * @var MediaFile[]
      */
-    protected $content;
+    protected $content = [];
 
     /**
      * The copyright holder of this content.
@@ -145,14 +161,14 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @var string[]
      */
-    protected $countries;
+    protected $countries = [];
 
     /**
      * The creative credits for this content.
      *
      * @var Credit[]
      */
-    protected $credits;
+    protected $credits = [];
 
     /**
      * The streamingUrl of the default thumbnail for this Media.
@@ -185,7 +201,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date that this content expires and is no longer available for playback.
      *
-     * @var \DateTime
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $expirationDate;
 
@@ -202,6 +218,13 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      * @var string
      */
     protected $guid;
+
+    /**
+     * The globally unique URI of this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $id;
 
     /**
      * A list of internal keywords that describe this content.
@@ -243,14 +266,28 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @var \Psr\Http\Message\UriInterface[]
      */
-    protected $originalMediaIds;
+    protected $originalMediaIds = [];
 
     /**
      * The id values of the accounts that shared this Media.
      *
      * @var \Psr\Http\Message\UriInterface[]
      */
-    protected $originalOwnerIds;
+    protected $originalOwnerIds = [];
+
+    /**
+     * The id of the account that owns this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $ownerId;
+
+    /**
+     * The globally unique public identifier for this media.
+     *
+     * @var string
+     */
+    protected $pid;
 
     /**
      * The ID of the Program that represents this media. The GUID URI is recommended.
@@ -276,14 +313,14 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * The original release date or airdate of this Media object's content.
      *
-     * @var \DateTime
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $pubDate;
 
     /**
      * The public URL for this media.
      *
-     * @var string
+     * @var Uri
      */
     protected $publicUrl;
 
@@ -292,7 +329,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @var Rating[]
      */
-    protected $ratings;
+    protected $ratings = [];
 
     /**
      * The id of the Restriction associated with this content.
@@ -327,7 +364,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @var MediaFile[]
      */
-    protected $thumbnails;
+    protected $thumbnails = [];
 
     /**
      * The name of this object.
@@ -346,7 +383,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date and time this object was last modified.
      *
-     * @var \DateTime
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $updated;
 
@@ -365,6 +402,78 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     protected $version;
 
     /**
+     * Returns the id of the AdPolicy associated with this content.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getAdPolicyId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->adPolicyId) {
+            return new Uri();
+        }
+
+        return $this->adPolicyId;
+    }
+
+    /**
+     * Set the id of the AdPolicy associated with this content.
+     *
+     * @param \Psr\Http\Message\UriInterface $adPolicyId
+     */
+    public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId)
+    {
+        $this->adPolicyId = $adPolicyId;
+    }
+
+    /**
+     * Returns the date and time that this object was created.
+     *
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+     */
+    public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+    {
+        if (!$this->added) {
+            return new NullDateTime();
+        }
+
+        return $this->added;
+    }
+
+    /**
+     * Set the date and time that this object was created.
+     *
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
+     */
+    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
+    {
+        $this->added = $added;
+    }
+
+    /**
+     * Returns the id of the user that created this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->addedByUserId) {
+            return new Uri();
+        }
+
+        return $this->addedByUserId;
+    }
+
+    /**
+     * Set the id of the user that created this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $addedByUserId
+     */
+    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
+    {
+        $this->addedByUserId = $addedByUserId;
+    }
+
+    /**
      * Returns the administrative workflow tags for this object.
      *
      * @return string[]
@@ -377,9 +486,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the administrative workflow tags for this object.
      *
-     * @param string[]
+     * @param string[] $adminTags
      */
-    public function setAdminTags($adminTags)
+    public function setAdminTags(array $adminTags)
     {
         $this->adminTags = $adminTags;
     }
@@ -389,7 +498,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return bool
      */
-    public function getApproved(): bool
+    public function getApproved(): ?bool
     {
         return $this->approved;
     }
@@ -397,9 +506,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set whether this content is approved for playback.
      *
-     * @param bool
+     * @param bool $approved
      */
-    public function setApproved($approved)
+    public function setApproved(?bool $approved)
     {
         $this->approved = $approved;
     }
@@ -409,7 +518,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getAuthor(): string
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
@@ -417,9 +526,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the creator of this content.
      *
-     * @param string
+     * @param string $author
      */
-    public function setAuthor($author)
+    public function setAuthor(?string $author)
     {
         $this->author = $author;
     }
@@ -437,9 +546,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a map that contains localized versions of this object's author value.
      *
-     * @param array
+     * @param array $authorLocalized
      */
-    public function setAuthorLocalized($authorLocalized)
+    public function setAuthorLocalized(array $authorLocalized)
     {
         $this->authorLocalized = $authorLocalized;
     }
@@ -449,7 +558,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getAvailabilityState()
+    public function getAvailabilityState(): ?string
     {
         return $this->availabilityState;
     }
@@ -457,9 +566,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the computed availability of the media for playback.
      *
-     * @param string
+     * @param string $availabilityState
      */
-    public function setAvailabilityState(string $availabilityState)
+    public function setAvailabilityState(?string $availabilityState)
     {
         $this->availabilityState = $availabilityState;
     }
@@ -477,9 +586,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the playback availability tags for this media.
      *
-     * @param string[]
+     * @param string[] $availabilityTags
      */
-    public function setAvailabilityTags($availabilityTags)
+    public function setAvailabilityTags(array $availabilityTags)
     {
         $this->availabilityTags = $availabilityTags;
     }
@@ -497,9 +606,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set an array of distinct time frames that identify the playback availability for this media.
      *
-     * @param AvailabilityWindow[]
+     * @param AvailabilityWindow[] $availabilityWindows
      */
-    public function setAvailabilityWindows($availabilityWindows)
+    public function setAvailabilityWindows(array $availabilityWindows)
     {
         $this->availabilityWindows = $availabilityWindows;
     }
@@ -507,19 +616,23 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date that this content becomes available for playback.
      *
-     * @return \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getAvailableDate(): \DateTime
+    public function getAvailableDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
+        if (!$this->availableDate) {
+            return new NullDateTime();
+        }
+
         return $this->availableDate;
     }
 
     /**
      * Set the date that this content becomes available for playback.
      *
-     * @param \DateTime
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $availableDate
      */
-    public function setAvailableDate($availableDate)
+    public function setAvailableDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $availableDate)
     {
         $this->availableDate = $availableDate;
     }
@@ -537,9 +650,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the Category objects that this object is associated with, represented as CategoryInfo objects.
      *
-     * @param CategoryInfo[]
+     * @param CategoryInfo[] $categories
      */
-    public function setCategories($categories)
+    public function setCategories(array $categories)
     {
         $this->categories = $categories;
     }
@@ -557,15 +670,15 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the id values of the Category objects that this object is associated with.
      *
-     * @param \Psr\Http\Message\UriInterface[]
+     * @param \Psr\Http\Message\UriInterface[] $categoryIds
      */
-    public function setCategoryIds($categoryIds)
+    public function setCategoryIds(array $categoryIds)
     {
         $this->categoryIds = $categoryIds;
     }
 
     /**
-     * Returns Chapter information for this content.
+     * Returns chapter information for this content.
      *
      * @return Chapter[]
      */
@@ -575,11 +688,11 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set Chapter information for this content.
+     * Set chapter information for this content.
      *
-     * @param Chapter[]
+     * @param Chapter[] $chapters
      */
-    public function setChapters($chapters)
+    public function setChapters(array $chapters)
     {
         $this->chapters = $chapters;
     }
@@ -597,9 +710,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the content MediaFile objects that this object is associated with.
      *
-     * @param MediaFile[]
+     * @param MediaFile[] $content
      */
-    public function setContent($content)
+    public function setContent(array $content)
     {
         $this->content = $content;
     }
@@ -609,7 +722,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getCopyright(): string
+    public function getCopyright(): ?string
     {
         return $this->copyright;
     }
@@ -617,9 +730,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the copyright holder of this content.
      *
-     * @param string
+     * @param string $copyright
      */
-    public function setCopyright($copyright)
+    public function setCopyright(?string $copyright)
     {
         $this->copyright = $copyright;
     }
@@ -637,9 +750,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a map that contains localized versions of this object's copyright value.
      *
-     * @param array
+     * @param array $copyrightLocalized
      */
-    public function setCopyrightLocalized($copyrightLocalized)
+    public function setCopyrightLocalized(array $copyrightLocalized)
     {
         $this->copyrightLocalized = $copyrightLocalized;
     }
@@ -649,7 +762,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getCopyrightUrl(): string
+    public function getCopyrightUrl(): ?string
     {
         return $this->copyrightUrl;
     }
@@ -657,9 +770,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the URL of a copyright statement or terms of use.
      *
-     * @param string
+     * @param string $copyrightUrl
      */
-    public function setCopyrightUrl($copyrightUrl)
+    public function setCopyrightUrl(?string $copyrightUrl)
     {
         $this->copyrightUrl = $copyrightUrl;
     }
@@ -677,9 +790,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a map that contains localized versions of this object's copyrightUrl value.
      *
-     * @param array
+     * @param array $copyrightUrlLocalized
      */
-    public function setCopyrightUrlLocalized($copyrightUrlLocalized)
+    public function setCopyrightUrlLocalized(array $copyrightUrlLocalized)
     {
         $this->copyrightUrlLocalized = $copyrightUrlLocalized;
     }
@@ -697,9 +810,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the list of ISO 3166 country codes that geo-targeting restrictions apply to.
      *
-     * @param string[]
+     * @param string[] $countries
      */
-    public function setCountries($countries)
+    public function setCountries(array $countries)
     {
         $this->countries = $countries;
     }
@@ -717,9 +830,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the creative credits for this content.
      *
-     * @param Credit[]
+     * @param Credit[] $credits
      */
-    public function setCredits($credits)
+    public function setCredits(array $credits)
     {
         $this->credits = $credits;
     }
@@ -749,7 +862,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -757,9 +870,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a description of this content.
      *
-     * @param string
+     * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(?string $description)
     {
         $this->description = $description;
     }
@@ -777,9 +890,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a map that contains localized versions of this object's description value.
      *
-     * @param array
+     * @param array $descriptionLocalized
      */
-    public function setDescriptionLocalized($descriptionLocalized)
+    public function setDescriptionLocalized(array $descriptionLocalized)
     {
         $this->descriptionLocalized = $descriptionLocalized;
     }
@@ -789,7 +902,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return bool
      */
-    public function getExcludeCountries(): bool
+    public function getExcludeCountries(): ?bool
     {
         return $this->excludeCountries;
     }
@@ -797,9 +910,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set whether the specified countries are excluded from playing this content.
      *
-     * @param bool
+     * @param bool $excludeCountries
      */
-    public function setExcludeCountries($excludeCountries)
+    public function setExcludeCountries(?bool $excludeCountries)
     {
         $this->excludeCountries = $excludeCountries;
     }
@@ -807,39 +920,47 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date that this content expires and is no longer available for playback.
      *
-     * @return \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getExpirationDate(): \DateTime
+    public function getExpirationDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
+        if (!$this->expirationDate) {
+            return new NullDateTime();
+        }
+
         return $this->expirationDate;
     }
 
     /**
      * Set the date that this content expires and is no longer available for playback.
      *
-     * @param \DateTime
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $expirationDate
      */
-    public function setExpirationDate($expirationDate)
+    public function setExpirationDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $expirationDate)
     {
         $this->expirationDate = $expirationDate;
     }
 
     /**
-     * Returns Reserved for future use.
+     * Returns reserved for future use.
      *
      * @return \Psr\Http\Message\UriInterface
      */
-    public function getFileSourceMediaId(): UriInterface
+    public function getFileSourceMediaId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->fileSourceMediaId) {
+            return new Uri();
+        }
+
         return $this->fileSourceMediaId;
     }
 
     /**
-     * Set Reserved for future use.
+     * Set reserved for future use.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $fileSourceMediaId
      */
-    public function setFileSourceMediaId($fileSourceMediaId)
+    public function setFileSourceMediaId(\Psr\Http\Message\UriInterface $fileSourceMediaId)
     {
         $this->fileSourceMediaId = $fileSourceMediaId;
     }
@@ -849,7 +970,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getGuid(): string
+    public function getGuid(): ?string
     {
         return $this->guid;
     }
@@ -857,11 +978,35 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
      *
-     * @param string
+     * @param string $guid
      */
-    public function setGuid($guid)
+    public function setGuid(?string $guid)
     {
         $this->guid = $guid;
+    }
+
+    /**
+     * Returns the globally unique URI of this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->id) {
+            return new Uri();
+        }
+
+        return $this->id;
+    }
+
+    /**
+     * Set the globally unique URI of this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $id
+     */
+    public function setId(\Psr\Http\Message\UriInterface $id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -869,7 +1014,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getKeywords(): string
+    public function getKeywords(): ?string
     {
         return $this->keywords;
     }
@@ -877,9 +1022,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a list of internal keywords that describe this content.
      *
-     * @param string
+     * @param string $keywords
      */
-    public function setKeywords($keywords)
+    public function setKeywords(?string $keywords)
     {
         $this->keywords = $keywords;
     }
@@ -897,9 +1042,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a map that contains localized versions of this object's keywords value.
      *
-     * @param array
+     * @param array $keywordsLocalized
      */
-    public function setKeywordsLocalized($keywordsLocalized)
+    public function setKeywordsLocalized(array $keywordsLocalized)
     {
         $this->keywordsLocalized = $keywordsLocalized;
     }
@@ -909,7 +1054,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
     }
@@ -917,9 +1062,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a link to additional information related to this content.
      *
-     * @param string
+     * @param string $link
      */
-    public function setLink($link)
+    public function setLink(?string $link)
     {
         $this->link = $link;
     }
@@ -937,9 +1082,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a map that contains localized versions of this object's link value.
      *
-     * @param array
+     * @param array $linkLocalized
      */
-    public function setLinkLocalized($linkLocalized)
+    public function setLinkLocalized(array $linkLocalized)
     {
         $this->linkLocalized = $linkLocalized;
     }
@@ -949,7 +1094,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return bool
      */
-    public function getLocked(): bool
+    public function getLocked(): ?bool
     {
         return $this->locked;
     }
@@ -957,9 +1102,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set whether this object currently allows updates.
      *
-     * @param bool
+     * @param bool $locked
      */
-    public function setLocked($locked)
+    public function setLocked(?bool $locked)
     {
         $this->locked = $locked;
     }
@@ -977,9 +1122,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the id values of the source Media objects that were shared to create this Media.
      *
-     * @param \Psr\Http\Message\UriInterface[]
+     * @param \Psr\Http\Message\UriInterface[] $originalMediaIds
      */
-    public function setOriginalMediaIds($originalMediaIds)
+    public function setOriginalMediaIds(array $originalMediaIds)
     {
         $this->originalMediaIds = $originalMediaIds;
     }
@@ -997,11 +1142,55 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the id values of the accounts that shared this Media.
      *
-     * @param \Psr\Http\Message\UriInterface[]
+     * @param \Psr\Http\Message\UriInterface[] $originalOwnerIds
      */
-    public function setOriginalOwnerIds($originalOwnerIds)
+    public function setOriginalOwnerIds(array $originalOwnerIds)
     {
         $this->originalOwnerIds = $originalOwnerIds;
+    }
+
+    /**
+     * Returns the id of the account that owns this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getOwnerId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->ownerId) {
+            return new Uri();
+        }
+
+        return $this->ownerId;
+    }
+
+    /**
+     * Set the id of the account that owns this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $ownerId
+     */
+    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
+    {
+        $this->ownerId = $ownerId;
+    }
+
+    /**
+     * Returns the globally unique public identifier for this media.
+     *
+     * @return string
+     */
+    public function getPid(): ?string
+    {
+        return $this->pid;
+    }
+
+    /**
+     * Set the globally unique public identifier for this media.
+     *
+     * @param string $pid
+     */
+    public function setPid(?string $pid)
+    {
+        $this->pid = $pid;
     }
 
     /**
@@ -1009,17 +1198,21 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return \Psr\Http\Message\UriInterface
      */
-    public function getProgramId(): UriInterface
+    public function getProgramId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->programId) {
+            return new Uri();
+        }
+
         return $this->programId;
     }
 
     /**
      * Set the ID of the Program that represents this media. The GUID URI is recommended.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $programId
      */
-    public function setProgramId($programId)
+    public function setProgramId(\Psr\Http\Message\UriInterface $programId)
     {
         $this->programId = $programId;
     }
@@ -1029,7 +1222,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getProvider(): string
+    public function getProvider(): ?string
     {
         return $this->provider;
     }
@@ -1037,9 +1230,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the title of the Provider that represents the account that shared this Media.
      *
-     * @param string
+     * @param string $provider
      */
-    public function setProvider($provider)
+    public function setProvider(?string $provider)
     {
         $this->provider = $provider;
     }
@@ -1049,17 +1242,21 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return \Psr\Http\Message\UriInterface
      */
-    public function getProviderId(): UriInterface
+    public function getProviderId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->providerId) {
+            return new Uri();
+        }
+
         return $this->providerId;
     }
 
     /**
      * Set the id of the Provider that represents the account that shared this Media.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $providerId
      */
-    public function setProviderId($providerId)
+    public function setProviderId(\Psr\Http\Message\UriInterface $providerId)
     {
         $this->providerId = $providerId;
     }
@@ -1067,19 +1264,23 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the original release date or airdate of this Media object's content.
      *
-     * @return \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getPubDate(): \DateTime
+    public function getPubDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
+        if (!$this->pubDate) {
+            return new NullDateTime();
+        }
+
         return $this->pubDate;
     }
 
     /**
      * Set the original release date or airdate of this Media object's content.
      *
-     * @param \DateTime
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $pubDate
      */
-    public function setPubDate($pubDate)
+    public function setPubDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $pubDate)
     {
         $this->pubDate = $pubDate;
     }
@@ -1087,9 +1288,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the public URL for this media.
      *
-     * @return string
+     * @return Uri
      */
-    public function getPublicUrl(): string
+    public function getPublicUrl(): Uri
     {
         return $this->publicUrl;
     }
@@ -1097,9 +1298,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the public URL for this media.
      *
-     * @param string
+     * @param Uri $publicUrl
      */
-    public function setPublicUrl($publicUrl)
+    public function setPublicUrl(Uri $publicUrl)
     {
         $this->publicUrl = $publicUrl;
     }
@@ -1117,9 +1318,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the advisory ratings associated with this content.
      *
-     * @param Rating[]
+     * @param Rating[] $ratings
      */
-    public function setRatings($ratings)
+    public function setRatings(array $ratings)
     {
         $this->ratings = $ratings;
     }
@@ -1129,38 +1330,45 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return \Psr\Http\Message\UriInterface
      */
-    public function getRestrictionId(): UriInterface
+    public function getRestrictionId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->restrictionId) {
+            return new Uri();
+        }
+
         return $this->restrictionId;
     }
 
     /**
      * Set the id of the Restriction associated with this content.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $restrictionId
      */
-    public function setRestrictionId($restrictionId)
+    public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId)
     {
         $this->restrictionId = $restrictionId;
     }
 
     /**
-     * Returns the ID of the Program that represents the series to which this media belongs. The GUID URI is
-     * recommended.
+     * Returns the ID of the Program that represents the series to which this media belongs. The GUID URI is recommended.
      *
      * @return \Psr\Http\Message\UriInterface
      */
-    public function getSeriesId(): UriInterface
+    public function getSeriesId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->seriesId) {
+            return new Uri();
+        }
+
         return $this->seriesId;
     }
 
     /**
      * Set the ID of the Program that represents the series to which this media belongs. The GUID URI is recommended.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $seriesId
      */
-    public function setSeriesId($seriesId)
+    public function setSeriesId(\Psr\Http\Message\UriInterface $seriesId)
     {
         $this->seriesId = $seriesId;
     }
@@ -1170,7 +1378,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
@@ -1178,9 +1386,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set text associated with this content.
      *
-     * @param string
+     * @param string $text
      */
-    public function setText($text)
+    public function setText(?string $text)
     {
         $this->text = $text;
     }
@@ -1198,9 +1406,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a map that contains localized versions of this object's text value.
      *
-     * @param array
+     * @param array $textLocalized
      */
-    public function setTextLocalized($textLocalized)
+    public function setTextLocalized(array $textLocalized)
     {
         $this->textLocalized = $textLocalized;
     }
@@ -1218,9 +1426,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the thumbnail MediaFile objects that this object is associated with.
      *
-     * @param MediaFile[]
+     * @param MediaFile[] $thumbnails
      */
-    public function setThumbnails($thumbnails)
+    public function setThumbnails(array $thumbnails)
     {
         $this->thumbnails = $thumbnails;
     }
@@ -1230,7 +1438,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -1238,9 +1446,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the name of this object.
      *
-     * @param string
+     * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
     }
@@ -1258,9 +1466,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set a map that contains localized versions of this object's title value.
      *
-     * @param array
+     * @param array $titleLocalized
      */
-    public function setTitleLocalized($titleLocalized)
+    public function setTitleLocalized(array $titleLocalized)
     {
         $this->titleLocalized = $titleLocalized;
     }
@@ -1268,19 +1476,23 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date and time this object was last modified.
      *
-     * @return \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getUpdated(): \DateTime
+    public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
+        if (!$this->updated) {
+            return new NullDateTime();
+        }
+
         return $this->updated;
     }
 
     /**
      * Set the date and time this object was last modified.
      *
-     * @param \DateTime
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
-    public function setUpdated($updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
         $this->updated = $updated;
     }
@@ -1290,17 +1502,21 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return \Psr\Http\Message\UriInterface
      */
-    public function getUpdatedByUserId(): UriInterface
+    public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->updatedByUserId) {
+            return new Uri();
+        }
+
         return $this->updatedByUserId;
     }
 
     /**
      * Set the id of the user that last modified this object.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
-    public function setUpdatedByUserId($updatedByUserId)
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {
         $this->updatedByUserId = $updatedByUserId;
     }
@@ -1310,7 +1526,7 @@ class Media extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getVersion(): int
+    public function getVersion(): ?int
     {
         return $this->version;
     }
@@ -1318,9 +1534,9 @@ class Media extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set this object's modification version, used for optimistic locking.
      *
-     * @param int
+     * @param int $version
      */
-    public function setVersion($version)
+    public function setVersion(?int $version)
     {
         $this->version = $version;
     }

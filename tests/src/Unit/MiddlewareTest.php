@@ -76,7 +76,7 @@ class MiddlewareTest extends TestCase
     /**
      * Tests throwing mpx notification errors.
      *
-     * @covers ::mpxErrors()
+     * @covers ::mpxErrors
      */
     public function testNotificationException()
     {

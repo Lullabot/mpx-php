@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
+use GuzzleHttp\Psr7\Uri;
+
 /**
  * Represents a MediaFile that has been moved.
  *
@@ -35,7 +37,7 @@ class PreviousLocation
      *
      * @return string
      */
-    public function getFilePath(): string
+    public function getFilePath(): ?string
     {
         return $this->filePath;
     }
@@ -43,9 +45,9 @@ class PreviousLocation
     /**
      * Set the MediaFile filePath value at the time moveFile was called.
      *
-     * @param string
+     * @param string $filePath
      */
-    public function setFilePath($filePath)
+    public function setFilePath(?string $filePath)
     {
         $this->filePath = $filePath;
     }
@@ -57,15 +59,19 @@ class PreviousLocation
      */
     public function getServerId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->serverId) {
+            return new Uri();
+        }
+
         return $this->serverId;
     }
 
     /**
      * Set the MediaFile serverId value at the time moveFile was called.
      *
-     * @param \Psr\Http\Message\UriInterface
+     * @param \Psr\Http\Message\UriInterface $serverId
      */
-    public function setServerId($serverId)
+    public function setServerId(\Psr\Http\Message\UriInterface $serverId)
     {
         $this->serverId = $serverId;
     }
@@ -75,7 +81,7 @@ class PreviousLocation
      *
      * @return int
      */
-    public function getVersion(): int
+    public function getVersion(): ?int
     {
         return $this->version;
     }
@@ -83,9 +89,9 @@ class PreviousLocation
     /**
      * Set the MediaFile version value at the time moveFile was called.
      *
-     * @param int
+     * @param int $version
      */
-    public function setVersion($version)
+    public function setVersion(?int $version)
     {
         $this->version = $version;
     }

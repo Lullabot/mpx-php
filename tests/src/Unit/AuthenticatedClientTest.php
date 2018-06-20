@@ -13,6 +13,7 @@ use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
+use Lullabot\Mpx\Token;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -34,10 +35,13 @@ class AuthenticatedClientTest extends TestCase
      * @param string $method The method on AuthenticatedClient to call.
      * @param array  $args   The method arguments.
      *
+     * @covers ::__construct
      * @covers ::request
      * @covers ::requestAsync
+     * @covers ::requestAsyncWithRetry
      * @covers ::send
      * @covers ::sendAsync
+     * @covers ::sendAsyncWithRetry
      * @covers ::mergeAuth
      * @covers ::requestWithRetry
      * @covers ::sendWithRetry
@@ -61,7 +65,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
@@ -103,7 +107,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(2);
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
@@ -142,7 +146,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
@@ -179,7 +183,7 @@ class AuthenticatedClientTest extends TestCase
 
         $logger = $this->fetchTokenLogger(1);
 
-        $user = new User('USER-NAME', 'correct-password');
+        $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
@@ -191,7 +195,7 @@ class AuthenticatedClientTest extends TestCase
     }
 
     /**
-     * @covers ::getConfig()
+     * @covers ::getConfig
      */
     public function testGetConfig()
     {
@@ -208,6 +212,32 @@ class AuthenticatedClientTest extends TestCase
             ->getMock();
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $this->assertEquals('the-value', $authenticatedClient->getConfig('the-option'));
+    }
+
+    /**
+     * Test setting a duration for renewed tokens.
+     *
+     * @covers ::setTokenDuration
+     * @covers ::mergeAuth
+     */
+    public function testTokenDuration()
+    {
+        /** @var Client|\PHPUnit\Framework\MockObject\MockObject $client */
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        /** @var UserSession|\PHPUnit\Framework\MockObject\MockObject $userSession */
+        $userSession = $this->getMockBuilder(UserSession::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $authenticatedClient = new AuthenticatedClient($client, $userSession);
+        $duration = rand(1, 3600);
+        $userSession->expects($this->once())->method('acquireToken')
+            ->with($duration, false)
+            ->willReturn(new Token('mpx/USER-ID', 'abcdef', $duration));
+        $authenticatedClient->setTokenDuration($duration);
+        $authenticatedClient->request('GET', 'https://www.example.com/');
     }
 
     /**
@@ -252,7 +282,7 @@ class AuthenticatedClientTest extends TestCase
                     $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
                     $this->assertArraySubset([
                         'token' => 'TOKEN-VALUE',
-                        'username' => 'USER-NAME',
+                        'username' => 'mpx/USER-NAME',
                     ], $context);
                     $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
                 });
