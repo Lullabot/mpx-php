@@ -953,7 +953,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Returns uRL for a custom background image.
+     * Returns URL for a custom background image.
      *
      * @return string
      */
@@ -963,7 +963,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set uRL for a custom background image.
+     * Set URL for a custom background image.
      *
      * @param string $backgroundImageUrl
      */
@@ -1037,7 +1037,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Returns xML layout content for the player control rack.
+     * Returns XML layout content for the player control rack.
      *
      * @return string
      */
@@ -1047,7 +1047,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set xML layout content for the player control rack.
+     * Set XML layout content for the player control rack.
      *
      * @param string $controlLayoutXml
      */
@@ -1097,7 +1097,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Returns uRLs to remote custom CSS content for the player.
+     * Returns URLs to remote custom CSS content for the player.
      *
      * @return string[]
      */
@@ -1107,7 +1107,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set uRLs to remote custom CSS content for the player.
+     * Set URLs to remote custom CSS content for the player.
      *
      * @param string[] $customCssUrls
      */
@@ -1157,7 +1157,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Returns uRLs to custom JavaScript content for the player.
+     * Returns URLs to custom JavaScript content for the player.
      *
      * @return string[]
      */
@@ -1167,7 +1167,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set uRLs to custom JavaScript content for the player.
+     * Set URLs to custom JavaScript content for the player.
      *
      * @param string[] $customJavaScriptUrls
      */
@@ -2077,7 +2077,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Returns uRL parameters to add to Public URL requests.
+     * Returns URL parameters to add to Public URL requests.
      *
      * @return string
      */
@@ -2087,7 +2087,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set uRL parameters to add to Public URL requests.
+     * Set URL parameters to add to Public URL requests.
      *
      * @param string $releaseUrlParams
      */
