@@ -47,11 +47,13 @@ abstract class ClassGenerator extends Command
     ];
 
     /**
-     * @param $dataType
+     * Returns if the string representation of the data type is a PHP scalar.
+     *
+     * @param string $dataType The data type to check, such as 'float'.
      *
      * @return bool
      */
-    protected function isScalarType($dataType): bool
+    protected function isScalarType(string $dataType): bool
     {
         return in_array($dataType, ['int', 'float', 'string', 'bool']);
     }
