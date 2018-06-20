@@ -2,14 +2,23 @@
 
 namespace Lullabot\Mpx\Normalizer;
 
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTimeInterface;
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 /**
- * Normalize a millisecond timestamp into a date object.
+ * Denormalize a millisecond timestamp into a date object.
  */
 class UnixMillisecondNormalizer extends DateTimeNormalizer
 {
+    private static $supportedTypes = [
+        DateTimeFormatInterface::class => true,
+        ConcreteDateTimeInterface::class => true,
+        ConcreteDateTime::class => true,
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -25,6 +34,16 @@ class UnixMillisecondNormalizer extends DateTimeNormalizer
 
         $context[self::FORMAT_KEY] = 'U.u';
 
-        return parent::denormalize($bySeconds, $class, $format, $context);
+        $date = parent::denormalize($bySeconds, \DateTime::class, $format, $context);
+
+        return new ConcreteDateTime($date);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsDenormalization($data, $type, $format = null)
+    {
+        return isset(self::$supportedTypes[$type]);
     }
 }

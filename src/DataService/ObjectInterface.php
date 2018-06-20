@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -12,16 +13,16 @@ interface ObjectInterface extends IdInterface, JsonInterface
     /**
      * Returns the date and time that this object was created.
      *
-     * @return \DateTime
+     * @return DateTimeFormatInterface
      */
-    public function getAdded(): \DateTime;
+    public function getAdded(): DateTimeFormatInterface;
 
     /**
      * Set the date and time that this object was created.
      *
-     * @param \DateTime
+     * @param DateTimeFormatInterface
      */
-    public function setAdded($added);
+    public function setAdded(DateTimeFormatInterface $added);
 
     /**
      * Returns the id of the user that created this object.
@@ -33,9 +34,9 @@ interface ObjectInterface extends IdInterface, JsonInterface
     /**
      * Set the id of the user that created this object.
      *
-     * @param UriInterface
+     * @param UriInterface $addedByUserId
      */
-    public function setAddedByUserId($addedByUserId);
+    public function setAddedByUserId(UriInterface $addedByUserId);
 
     /**
      * Returns the id of the account that owns this object.
@@ -47,9 +48,9 @@ interface ObjectInterface extends IdInterface, JsonInterface
     /**
      * Set the id of the account that owns this object.
      *
-     * @param UriInterface
+     * @param UriInterface $ownerId
      */
-    public function setOwnerId($ownerId);
+    public function setOwnerId(UriInterface $ownerId);
 
     /**
      * Return custom fields attached to this object.
@@ -58,7 +59,7 @@ interface ObjectInterface extends IdInterface, JsonInterface
      *
      * @return CustomFieldInterface
      */
-    public function getCustomFields($namespace);
+    public function getCustomFields(string $namespace);
 
     /**
      * Set the custom fields attached to this data object.

@@ -22,9 +22,15 @@ class ImageTest extends TestCase
     {
         $get = 'get'.ucfirst($property);
         $set = 'set'.ucfirst($property);
-        $link = new Image();
-        $link->$set($value);
-        $this->assertSame($value, $link->$get());
+        $image = new Image();
+        $image->$set($value);
+        $this->assertSame($value, $image->$get());
+    }
+
+    public function testOptionalAnchorHref()
+    {
+        $image = new Image();
+        $this->assertEmpty((string) $image->getAnchorHref());
     }
 
     public function getSetMethodDataProvider()

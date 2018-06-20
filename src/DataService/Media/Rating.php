@@ -28,14 +28,14 @@ class Rating
      *
      * @var string[]
      */
-    protected $subRatings;
+    protected $subRatings = [];
 
     /**
      * Returns the content's rating.
      *
      * @return string
      */
-    public function getRating(): string
+    public function getRating(): ?string
     {
         return $this->rating;
     }
@@ -43,9 +43,9 @@ class Rating
     /**
      * Set the content's rating.
      *
-     * @param string
+     * @param string $rating
      */
-    public function setRating($rating)
+    public function setRating(?string $rating)
     {
         $this->rating = $rating;
     }
@@ -55,7 +55,7 @@ class Rating
      *
      * @return string
      */
-    public function getScheme(): string
+    public function getScheme(): ?string
     {
         return $this->scheme;
     }
@@ -63,9 +63,9 @@ class Rating
     /**
      * Set the URI of a rating scheme.
      *
-     * @param string
+     * @param string $scheme
      */
-    public function setScheme($scheme)
+    public function setScheme(?string $scheme)
     {
         $this->scheme = $scheme;
     }
@@ -83,9 +83,9 @@ class Rating
     /**
      * Set the content's subratings.
      *
-     * @param string[]
+     * @param string[] $subRatings
      */
-    public function setSubRatings($subRatings)
+    public function setSubRatings(array $subRatings)
     {
         $this->subRatings = $subRatings;
     }

@@ -93,7 +93,7 @@ test_and_cover: &test_and_cover
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
-        
+
       # run tests!
       - run: |
           mkdir -p build/logs
@@ -151,31 +151,18 @@ jobs:
       # specify the version you desire here
       - image: php:7.2
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mysql:9.4
-
     working_directory: ~/repo
 
     <<: *test_and_cover
-
-  build_php70:
-    docker:
-      - image: php:7.0
-
-    working_directory: ~/repo
-
-    environment:
-      - COMPOSER_FLAGS: --prefer-lowest
-
-    <<: *test
 
   build_php71:
     docker:
       - image: php:7.1
 
     working_directory: ~/repo
+
+    environment:
+      - COMPOSER_FLAGS: --prefer-lowest
 
     <<: *test
 
@@ -194,7 +181,6 @@ workflows:
   test_cover_workflow:
     jobs:
       - build
-      - build_php70
       - build_php71
       - code_fixer
 
@@ -209,6 +195,5 @@ workflows:
                 - master
     jobs:
       - build
-      - build_php70
       - build_php71
       - code_fixer

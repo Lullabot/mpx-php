@@ -27,6 +27,12 @@ class LinkTest extends TestCase
         $this->assertSame($value, $link->$get());
     }
 
+    public function testOptionalAnchorHref()
+    {
+        $link = new Link();
+        $this->assertEmpty((string) $link->getHref());
+    }
+
     public function getSetMethodDataProvider()
     {
         return [

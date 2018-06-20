@@ -30,7 +30,7 @@ class Credit
      *
      * @return string
      */
-    public function getRole(): string
+    public function getRole(): ?string
     {
         return $this->role;
     }
@@ -38,9 +38,9 @@ class Credit
     /**
      * Set the role that is being credited.
      *
-     * @param string
+     * @param string $role
      */
-    public function setRole($role)
+    public function setRole(?string $role)
     {
         $this->role = $role;
     }
@@ -50,7 +50,7 @@ class Credit
      *
      * @return string
      */
-    public function getScheme(): string
+    public function getScheme(): ?string
     {
         return $this->scheme;
     }
@@ -58,9 +58,9 @@ class Credit
     /**
      * Set the role scheme for the credit.
      *
-     * @param string
+     * @param string $scheme
      */
-    public function setScheme($scheme)
+    public function setScheme(?string $scheme)
     {
         $this->scheme = $scheme;
     }
@@ -70,7 +70,7 @@ class Credit
      *
      * @return string
      */
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }
@@ -78,9 +78,9 @@ class Credit
     /**
      * Set the person or entity that is being credited.
      *
-     * @param string
+     * @param string $value
      */
-    public function setValue($value)
+    public function setValue(?string $value)
     {
         $this->value = $value;
     }

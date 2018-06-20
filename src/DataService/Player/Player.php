@@ -2,12 +2,11 @@
 
 namespace Lullabot\Mpx\DataService\Player;
 
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
-use Lullabot\Mpx\DataService\AdPolicyDataTrait;
+use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
-use Lullabot\Mpx\DataService\PublicIdentifierTrait;
-use Psr\Http\Message\UriInterface;
 
 /**
  * @DataService(
@@ -18,15 +17,33 @@ use Psr\Http\Message\UriInterface;
  */
 class Player extends ObjectBase implements PublicIdentifierInterface
 {
-    use AdPolicyDataTrait;
-    use PublicIdentifierTrait;
+    /**
+     * The date and time that this object was created.
+     *
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+     */
+    protected $added;
+
+    /**
+     * The id of the user that created this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $addedByUserId;
 
     /**
      * The administrative workflow tags for this object.
      *
      * @var string[]
      */
-    protected $adminTags;
+    protected $adminTags = [];
+
+    /**
+     * the identifier for the advertising policy for this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $adPolicyId;
 
     /**
      * Indicates whether the player will feature sharing via email.
@@ -159,7 +176,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @var \Psr\Http\Message\UriInterface[]
      */
-    protected $customCssUrls;
+    protected $customCssUrls = [];
 
     /**
      * Custom HTML content for the player (not currently used).
@@ -178,14 +195,14 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * URLs to custom JavaScript content for the player.
      *
-     * @var \Psr\Http\Message\UriInterface[]
+     * @var string[]
      */
-    protected $customJavaScriptUrls;
+    protected $customJavaScriptUrls = [];
 
     /**
      * Additional attributes to include in the player HTML.
      *
-     * @var array<string, string>
+     * @var array
      */
     protected $customProperties;
 
@@ -243,7 +260,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @var PlugInInstance[]
      */
-    protected $enabledPlugIns;
+    protected $enabledPlugIns = [];
 
     /**
      * Indicates if the player responds to commands from an IFrame parent element.
@@ -316,6 +333,13 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     protected $height;
 
     /**
+     * The globally unique URI of this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $id;
+
+    /**
      * Whether to include the default player CSS file in the player HTML page.
      *
      * @var bool
@@ -341,7 +365,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @var string[]
      */
-    protected $limitToCategories;
+    protected $limitToCategories = [];
 
     /**
      * The destination URL for when a user clicks the player video area.
@@ -363,6 +387,13 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      * @var \Psr\Http\Message\UriInterface
      */
     protected $overlayImageUrl;
+
+    /**
+     * The id of the account that owns this object.
+     *
+     * @var \Psr\Http\Message\UriInterface
+     */
+    protected $ownerId;
 
     /**
      * The amount of padding to add to the bottom of the player host page.
@@ -398,6 +429,13 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      * @var string
      */
     protected $pdk;
+
+    /**
+     * The public identifier for this player when requested through the Player Service.
+     *
+     * @var string
+     */
+    protected $pid;
 
     /**
      * Indicates if the player should automatically play the next release when one finishes.
@@ -446,26 +484,26 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @var string[]
      */
-    protected $preferredFormats;
+    protected $preferredFormats = [];
 
     /**
      * The runtimes meant for use in the player.
      *
      * @var string[]
      */
-    protected $preferredRuntimes;
+    protected $preferredRuntimes = [];
 
     /**
      * Heights of the regions in the layout.
      *
-     * @var array<string, Integer>
+     * @var array
      */
     protected $regionHeights;
 
     /**
      * Widths of the regions in the layout.
      *
-     * @var array<string, Integer>
+     * @var array
      */
     protected $regionWidths;
 
@@ -570,7 +608,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * The date and time this object was last modified.
      *
-     * @var \DateTime
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $updated;
 
@@ -603,6 +641,54 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     protected $width;
 
     /**
+     * Returns the date and time that this object was created.
+     *
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+     */
+    public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+    {
+        if (!$this->added) {
+            return new NullDateTime();
+        }
+
+        return $this->added;
+    }
+
+    /**
+     * Set the date and time that this object was created.
+     *
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
+     */
+    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
+    {
+        $this->added = $added;
+    }
+
+    /**
+     * Returns the id of the user that created this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->addedByUserId) {
+            return new Uri();
+        }
+
+        return $this->addedByUserId;
+    }
+
+    /**
+     * Set the id of the user that created this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $addedByUserId
+     */
+    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
+    {
+        $this->addedByUserId = $addedByUserId;
+    }
+
+    /**
      * Returns the administrative workflow tags for this object.
      *
      * @return string[]
@@ -615,149 +701,173 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the administrative workflow tags for this object.
      *
-     * @param string[]
+     * @param string[] $adminTags
      */
-    public function setAdminTags($adminTags)
+    public function setAdminTags(array $adminTags)
     {
         $this->adminTags = $adminTags;
     }
 
     /**
-     * Returns Indicates whether the player will feature sharing via email.
+     * Returns the identifier for the advertising policy for this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getAdPolicyId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->adPolicyId) {
+            return new Uri();
+        }
+
+        return $this->adPolicyId;
+    }
+
+    /**
+     * Set the identifier for the advertising policy for this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $adPolicyId
+     */
+    public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId)
+    {
+        $this->adPolicyId = $adPolicyId;
+    }
+
+    /**
+     * Returns indicates whether the player will feature sharing via email.
      *
      * @return bool
      */
-    public function getAllowEmail(): bool
+    public function getAllowEmail(): ?bool
     {
         return $this->allowEmail;
     }
 
     /**
-     * Set Indicates whether the player will feature sharing via email.
+     * Set indicates whether the player will feature sharing via email.
      *
-     * @param bool
+     * @param bool $allowEmail
      */
-    public function setAllowEmail($allowEmail)
+    public function setAllowEmail(?bool $allowEmail)
     {
         $this->allowEmail = $allowEmail;
     }
 
     /**
-     * Returns Indicates whether the player will provide an embed code for sharing on other sites.
+     * Returns indicates whether the player will provide an embed code for sharing on other sites.
      *
      * @return bool
      */
-    public function getAllowEmbed(): bool
+    public function getAllowEmbed(): ?bool
     {
         return $this->allowEmbed;
     }
 
     /**
-     * Set Indicates whether the player will provide an embed code for sharing on other sites.
+     * Set indicates whether the player will provide an embed code for sharing on other sites.
      *
-     * @param bool
+     * @param bool $allowEmbed
      */
-    public function setAllowEmbed($allowEmbed)
+    public function setAllowEmbed(?bool $allowEmbed)
     {
         $this->allowEmbed = $allowEmbed;
     }
 
     /**
-     * Returns Indicates whether the player will be allowed to play video in fullscreen mode.
+     * Returns indicates whether the player will be allowed to play video in fullscreen mode.
      *
      * @return bool
      */
-    public function getAllowFullScreen(): bool
+    public function getAllowFullScreen(): ?bool
     {
         return $this->allowFullScreen;
     }
 
     /**
-     * Set Indicates whether the player will be allowed to play video in fullscreen mode.
+     * Set indicates whether the player will be allowed to play video in fullscreen mode.
      *
-     * @param bool
+     * @param bool $allowFullScreen
      */
-    public function setAllowFullScreen($allowFullScreen)
+    public function setAllowFullScreen(?bool $allowFullScreen)
     {
         $this->allowFullScreen = $allowFullScreen;
     }
 
     /**
-     * Returns Indicates whether the player will make a shareable link available to users.
+     * Returns indicates whether the player will make a shareable link available to users.
      *
      * @return bool
      */
-    public function getAllowGetLink(): bool
+    public function getAllowGetLink(): ?bool
     {
         return $this->allowGetLink;
     }
 
     /**
-     * Set Indicates whether the player will make a shareable link available to users.
+     * Set indicates whether the player will make a shareable link available to users.
      *
-     * @param bool
+     * @param bool $allowGetLink
      */
-    public function setAllowGetLink($allowGetLink)
+    public function setAllowGetLink(?bool $allowGetLink)
     {
         $this->allowGetLink = $allowGetLink;
     }
 
     /**
-     * Returns Indicates whether the player will make an RSS link available to users.
+     * Returns indicates whether the player will make an RSS link available to users.
      *
      * @return bool
      */
-    public function getAllowRss(): bool
+    public function getAllowRss(): ?bool
     {
         return $this->allowRss;
     }
 
     /**
-     * Set Indicates whether the player will make an RSS link available to users.
+     * Set indicates whether the player will make an RSS link available to users.
      *
-     * @param bool
+     * @param bool $allowRss
      */
-    public function setAllowRss($allowRss)
+    public function setAllowRss(?bool $allowRss)
     {
         $this->allowRss = $allowRss;
     }
 
     /**
-     * Returns Indicates whether to include the search component.
+     * Returns indicates whether to include the search component.
      *
      * @return bool
      */
-    public function getAllowSearch(): bool
+    public function getAllowSearch(): ?bool
     {
         return $this->allowSearch;
     }
 
     /**
-     * Set Indicates whether to include the search component.
+     * Set indicates whether to include the search component.
      *
-     * @param bool
+     * @param bool $allowSearch
      */
-    public function setAllowSearch($allowSearch)
+    public function setAllowSearch(?bool $allowSearch)
     {
         $this->allowSearch = $allowSearch;
     }
 
     /**
-     * Returns Indicates whether the player should always display the play overlay.
+     * Returns indicates whether the player should always display the play overlay.
      *
      * @return bool
      */
-    public function getAlwaysShowOverlay(): bool
+    public function getAlwaysShowOverlay(): ?bool
     {
         return $this->alwaysShowOverlay;
     }
 
     /**
-     * Set Indicates whether the player should always display the play overlay.
+     * Set indicates whether the player should always display the play overlay.
      *
-     * @param bool
+     * @param bool $alwaysShowOverlay
      */
-    public function setAlwaysShowOverlay($alwaysShowOverlay)
+    public function setAlwaysShowOverlay(?bool $alwaysShowOverlay)
     {
         $this->alwaysShowOverlay = $alwaysShowOverlay;
     }
@@ -767,7 +877,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getAspectRatioHeight(): int
+    public function getAspectRatioHeight(): ?int
     {
         return $this->aspectRatioHeight;
     }
@@ -775,9 +885,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the value of the aspect ratio for the height of the media area.
      *
-     * @param int
+     * @param int $aspectRatioHeight
      */
-    public function setAspectRatioHeight($aspectRatioHeight)
+    public function setAspectRatioHeight(?int $aspectRatioHeight)
     {
         $this->aspectRatioHeight = $aspectRatioHeight;
     }
@@ -787,7 +897,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getAspectRatioWidth(): int
+    public function getAspectRatioWidth(): ?int
     {
         return $this->aspectRatioWidth;
     }
@@ -795,49 +905,49 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the value of the aspect ratio for the width of the media area.
      *
-     * @param int
+     * @param int $aspectRatioWidth
      */
-    public function setAspectRatioWidth($aspectRatioWidth)
+    public function setAspectRatioWidth(?int $aspectRatioWidth)
     {
         $this->aspectRatioWidth = $aspectRatioWidth;
     }
 
     /**
-     * Returns Indicates whether the player will start playback on load.
+     * Returns indicates whether the player will start playback on load.
      *
      * @return bool
      */
-    public function getAutoPlay(): bool
+    public function getAutoPlay(): ?bool
     {
         return $this->autoPlay;
     }
 
     /**
-     * Set Indicates whether the player will start playback on load.
+     * Set indicates whether the player will start playback on load.
      *
-     * @param bool
+     * @param bool $autoPlay
      */
-    public function setAutoPlay($autoPlay)
+    public function setAutoPlay(?bool $autoPlay)
     {
         $this->autoPlay = $autoPlay;
     }
 
     /**
-     * Returns Indicates whether the player will self-initialize on load.
+     * Returns indicates whether the player will self-initialize on load.
      *
      * @return bool
      */
-    public function getAutoInitialize(): bool
+    public function getAutoInitialize(): ?bool
     {
         return $this->autoInitialize;
     }
 
     /**
-     * Set Indicates whether the player will self-initialize on load.
+     * Set indicates whether the player will self-initialize on load.
      *
-     * @param bool
+     * @param bool $autoInitialize
      */
-    public function setAutoInitialize($autoInitialize)
+    public function setAutoInitialize(?bool $autoInitialize)
     {
         $this->autoInitialize = $autoInitialize;
     }
@@ -847,7 +957,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getBackgroundImageUrl(): string
+    public function getBackgroundImageUrl(): ?string
     {
         return $this->backgroundImageUrl;
     }
@@ -855,29 +965,33 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set URL for a custom background image.
      *
-     * @param string
+     * @param string $backgroundImageUrl
      */
-    public function setBackgroundImageUrl($backgroundImageUrl)
+    public function setBackgroundImageUrl(?string $backgroundImageUrl)
     {
         $this->backgroundImageUrl = $backgroundImageUrl;
     }
 
     /**
-     * Returns Identifier for the color scheme assigned to this player.
+     * Returns identifier for the color scheme assigned to this player.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getColorSchemeId(): UriInterface
+    public function getColorSchemeId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->colorSchemeId) {
+            return new Uri();
+        }
+
         return $this->colorSchemeId;
     }
 
     /**
-     * Set Identifier for the color scheme assigned to this player.
+     * Set identifier for the color scheme assigned to this player.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface $colorSchemeId
      */
-    public function setColorSchemeId($colorSchemeId)
+    public function setColorSchemeId(\Psr\Http\Message\UriInterface $colorSchemeId)
     {
         $this->colorSchemeId = $colorSchemeId;
     }
@@ -887,7 +1001,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getColumns(): int
+    public function getColumns(): ?int
     {
         return $this->columns;
     }
@@ -895,29 +1009,29 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the number of columns in the release list.
      *
-     * @param int
+     * @param int $columns
      */
-    public function setColumns($columns)
+    public function setColumns(?int $columns)
     {
         $this->columns = $columns;
     }
 
     /**
-     * Returns Reserved for future use. The default value is false.
+     * Returns reserved for future use. The default value is false.
      *
      * @return bool
      */
-    public function getCompatibilityMode(): bool
+    public function getCompatibilityMode(): ?bool
     {
         return $this->compatibilityMode;
     }
 
     /**
-     * Set Reserved for future use. The default value is false.
+     * Set reserved for future use. The default value is false.
      *
-     * @param bool
+     * @param bool $compatibilityMode
      */
-    public function setCompatibilityMode($compatibilityMode)
+    public function setCompatibilityMode(?bool $compatibilityMode)
     {
         $this->compatibilityMode = $compatibilityMode;
     }
@@ -927,7 +1041,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getControlLayoutXml(): string
+    public function getControlLayoutXml(): ?string
     {
         return $this->controlLayoutXml;
     }
@@ -935,49 +1049,49 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set XML layout content for the player control rack.
      *
-     * @param string
+     * @param string $controlLayoutXml
      */
-    public function setControlLayoutXml($controlLayoutXml)
+    public function setControlLayoutXml(?string $controlLayoutXml)
     {
         $this->controlLayoutXml = $controlLayoutXml;
     }
 
     /**
-     * Returns Height of the player control rack.
+     * Returns height of the player control rack.
      *
      * @return int
      */
-    public function getControlRackHeight(): int
+    public function getControlRackHeight(): ?int
     {
         return $this->controlRackHeight;
     }
 
     /**
-     * Set Height of the player control rack.
+     * Set height of the player control rack.
      *
-     * @param int
+     * @param int $controlRackHeight
      */
-    public function setControlRackHeight($controlRackHeight)
+    public function setControlRackHeight(?int $controlRackHeight)
     {
         $this->controlRackHeight = $controlRackHeight;
     }
 
     /**
-     * Returns Custom CSS content for the player.
+     * Returns custom CSS content for the player.
      *
      * @return string
      */
-    public function getCustomCss(): string
+    public function getCustomCss(): ?string
     {
         return $this->customCss;
     }
 
     /**
-     * Set Custom CSS content for the player.
+     * Set custom CSS content for the player.
      *
-     * @param string
+     * @param string $customCss
      */
-    public function setCustomCss($customCss)
+    public function setCustomCss(?string $customCss)
     {
         $this->customCss = $customCss;
     }
@@ -995,49 +1109,49 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set URLs to remote custom CSS content for the player.
      *
-     * @param string[]
+     * @param string[] $customCssUrls
      */
-    public function setCustomCssUrls($customCssUrls)
+    public function setCustomCssUrls(array $customCssUrls)
     {
         $this->customCssUrls = $customCssUrls;
     }
 
     /**
-     * Returns Custom HTML content for the player (not currently used).
+     * Returns custom HTML content for the player (not currently used).
      *
      * @return string
      */
-    public function getCustomHtml(): string
+    public function getCustomHtml(): ?string
     {
         return $this->customHtml;
     }
 
     /**
-     * Set Custom HTML content for the player (not currently used).
+     * Set custom HTML content for the player (not currently used).
      *
-     * @param string
+     * @param string $customHtml
      */
-    public function setCustomHtml($customHtml)
+    public function setCustomHtml(?string $customHtml)
     {
         $this->customHtml = $customHtml;
     }
 
     /**
-     * Returns Custom JavaScript content for the player.
+     * Returns custom JavaScript content for the player.
      *
      * @return string
      */
-    public function getCustomJavaScript(): string
+    public function getCustomJavaScript(): ?string
     {
         return $this->customJavaScript;
     }
 
     /**
-     * Set Custom JavaScript content for the player.
+     * Set custom JavaScript content for the player.
      *
-     * @param string
+     * @param string $customJavaScript
      */
-    public function setCustomJavaScript($customJavaScript)
+    public function setCustomJavaScript(?string $customJavaScript)
     {
         $this->customJavaScript = $customJavaScript;
     }
@@ -1055,17 +1169,17 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set URLs to custom JavaScript content for the player.
      *
-     * @param string[]
+     * @param string[] $customJavaScriptUrls
      */
-    public function setCustomJavaScriptUrls($customJavaScriptUrls)
+    public function setCustomJavaScriptUrls(array $customJavaScriptUrls)
     {
         $this->customJavaScriptUrls = $customJavaScriptUrls;
     }
 
     /**
-     * Returns Additional attributes to include in the player HTML.
+     * Returns additional attributes to include in the player HTML.
      *
-     * @return string[]
+     * @return array
      */
     public function getCustomProperties(): array
     {
@@ -1073,11 +1187,11 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set Additional attributes to include in the player HTML.
+     * Set additional attributes to include in the player HTML.
      *
-     * @param array<string, string>
+     * @param array $customProperties
      */
-    public function setCustomProperties($customProperties)
+    public function setCustomProperties(array $customProperties)
     {
         $this->customProperties = $customProperties;
     }
@@ -1087,7 +1201,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -1095,29 +1209,29 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the description of this object.
      *
-     * @param string
+     * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(?string $description)
     {
         $this->description = $description;
     }
 
     /**
-     * Returns Whether is player is available for customer retrieval.
+     * Returns whether is player is available for customer retrieval.
      *
      * @return bool
      */
-    public function getDisabled(): bool
+    public function getDisabled(): ?bool
     {
         return $this->disabled;
     }
 
     /**
-     * Set Whether is player is available for customer retrieval.
+     * Set whether is player is available for customer retrieval.
      *
-     * @param bool
+     * @param bool $disabled
      */
-    public function setDisabled($disabled)
+    public function setDisabled(?bool $disabled)
     {
         $this->disabled = $disabled;
     }
@@ -1125,39 +1239,43 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the identifier for the advertising policy to use when the player is embedded in another site.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getEmbedAdPolicyId(): UriInterface
+    public function getEmbedAdPolicyId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->embedAdPolicyId) {
+            return new Uri();
+        }
+
         return $this->embedAdPolicyId;
     }
 
     /**
      * Set the identifier for the advertising policy to use when the player is embedded in another site.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface $embedAdPolicyId
      */
-    public function setEmbedAdPolicyId($embedAdPolicyId)
+    public function setEmbedAdPolicyId(\Psr\Http\Message\UriInterface $embedAdPolicyId)
     {
         $this->embedAdPolicyId = $embedAdPolicyId;
     }
 
     /**
-     * Returns Indicates whether embedded players will be allowed to be viewed in fullscreen mode.
+     * Returns indicates whether embedded players will be allowed to be viewed in fullscreen mode.
      *
      * @return bool
      */
-    public function getEmbedAllowFullScreen(): bool
+    public function getEmbedAllowFullScreen(): ?bool
     {
         return $this->embedAllowFullScreen;
     }
 
     /**
-     * Set Indicates whether embedded players will be allowed to be viewed in fullscreen mode.
+     * Set indicates whether embedded players will be allowed to be viewed in fullscreen mode.
      *
-     * @param bool
+     * @param bool $embedAllowFullScreen
      */
-    public function setEmbedAllowFullScreen($embedAllowFullScreen)
+    public function setEmbedAllowFullScreen(?bool $embedAllowFullScreen)
     {
         $this->embedAllowFullScreen = $embedAllowFullScreen;
     }
@@ -1167,7 +1285,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getEmbedHeight(): int
+    public function getEmbedHeight(): ?int
     {
         return $this->embedHeight;
     }
@@ -1175,9 +1293,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the default height of the player when embedded in another site.
      *
-     * @param int
+     * @param int $embedHeight
      */
-    public function setEmbedHeight($embedHeight)
+    public function setEmbedHeight(?int $embedHeight)
     {
         $this->embedHeight = $embedHeight;
     }
@@ -1185,19 +1303,23 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the identifier for the restriction to apply to this player when embedded in another site.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getEmbedRestrictionId(): UriInterface
+    public function getEmbedRestrictionId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->embedRestrictionId) {
+            return new Uri();
+        }
+
         return $this->embedRestrictionId;
     }
 
     /**
      * Set the identifier for the restriction to apply to this player when embedded in another site.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface $embedRestrictionId
      */
-    public function setEmbedRestrictionId($embedRestrictionId)
+    public function setEmbedRestrictionId(\Psr\Http\Message\UriInterface $embedRestrictionId)
     {
         $this->embedRestrictionId = $embedRestrictionId;
     }
@@ -1207,7 +1329,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getEmbedWidth(): int
+    public function getEmbedWidth(): ?int
     {
         return $this->embedWidth;
     }
@@ -1215,9 +1337,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the default width of the player when embedded in another site.
      *
-     * @param int
+     * @param int $embedWidth
      */
-    public function setEmbedWidth($embedWidth)
+    public function setEmbedWidth(?int $embedWidth)
     {
         $this->embedWidth = $embedWidth;
     }
@@ -1235,29 +1357,29 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the set of plug-ins for this player.
      *
-     * @param PlugInInstance[]
+     * @param PlugInInstance[] $enabledPlugIns
      */
-    public function setEnabledPlugIns($enabledPlugIns)
+    public function setEnabledPlugIns(array $enabledPlugIns)
     {
         $this->enabledPlugIns = $enabledPlugIns;
     }
 
     /**
-     * Returns Indicates if the player responds to commands from an IFrame parent element.
+     * Returns indicates if the player responds to commands from an IFrame parent element.
      *
      * @return bool
      */
-    public function getEnableExternalController(): bool
+    public function getEnableExternalController(): ?bool
     {
         return $this->enableExternalController;
     }
 
     /**
-     * Set Indicates if the player responds to commands from an IFrame parent element.
+     * Set indicates if the player responds to commands from an IFrame parent element.
      *
-     * @param bool
+     * @param bool $enableExternalController
      */
-    public function setEnableExternalController($enableExternalController)
+    public function setEnableExternalController(?bool $enableExternalController)
     {
         $this->enableExternalController = $enableExternalController;
     }
@@ -1267,7 +1389,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getEndCardFeedUrl(): string
+    public function getEndCardFeedUrl(): ?string
     {
         return $this->endCardFeedUrl;
     }
@@ -1275,9 +1397,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the URL of the feed that will populate the related items list end card.
      *
-     * @param string
+     * @param string $endCardFeedUrl
      */
-    public function setEndCardFeedUrl($endCardFeedUrl)
+    public function setEndCardFeedUrl(?string $endCardFeedUrl)
     {
         $this->endCardFeedUrl = $endCardFeedUrl;
     }
@@ -1287,7 +1409,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getFailoverHtml(): string
+    public function getFailoverHtml(): ?string
     {
         return $this->failoverHtml;
     }
@@ -1295,29 +1417,29 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the custom failover HTML.
      *
-     * @param string
+     * @param string $failoverHtml
      */
-    public function setFailoverHtml($failoverHtml)
+    public function setFailoverHtml(?string $failoverHtml)
     {
         $this->failoverHtml = $failoverHtml;
     }
 
     /**
-     * Returns Reserved for future use. The default value is null.
+     * Returns reserved for future use. The default value is null.
      *
      * @return string
      */
-    public function getFallbackPdk(): string
+    public function getFallbackPdk(): ?string
     {
         return $this->fallbackPdk;
     }
 
     /**
-     * Set Reserved for future use. The default value is null.
+     * Set reserved for future use. The default value is null.
      *
-     * @param string
+     * @param string $fallbackPdk
      */
-    public function setFallbackPdk($fallbackPdk)
+    public function setFallbackPdk(?string $fallbackPdk)
     {
         $this->fallbackPdk = $fallbackPdk;
     }
@@ -1327,7 +1449,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getFeedUrl(): string
+    public function getFeedUrl(): ?string
     {
         return $this->feedUrl;
     }
@@ -1335,9 +1457,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the URL of the player's default feed.
      *
-     * @param string
+     * @param string $feedUrl
      */
-    public function setFeedUrl($feedUrl)
+    public function setFeedUrl(?string $feedUrl)
     {
         $this->feedUrl = $feedUrl;
     }
@@ -1347,7 +1469,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getFeedUrlParams(): string
+    public function getFeedUrlParams(): ?string
     {
         return $this->feedUrlParams;
     }
@@ -1355,29 +1477,29 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the request parameters to include in the feed request.
      *
-     * @param string
+     * @param string $feedUrlParams
      */
-    public function setFeedUrlParams($feedUrlParams)
+    public function setFeedUrlParams(?string $feedUrlParams)
     {
         $this->feedUrlParams = $feedUrlParams;
     }
 
     /**
-     * Returns An alternate identifier for this object that is unique within the owning account.
+     * Returns an alternate identifier for this object that is unique within the owning account.
      *
      * @return string
      */
-    public function getGuid(): string
+    public function getGuid(): ?string
     {
         return $this->guid;
     }
 
     /**
-     * Set An alternate identifier for this object that is unique within the owning account.
+     * Set an alternate identifier for this object that is unique within the owning account.
      *
-     * @param string
+     * @param string $guid
      */
-    public function setGuid($guid)
+    public function setGuid(?string $guid)
     {
         $this->guid = $guid;
     }
@@ -1387,7 +1509,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getHeaderImageHeight(): int
+    public function getHeaderImageHeight(): ?int
     {
         return $this->headerImageHeight;
     }
@@ -1395,9 +1517,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the height of the header image.
      *
-     * @param int
+     * @param int $headerImageHeight
      */
-    public function setHeaderImageHeight($headerImageHeight)
+    public function setHeaderImageHeight(?int $headerImageHeight)
     {
         $this->headerImageHeight = $headerImageHeight;
     }
@@ -1407,7 +1529,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getHeaderImageUrl(): string
+    public function getHeaderImageUrl(): ?string
     {
         return $this->headerImageUrl;
     }
@@ -1415,9 +1537,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the URL of the header image.
      *
-     * @param string
+     * @param string $headerImageUrl
      */
-    public function setHeaderImageUrl($headerImageUrl)
+    public function setHeaderImageUrl(?string $headerImageUrl)
     {
         $this->headerImageUrl = $headerImageUrl;
     }
@@ -1427,7 +1549,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getHeight(): int
+    public function getHeight(): ?int
     {
         return $this->height;
     }
@@ -1435,29 +1557,53 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the height of the player.
      *
-     * @param int
+     * @param int $height
      */
-    public function setHeight($height)
+    public function setHeight(?int $height)
     {
         $this->height = $height;
     }
 
     /**
-     * Returns Whether to include the default player CSS file in the player HTML page.
+     * Returns the globally unique URI of this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->id) {
+            return new Uri();
+        }
+
+        return $this->id;
+    }
+
+    /**
+     * Set the globally unique URI of this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $id
+     */
+    public function setId(\Psr\Http\Message\UriInterface $id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Returns whether to include the default player CSS file in the player HTML page.
      *
      * @return bool
      */
-    public function getIncludeDefaultCss(): bool
+    public function getIncludeDefaultCss(): ?bool
     {
         return $this->includeDefaultCss;
     }
 
     /**
-     * Set Whether to include the default player CSS file in the player HTML page.
+     * Set whether to include the default player CSS file in the player HTML page.
      *
-     * @param bool
+     * @param bool $includeDefaultCss
      */
-    public function setIncludeDefaultCss($includeDefaultCss)
+    public function setIncludeDefaultCss(?bool $includeDefaultCss)
     {
         $this->includeDefaultCss = $includeDefaultCss;
     }
@@ -1467,7 +1613,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getItemsPerPage(): int
+    public function getItemsPerPage(): ?int
     {
         return $this->itemsPerPage;
     }
@@ -1475,9 +1621,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the number of items to make visible in each page of the release list.
      *
-     * @param int
+     * @param int $itemsPerPage
      */
-    public function setItemsPerPage($itemsPerPage)
+    public function setItemsPerPage(?int $itemsPerPage)
     {
         $this->itemsPerPage = $itemsPerPage;
     }
@@ -1485,25 +1631,29 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the identifier for the layout assigned to this player.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getLayoutId(): UriInterface
+    public function getLayoutId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->layoutId) {
+            return new Uri();
+        }
+
         return $this->layoutId;
     }
 
     /**
      * Set the identifier for the layout assigned to this player.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface $layoutId
      */
-    public function setLayoutId($layoutId)
+    public function setLayoutId(\Psr\Http\Message\UriInterface $layoutId)
     {
         $this->layoutId = $layoutId;
     }
 
     /**
-     * Returns A list of categories that will appear in the category list.
+     * Returns a list of categories that will appear in the category list.
      *
      * @return string[]
      */
@@ -1513,11 +1663,11 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set A list of categories that will appear in the category list.
+     * Set a list of categories that will appear in the category list.
      *
-     * @param string[]
+     * @param string[] $limitToCategories
      */
-    public function setLimitToCategories($limitToCategories)
+    public function setLimitToCategories(array $limitToCategories)
     {
         $this->limitToCategories = $limitToCategories;
     }
@@ -1525,9 +1675,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the destination URL for when a user clicks the player video area.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return string
      */
-    public function getLinkUrl(): UriInterface
+    public function getLinkUrl(): ?string
     {
         return $this->linkUrl;
     }
@@ -1535,29 +1685,29 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the destination URL for when a user clicks the player video area.
      *
-     * @param string
+     * @param string $linkUrl
      */
-    public function setLinkUrl($linkUrl)
+    public function setLinkUrl(?string $linkUrl)
     {
         $this->linkUrl = $linkUrl;
     }
 
     /**
-     * Returns Whether this object currently allows updates.
+     * Returns whether this object currently allows updates.
      *
      * @return bool
      */
-    public function getLocked(): bool
+    public function getLocked(): ?bool
     {
         return $this->locked;
     }
 
     /**
-     * Set Whether this object currently allows updates.
+     * Set whether this object currently allows updates.
      *
-     * @param bool
+     * @param bool $locked
      */
-    public function setLocked($locked)
+    public function setLocked(?bool $locked)
     {
         $this->locked = $locked;
     }
@@ -1565,9 +1715,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the URL of the player overlay image.
      *
-     * @return \Psr\Http\Message\UriInterface
+     * @return string
      */
-    public function getOverlayImageUrl(): UriInterface
+    public function getOverlayImageUrl(): ?string
     {
         return $this->overlayImageUrl;
     }
@@ -1575,11 +1725,35 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the URL of the player overlay image.
      *
-     * @param string
+     * @param string $overlayImageUrl
      */
-    public function setOverlayImageUrl($overlayImageUrl)
+    public function setOverlayImageUrl(?string $overlayImageUrl)
     {
         $this->overlayImageUrl = $overlayImageUrl;
+    }
+
+    /**
+     * Returns the id of the account that owns this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getOwnerId(): \Psr\Http\Message\UriInterface
+    {
+        if (!$this->ownerId) {
+            return new Uri();
+        }
+
+        return $this->ownerId;
+    }
+
+    /**
+     * Set the id of the account that owns this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $ownerId
+     */
+    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
+    {
+        $this->ownerId = $ownerId;
     }
 
     /**
@@ -1587,7 +1761,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getPaddingBottom(): int
+    public function getPaddingBottom(): ?int
     {
         return $this->paddingBottom;
     }
@@ -1595,9 +1769,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the amount of padding to add to the bottom of the player host page.
      *
-     * @param int
+     * @param int $paddingBottom
      */
-    public function setPaddingBottom($paddingBottom)
+    public function setPaddingBottom(?int $paddingBottom)
     {
         $this->paddingBottom = $paddingBottom;
     }
@@ -1607,7 +1781,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getPaddingLeft(): int
+    public function getPaddingLeft(): ?int
     {
         return $this->paddingLeft;
     }
@@ -1615,9 +1789,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the amount of padding to add to the left side of the player host page.
      *
-     * @param int
+     * @param int $paddingLeft
      */
-    public function setPaddingLeft($paddingLeft)
+    public function setPaddingLeft(?int $paddingLeft)
     {
         $this->paddingLeft = $paddingLeft;
     }
@@ -1627,7 +1801,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getPaddingRight(): int
+    public function getPaddingRight(): ?int
     {
         return $this->paddingRight;
     }
@@ -1635,9 +1809,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the amount of padding to add to the right side of the player host page.
      *
-     * @param int
+     * @param int $paddingRight
      */
-    public function setPaddingRight($paddingRight)
+    public function setPaddingRight(?int $paddingRight)
     {
         $this->paddingRight = $paddingRight;
     }
@@ -1647,7 +1821,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getPaddingTop(): int
+    public function getPaddingTop(): ?int
     {
         return $this->paddingTop;
     }
@@ -1655,69 +1829,89 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the amount of padding to add to the top of the player host page.
      *
-     * @param int
+     * @param int $paddingTop
      */
-    public function setPaddingTop($paddingTop)
+    public function setPaddingTop(?int $paddingTop)
     {
         $this->paddingTop = $paddingTop;
     }
 
     /**
-     * Returns Reserved for future use. The default value is null.
+     * Returns reserved for future use. The default value is null.
      *
      * @return string
      */
-    public function getPdk(): string
+    public function getPdk(): ?string
     {
         return $this->pdk;
     }
 
     /**
-     * Set Reserved for future use. The default value is null.
+     * Set reserved for future use. The default value is null.
      *
-     * @param string
+     * @param string $pdk
      */
-    public function setPdk($pdk)
+    public function setPdk(?string $pdk)
     {
         $this->pdk = $pdk;
     }
 
     /**
-     * Returns Indicates if the player should automatically play the next release when one finishes.
+     * Returns the public identifier for this player when requested through the Player Service.
+     *
+     * @return string
+     */
+    public function getPid(): ?string
+    {
+        return $this->pid;
+    }
+
+    /**
+     * Set the public identifier for this player when requested through the Player Service.
+     *
+     * @param string $pid
+     */
+    public function setPid(?string $pid)
+    {
+        $this->pid = $pid;
+    }
+
+    /**
+     * Returns indicates if the player should automatically play the next release when one finishes.
      *
      * @return bool
      */
-    public function getPlayAll(): bool
+    public function getPlayAll(): ?bool
     {
         return $this->playAll;
     }
 
     /**
-     * Set Indicates if the player should automatically play the next release when one finishes.
+     * Set indicates if the player should automatically play the next release when one finishes.
      *
-     * @param bool
+     * @param bool $playAll
      */
-    public function setPlayAll($playAll)
+    public function setPlayAll(?bool $playAll)
     {
         $this->playAll = $playAll;
     }
 
     /**
-     * Returns Player URL used in the sharing features.
+     * Returns player URL used in the sharing features.
      *
      * @return string
      */
-    public function getPlayerUrl(): string
+    public function getPlayerUrl(): ?string
     {
         return $this->playerUrl;
     }
 
     /**
-     * Set Player URL used in the sharing features.
+     * Set player URL used in the sharing features.
      *
-     * @param string
+     * @param string $playerUrl
      */
-    public function setPlayerUrl($playerUrl)
+    public function setPlayerUrl(?string $playerUrl)
     {
         $this->playerUrl = $playerUrl;
     }
@@ -1727,7 +1921,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getPosterImageDefaultHeight(): int
+    public function getPosterImageDefaultHeight(): ?int
     {
         return $this->posterImageDefaultHeight;
     }
@@ -1735,9 +1929,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the default height to use for the poster image.
      *
-     * @param int
+     * @param int $posterImageDefaultHeight
      */
-    public function setPosterImageDefaultHeight($posterImageDefaultHeight)
+    public function setPosterImageDefaultHeight(?int $posterImageDefaultHeight)
     {
         $this->posterImageDefaultHeight = $posterImageDefaultHeight;
     }
@@ -1747,7 +1941,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getPosterImageDefaultWidth(): int
+    public function getPosterImageDefaultWidth(): ?int
     {
         return $this->posterImageDefaultWidth;
     }
@@ -1755,9 +1949,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the default width to use for the poster image.
      *
-     * @param int
+     * @param int $posterImageDefaultWidth
      */
-    public function setPosterImageDefaultWidth($posterImageDefaultWidth)
+    public function setPosterImageDefaultWidth(?int $posterImageDefaultWidth)
     {
         $this->posterImageDefaultWidth = $posterImageDefaultWidth;
     }
@@ -1767,7 +1961,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getPosterImageMetaAssetType(): string
+    public function getPosterImageMetaAssetType(): ?string
     {
         return $this->posterImageMetaAssetType;
     }
@@ -1775,9 +1969,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the meta asset type to use for the poster image.
      *
-     * @param string
+     * @param string $posterImageMetaAssetType
      */
-    public function setPosterImageMetaAssetType(string $posterImageMetaAssetType)
+    public function setPosterImageMetaAssetType(?string $posterImageMetaAssetType)
     {
         $this->posterImageMetaAssetType = $posterImageMetaAssetType;
     }
@@ -1787,7 +1981,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getPosterImagePreviewAssetType(): string
+    public function getPosterImagePreviewAssetType(): ?string
     {
         return $this->posterImagePreviewAssetType;
     }
@@ -1795,9 +1989,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the preview asset type to use for the poster image.
      *
-     * @param string
+     * @param string $posterImagePreviewAssetType
      */
-    public function setPosterImagePreviewAssetType($posterImagePreviewAssetType)
+    public function setPosterImagePreviewAssetType(?string $posterImagePreviewAssetType)
     {
         $this->posterImagePreviewAssetType = $posterImagePreviewAssetType;
     }
@@ -1815,9 +2009,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the media formats meant for use in this player.
      *
-     * @param string[]
+     * @param string[] $preferredFormats
      */
-    public function setPreferredFormats($preferredFormats)
+    public function setPreferredFormats(array $preferredFormats)
     {
         $this->preferredFormats = $preferredFormats;
     }
@@ -1835,17 +2029,17 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the runtimes meant for use in the player.
      *
-     * @param string[]
+     * @param string[] $preferredRuntimes
      */
-    public function setPreferredRuntimes($preferredRuntimes)
+    public function setPreferredRuntimes(array $preferredRuntimes)
     {
         $this->preferredRuntimes = $preferredRuntimes;
     }
 
     /**
-     * Returns Heights of the regions in the layout.
+     * Returns heights of the regions in the layout.
      *
-     * @return int[]
+     * @return array
      */
     public function getRegionHeights(): array
     {
@@ -1853,19 +2047,19 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set Heights of the regions in the layout.
+     * Set heights of the regions in the layout.
      *
-     * @param array<string, Integer>
+     * @param array $regionHeights
      */
-    public function setRegionHeights($regionHeights)
+    public function setRegionHeights(array $regionHeights)
     {
         $this->regionHeights = $regionHeights;
     }
 
     /**
-     * Returns Widths of the regions in the layout.
+     * Returns widths of the regions in the layout.
      *
-     * @return int[]
+     * @return array
      */
     public function getRegionWidths(): array
     {
@@ -1873,11 +2067,11 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     }
 
     /**
-     * Set Widths of the regions in the layout.
+     * Set widths of the regions in the layout.
      *
-     * @param array<string, Integer>
+     * @param array $regionWidths
      */
-    public function setRegionWidths($regionWidths)
+    public function setRegionWidths(array $regionWidths)
     {
         $this->regionWidths = $regionWidths;
     }
@@ -1887,7 +2081,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getReleaseUrlParams(): string
+    public function getReleaseUrlParams(): ?string
     {
         return $this->releaseUrlParams;
     }
@@ -1895,9 +2089,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set URL parameters to add to Public URL requests.
      *
-     * @param string
+     * @param string $releaseUrlParams
      */
-    public function setReleaseUrlParams($releaseUrlParams)
+    public function setReleaseUrlParams(?string $releaseUrlParams)
     {
         $this->releaseUrlParams = $releaseUrlParams;
     }
@@ -1905,199 +2099,207 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the identifier of the restriction to apply to this player.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getRestrictionId(): UriInterface
+    public function getRestrictionId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->restrictionId) {
+            return new Uri();
+        }
+
         return $this->restrictionId;
     }
 
     /**
      * Set the identifier of the restriction to apply to this player.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface $restrictionId
      */
-    public function setRestrictionId($restrictionId)
+    public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId)
     {
         $this->restrictionId = $restrictionId;
     }
 
     /**
-     * Returns Indicates whether to display the air date in the release list component.
+     * Returns indicates whether to display the air date in the release list component.
      *
      * @return bool
      */
-    public function getShowAirdate(): bool
+    public function getShowAirdate(): ?bool
     {
         return $this->showAirdate;
     }
 
     /**
-     * Set Indicates whether to display the air date in the release list component.
+     * Set indicates whether to display the air date in the release list component.
      *
-     * @param bool
+     * @param bool $showAirdate
      */
-    public function setShowAirdate($showAirdate)
+    public function setShowAirdate(?bool $showAirdate)
     {
         $this->showAirdate = $showAirdate;
     }
 
     /**
-     * Returns Indicates whether to include the All option in the category list component.
+     * Returns indicates whether to include the All option in the category list component.
      *
      * @return bool
      */
-    public function getShowAllChoice(): bool
+    public function getShowAllChoice(): ?bool
     {
         return $this->showAllChoice;
     }
 
     /**
-     * Set Indicates whether to include the All option in the category list component.
+     * Set indicates whether to include the All option in the category list component.
      *
-     * @param bool
+     * @param bool $showAllChoice
      */
-    public function setShowAllChoice($showAllChoice)
+    public function setShowAllChoice(?bool $showAllChoice)
     {
         $this->showAllChoice = $showAllChoice;
     }
 
     /**
-     * Returns Indicates whether to display the author in the release list and clip info components.
+     * Returns indicates whether to display the author in the release list and clip info components.
      *
      * @return bool
      */
-    public function getShowAuthor(): bool
+    public function getShowAuthor(): ?bool
     {
         return $this->showAuthor;
     }
 
     /**
-     * Set Indicates whether to display the author in the release list and clip info components.
+     * Set indicates whether to display the author in the release list and clip info components.
      *
-     * @param bool
+     * @param bool $showAuthor
      */
-    public function setShowAuthor($showAuthor)
+    public function setShowAuthor(?bool $showAuthor)
     {
         $this->showAuthor = $showAuthor;
     }
 
     /**
-     * Returns Indicates whether to display the media bitrate in the release list component.
+     * Returns indicates whether to display the media bitrate in the release list component.
      *
      * @return bool
      */
-    public function getShowBitrate(): bool
+    public function getShowBitrate(): ?bool
     {
         return $this->showBitrate;
     }
 
     /**
-     * Set Indicates whether to display the media bitrate in the release list component.
+     * Set indicates whether to display the media bitrate in the release list component.
      *
-     * @param bool
+     * @param bool $showBitrate
      */
-    public function setShowBitrate($showBitrate)
+    public function setShowBitrate(?bool $showBitrate)
     {
         $this->showBitrate = $showBitrate;
     }
 
     /**
-     * Returns Indicates whether to show the full video time in the player control rack.
+     * Returns indicates whether to show the full video time in the player control rack.
      *
      * @return bool
      */
-    public function getShowFullTime(): bool
+    public function getShowFullTime(): ?bool
     {
         return $this->showFullTime;
     }
 
     /**
-     * Set Indicates whether to show the full video time in the player control rack.
+     * Set indicates whether to show the full video time in the player control rack.
      *
-     * @param bool
+     * @param bool $showFullTime
      */
-    public function setShowFullTime($showFullTime)
+    public function setShowFullTime(?bool $showFullTime)
     {
         $this->showFullTime = $showFullTime;
     }
 
     /**
-     * Returns Indicates whether to show the Most Popular option in the category list component.
+     * Returns indicates whether to show the Most Popular option in the category list component.
      *
      * @return bool
      */
-    public function getShowMostPopularChoice(): bool
+    public function getShowMostPopularChoice(): ?bool
     {
         return $this->showMostPopularChoice;
     }
 
     /**
-     * Set Indicates whether to show the Most Popular option in the category list component.
+     * Set indicates whether to show the Most Popular option in the category list component.
      *
-     * @param bool
+     * @param bool $showMostPopularChoice
      */
-    public function setShowMostPopularChoice($showMostPopularChoice)
+    public function setShowMostPopularChoice(?bool $showMostPopularChoice)
     {
         $this->showMostPopularChoice = $showMostPopularChoice;
     }
 
     /**
-     * Returns Indicates whether to display the previous and next buttons in the player control rack.
+     * Returns indicates whether to display the previous and next buttons in the player control rack.
      *
      * @return bool
      */
-    public function getShowNav(): bool
+    public function getShowNav(): ?bool
     {
         return $this->showNav;
     }
 
     /**
-     * Set Indicates whether to display the previous and next buttons in the player control rack.
+     * Set indicates whether to display the previous and next buttons in the player control rack.
      *
-     * @param bool
+     * @param bool $showNav
      */
-    public function setShowNav($showNav)
+    public function setShowNav(?bool $showNav)
     {
         $this->showNav = $showNav;
     }
 
     /**
-     * Returns Indicates whether to randomize the contents of the release list.
+     * Returns indicates whether to randomize the contents of the release list.
      *
      * @return bool
      */
-    public function getShuffle(): bool
+    public function getShuffle(): ?bool
     {
         return $this->shuffle;
     }
 
     /**
-     * Set Indicates whether to randomize the contents of the release list.
+     * Set indicates whether to randomize the contents of the release list.
      *
-     * @param bool
+     * @param bool $shuffle
      */
-    public function setShuffle($shuffle)
+    public function setShuffle(?bool $shuffle)
     {
         $this->shuffle = $shuffle;
     }
 
     /**
-     * Returns Identifier for the skin object to apply this player.
+     * Returns identifier for the skin object to apply this player.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getSkinId(): UriInterface
+    public function getSkinId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->skinId) {
+            return new Uri();
+        }
+
         return $this->skinId;
     }
 
     /**
-     * Set Identifier for the skin object to apply this player.
+     * Set identifier for the skin object to apply this player.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface $skinId
      */
-    public function setSkinId($skinId)
+    public function setSkinId(\Psr\Http\Message\UriInterface $skinId)
     {
         $this->skinId = $skinId;
     }
@@ -2107,7 +2309,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getThumbnailHeight(): int
+    public function getThumbnailHeight(): ?int
     {
         return $this->thumbnailHeight;
     }
@@ -2115,9 +2317,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the height of the thumbnail images in the release list.
      *
-     * @param int
+     * @param int $thumbnailHeight
      */
-    public function setThumbnailHeight($thumbnailHeight)
+    public function setThumbnailHeight(?int $thumbnailHeight)
     {
         $this->thumbnailHeight = $thumbnailHeight;
     }
@@ -2127,7 +2329,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getThumbnailWidth(): int
+    public function getThumbnailWidth(): ?int
     {
         return $this->thumbnailWidth;
     }
@@ -2135,9 +2337,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the width of the thumbnail images in the release list.
      *
-     * @param int
+     * @param int $thumbnailWidth
      */
-    public function setThumbnailWidth($thumbnailWidth)
+    public function setThumbnailWidth(?int $thumbnailWidth)
     {
         $this->thumbnailWidth = $thumbnailWidth;
     }
@@ -2147,7 +2349,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -2155,9 +2357,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the name of this object.
      *
-     * @param string
+     * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
     }
@@ -2165,19 +2367,23 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the date and time this object was last modified.
      *
-     * @return \DateTime
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
-    public function getUpdated(): \DateTime
+    public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
+        if (!$this->updated) {
+            return new NullDateTime();
+        }
+
         return $this->updated;
     }
 
     /**
      * Set the date and time this object was last modified.
      *
-     * @param int
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
-    public function setUpdated($updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
         $this->updated = $updated;
     }
@@ -2185,39 +2391,43 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Returns the id of the user that last modified this object.
      *
-     * @return UriInterface
+     * @return \Psr\Http\Message\UriInterface
      */
-    public function getUpdatedByUserId(): UriInterface
+    public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
+        if (!$this->updatedByUserId) {
+            return new Uri();
+        }
+
         return $this->updatedByUserId;
     }
 
     /**
      * Set the id of the user that last modified this object.
      *
-     * @param UriInterface
+     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
-    public function setUpdatedByUserId($updatedByUserId)
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {
         $this->updatedByUserId = $updatedByUserId;
     }
 
     /**
-     * Returns Indicates whether to float the control rack over the media area of the player.
+     * Returns indicates whether to float the control rack over the media area of the player.
      *
      * @return bool
      */
-    public function getUseFloatingControls(): bool
+    public function getUseFloatingControls(): ?bool
     {
         return $this->useFloatingControls;
     }
 
     /**
-     * Set Indicates whether to float the control rack over the media area of the player.
+     * Set indicates whether to float the control rack over the media area of the player.
      *
-     * @param bool
+     * @param bool $useFloatingControls
      */
-    public function setUseFloatingControls($useFloatingControls)
+    public function setUseFloatingControls(?bool $useFloatingControls)
     {
         $this->useFloatingControls = $useFloatingControls;
     }
@@ -2227,7 +2437,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getVersion(): int
+    public function getVersion(): ?int
     {
         return $this->version;
     }
@@ -2235,9 +2445,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set this object's modification version, used for optimistic locking.
      *
-     * @param int
+     * @param int $version
      */
-    public function setVersion($version)
+    public function setVersion(?int $version)
     {
         $this->version = $version;
     }
@@ -2247,7 +2457,7 @@ class Player extends ObjectBase implements PublicIdentifierInterface
      *
      * @return int
      */
-    public function getWidth(): int
+    public function getWidth(): ?int
     {
         return $this->width;
     }
@@ -2255,9 +2465,9 @@ class Player extends ObjectBase implements PublicIdentifierInterface
     /**
      * Set the width of the player.
      *
-     * @param int
+     * @param int $width
      */
-    public function setWidth($width)
+    public function setWidth(?int $width)
     {
         $this->width = $width;
     }

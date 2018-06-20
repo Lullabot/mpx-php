@@ -9,7 +9,7 @@
   "homepage": "http://bitbucket.com/lullabot/mpx-php",
   "license": "GPL-2.0+",
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.1",
     "guzzlehttp/guzzle": "^6.3",
     "guzzlehttp/psr7": "^1.0",
     "psr/log": "^1.0",

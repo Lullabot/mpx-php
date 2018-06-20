@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
 use Lullabot\Mpx\DataService\Media\AvailabilityWindow;
 use Lullabot\Mpx\DataService\Media\CategoryInfo;
@@ -86,11 +87,11 @@ class MediaTest extends ObjectTestBase
     public function getSetMethods()
     {
         $tests = parent::getSetMethods();
-        $tests['added'] = ['added', \DateTime::createFromFormat('U.u', '1299622592.000')];
-        $tests['updated'] = ['updated', \DateTime::createFromFormat('U.u', '1299624648.000')];
-        $tests['availableDate'] = ['availableDate', \DateTime::createFromFormat('U.u', '1230796800.000')];
-        $tests['expirationDate'] = ['expirationDate', \DateTime::createFromFormat('U.u', '1609401600.000')];
-        $tests['pubDate'] = ['pubDate', \DateTime::createFromFormat('U.u', '1256661120.000')];
+        $tests['added'] = ['added', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1299622592.000'))];
+        $tests['updated'] = ['updated', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1299624648.000'))];
+        $tests['availableDate'] = ['availableDate', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1230796800.000'))];
+        $tests['expirationDate'] = ['expirationDate', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1609401600.000'))];
+        $tests['pubDate'] = ['pubDate', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1256661120.000'))];
 
         unset($tests['availabilityWindows']);
         unset($tests['categories']);

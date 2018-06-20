@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Player;
 
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\Player\Player;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
@@ -47,8 +48,8 @@ class PlayerTest extends ObjectTestBase
     public function getSetMethods()
     {
         $tests = parent::getSetMethods();
-        $tests['added'] = ['added', \DateTime::createFromFormat('U.u', '1335377369.000')];
-        $tests['updated'] = ['updated', \DateTime::createFromFormat('U.u', '1335378125.000')];
+        $tests['added'] = ['added', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1335377369.000'))];
+        $tests['updated'] = ['updated', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1335378125.000'))];
 
         return $tests;
     }
