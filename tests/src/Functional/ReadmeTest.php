@@ -53,7 +53,7 @@ class ReadmeTest extends FunctionalTestBase
             ->setStartIndex(1)
             ->setEndIndex(1);
         $results = $mediaFactory->select($filter, $account);
-        foreach ($results as $index => $media) {
+        foreach ($results as $media) {
             // Replace the ID to the media item to load. You can find it under "History -> ID" in the MPX console.
             $id = $media->getId();
             $media = $mediaFactory->load($id)
