@@ -11,6 +11,20 @@ use Psr\Http\Message\UriInterface;
 interface ObjectInterface extends IdInterface, JsonInterface
 {
     /**
+     * Returns the globally unique URI of this object.
+     *
+     * @return UriInterface
+     */
+    public function getId(): UriInterface;
+
+    /**
+     * Set the globally unique URI of this object.
+     *
+     * @param UriInterface $id
+     */
+    public function setId(UriInterface $id);
+
+    /**
      * Returns the date and time that this object was created.
      *
      * @return DateTimeFormatInterface

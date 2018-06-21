@@ -36,7 +36,7 @@ class ResolveDomain extends ResolveBase
      */
     public function resolve(IdInterface $account): ResolveDomainResponse
     {
-        $key = md5($account->getId().static::SCHEMA_VERSION);
+        $key = md5($account->getMpxId().static::SCHEMA_VERSION);
         $item = $this->cache->getItem($key);
 
         if ($item->isHit()) {
@@ -46,8 +46,8 @@ class ResolveDomain extends ResolveBase
         $options = [
             'query' => [
                 'schema' => static::SCHEMA_VERSION,
-                '_accountId' => (string) $account->getId(),
-                'account' => (string) $account->getId(),
+                '_accountId' => (string) $account->getMpxId(),
+                'account' => (string) $account->getMpxId(),
             ],
         ];
 

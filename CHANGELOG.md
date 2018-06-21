@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - All traits for mpx data service objects have been removed to simplify updates
   using the console tool. This includes `AdPolicyDataTrait` and
   `PublicIdentifierTrait`.
+- Rename IdInterface methods to prevent name and type conflicts #104
 
 ## [0.4.0] - 2018-06-08
 

@@ -2,6 +2,8 @@
 
 namespace Lullabot\Mpx\DataService;
 
+use Psr\Http\Message\UriInterface;
+
 /**
  * Base class for common data used by all mpx objects.
  */
@@ -48,10 +50,26 @@ abstract class ObjectBase implements ObjectInterface
      */
     public function getJson()
     {
-        if (!$this->json) {
+        if (null === $this->json) {
             throw new \LogicException('This object has no original JSON representation available');
         }
 
         return $this->json;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMpxId(): UriInterface
+    {
+        return $this->getId();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMpxId(UriInterface $id)
+    {
+        $this->setId($id);
     }
 }
