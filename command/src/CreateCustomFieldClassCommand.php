@@ -157,7 +157,7 @@ EOD;
         list($namespace, $class) = $this->getClass($input, $mpxNamespace);
 
         $this->addProperty($class, $field);
-        $dataType = static::TYPE_MAP[$field->getDataType()];
+        $dataType = $this->getPhpDataType($field);
 
         $get = $class->addMethod('get'.ucfirst($field->getFieldName()));
         $get->setVisibility('public');
@@ -246,13 +246,27 @@ EOD;
             $property->setComment($field->getDescription());
             $property->addComment('');
         }
-        $dataType = static::TYPE_MAP[$field->getDataType()];
-        if ('Single' != $field->getDataStructure()) {
-            $dataType .= '[]';
-        }
+        $dataType = $this->getPhpDataType($field);
         $property->addComment('@var '.$dataType);
         if ($this->isCollectionType($dataType)) {
             $property->setValue([]);
         }
+    }
+
+    /**
+     * Get the PHP data type for a field, including mapping to arrays.
+     *
+     * @param Field $field
+     *
+     * @return string
+     */
+    private function getPhpDataType(Field $field): string
+    {
+        $dataType = static::TYPE_MAP[$field->getDataType()];
+        if ('Single' != $field->getDataStructure()) {
+            $dataType .= '[]';
+        }
+
+        return $dataType;
     }
 }
