@@ -69,11 +69,9 @@ interface ObjectInterface extends IdInterface, JsonInterface
     /**
      * Return custom fields attached to this object.
      *
-     * @param string $namespace The namespace of the fields to retrieve.
-     *
-     * @return CustomFieldInterface
+     * @return CustomFieldInterface[]
      */
-    public function getCustomFields(string $namespace);
+    public function getCustomFields();
 
     /**
      * Set the custom fields attached to this data object.

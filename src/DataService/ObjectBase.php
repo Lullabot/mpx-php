@@ -12,7 +12,7 @@ abstract class ObjectBase implements ObjectInterface
     /**
      * @var CustomFieldInterface[]
      */
-    protected $customFields;
+    protected $customFields = [];
 
     /**
      * The original JSON representation of this object.
@@ -24,9 +24,9 @@ abstract class ObjectBase implements ObjectInterface
     /**
      * {@inheritdoc}
      */
-    public function getCustomFields(string $namespace)
+    public function getCustomFields()
     {
-        return $this->customFields[$namespace];
+        return $this->customFields;
     }
 
     /**

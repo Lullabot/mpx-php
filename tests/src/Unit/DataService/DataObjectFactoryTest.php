@@ -3,9 +3,13 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\DataService\CustomFieldDiscovery;
+use Lullabot\Mpx\DataService\CustomFieldManager;
 use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
@@ -16,6 +20,8 @@ use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
+use Lullabot\Mpx\Tests\Unit\DataService\CustomField\NeverUsedCustomField;
+use Lullabot\Mpx\Tests\Unit\DataService\CustomField\SeriesCustomField;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Lock\StoreInterface;
@@ -204,9 +210,48 @@ class DataObjectFactoryTest extends TestCase
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
-        /** @var ObjectList $objectList */
         $media = $factory->loadByNumericId(2602559)->wait();
         $this->assertInstanceOf(Media::class, $media);
         $this->assertEquals('http://data.media.theplatform.com/media/data/Media/2602559', $media->getId());
+    }
+
+    /**
+     * Tests that defined custom fields classes are always attached.
+     *
+     * @covers ::deserialize
+     */
+    public function testAlwaysCreateCustomFieldClass()
+    {
+        // Register the mock custom fields used for this test.
+        AnnotationReader::addGlobalIgnoredName('class');
+        AnnotationRegistry::registerFile(__DIR__.'/../../../../src/DataService/Annotation/CustomField.php');
+        $discovery = new CustomFieldDiscovery('\\Lullabot\\Mpx\\Tests\\Unit\\DataService\\CustomField', 'Unit/DataService/CustomField', __DIR__.'/../..', new AnnotationReader());
+        $fieldManager = new CustomFieldManager($discovery);
+        $manager = DataServiceManager::basicDiscovery($fieldManager);
+
+        $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
+        $client = $this->getMockClient([
+            new JsonResponse(200, [], 'signin-success.json'),
+            new JsonResponse(200, [], 'resolveAllUrls.json'),
+            new JsonResponse(200, [], 'media-object.json'),
+        ]);
+        $user = new User('mpx/username', 'password');
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $authenticatedClient = new AuthenticatedClient($client, $session);
+        $factory = new DataObjectFactory($service, $authenticatedClient);
+
+        /** @var Media $media */
+        $media = $factory->loadByNumericId(2602559)->wait();
+        $customFields = $media->getCustomFields();
+        $this->assertInstanceOf(SeriesCustomField::class, $customFields['http://www.example.com/xml']);
+
+        // This namespace must not be present in media-object.json.
+        /** @var NeverUsedCustomField $neverUsed */
+        $neverUsed = $customFields['http://www.example.com/never-used'];
+        $this->assertInstanceOf(NeverUsedCustomField::class, $neverUsed);
+        $this->assertEmpty($neverUsed->getNeverUsed());
     }
 }

@@ -25,7 +25,7 @@ class ObjectBaseTest extends TestCase
             'http://www.example.com/xml' => $this->createMock(CustomFieldInterface::class),
         ];
         $o->setCustomFields($customFields);
-        $this->assertEquals($customFields['http://www.example.com/xml'], $o->getCustomFields('http://www.example.com/xml'));
+        $this->assertEquals($customFields, $o->getCustomFields());
     }
 
     /**

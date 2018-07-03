@@ -128,6 +128,28 @@ class DataObjectFactory
 
         $object = $this->getObjectSerializer($cached)->deserialize($data, $class, 'json');
 
+        // Adds any missing custom field classes. A given object may not
+        // contain any set fields in a given custom field namespace. In that
+        // case, the serializer will never create a field class. This is fine
+        // until calling code wants to check to see if a given field exists.
+        // By ensuring we add in any missing custom field definitions, we
+        // ensure a valid object is returned instead of null.
+        if ($object instanceof ObjectInterface) {
+            $customFields = $object->getCustomFields();
+            $remaining = array_diff_key($this->dataService->getCustomFields(), $customFields);
+
+            /**
+             * @var string
+             * @var DiscoveredCustomField $field
+             */
+            foreach ($remaining as $namespace => $field) {
+                $namespaceClass = $field->getClass();
+                $customFields[$namespace] = new $namespaceClass();
+            }
+
+            $object->setCustomFields($customFields);
+        }
+
         if ($object instanceof JsonInterface) {
             $object->setJson($data);
         }
@@ -170,9 +192,10 @@ class DataObjectFactory
     /**
      * Query for MPX data using with parameters.
      *
-     * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact matches.
-     * @param IdInterface     $account         (optional) The account context to use in the request. Defaults to the account
-     *                                         associated with the authenticated client.
+     * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact
+     *                                         matches.
+     * @param IdInterface     $account         (optional) The account context to use in the request. Defaults to the
+     *                                         account associated with the authenticated client.
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
@@ -186,9 +209,10 @@ class DataObjectFactory
      *
      * @see \Lullabot\Mpx\DataService\DataObjectFactory::select
      *
-     * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact matches.
-     * @param IdInterface     $account         (optional) The account context to use in the request. Note that most requests require
-     *                                         an account context.
+     * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact
+     *                                         matches.
+     * @param IdInterface     $account         (optional) The account context to use in the request. Note that most
+     *                                         requests require an account context.
      *
      * @return PromiseInterface A promise to return an ObjectList.
      */
