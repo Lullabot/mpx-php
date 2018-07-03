@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - YYYY-MM-DD
+
+### Changed
+
+- `\Lullabot\Mpx\DataService\ObjectInterface::getCustomFields()` now returns
+  an array of all custom field classes and does not take a namespace
+  parameter. #135
+- A custom field class is loaded in objects even if the response data does not
+  contain any fields in that namespace. #135
+
 ## [0.5.0] - 2018-06-21
 
 ### Added
