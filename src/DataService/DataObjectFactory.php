@@ -139,7 +139,7 @@ class DataObjectFactory
             $remaining = array_diff_key($this->dataService->getCustomFields(), $customFields);
 
             /**
-             * @var string
+             * @var string $namespace
              * @var DiscoveredCustomField $field
              */
             foreach ($remaining as $namespace => $field) {
