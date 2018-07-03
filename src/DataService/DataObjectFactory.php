@@ -138,10 +138,8 @@ class DataObjectFactory
             $customFields = $object->getCustomFields();
             $remaining = array_diff_key($this->dataService->getCustomFields(), $customFields);
 
-            /**
-             * @var string $namespace
-             * @var DiscoveredCustomField $field
-             */
+            /** @var string $namespace */
+            /** @var DiscoveredCustomField $field */
             foreach ($remaining as $namespace => $field) {
                 $namespaceClass = $field->getClass();
                 $customFields[$namespace] = new $namespaceClass();
