@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- The library has been relicensed to MIT #136.
 - `\Lullabot\Mpx\DataService\ObjectInterface::getCustomFields()` now returns
   an array of all custom field classes and does not take a namespace
   parameter. #135
