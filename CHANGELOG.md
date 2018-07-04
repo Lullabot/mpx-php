@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   parameter. #135
 - A custom field class is loaded in objects even if the response data does not
   contain any fields in that namespace. #135
+- Fix not using the adapter's cache item #137
 
 ## [0.5.0] - 2018-06-21
 
