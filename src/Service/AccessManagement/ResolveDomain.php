@@ -2,7 +2,6 @@
 
 namespace Lullabot\Mpx\Service\AccessManagement;
 
-use Cache\Adapter\Common\CacheItem;
 use Lullabot\Mpx\DataService\IdInterface;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -58,7 +57,6 @@ class ResolveDomain extends ResolveBase
         $serializer = new Serializer($normalizers, $encoders);
 
         $resolved = $serializer->deserialize($response->getBody(), ResolveDomainResponse::class, 'json');
-        $item = new CacheItem($key);
         $item->set($resolved);
 
         // thePlatform provides no guidance on how long we can cache this for.

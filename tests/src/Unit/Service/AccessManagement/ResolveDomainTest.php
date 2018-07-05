@@ -88,10 +88,9 @@ class ResolveDomainTest extends TestCase
 
         $cache->expects($this->once())->method('save');
 
-        $item->expects($this->at(0))->method('isHit')
-            ->willReturn(false);
-        $item->expects($this->at(1))->method('isHit')
-            ->willReturn(true);
+        $item->expects($this->exactly(2))->method('isHit')
+            ->willReturnOnConsecutiveCalls(false, true);
+        $item->expects($this->at(0))->method('set');
 
         $resolveDomain = new ResolveDomain($authenticatedClient, $cache);
 
