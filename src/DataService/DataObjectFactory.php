@@ -159,9 +159,9 @@ class DataObjectFactory
     /**
      * Load an object from mpx.
      *
-     * @param \Psr\Http\Message\UriInterface $uri The URI to load from. This URI will always be converted to https,
-     *                                            making it safe to use directly from the ID of an mpx object.
-     * @param array           $options         (optional) An array of HTTP client options.
+     * @param \Psr\Http\Message\UriInterface $uri     The URI to load from. This URI will always be converted to https,
+     *                                                making it safe to use directly from the ID of an mpx object.
+     * @param array                          $options (optional) An array of HTTP client options.
      *
      * @return PromiseInterface A promise to return a \Lullabot\Mpx\DataService\ObjectInterface.
      */
