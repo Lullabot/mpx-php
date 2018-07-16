@@ -84,17 +84,18 @@ class DataObjectFactory
      * @param int         $id       The numeric ID to load.
      * @param IdInterface $account
      * @param bool        $readonly (optional) Load from the read-only service.
+     * @param array       $options  (optional) An array of HTTP client options.
      *
      * @return PromiseInterface
      */
-    public function loadByNumericId(int $id, IdInterface $account = null, bool $readonly = false)
+    public function loadByNumericId(int $id, IdInterface $account = null, bool $readonly = false, array $options = [])
     {
         $annotation = $this->dataService->getAnnotation();
         $base = $this->getBaseUri($annotation, $account, $readonly);
 
         $uri = new Uri($base.'/'.$id);
 
-        return $this->load($uri);
+        return $this->load($uri, $options);
     }
 
     /**
@@ -158,20 +159,23 @@ class DataObjectFactory
     /**
      * Load an object from mpx.
      *
-     * @param \Psr\Http\Message\UriInterface $uri The URI to load from. This URI will always be converted to https,
-     *                                            making it safe to use directly from the ID of an mpx object.
+     * @param \Psr\Http\Message\UriInterface $uri     The URI to load from. This URI will always be converted to https,
+     *                                                making it safe to use directly from the ID of an mpx object.
+     * @param array                          $options (optional) An array of HTTP client options.
      *
      * @return PromiseInterface A promise to return a \Lullabot\Mpx\DataService\ObjectInterface.
      */
-    public function load(UriInterface $uri): PromiseInterface
+    public function load(UriInterface $uri, array $options = []): PromiseInterface
     {
         /** @var DataService $annotation */
         $annotation = $this->dataService->getAnnotation();
-        $options = [
-            'query' => [
-                'schema' => $annotation->schemaVersion,
-                'form' => 'cjson',
-            ],
+
+        if (!isset($options['query'])) {
+            $options['query'] = [];
+        }
+        $options['query'] = $options['query'] += [
+            'schema' => $annotation->schemaVersion,
+            'form' => 'cjson',
         ];
 
         if ('http' == $uri->getScheme()) {
@@ -194,10 +198,11 @@ class DataObjectFactory
      *                                         matches.
      * @param IdInterface     $account         (optional) The account context to use in the request. Defaults to the
      *                                         account associated with the authenticated client.
+     * @param array           $options         (optional) An array of HTTP client options.
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
-    public function select(ObjectListQuery $objectListQuery = null, IdInterface $account = null): ObjectListIterator
+    public function select(ObjectListQuery $objectListQuery = null, IdInterface $account = null, array $options = []): ObjectListIterator
     {
         return new ObjectListIterator($this->selectRequest($objectListQuery, $account));
     }
@@ -211,23 +216,27 @@ class DataObjectFactory
      *                                         matches.
      * @param IdInterface     $account         (optional) The account context to use in the request. Note that most
      *                                         requests require an account context.
+     * @param array           $options         (optional) An array of HTTP client options.
      *
      * @return PromiseInterface A promise to return an ObjectList.
      */
-    public function selectRequest(ObjectListQuery $objectListQuery = null, IdInterface $account = null): PromiseInterface
+    public function selectRequest(ObjectListQuery $objectListQuery = null, IdInterface $account = null, array $options = []): PromiseInterface
     {
         if (!$objectListQuery) {
             $objectListQuery = new ObjectListQuery();
         }
 
         $annotation = $this->dataService->getAnnotation();
-        $options = [
-            'query' => $objectListQuery->toQueryParts() + [
+
+        if (!isset($options['query'])) {
+            $options['query'] = [];
+        }
+        $options['query'] = $options['query'] +
+            $objectListQuery->toQueryParts() + [
                 'schema' => $annotation->schemaVersion,
                 'form' => 'cjson',
                 'count' => true,
-            ],
-        ];
+            ];
 
         $uri = $this->getBaseUri($annotation, $account, true);
 
