@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Methods that load data from mpx now support passing in HTTP client options to
   Guzzle. This is primarily useful for implementations wishing to pass custom
   headers in the request, such as `Cache-Control: no-cache` to intermediate
-  proxies.
+  proxies. #138
 
 ## [0.6.0] - 2018-07-05
 
