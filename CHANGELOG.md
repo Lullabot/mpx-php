@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - YYYY-MM-DD
+
+### Added
+
+- Methods that load data from mpx now support passing in HTTP client options to
+  Guzzle. This is primarily useful for implementations wishing to pass custom
+  headers in the request, such as `Cache-Control: no-cache` to intermediate
+  proxies.
+
 ## [0.6.0] - 2018-07-05
 
 ### Changed
