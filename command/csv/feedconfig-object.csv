@@ -1,0 +1,43 @@
+FIELD NAME,ATTRIBUTES,DATA TYPE,DESCRIPTION
+adapterParameters,,String,The parameters that are passed to a custom feed adapter for processing at runtime
+added,,DateTime,The date and time that this object was created
+addedByUserId,,URI,The id of the user that created this object
+adminTags,,String[],The list of administrative workflow tags for the feed configuration
+adPolicyId,,URI,The id of the AdPolicythat is applied to the feed
+author,,String,The author of the feed content
+availableFields,,String[],The list of object fields that can be retrieved in a feed request. Feed clients can only request fields that are listed in this field
+baseQuery,,String,A filter applied to any items specified in the pinnedIds field and any items selected by the segmentQueriesfield
+cacheLifetime,,Duration,The minimum time that items in the cache are valid
+cacheRefreshStrategy,,String,The response behavior during a cache refresh
+defaultThumbnailAssetType,,String,The identifier for the default thumbnail for each item in the feed
+description,,String,The description of the feed
+disabled,,Boolean,Whether the feed is disabled
+endIndex,,Integer,The maximum number of items in the feed
+feedType,,String,The feed items' object type
+form,,String,The default format of the feed
+guid,,String,An alternate identifier for this object that is unique within the owning account
+id,,URI,The globally unique URI of this object
+itemLinkUrl,,String,The URL template that is used to create the value of each feed item's link field
+limitByAvailableDate,,Boolean,Whether to only include items that are currently available
+limitToApproved,,Boolean,Whether to only include items that are approved
+linkUrl,,String,The URL value of the feed's link field
+locked,,Boolean,Whether this object currently allows updates
+ownerId,,URI,The id of the account that owns this object
+pid,,URI Reference,The globally-unique public identifier that is used to request this feed
+pinnedIds,,Long[],"The IDs of specific items to include in the feed. These items are in addition to any selected by the segmentQueries field, and may be filtered by the baseQuery field"
+playerUrl,,String,The URL template that is used to create the value of each feed item's content.player.urlfield
+preferSortKeysOnSearch,,Boolean,Whether to use the sortKeys to sort items in the feed when a Q query is included in the FeedConfig or the feed request
+queryEngine,,String,The type of query engine used to retrieve the feed items
+releaseUrlParameters,,String,The list of key-value URL parameters that are appended to the feed item's content.urlfield
+restrictionId,,URI,The id of the Restriction that is applied to the feed
+schema,,String,The object schema version of the feed items
+segmentQueries,,String[],"A query used to select items for the feed. These items are in addition to any specified in the pinnedIds field, and may be filtered by the baseQuery field"
+sortKeys,,SortKey[],The list of fields and directions used to sort items in the feed
+subFeeds,,SubFeed[],"The sub feeds of the feed. Sub feeds contain all items of the specified SubFeed.feedType in the feed owner's account. Currently, only a Category sub feed of a Media feed is supported"
+thumbnailFilter,,String,The query or key names used to select the thumbnail files for each item in the feed
+title,,String,The title of the feed
+updated,,DateTime,The date and time this object was last modified
+updatedByUserId,,URI,The id of the user that last modified this object
+urlType,,UrlType,The type of URL that is returned in each feed item's content.urlfield
+validFeed,,Boolean,Whether to include the feed-level elements and any feed-level custom fields in the feed header
+version,,Long,"This object's modification version, used for optimistic locking"
