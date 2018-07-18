@@ -3,9 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService\Feeds;
 
 use Lullabot\Mpx\DataService\DataServiceExtractor;
-use Lullabot\Mpx\DataService\Feeds\SortKey;
 use Lullabot\Mpx\DataService\Feeds\SubFeed;
-use Lullabot\Mpx\DataService\Media\Rating;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
 /**
