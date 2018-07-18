@@ -13,7 +13,6 @@ use Psr\Http\Message\UriInterface;
  */
 class FeedConfigTest extends FunctionalTestBase
 {
-
     /**
      * Tests loading two FeedConfig objects.
      */
