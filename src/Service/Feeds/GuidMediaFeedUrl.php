@@ -78,7 +78,7 @@ class GuidMediaFeedUrl extends MediaFeedUrl
     public function toUri(): UriInterface
     {
         $uri = $this->uriToFeedComponent();
-        $uri = $uri->withPath($uri->getPath().'/guid/'.implode(',', $this->guids));
+        $uri = $uri->withPath($uri->getPath().'/guid/'.$this->ownerId.'/'.implode(',', $this->guids));
         $uri = $this->appendSeoTerms($uri);
 
         return $uri;
