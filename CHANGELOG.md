@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - The FeedConfig object is now supported. #110
+- New classes have been added to support feed URL generation. See
+  `\Lullabot\Mpx\Service\Feeds` for details. #111
 
 ## [0.6.2] - 2018-07-17
 
