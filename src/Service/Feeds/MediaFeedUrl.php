@@ -6,33 +6,52 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Feeds\FeedConfig;
 use Lullabot\Mpx\DataService\Feeds\SubFeed;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\ToUriInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
- * Class MediaFeedUrl
+ * Class representing a media feed URL.
+ *
+ * A media feed URL follows this template:
  *
  * @code
  *      http[s]://feed.media.theplatform.com/f/<account PID>/<feed PID>[/<feed type>][/feed][/<ID>][/guid/<owner ID>/<GUIDs>][/<SEO terms>][?<query parameters>]
  * @endcode
  *
+ * While mpx supports http URLs, this class only supports https URLs by default.
+ * If you must return an http URL, use the withScheme() method on the returned
+ * URL.
+ *
+ * Note that IDs and GUIDs can not be specified in the same URL.
+ *
  * @see https://docs.theplatform.com/help/feeds-requesting-media-feeds
+ * @see IdMediaFeedUrl
+ * @see GuidMediaFeedUrl
  */
-class MediaFeedUrl
+class MediaFeedUrl implements ToUriInterface
 {
-
+    /**
+     * The base URL for all feed requests.
+     */
     const BASE_URL = 'https://feed.media.theplatform.com/f/';
 
     /**
+     * The account the feed is associated with.
+     *
      * @var PublicIdentifierInterface
      */
     protected $account;
 
     /**
+     * The feed being rendered.
+     *
      * @var FeedConfig
      */
     protected $feedConfig;
 
     /**
+     * A subfeed specifying the feed type.
+     *
      * @var SubFeed
      */
     protected $feedTypeSubFeed;
@@ -51,6 +70,12 @@ class MediaFeedUrl
      */
     protected $seoTerms = [];
 
+    /**
+     * MediaFeedUrl constructor.
+     *
+     * @param PublicIdentifierInterface $account    The account the feed is associated with.
+     * @param FeedConfig                $feedConfig The feed the URL is being generated for.
+     */
     public function __construct(PublicIdentifierInterface $account, FeedConfig $feedConfig)
     {
         $this->account = $account;
@@ -83,6 +108,9 @@ class MediaFeedUrl
     }
 
     /**
+     * Returns if this URL requests a feed response always, even if only one
+     * item is in the feed.
+     *
      * @return bool
      */
     public function isReturnsFeed(): bool
@@ -91,6 +119,9 @@ class MediaFeedUrl
     }
 
     /**
+     * Set if this URL requests a feed response always, even if only one
+     * item is in the feed.
+     *
      * @param bool $returnsFeed
      */
     public function setReturnsFeed(bool $returnsFeed): void
@@ -99,6 +130,8 @@ class MediaFeedUrl
     }
 
     /**
+     * Return the array of SEO terms.
+     *
      * @return string[]
      */
     public function getSeoTerms(): array
@@ -107,6 +140,10 @@ class MediaFeedUrl
     }
 
     /**
+     * Set an array of SEO terms.
+     *
+     * Terms with a forward slash will also be considered as separate terms.
+     *
      * @param string[] $seoTerms
      */
     public function setSeoTerms(array $seoTerms): void
@@ -114,25 +151,31 @@ class MediaFeedUrl
         $this->seoTerms = $seoTerms;
     }
 
-
+    /**
+     * {@inheritdoc}
+     */
     public function toUri(): UriInterface
     {
         $uri = $this->uriToFeedComponent();
-
         $uri = $this->appendSeoTerms($uri);
 
         return $uri;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function __toString()
     {
         return (string) $this->toUri();
     }
 
     /**
-     * @return Uri
+     * Return a new URI with all components up to the '/feed' component.
+     *
+     * @return Uri The new URI.
      */
-    protected function uriToFeedComponent()
+    protected function uriToFeedComponent(): Uri
     {
         $uri = new Uri(static::BASE_URL.$this->account->getPid().'/'.$this->feedConfig->getPid());
 
@@ -148,16 +191,18 @@ class MediaFeedUrl
     }
 
     /**
-     * @param $uri
+     * Append the SEO terms to the end of a URI.
      *
-     * @return mixed
+     * @param UriInterface $uri The URI to append to.
+     *
+     * @return Uri
      */
-    protected function appendSeoTerms($uri)
+    protected function appendSeoTerms(UriInterface $uri): Uri
     {
         if (!empty($this->seoTerms)) {
             $uri = $uri->withPath($uri->getPath().'/'.implode('/', $this->seoTerms));
         }
 
         return $uri;
-}
+    }
 }

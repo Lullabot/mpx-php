@@ -6,6 +6,9 @@ use Lullabot\Mpx\DataService\Feeds\FeedConfig;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Psr\Http\Message\UriInterface;
 
+/**
+ * A feed URL with a list of feed items by GUID.
+ */
 class GuidMediaFeedUrl extends MediaFeedUrl
 {
     /**
@@ -18,19 +21,20 @@ class GuidMediaFeedUrl extends MediaFeedUrl
     protected $guids;
 
     /**
-     * Contains either an owner ID or a dash (—).
-     *
-     * GUIDs are only guaranteed to be unique within an account. Because some
-     * feeds can be configured to include inherited objects from other accounts,
-     * it is possible that 2 objects in a feed could have the same GUID. You
-     * can include the object's ownerId to uniquely identify the object.
-     * Alternatively, you can include a dash (—) to specify that the owner ID is
-     * the owner ID of the FeedConfig.
+     * The owner ID or a dash.
      *
      * @var string
      */
     protected $ownerId;
 
+    /**
+     * GuidMediaFeedUrl constructor.
+     *
+     * @param PublicIdentifierInterface $account    The account the feed is associated with.
+     * @param FeedConfig                $feedConfig The feed the URL is being generated for.
+     * @param array                     $guids      An array of GUIDs.
+     * @param string                    $ownerId    (optional) The owner ID of the associated GUIDs. Defaults to a '-' which uses the owner of the FeedConfig object.
+     */
     public function __construct(PublicIdentifierInterface $account, FeedConfig $feedConfig, array $guids, string $ownerId = '-')
     {
         parent::__construct($account, $feedConfig);
@@ -39,6 +43,8 @@ class GuidMediaFeedUrl extends MediaFeedUrl
     }
 
     /**
+     * Return the GUIDs.
+     *
      * @return string[]
      */
     public function getGuids(): array
@@ -47,6 +53,15 @@ class GuidMediaFeedUrl extends MediaFeedUrl
     }
 
     /**
+     * Set either an owner ID or a dash (—).
+     *
+     * GUIDs are only guaranteed to be unique within an account. Because some
+     * feeds can be configured to include inherited objects from other accounts,
+     * it is possible that 2 objects in a feed could have the same GUID. You
+     * can include the object's ownerId to uniquely identify the object.
+     * Alternatively, you can include a dash (—) to specify that the owner ID is
+     * the owner ID of the FeedConfig.
+     *
      * @param string[] $guids
      */
     public function setGuids(array $guids): void
@@ -57,10 +72,13 @@ class GuidMediaFeedUrl extends MediaFeedUrl
         $this->guids = $guids;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function toUri(): UriInterface
     {
         $uri = $this->uriToFeedComponent();
-        $uri = $uri->withPath($uri->getPath() . '/guid/' . implode(',', $this->guids));
+        $uri = $uri->withPath($uri->getPath().'/guid/'.implode(',', $this->guids));
         $uri = $this->appendSeoTerms($uri);
 
         return $uri;
