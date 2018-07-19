@@ -50,6 +50,12 @@ class IdMediaFeedUrl extends MediaFeedUrl
             throw new \InvalidArgumentException('At least one ID must be specified');
         }
 
+        foreach ($ids as $id) {
+            if (!is_int($id)) {
+                throw new \InvalidArgumentException('All IDs must be integers');
+            }
+        }
+
         $this->ids = $ids;
     }
 
