@@ -78,6 +78,13 @@ class MediaFeedUrl implements ToUriInterface
      */
     public function __construct(PublicIdentifierInterface $account, FeedConfig $feedConfig)
     {
+        if (empty($account->getPid())) {
+            throw new \InvalidArgumentException('Account must have a public identifier set');
+        }
+        if (empty($feedConfig->getPid())) {
+            throw new \InvalidArgumentException('Feed config must have a public identifier set');
+        }
+
         $this->account = $account;
         $this->feedConfig = $feedConfig;
     }
@@ -195,9 +202,9 @@ class MediaFeedUrl implements ToUriInterface
      *
      * @param UriInterface $uri The URI to append to.
      *
-     * @return Uri
+     * @return UriInterface
      */
-    protected function appendSeoTerms(UriInterface $uri): Uri
+    protected function appendSeoTerms(UriInterface $uri): UriInterface
     {
         if (!empty($this->seoTerms)) {
             $uri = $uri->withPath($uri->getPath().'/'.implode('/', $this->seoTerms));
