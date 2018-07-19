@@ -1,17 +1,17 @@
 <?php
 
-namespace Lullabot\Mpx\Tests\Unit\Player;
+namespace Lullabot\Mpx\Tests\Unit\Service\Player;
 
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\Player\Player;
-use Lullabot\Mpx\Player\Url;
+use Lullabot\Mpx\Service\Player\Url;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests generating player URLs for embedding.
  *
- * @coversDefaultClass \Lullabot\Mpx\Player\Url
+ * @coversDefaultClass \Lullabot\Mpx\Service\Player\Url
  */
 class UrlTest extends TestCase
 {

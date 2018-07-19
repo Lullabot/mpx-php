@@ -1,6 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\Player;
+namespace Lullabot\Mpx\Service\Player;
 
 use function GuzzleHttp\Psr7\build_query;
 use GuzzleHttp\Psr7\Uri;
