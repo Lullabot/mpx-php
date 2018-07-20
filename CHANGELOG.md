@@ -8,11 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- The FeedConfig object is now supported. #110
+
+## [0.6.2] - 2018-07-17
+
+### Added
+
 - Methods that load data from mpx now support passing in HTTP client options to
   Guzzle. This is primarily useful for implementations wishing to pass custom
   headers in the request, such as `Cache-Control: no-cache` to intermediate
   proxies. #138
 
+## [0.6.1] - 2018-07-05
 ## [0.6.0] - 2018-07-05
 
 ### Changed

@@ -1,0 +1,83 @@
+{
+    "id": "http://data.feed.theplatform.com/feed/data/FeedConfig/12345",
+    "guid": "toe2Mt10g42hayPv6nlOkn5X3qiJawyY",
+    "updated": 1342817557000,
+    "title": "Title-sorted racing feed.",
+    "author": "My company",
+    "description": "This feed returns auto racing media sorted by title.",
+    "added": 1342817557000,
+    "ownerId": "http://access.auth.theplatform.com/data/Account/54321",
+    "addedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mps/5",
+    "updatedByUserId": "http://identity.auth.theplatform.com/idm/data/User/mps/5",
+    "version": 0,
+    "locked": false,
+    "adapterParameters": "a=b",
+    "disabled": false,
+    "adPolicyId": null,
+    "cacheLifetime": 0.0,
+    "baseQuery": "byCategories=AutoRacing",
+    "defaultThumbnailAssetType": "mainThumb",
+    "endIndex": 100,
+    "form": "atom",
+    "limitByAvailableDate": true,
+    "limitToApproved": true,
+    "linkUrl": "http://www.feedlink.com/feed/",
+    "availableFields": [
+        "author",
+        "description",
+        "guid",
+        "link",
+        "pubDate",
+        "title",
+        "media:",
+        "content",
+        "content.media:",
+        "thumbnails",
+        "thumbnails.media:"
+    ],
+    "pinnedIds": [
+  "25478"        
+    ],
+    "pid": "uy4aTomGaVKC",
+    "playerUrl": "http://www.linktoplayer.com/player",
+    "preferSortKeysOnSearch": true,
+    "queryEngine": "search",
+    "releaseUrlParameters": "network=SPEED&Format=SMIL",
+    "restrictionId": "https://data.delivery.theplatform.com/delivery/data/Restriction/11111",
+    "segmentQueries": [
+        "&byContentFormat=FLV"
+    ],
+    "sortKeys": [
+        {
+            "field": "title",
+            "descending": true
+        }
+    ],
+    "subFeeds": [
+        {
+            "feedType": "Category",
+            "adapterParameters": "",
+            "availableFields": [
+                
+            ],
+            "form": "atom",
+            "baseQuery": "byCategories=championship",
+            "limitByTitles": [
+                
+            ],
+            "schema": ""
+        }
+    ],
+    "thumbnailFilter": "byFormat=jpeg",
+    "urlType": "release",
+    "cacheRefreshStrategy": "uponRequest",
+    "feedType": "Media",
+    "schema": "1.3",
+    "validFeed": true,
+    "itemLinkUrl": "http://linktoitem",
+    "adminTags": [
+        "championship",
+        "rally",
+        "sports"
+    ]
+}

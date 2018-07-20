@@ -1,0 +1,13 @@
+        {
+            "feedType": "Category",
+            "adapterParameters": "",
+            "availableFields": [
+                
+            ],
+            "form": "atom",
+            "baseQuery": "byCategories=championship",
+            "limitByTitles": [
+                
+            ],
+            "schema": ""
+        }
