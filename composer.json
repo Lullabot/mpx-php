@@ -42,6 +42,9 @@
     }
   },
   "extra": {
-    "composer-version": "^1.6.3"
+    "composer-version": "^1.6.3",
+    "branch-alias": {
+        "dev-feed-url": "0.6.x-dev"
+    }
   }
 }
