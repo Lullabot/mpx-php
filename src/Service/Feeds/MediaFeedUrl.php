@@ -45,7 +45,7 @@ class MediaFeedUrl implements ToUriInterface
     /**
      * The feed being rendered.
      *
-     * @var FeedConfig
+     * @var PublicIdentifierInterface
      */
     protected $feedConfig;
 
@@ -74,9 +74,9 @@ class MediaFeedUrl implements ToUriInterface
      * MediaFeedUrl constructor.
      *
      * @param PublicIdentifierInterface $account    The account the feed is associated with.
-     * @param FeedConfig                $feedConfig The feed the URL is being generated for.
+     * @param PublicIdentifierInterface $feedConfig The feed the URL is being generated for.
      */
-    public function __construct(PublicIdentifierInterface $account, FeedConfig $feedConfig)
+    public function __construct(PublicIdentifierInterface $account, PublicIdentifierInterface $feedConfig)
     {
         if (empty($account->getPid())) {
             throw new \InvalidArgumentException('Account must have a public identifier set');
