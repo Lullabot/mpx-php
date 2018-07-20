@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
  */
 class DataServiceTest extends TestCase
 {
-
     /**
      * @param $property
      * @param $get
@@ -25,7 +24,8 @@ class DataServiceTest extends TestCase
         $this->assertEquals($return, $annotation->$get());
     }
 
-    public function getSetDataProvider() {
+    public function getSetDataProvider()
+    {
         return [
             'object type' => ['objectType', 'getObjectType', '/data/Player', '/data/Player'],
             'schema version' => ['schemaVersion', 'getSchemaVersion', '1.23', '1.23'],
