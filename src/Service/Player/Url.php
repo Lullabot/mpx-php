@@ -1,12 +1,13 @@
 <?php
 
-namespace Lullabot\Mpx\Player;
+namespace Lullabot\Mpx\Service\Player;
 
 use function GuzzleHttp\Psr7\build_query;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\Player\Player;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\ToUriInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -15,7 +16,7 @@ use Psr\Http\Message\UriInterface;
  * @see https://docs.theplatform.com/help/displaying-mpx-players-to-your-audience
  * @see https://docs.theplatform.com/help/generate-a-player-url-for-a-media
  */
-class Url
+class Url implements ToUriInterface
 {
     /**
      * The base URL for all players.
