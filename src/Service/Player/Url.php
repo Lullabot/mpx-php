@@ -79,7 +79,7 @@ class Url implements ToUriInterface
      */
     public function toUri(): UriInterface
     {
-        $uri = new Uri($this::BASE_URL.$this->account->getPid().'/'.$this->player->getPid().'/select/'.$this->media->getPid());
+        $uri = new Uri($this::BASE_URL.$this->account->getPid().'/'.$this->player->getPid().'/select/media/'.$this->media->getPid());
         $query_parts = [];
 
         if ($this->autoplay) {
