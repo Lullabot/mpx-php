@@ -51,7 +51,7 @@ class IdMediaFeedUrl extends MediaFeedUrl
         }
 
         foreach ($ids as $id) {
-            if (!is_int($id)) {
+            if (!\is_int($id)) {
                 throw new \InvalidArgumentException('All IDs must be integers');
             }
         }

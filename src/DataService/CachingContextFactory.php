@@ -183,12 +183,12 @@ final class CachingContextFactory
                 $result[] = '';
             }
             if (T_STRING === $tokens->current()[0] || T_NS_SEPARATOR === $tokens->current()[0]) {
-                $result[count($result) - 1] .= $tokens->current()[1];
+                $result[\count($result) - 1] .= $tokens->current()[1];
             }
             $tokens->next();
         }
 
-        if (1 == count($result)) {
+        if (1 == \count($result)) {
             $backslashPos = strrpos($result[0], '\\');
 
             if (false !== $backslashPos) {

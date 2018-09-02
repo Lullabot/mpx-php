@@ -249,7 +249,7 @@ class AuthenticatedClient implements ClientInterface
         try {
             // Since we must have blocked to get to this point, we now use
             // a blocking request to resolve things once and for all.
-            $promise->resolve(call_user_func_array($callable, $args));
+            $promise->resolve(\call_user_func_array($callable, $args));
         } catch (\Exception $e) {
             $promise->reject($e);
         }
