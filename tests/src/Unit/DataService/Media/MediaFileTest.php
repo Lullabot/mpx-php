@@ -58,7 +58,7 @@ class MediaFileTest extends ObjectTestBase
         $object = $this->deserialize($this->class, $field);
         $method = 'get'.ucfirst($field);
         $value = $object->$method();
-        if (is_array($value)) {
+        if (\is_array($value)) {
             foreach ($value as $item) {
                 $this->assertInstanceOf($class, $item);
             }

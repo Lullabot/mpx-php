@@ -15,11 +15,11 @@ class JsonResponse extends Response
     public function __construct($status = 200, array $headers = [], $body = null, $version = '1.1', $reason = null)
     {
         if (isset($body)) {
-            if (is_string($body) && is_file($body)) {
-                $body = fopen($body, 'r');
-            } elseif (is_string($body) && is_file(__DIR__.'/../fixtures/'.$body)) {
-                $body = fopen(__DIR__.'/../fixtures/'.$body, 'r');
-            } elseif (is_array($body)) {
+            if (\is_string($body) && is_file($body)) {
+                $body = fopen($body, 'rb');
+            } elseif (\is_string($body) && is_file(__DIR__.'/../fixtures/'.$body)) {
+                $body = fopen(__DIR__.'/../fixtures/'.$body, 'rb');
+            } elseif (\is_array($body)) {
                 $body = \GuzzleHttp\json_encode($body);
             }
         }

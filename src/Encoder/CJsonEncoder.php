@@ -32,7 +32,7 @@ class CJsonEncoder extends JsonEncoder
     protected function cleanup(array &$data)
     {
         foreach ($data as &$value) {
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $this->cleanup($value);
             }
         }
@@ -84,7 +84,7 @@ class CJsonEncoder extends JsonEncoder
         $customFields = ['namespace' => $namespace];
         foreach ($object as $key => $value) {
             if (false !== strpos($key, $prefix.'$')) {
-                $fieldName = substr($key, strlen($prefix) + 1);
+                $fieldName = substr($key, \strlen($prefix) + 1);
                 $customFields['data'][$fieldName] = $value;
             }
         }
