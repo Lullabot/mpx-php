@@ -24,7 +24,7 @@ class UnixMillisecondNormalizer extends DateTimeNormalizer
      */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (!is_int($data)) {
+        if (!\is_int($data)) {
             throw new NotNormalizableValueException('The data is not an integer, you should pass an integer representing the unix time in milliseconds.');
         }
 

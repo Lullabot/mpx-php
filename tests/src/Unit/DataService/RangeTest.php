@@ -95,7 +95,7 @@ class RangeTest extends TestCase
         $list->setTotalResults($start + ($entryCount * $remainingPages));
         $ranges = Range::nextRanges($list);
 
-        $this->assertEquals($remainingPages, count($ranges));
+        $this->assertEquals($remainingPages, \count($ranges));
 
         foreach ($ranges as $range) {
             $start += $entryCount;

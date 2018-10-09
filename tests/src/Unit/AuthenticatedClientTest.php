@@ -69,7 +69,7 @@ class AuthenticatedClientTest extends TestCase
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
-        $response = call_user_func_array([$authenticatedClient, $method], $args);
+        $response = \call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
         }
@@ -111,7 +111,7 @@ class AuthenticatedClientTest extends TestCase
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
-        $response = call_user_func_array([$authenticatedClient, $method], $args);
+        $response = \call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response = $response->wait();
         }
@@ -151,7 +151,7 @@ class AuthenticatedClientTest extends TestCase
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $this->expectException(ClientException::class);
-        $response = call_user_func_array([$authenticatedClient, $method], $args);
+        $response = \call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response->wait();
         }
@@ -188,7 +188,7 @@ class AuthenticatedClientTest extends TestCase
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $this->expectException(ServerException::class);
-        $response = call_user_func_array([$authenticatedClient, $method], $args);
+        $response = \call_user_func_array([$authenticatedClient, $method], $args);
         if ($response instanceof PromiseInterface) {
             $response->wait();
         }

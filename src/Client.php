@@ -112,7 +112,7 @@ class Client implements GuzzleClientInterface
     {
         $result = [];
         foreach ((array) $data as $index => $node) {
-            $result[$index] = (is_object($node)) ? static::convertXmlToArray($node) : trim((string) $node);
+            $result[$index] = (\is_object($node)) ? static::convertXmlToArray($node) : trim((string) $node);
         }
 
         return $result;
