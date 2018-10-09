@@ -36,10 +36,10 @@ class UrlTest extends TestCase
         $media->setPid('media-pid');
         $player_url = new Url($account, $player, $media);
 
-        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media-pid', (string) $player_url->toUri());
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid', (string) $player_url->toUri());
 
         $player_url->setAutoplay(true);
         $player_url->setPlayAll(true);
-        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media-pid?autoplay=1&playAll=1', (string) $player_url);
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoplay=1&playAll=1', (string) $player_url);
     }
 }
