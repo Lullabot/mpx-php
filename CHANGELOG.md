@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - The `\Lullabot\Mpx\Player\Url` has been moved to
   `\Lullabot\Mpx\Service\Player\Url`. #111
+- `\Lullabot\Mpx\Player\Url` generated URLs are no longer missing `media`. #141
 
 ## [0.6.2] - 2018-07-17
 
