@@ -79,4 +79,117 @@ interface ObjectInterface extends IdInterface, JsonInterface
      * @param CustomFieldInterface[] $customFields The array of custom field implementations, keyed by their namespace.
      */
     public function setCustomFields(array $customFields);
+
+    /**
+     * Returns the allowed values for this custom field.
+     *
+     * @return array
+     */
+    public function getAllowedValues(): array;
+
+    /**
+     * Set the allowed values for this custom field.
+     *
+     * @param array $allowedValues
+     */
+    public function setAllowedValues(array $allowedValues);
+
+    /**
+     * Returns the description of this object.
+     *
+     * @return string
+     */
+    public function getDescription(): ?string;
+
+    /**
+     * Set the description of this object.
+     *
+     * @param string $description
+     */
+    public function setDescription(?string $description);
+
+    /**
+     * Returns an alternate identifier for this object that is unique within the owning account.
+     *
+     * @return string
+     */
+    public function getGuid(): ?string;
+
+    /**
+     * Set an alternate identifier for this object that is unique within the owning account.
+     *
+     * @param string $guid
+     */
+    public function setGuid(?string $guid);
+
+    /**
+     * Returns whether this object currently allows updates.
+     *
+     * @return bool
+     */
+    public function getLocked(): ?bool;
+
+    /**
+     * Set whether this object currently allows updates.
+     *
+     * @param bool $locked
+     */
+    public function setLocked(?bool $locked);
+
+    /**
+     * Returns the name of this object.
+     *
+     * @return string
+     */
+    public function getTitle(): ?string;
+
+    /**
+     * Set the name of this object.
+     *
+     * @param string $title
+     */
+    public function setTitle(?string $title);
+
+    /**
+     * Returns the date and time this object was last modified.
+     *
+     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+     */
+    public function getUpdated(): DateTimeFormatInterface;
+
+    /**
+     * Set the date and time this object was last modified.
+     *
+     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
+     */
+    public function setUpdated(DateTimeFormatInterface $updated);
+
+    /**
+     * Returns the id of the user that last modified this object.
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface;
+
+    /**
+     * Set the id of the user that last modified this object.
+     *
+     * @param \Psr\Http\Message\UriInterface $updatedByUserId
+     */
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId);
+
+    /**
+     * Returns this object's modification version, used for optimistic locking.
+     *
+     * @return int
+     */
+    public function getVersion(): ?int;
+
+    /**
+     * Set this object's modification version, used for optimistic locking.
+     *
+     * @param int $version
+     */
+    public function setVersion(?int $version);
+
 }
