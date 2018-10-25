@@ -81,20 +81,6 @@ interface ObjectInterface extends IdInterface, JsonInterface
     public function setCustomFields(array $customFields);
 
     /**
-     * Returns the allowed values for this custom field.
-     *
-     * @return array
-     */
-    public function getAllowedValues(): array;
-
-    /**
-     * Set the allowed values for this custom field.
-     *
-     * @param array $allowedValues
-     */
-    public function setAllowedValues(array $allowedValues);
-
-    /**
      * Returns the description of this object.
      *
      * @return string
