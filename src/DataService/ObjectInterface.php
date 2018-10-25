@@ -177,5 +177,4 @@ interface ObjectInterface extends IdInterface, JsonInterface
      * @param int $version
      */
     public function setVersion(?int $version);
-
 }
