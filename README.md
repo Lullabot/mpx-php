@@ -1,4 +1,4 @@
-# MPX for PHP
+# mpx for PHP
 
 [![CircleCI](https://circleci.com/gh/Lullabot/mpx-php.svg?style=svg)](https://circleci.com/gh/Lullabot/mpx-php) [![Maintainability](https://api.codeclimate.com/v1/badges/cc44177e7a46c0d99d88/maintainability)](https://codeclimate.com/github/Lullabot/mpx-php/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/cc44177e7a46c0d99d88/test_coverage)](https://codeclimate.com/github/Lullabot/mpx-php/test_coverage) [![Packagist](https://img.shields.io/packagist/dt/lullabot/mpx-php.svg)](https://packagist.org/packages/lullabot/mpx-php)
 
@@ -13,7 +13,7 @@
 ## Example
 
 Here is a complete example showing how to load an account and media items from
-MPX. Most implementations should not contain all of this code in a single class.
+mpx. Most implementations should not contain all of this code in a single class.
 Instead, create functions, classes, or services to bridge the clients, caches,
 and locks into your application. For an example of how to do this, see the
 [media_mpx module for Drupal 8](https://github.com/Lullabot/media_mpx).
@@ -38,7 +38,7 @@ use Symfony\Component\Lock\Store\FlockStore;
 // Only required if your application is not using Composer's autoloader already.
 require_once './vendor/autoload.php';
 
-// Create a new MPX client with the default configuration.
+// Create a new mpx client with the default configuration.
 $defaults = Client::getDefaultConfiguration();
 $client = new Client(new \GuzzleHttp\Client($defaults));
 
@@ -61,7 +61,7 @@ var_dump($account);
 
 $mediaFactory = new DataObjectFactory($dataServiceManager->getDataService('Media Data Service', 'Media', '1.10'), $authenticatedClient);
 
-// Replace the ID to the media item to load. You can find it under "History -> ID" in the MPX console.
+// Replace the ID to the media item to load. You can find it under "History -> ID" in the mpx console.
 $media = $mediaFactory->load(new Uri('http://data.media.theplatform.com/media/data/Media/12345'), $account)
     ->wait();
 print "The loaded media is:\n";
@@ -184,7 +184,7 @@ If a custom field class is not found, a notice will be logged and the empty
 ## Overview of main classes
 
 ### Lullabot\Mpx\Client
-MPX API implementation of [GuzzleHttp\ClientInterface](https://github.com/guzzle/guzzle/blob/master/src/ClientInterface.php).
+mpx API implementation of [GuzzleHttp\ClientInterface](https://github.com/guzzle/guzzle/blob/master/src/ClientInterface.php).
 As a Client it doesn’t do anything extra but suppress errors to force a returning HTTP 200 for XML responses.
 It also handles XML from responses.
 
@@ -192,10 +192,10 @@ It also handles XML from responses.
 Manages authenticated sessions and proxies API calls with a ClientInterface implementation, automatically refreshing expired API tokens as required.
 
 ### Lullabot\Mpx\Service\IdentityManagement\UserSession
-An MPX user. Just username and password getters.
+An mpx user. Just username and password getters.
 
 ### Lullabot\Mpx\Token
-MPX authentication token that is returned by the platform after [sign in](https://docs.theplatform.com/help/wsf-signin-method).
+mpx authentication token that is returned by the platform after [sign in](https://docs.theplatform.com/help/wsf-signin-method).
 
 ### Lullabot\Mpx\TokenCachePool
 Cache of user authentication tokens. This class is a wrapper around a \Psr\Cache\CacheItemPoolInterface object.
