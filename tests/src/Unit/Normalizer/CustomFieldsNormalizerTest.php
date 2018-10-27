@@ -210,4 +210,102 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     {
         $this->ownerId = $ownerId;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDescription(): ?string
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDescription(?string $description)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getGuid(): ?string
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setGuid(?string $guid)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLocked(): ?bool
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLocked(?bool $locked)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTitle(): ?string
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setTitle(?string $title)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUpdated(): DateTimeFormatInterface
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUpdated(DateTimeFormatInterface $updated)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getVersion(): ?int
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setVersion(?int $version)
+    {
+    }
 }
