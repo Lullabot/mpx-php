@@ -7,7 +7,7 @@ use Lullabot\Mpx\DataService\QueryPartsInterface;
 /**
  * Class for 'fields' filters on requests.
  *
- * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-a-byfield-query-parameter
+ * @see https://docs.theplatform.com/help/wsf-controlling-the-contents-of-the-response-payload
  */
 class Fields implements QueryPartsInterface
 {
