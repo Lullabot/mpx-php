@@ -3,7 +3,7 @@
 namespace Lullabot\Mpx\DataService;
 
 /**
- * Class for 'fields' filters on requests.
+ * Class for 'fields' filters on requests to limit the response contents.
  *
  * @see https://docs.theplatform.com/help/wsf-controlling-the-contents-of-the-response-payload
  */
@@ -31,9 +31,7 @@ class Fields implements QueryPartsInterface
     }
 
     /**
-     * Return all of the fields being filtered.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function toQueryParts(): array
     {
