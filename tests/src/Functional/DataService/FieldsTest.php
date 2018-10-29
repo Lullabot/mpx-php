@@ -11,7 +11,6 @@ use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
 
 class FieldsTest extends FunctionalTestBase
 {
-
     public function testLimitFields()
     {
         $manager = DataServiceManager::basicDiscovery();

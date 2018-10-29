@@ -44,6 +44,6 @@
     "composer-version": "^1.6.3"
   },
   "scripts": {
-    "csFix": "vendor/bin/php-cs-fixer fix --path-mode=intersection"
+    "csFix": "vendor/bin/php-cs-fixer fix -v"
   }
 }
