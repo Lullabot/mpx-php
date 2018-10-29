@@ -1,8 +1,6 @@
 <?php
 
-namespace Lullabot\Mpx\DataService\QQuery;
-
-use Lullabot\Mpx\DataService\QueryPartsInterface;
+namespace Lullabot\Mpx\DataService;
 
 /**
  * Class for 'fields' filters on requests.
