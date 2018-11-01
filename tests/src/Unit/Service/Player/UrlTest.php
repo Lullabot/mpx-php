@@ -40,6 +40,10 @@ class UrlTest extends TestCase
 
         $player_url->setAutoplay(true);
         $player_url->setPlayAll(true);
-        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoplay=1&playAll=1', (string) $player_url);
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoplay=true&playAll=true', (string) $player_url);
+
+        $player_url->setAutoplay(false);
+        $player_url->setPlayAll(false);
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoplay=false&playAll=false', (string) $player_url);
     }
 }
