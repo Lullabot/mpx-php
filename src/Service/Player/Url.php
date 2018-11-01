@@ -45,11 +45,11 @@ class Url implements ToUriInterface
     private $media;
 
     /**
-     * Should autoplay be overridden?
+     * Should autoPlay be overridden?
      *
      * @var bool
      */
-    private $autoplay;
+    private $autoPlay;
 
     /**
      * Should the playAll setting be overridden?
@@ -82,11 +82,11 @@ class Url implements ToUriInterface
         $uri = new Uri($this::BASE_URL.$this->account->getPid().'/'.$this->player->getPid().'/select/media/'.$this->media->getPid());
         $query_parts = [];
 
-        if ($this->autoplay) {
-            $query_parts['autoplay'] = $this->autoplay;
+        if (isset($this->autoPlay)) {
+            $query_parts['autoPlay'] = $this->autoPlay ? 'true' : 'false';
         }
-        if ($this->playAll) {
-            $query_parts['playAll'] = $this->playAll;
+        if (isset($this->playAll)) {
+            $query_parts['playAll'] = $this->playAll ? 'true' : 'false';
         }
 
         $uri = $uri->withQuery(build_query($query_parts));
@@ -109,11 +109,11 @@ class Url implements ToUriInterface
      *
      * @see https://docs.theplatform.com/help/player-player-autoplay
      *
-     * @param bool $autoplay True to enable autoplay, false otherwise.
+     * @param bool $autoPlay True to enable autoPlay, false otherwise.
      */
-    public function setAutoplay(bool $autoplay)
+    public function setAutoplay(bool $autoPlay)
     {
-        $this->autoplay = $autoplay;
+        $this->autoPlay = $autoPlay;
     }
 
     /**
