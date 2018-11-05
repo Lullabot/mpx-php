@@ -59,6 +59,15 @@ class Url implements ToUriInterface
     private $playAll;
 
     /**
+     * Should this player URL be rendered so it can be embedded?
+     *
+     * @see https://docs.theplatform.com/help/displaying-mpx-players-to-your-audience#tp-toc17
+     *
+     * @var bool
+     */
+    private $embed;
+
+    /**
      * Url constructor.
      *
      * @param PublicIdentifierInterface $account The account the player is owned by.
@@ -79,7 +88,13 @@ class Url implements ToUriInterface
      */
     public function toUri(): UriInterface
     {
-        $uri = new Uri($this::BASE_URL.$this->account->getPid().'/'.$this->player->getPid().'/select/media/'.$this->media->getPid());
+        $str = $this::BASE_URL.$this->account->getPid().'/'.$this->player->getPid();
+
+        if ($this->embed) {
+            $str .= '/embed';
+        }
+
+        $uri = new Uri($str.'/select/media/'.$this->media->getPid());
         $query_parts = [];
 
         if (isset($this->autoPlay)) {
@@ -126,5 +141,13 @@ class Url implements ToUriInterface
     public function setPlayAll(bool $playAll)
     {
         $this->playAll = $playAll;
+    }
+
+    /**
+     * @param bool $embed
+     */
+    public function setEmbed(bool $embed): void
+    {
+        $this->embed = $embed;
     }
 }

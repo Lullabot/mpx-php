@@ -45,5 +45,8 @@ class UrlTest extends TestCase
         $player_url->setAutoplay(false);
         $player_url->setPlayAll(false);
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
+
+        $player_url->setEmbed(true);
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/embed/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
     }
 }
