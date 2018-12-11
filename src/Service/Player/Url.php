@@ -4,12 +4,15 @@ namespace Lullabot\Mpx\Service\Player;
 
 use function GuzzleHttp\Psr7\build_query;
 use GuzzleHttp\Psr7\Uri;
+use Lullabot\Mpx\DataService\ObjectInterface;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Lullabot\Mpx\ToUriInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
  * Represents a player URL, suitable for embedding with an iframe.
+ *
+ * By default, URLs are generated using the media public ID.
  *
  * @see https://docs.theplatform.com/help/displaying-mpx-players-to-your-audience
  * @see https://docs.theplatform.com/help/generate-a-player-url-for-a-media
@@ -66,14 +69,21 @@ class Url implements ToUriInterface
     private $embed;
 
     /**
+     * Should this player URL be rendered using media GUIDs instead of public IDs?
+     *
+     * @var bool
+     */
+    private $byGuid;
+
+    /**
      * Url constructor.
      *
      * @param PublicIdentifierInterface $account The account the player is owned by.
      * @param PublicIdentifierInterface $player  The player to play $media with.
-     * @param PublicIdentifierInterface $media   The media to play.
+     * @param ObjectInterface           $media   The media to play.
      */
-    public function __construct(PublicIdentifierInterface $account, PublicIdentifierInterface $player, PublicIdentifierInterface $media)
-    {
+    public function __construct(PublicIdentifierInterface $account, PublicIdentifierInterface $player, ObjectInterface $media
+    ) {
         $this->player = $player;
         $this->media = $media;
         $this->account = $account;
@@ -92,7 +102,16 @@ class Url implements ToUriInterface
             $str .= '/embed';
         }
 
-        $uri = new Uri($str.'/select/media/'.$this->media->getPid());
+        if ($this->byGuid) {
+            $ownerId = $this->media->getOwnerId();
+            $parts = explode('/', $ownerId);
+            $numeric_id = end($parts);
+
+            $uri = new Uri($str.'/select/media/guid/'.$numeric_id.'/'.$this->media->getGuid());
+        } else {
+            $uri = new Uri($str.'/select/media/'.$this->media->getPid());
+        }
+
         $query_parts = [];
 
         if (isset($this->autoPlay)) {
@@ -134,6 +153,7 @@ class Url implements ToUriInterface
 
         $url = clone $this;
         $url->autoPlay = $autoPlay;
+
         return $url;
     }
 
@@ -154,6 +174,7 @@ class Url implements ToUriInterface
 
         $url = clone $this;
         $url->playAll = $playAll;
+
         return $url;
     }
 
@@ -170,6 +191,41 @@ class Url implements ToUriInterface
 
         $url = clone $this;
         $url->embed = $embed;
+
+        return $url;
+    }
+
+    /**
+     * Return a Url using media reference GUIDs instead of media public IDs.
+     *
+     * @return Url
+     */
+    public function withMediaByGuid(): self
+    {
+        if ($this->byGuid) {
+            return $this;
+        }
+
+        $url = clone $this;
+        $url->byGuid = true;
+
+        return $url;
+    }
+
+    /**
+     * Return a Url using media public IDs instead of media reference Ids.
+     *
+     * @return Url
+     */
+    public function withMediaByPublicId(): self
+    {
+        if (!$this->byGuid) {
+            return $this;
+        }
+
+        $url = clone $this;
+        $url->byGuid = false;
+
         return $url;
     }
 }
