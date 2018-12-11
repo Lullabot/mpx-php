@@ -23,6 +23,9 @@ class UrlTest extends TestCase
      * @covers ::toUri
      * @covers ::withPlayAll
      * @covers ::withAutoplay
+     * @covers ::withEmbed
+     * @covers ::withMediaByGuid
+     * @covers ::withMediaByPublicId
      * @covers ::__toString
      */
     public function testToUri()
