@@ -20,8 +20,8 @@ class UrlTest extends TestCase
      *
      * @covers ::__construct
      * @covers ::toUri
-     * @covers ::setPlayAll
-     * @covers ::setAutoplay
+     * @covers ::withPlayAll
+     * @covers ::withAutoplay
      * @covers ::__toString
      */
     public function testToUri()
@@ -38,15 +38,15 @@ class UrlTest extends TestCase
 
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid', (string) $player_url->toUri());
 
-        $player_url->setAutoplay(true);
-        $player_url->setPlayAll(true);
+        $player_url = $player_url->withAutoplay(true);
+        $player_url = $player_url->withPlayAll(true);
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoPlay=true&playAll=true', (string) $player_url);
 
-        $player_url->setAutoplay(false);
-        $player_url->setPlayAll(false);
+        $player_url = $player_url->withAutoplay(false);
+        $player_url = $player_url->withPlayAll(false);
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
 
-        $player_url->setEmbed(true);
+        $player_url = $player_url->withEmbed(true);
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/embed/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
     }
 }

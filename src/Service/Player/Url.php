@@ -123,10 +123,18 @@ class Url implements ToUriInterface
      * @see https://docs.theplatform.com/help/player-player-autoplay
      *
      * @param bool $autoPlay True to enable autoPlay, false otherwise.
+     *
+     * @return Url
      */
-    public function setAutoplay(bool $autoPlay)
+    public function withAutoplay(bool $autoPlay): self
     {
-        $this->autoPlay = $autoPlay;
+        if ($this->autoPlay == $autoPlay) {
+            return $this;
+        }
+
+        $url = clone $this;
+        $url->autoPlay = $autoPlay;
+        return $url;
     }
 
     /**
@@ -135,17 +143,33 @@ class Url implements ToUriInterface
      * @see https://docs.theplatform.com/help/player-player-playall
      *
      * @param bool $playAll
+     *
+     * @return Url
      */
-    public function setPlayAll(bool $playAll)
+    public function withPlayAll(bool $playAll): self
     {
-        $this->playAll = $playAll;
+        if ($this->playAll == $playAll) {
+            return $this;
+        }
+
+        $url = clone $this;
+        $url->playAll = $playAll;
+        return $url;
     }
 
     /**
      * @param bool $embed
+     *
+     * @return Url
      */
-    public function setEmbed(bool $embed): void
+    public function withEmbed(bool $embed): self
     {
-        $this->embed = $embed;
+        if ($this->embed == $embed) {
+            return $this;
+        }
+
+        $url = clone $this;
+        $url->embed = $embed;
+        return $url;
     }
 }
