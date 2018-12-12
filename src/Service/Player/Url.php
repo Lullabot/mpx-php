@@ -82,8 +82,8 @@ class Url implements ToUriInterface
      * @param PublicIdentifierInterface $player  The player to play $media with.
      * @param ObjectInterface           $media   The media to play.
      */
-    public function __construct(PublicIdentifierInterface $account, PublicIdentifierInterface $player, ObjectInterface $media
-    ) {
+    public function __construct(PublicIdentifierInterface $account, PublicIdentifierInterface $player, ObjectInterface $media)
+    {
         $this->player = $player;
         $this->media = $media;
         $this->account = $account;
