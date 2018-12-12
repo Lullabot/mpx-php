@@ -114,8 +114,15 @@ class Url implements ToUriInterface
 
         $query_parts = [];
 
-        $query_parts['autoPlay'] = $this->autoPlay ? 'true' : 'false';
-        $query_parts['playAll'] = $this->playAll ? 'true' : 'false';
+        // We use isset() so that if the values have never been explicitly set
+        // the player configuration is used instead.
+        if (isset($this->autoPlay)) {
+            $query_parts['autoPlay'] = $this->autoPlay ? 'true' : 'false';
+        }
+
+        if (isset($this->playAll)) {
+            $query_parts['playAll'] = $this->playAll ? 'true' : 'false';
+        }
 
         $uri = $uri->withQuery(build_query($query_parts));
 

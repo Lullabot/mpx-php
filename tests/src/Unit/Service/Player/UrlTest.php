@@ -42,7 +42,7 @@ class UrlTest extends TestCase
         $media->setOwnerId(new Uri('https://example.com/123456'));
         $player_url = new Url($account, $player, $media);
 
-        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url->toUri());
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid', (string) $player_url->toUri());
 
         $player_url = $player_url->withAutoplay(true)
             ->withPlayAll(true);
