@@ -11,13 +11,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Allow any object with a public ID to be used for player URLs #152
 - Player URIs can now be generated using media reference GUIDs instead of
   public IDs by calling `withMediaByGuid`, and back to public IDs by calling
-  `withMediaByPublicId`.
+  `withMediaByPublicId`. #153
 
 ### Changed
 
 - `\Lullabot\Mpx\Service\Player\Url` now is immutable, following what
   `\Psr\Http\Message\UriInterface` does. All `set` methods are now `with`
-  methods.
+  methods. #153
+- The `media` parameter on the Url constructor is now an ObjectInterface and
+  not just a PublicIdentifierInterface to support guid URLs. #153
 
 ## [0.8.3] - 2018-11-05
 
