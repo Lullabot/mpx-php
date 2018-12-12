@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Unit\Service\Player;
 
+use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\Player\Player;
@@ -20,8 +21,11 @@ class UrlTest extends TestCase
      *
      * @covers ::__construct
      * @covers ::toUri
-     * @covers ::setPlayAll
-     * @covers ::setAutoplay
+     * @covers ::withPlayAll
+     * @covers ::withAutoplay
+     * @covers ::withEmbed
+     * @covers ::withMediaByGuid
+     * @covers ::withMediaByPublicId
      * @covers ::__toString
      */
     public function testToUri()
@@ -34,19 +38,27 @@ class UrlTest extends TestCase
 
         $media = new Media();
         $media->setPid('media-pid');
+        $media->setGuid('the-guid');
+        $media->setOwnerId(new Uri('https://example.com/123456'));
         $player_url = new Url($account, $player, $media);
 
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid', (string) $player_url->toUri());
 
-        $player_url->setAutoplay(true);
-        $player_url->setPlayAll(true);
+        $player_url = $player_url->withAutoplay(true)
+            ->withPlayAll(true);
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoPlay=true&playAll=true', (string) $player_url);
 
-        $player_url->setAutoplay(false);
-        $player_url->setPlayAll(false);
+        $player_url = $player_url->withAutoplay(false)
+            ->withPlayAll(false);
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
 
-        $player_url->setEmbed(true);
+        $player_url = $player_url->withEmbed(true);
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/embed/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
+
+        $player_url = $player_url->withMediaByGuid();
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/embed/select/media/guid/123456/the-guid?autoPlay=false&playAll=false', (string) $player_url);
+
+        $player_url = $player_url->withMediaByPublicId();
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/embed/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
     }
 }
