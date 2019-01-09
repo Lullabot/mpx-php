@@ -150,22 +150,33 @@ class NotificationListener
         return $this->authenticatedClient->requestAsync('GET', $this->uri, [
             'query' => $query,
         ])->then(function (ResponseInterface $response) {
-            // First, we need an encoder that filters out null values.
-            $encoders = [new JsonEncoder()];
-
-            // Attempt normalizing each key in this order, including denormalizing recursively.
-            $extractor = new NotificationTypeExtractor();
-            $extractor->setClass($this->service->getClass());
-            $normalizers = [
-                new UnixMillisecondNormalizer(),
-                new UriNormalizer(),
-                new ObjectNormalizer(null, null, null, $extractor),
-                new ArrayDenormalizer(),
-            ];
-
-            $serializer = new Serializer($normalizers, $encoders);
-            // @todo Handle exception returns.
-            return $serializer->deserialize($response->getBody(), Notification::class.'[]', 'json');
+            return $this->deserializeResponse($response);
         });
+    }
+
+    /**
+     * Deserialize a notification response.
+     *
+     * @param ResponseInterface $response
+     *
+     * @return Notification
+     */
+    protected function deserializeResponse(ResponseInterface $response) {
+        // First, we need an encoder that filters out null values.
+        $encoders = [new JsonEncoder()];
+
+        // Attempt normalizing each key in this order, including denormalizing recursively.
+        $extractor = new NotificationTypeExtractor();
+        $extractor->setClass($this->service->getClass());
+        $normalizers = [
+            new UnixMillisecondNormalizer(),
+            new UriNormalizer(),
+            new ObjectNormalizer(null, null, null, $extractor),
+            new ArrayDenormalizer(),
+        ];
+
+        $serializer = new Serializer($normalizers, $encoders);
+        // @todo Handle exception returns.
+        return $serializer->deserialize($response->getBody(), Notification::class.'[]', 'json');
     }
 }

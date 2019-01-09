@@ -75,6 +75,7 @@ class NotificationListenerTest extends TestCase
      *
      * @covers ::__construct
      * @covers ::listen
+     * @covers ::deserializeResponse
      */
     public function testListen()
     {
