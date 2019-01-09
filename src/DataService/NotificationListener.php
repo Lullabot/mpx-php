@@ -94,12 +94,18 @@ class NotificationListener
     public function sync()
     {
         // @todo Add support for filtering.
+        $query = [
+            'clientId' => $this->clientId,
+            'form' => 'cjson',
+            'schema' => '1.10',
+        ];
+
+        if ($this->authenticatedClient->hasAccount()) {
+            $query['account'] = (string) $this->authenticatedClient->getAccount()->getMpxId();
+        }
+
         return $this->authenticatedClient->requestAsync('GET', $this->uri, [
-            'query' => [
-                'clientId' => $this->clientId,
-                'form' => 'cjson',
-                'schema' => '1.10',
-            ],
+            'query' => $query,
         ])->then(function (ResponseInterface $response) {
             $data = \GuzzleHttp\json_decode($response->getBody(), true);
 
@@ -127,16 +133,22 @@ class NotificationListener
      */
     public function listen(int $since, int $maximum = 500)
     {
+        $query = [
+            'clientId' => $this->clientId,
+            'since' => $since,
+            'block' => 'true',
+            'form' => 'cjson',
+            'schema' => '1.10',
+            'filter' => $this->service->getAnnotation()->getObjectType(),
+            'size' => $maximum,
+        ];
+
+        if ($this->authenticatedClient->hasAccount()) {
+            $query['account'] = (string) $this->authenticatedClient->getAccount()->getMpxId();
+        }
+
         return $this->authenticatedClient->requestAsync('GET', $this->uri, [
-            'query' => [
-                'clientId' => $this->clientId,
-                'since' => $since,
-                'block' => 'true',
-                'form' => 'cjson',
-                'schema' => '1.10',
-                'filter' => $this->service->getAnnotation()->getObjectType(),
-                'size' => $maximum,
-            ],
+            'query' => $query,
         ])->then(function (ResponseInterface $response) {
             // First, we need an encoder that filters out null values.
             $encoders = [new JsonEncoder()];
