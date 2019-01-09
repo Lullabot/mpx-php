@@ -242,6 +242,7 @@ class AuthenticatedClientTest extends TestCase
     }
 
     /**
+     * @covers ::hasAccount
      * @covers ::getAccount
      */
     public function testGetAccount()
@@ -258,6 +259,7 @@ class AuthenticatedClientTest extends TestCase
 
         $account = new Account();
         $authenticatedClient = new AuthenticatedClient($client, $userSession, $account);
+        $this->assertTrue($authenticatedClient->hasAccount());
 
         $this->assertSame($account, $authenticatedClient->getAccount());
     }
