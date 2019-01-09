@@ -161,7 +161,8 @@ class NotificationListener
      *
      * @return Notification
      */
-    protected function deserializeResponse(ResponseInterface $response) {
+    protected function deserializeResponse(ResponseInterface $response)
+    {
         // First, we need an encoder that filters out null values.
         $encoders = [new JsonEncoder()];
 
