@@ -5,6 +5,7 @@ namespace Lullabot\Mpx;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
+use Lullabot\Mpx\DataService\IdInterface;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Http\Message\RequestInterface;
@@ -26,6 +27,15 @@ class AuthenticatedClient implements ClientInterface
     protected $client;
 
     /**
+     * An optional account to use as the account context for requests.
+     *
+     * @see https://docs.theplatform.com/help/wsf-introduction-to-theplatforms-web-services#IntroductiontothePlatform%27sWebservices-Accountcontext
+     *
+     * @var \Lullabot\Mpx\DataService\IdInterface
+     */
+    protected $account;
+
+    /**
      * The duration for authentication tokens to last for, or null for no
      * specific expiry.
      *
@@ -41,11 +51,16 @@ class AuthenticatedClient implements ClientInterface
      *
      * @param Client      $client      The client used to access MPX.
      * @param UserSession $userSession The user associated with this client.
+     * @param IdInterface $account     (optional) The account to use as the account context for requests.
      */
-    public function __construct(Client $client, UserSession $userSession)
+    public function __construct(Client $client, UserSession $userSession, IdInterface $account = null)
     {
         $this->client = $client;
         $this->userSession = $userSession;
+
+        if ($account) {
+            $this->account = $account;
+        }
     }
 
     /**
@@ -96,6 +111,32 @@ class AuthenticatedClient implements ClientInterface
     public function setTokenDuration(int $duration = null)
     {
         $this->duration = $duration;
+    }
+
+    /**
+     * Return if this client has an account context.
+     *
+     * @return bool
+     */
+    public function hasAccount(): bool
+    {
+        return isset($this->account);
+    }
+
+    /**
+     * Return the account to use as the context for requests.
+     *
+     * @throws \LogicException Thrown if an account context is not set.
+     *
+     * @return \Lullabot\Mpx\DataService\IdInterface
+     */
+    public function getAccount(): IdInterface
+    {
+        if (!$this->account) {
+            throw new \LogicException('hasAccount() must return TRUE before calling getAccount()');
+        }
+
+        return $this->account;
     }
 
     /**

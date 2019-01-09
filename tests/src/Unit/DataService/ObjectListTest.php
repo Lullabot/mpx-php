@@ -108,7 +108,7 @@ class ObjectListTest extends TestCase
         /** @var DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
-        $this->list->setDataObjectFactory($dof, $account);
+        $this->list->setDataObjectFactory($dof);
         $this->list->setObjectListQuery(new ObjectListQuery());
 
         $this->assertInstanceOf(PromiseInterface::class, $this->list->nextList());
@@ -127,7 +127,7 @@ class ObjectListTest extends TestCase
         /** @var DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
-        $this->list->setDataObjectFactory($dof, $account);
+        $this->list->setDataObjectFactory($dof);
         $this->list->setObjectListQuery(new ObjectListQuery());
         $this->assertFalse($this->list->nextList());
     }
@@ -161,7 +161,7 @@ class ObjectListTest extends TestCase
         /** @var DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
-        $this->list->setDataObjectFactory($dof, $account);
+        $this->list->setDataObjectFactory($dof);
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('setByFields must be called before calling nextList.');
         $this->list->nextList();
@@ -245,7 +245,7 @@ class ObjectListTest extends TestCase
         /** @var DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
-        $this->list->setDataObjectFactory($dof, $account);
+        $this->list->setDataObjectFactory($dof);
         $this->list->setObjectListQuery(new ObjectListQuery());
         $y = $this->list->yieldLists();
         foreach ($y as $l) {
@@ -275,7 +275,7 @@ class ObjectListTest extends TestCase
         /** @var DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
-        $this->list->setDataObjectFactory($dof, $account);
+        $this->list->setDataObjectFactory($dof);
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('setByFields must be called before calling nextList.');
         $this->list->yieldLists()->current();

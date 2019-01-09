@@ -24,7 +24,7 @@ class PlayerQueryTest extends FunctionalTestBase
         $filter->getRange()
             ->setStartIndex(1)
             ->setEndIndex(2);
-        $results = $dof->select($filter, $this->account);
+        $results = $dof->select($filter);
 
         foreach ($results as $index => $result) {
             $this->assertInstanceOf(UriInterface::class, $result->getId());

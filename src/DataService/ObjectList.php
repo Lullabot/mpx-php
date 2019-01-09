@@ -4,7 +4,6 @@ namespace Lullabot\Mpx\DataService;
 
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
-use Lullabot\Mpx\DataService\Access\Account;
 
 /**
  * An ObjectList represents a list of data service objects from a search query.
@@ -72,13 +71,6 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
      * @var DataObjectFactory
      */
     protected $dataObjectFactory;
-
-    /**
-     * The account context used for this list.
-     *
-     * @var Account
-     */
-    protected $account;
 
     /**
      * The original JSON of this object list.
@@ -214,12 +206,10 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
      * Set the objects needed to generate a next request.
      *
      * @param DataObjectFactory $dataObjectFactory The factory used to load the next ObjectList.
-     * @param IdInterface       $account           (optional) The account context to use for the request.
      */
-    public function setDataObjectFactory(DataObjectFactory $dataObjectFactory, IdInterface $account = null)
+    public function setDataObjectFactory(DataObjectFactory $dataObjectFactory)
     {
         $this->dataObjectFactory = $dataObjectFactory;
-        $this->account = $account;
     }
 
     /**
@@ -257,7 +247,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
         $range = Range::nextRange($this);
         $byFields->setRange($range);
 
-        return $this->dataObjectFactory->selectRequest($byFields, $this->account);
+        return $this->dataObjectFactory->selectRequest($byFields);
     }
 
     /**
@@ -284,7 +274,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
         foreach ($ranges as $range) {
             $byFields = clone $this->objectListQuery;
             $byFields->setRange($range);
-            yield $this->dataObjectFactory->selectRequest($byFields, $this->account);
+            yield $this->dataObjectFactory->selectRequest($byFields);
         }
     }
 

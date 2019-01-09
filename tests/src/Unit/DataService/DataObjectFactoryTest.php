@@ -97,12 +97,12 @@ class DataObjectFactoryTest extends TestCase
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
         $session = new UserSession($user, $client, $store, $tokenCachePool);
-        $authenticatedClient = new AuthenticatedClient($client, $session);
-        $factory = new DataObjectFactory($service, $authenticatedClient);
-
         $account = new Account();
         $account->setId(new Uri('http://example.com/1'));
-        $media = $factory->loadByNumericId(12345, $account)->wait();
+        $authenticatedClient = new AuthenticatedClient($client, $session, $account);
+        $factory = new DataObjectFactory($service, $authenticatedClient);
+
+        $media = $factory->loadByNumericId(12345)->wait();
         $this->assertInstanceOf(Media::class, $media);
     }
 
