@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - YYYY-MM-DD
 
+### Added
+
+- `Notification` now has an `isSyncResponse()` method to determine if no
+  further notifications are available. #154
+
 ### Changed
 
 - Setting an account context for requests is now done by setting the account
