@@ -10,7 +10,7 @@ use Psr\Http\Message\UriInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateDataServiceClassCommand extends ClassGenerator
+class CreateDataServiceClassCommand extends ClassGeneratorBase
 {
     protected function configure()
     {
@@ -23,14 +23,14 @@ class CreateDataServiceClassCommand extends ClassGenerator
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $handle = fopen('php://stdin', 'r');
+        $handle = fopen('php://stdin', 'rb');
         $index = 0;
 
         $output->write("<?php\n\n");
 
         // Extract the containing class namespace and the class name.
         $parts = explode('\\', $input->getArgument('fully-qualified-class-name'));
-        $namespace = new PhpNamespace(implode('\\', array_slice($parts, 0, -1)));
+        $namespace = new PhpNamespace(implode('\\', \array_slice($parts, 0, -1)));
         $class = $namespace->addClass(end($parts));
 
         // Loop over each row, which corresponds to each property.
@@ -47,7 +47,7 @@ class CreateDataServiceClassCommand extends ClassGenerator
                 continue;
             }
 
-            if (strrpos($description, '.') !== (strlen($description) - 1)) {
+            if (strrpos($description, '.') !== (\strlen($description) - 1)) {
                 $description .= '.';
             }
 
