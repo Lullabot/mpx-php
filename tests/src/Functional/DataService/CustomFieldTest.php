@@ -27,7 +27,7 @@ class CustomFieldTest extends FunctionalTestBase
         $range->setStartIndex(1)
             ->setEndIndex(2);
         $filter->setRange($range);
-        $results = $dof->select($filter, $this->account);
+        $results = $dof->select($filter);
         foreach ($results as $index => $field) {
             $this->assertInstanceOf(Field::class, $field);
 

@@ -3,7 +3,7 @@
 namespace Lullabot\Mpx\DataService;
 
 /**
- * Represents an MPX notification.
+ * Represents an mpx notification.
  *
  * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications
  */
@@ -91,5 +91,17 @@ class Notification
     public function setType(string $type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * Return if this notification is a sync response, containing only an ID.
+     *
+     * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications#tp-toc10
+     *
+     * @return bool
+     */
+    public function isSyncResponse(): bool
+    {
+        return !($this->method || $this->type || $this->entry);
     }
 }

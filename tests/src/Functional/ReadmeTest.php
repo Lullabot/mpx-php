@@ -52,7 +52,7 @@ class ReadmeTest extends FunctionalTestBase
         $filter->getRange()
             ->setStartIndex(1)
             ->setEndIndex(1);
-        $results = $mediaFactory->select($filter, $account);
+        $results = $mediaFactory->select($filter);
         foreach ($results as $media) {
             // Replace the ID to the media item to load. You can find it under "History -> ID" in the MPX console.
             $id = $media->getId();
@@ -93,7 +93,7 @@ class ReadmeTest extends FunctionalTestBase
         $termGroup->and(new Term('dogs'));
         $query->add($termGroup);
         $query->getRange()->setEndIndex(1);
-        $results = $mediaFactory->select($query, $account);
+        $results = $mediaFactory->select($query);
 
         foreach ($results as $media) {
             $this->assertInstanceOf(UriInterface::class, $media->getId());

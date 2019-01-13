@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Functional\DataService\Account;
 
+use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
@@ -13,6 +14,21 @@ use Psr\Http\Message\UriInterface;
  */
 class AccountQueryTest extends FunctionalTestBase
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        // Override the client to not include an account context, since the
+        // access data service does not support it.
+        $this->authenticatedClient = new AuthenticatedClient(
+            $this->client,
+            $this->userSession
+        );
+    }
+
     /**
      * Test loading two Account objects.
      */

@@ -20,7 +20,7 @@ class FieldsTest extends FunctionalTestBase
         $fields = (new Fields())->addField('title');
         $filter->add($fields);
         $filter->setRange((new Range())->setStartIndex(1)->setEndIndex(1));
-        $results = $dof->select($filter, $this->account);
+        $results = $dof->select($filter);
         $results->valid();
         $result = $results->current();
         $json = $result->getJson();

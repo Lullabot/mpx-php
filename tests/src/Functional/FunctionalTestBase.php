@@ -85,12 +85,13 @@ abstract class FunctionalTestBase extends TestCase
 
         $user = new User($username, $password);
         $this->userSession = new UserSession($user, $this->client, $store, new TokenCachePool(new ArrayCachePool()));
-        $this->authenticatedClient = new AuthenticatedClient(
-            $this->client,
-            $this->userSession
-        );
 
         $this->account = new Account();
         $this->account->setId(new Uri($account_id));
+        $this->authenticatedClient = new AuthenticatedClient(
+            $this->client,
+            $this->userSession,
+            $this->account
+        );
     }
 }
