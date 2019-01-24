@@ -8,7 +8,7 @@ use Psr\Http\Message\UriInterface;
 /**
  * Defines an interface object properties common to all mpx objects.
  */
-interface ObjectInterface extends IdInterface, JsonInterface
+interface ObjectInterface extends IdInterface, GuidInterface, JsonInterface
 {
     /**
      * Returns the globally unique URI of this object.
@@ -53,20 +53,6 @@ interface ObjectInterface extends IdInterface, JsonInterface
     public function setAddedByUserId(UriInterface $addedByUserId);
 
     /**
-     * Returns the id of the account that owns this object.
-     *
-     * @return UriInterface
-     */
-    public function getOwnerId(): UriInterface;
-
-    /**
-     * Set the id of the account that owns this object.
-     *
-     * @param UriInterface $ownerId
-     */
-    public function setOwnerId(UriInterface $ownerId);
-
-    /**
      * Return custom fields attached to this object.
      *
      * @return CustomFieldInterface[]
@@ -93,20 +79,6 @@ interface ObjectInterface extends IdInterface, JsonInterface
      * @param string $description
      */
     public function setDescription(?string $description);
-
-    /**
-     * Returns an alternate identifier for this object that is unique within the owning account.
-     *
-     * @return string
-     */
-    public function getGuid(): ?string;
-
-    /**
-     * Set an alternate identifier for this object that is unique within the owning account.
-     *
-     * @param string $guid
-     */
-    public function setGuid(?string $guid);
 
     /**
      * Returns whether this object currently allows updates.

@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
-use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\DataService\PublicIdWithGuidInterface;
 
 /**
  * @DataService(
@@ -15,7 +15,7 @@ use Lullabot\Mpx\DataService\PublicIdentifierInterface;
  *   objectType="Release",
  * )
  */
-class Release extends ObjectBase implements PublicIdentifierInterface
+class Release extends ObjectBase implements PublicIdWithGuidInterface
 {
     /**
      * The date and time that this object was created.
