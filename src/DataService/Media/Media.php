@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
-use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\DataService\PublicIdWithGuidInterface;
 
 /**
  * Implements the Media endpoint in the Media data service.
@@ -21,7 +21,7 @@ use Lullabot\Mpx\DataService\PublicIdentifierInterface;
  *   objectType="Media",
  * )
  */
-class Media extends ObjectBase implements PublicIdentifierInterface
+class Media extends ObjectBase implements PublicIdWithGuidInterface
 {
     /**
      * The id of the AdPolicy associated with this content.

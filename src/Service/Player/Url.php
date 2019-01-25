@@ -4,8 +4,8 @@ namespace Lullabot\Mpx\Service\Player;
 
 use function GuzzleHttp\Psr7\build_query;
 use GuzzleHttp\Psr7\Uri;
-use Lullabot\Mpx\DataService\ObjectInterface;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\DataService\PublicIdWithGuidInterface;
 use Lullabot\Mpx\ToUriInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -41,7 +41,7 @@ class Url implements ToUriInterface
     /**
      * The media that is being played.
      *
-     * @var PublicIdentifierInterface
+     * @var PublicIdWithGuidInterface
      */
     private $media;
 
@@ -80,9 +80,9 @@ class Url implements ToUriInterface
      *
      * @param PublicIdentifierInterface $account The account the player is owned by.
      * @param PublicIdentifierInterface $player  The player to play $media with.
-     * @param ObjectInterface           $media   The media to play.
+     * @param PublicIdWithGuidInterface $media   The media to play.
      */
-    public function __construct(PublicIdentifierInterface $account, PublicIdentifierInterface $player, ObjectInterface $media)
+    public function __construct(PublicIdentifierInterface $account, PublicIdentifierInterface $player, PublicIdWithGuidInterface $media)
     {
         $this->player = $player;
         $this->media = $media;

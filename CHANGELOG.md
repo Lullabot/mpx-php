@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - YYYY-MM-DD
+
+### Changed
+
+- New interfaces have been added, which ObjectInterface now inherits from.
+   * `\Lullabot\Mpx\DataService\OwnerIdInterface` represents objects with an
+      owner.
+   * `\Lullabot\Mpx\DataService\GuidInterface` represents objects with a GUID.
+   * `\Lullabot\Mpx\DataService\PublicIdWithGuidInterface` represents objects
+     containing both a public ID and a GUID.
+- `\Lullabot\Mpx\Service\Player\Url::__construct()` now typehints to a
+  `PublicIdWithGuidInterface`, which is required for rendering URLs with a
+  GUID.
+
 ## [0.10.0] - 2019-01-13
 
 ### Added

@@ -6,8 +6,8 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
-use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Lullabot\Mpx\DataService\IdInterface;
+use Lullabot\Mpx\DataService\PublicIdWithGuidInterface;
 
 /**
  * @DataService(
@@ -17,7 +17,7 @@ use Lullabot\Mpx\DataService\IdInterface;
  *   objectType="Account"
  * )
  */
-class Account extends ObjectBase implements PublicIdentifierInterface, IdInterface
+class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterface
 {
     /**
      * The date and time that this object was created.

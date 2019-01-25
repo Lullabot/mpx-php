@@ -4,6 +4,11 @@ namespace Lullabot\Mpx\DataService;
 
 /**
  * Interface definition for all mpx objects with a public identifier.
+ *
+ * Note that in practice, it appears that all mpx objects with a public ID also
+ * have a GUID. However, having a separate interface makes it easy for calling
+ * code to create simple stub objects with just a public identifier, such as
+ * when constructing URLs.
  */
 interface PublicIdentifierInterface
 {
