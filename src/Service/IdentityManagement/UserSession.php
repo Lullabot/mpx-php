@@ -74,7 +74,7 @@ class UserSession
         $this->client = $client;
         $this->store = $store;
         if (!$tokenCachePool) {
-            $tokenCachePool = new ArrayCachePool();
+            $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         }
         $this->tokenCachePool = $tokenCachePool;
         $this->logger = new NullLogger();
