@@ -44,9 +44,9 @@ $client = new Client(new \GuzzleHttp\Client($defaults));
 
 // Replace your username and password here. The username must begin with `mpx/`.
 $user = new User('mpx/YOU@EXAMPLE.COM', 'secret');
-$store = new FlockStore();
-$tokenCachePool = new TokenCachePool(new ArrayCachePool());
-$session = new UserSession($user, $client, $store, $tokenCachePool);
+// The optional lock and cache storage parameters are highly recommended for
+// applications with multiple threads or requests.
+$session = new UserSession($user, $client);
 
 // This registers the annotation loader.
 $dataServiceManager = DataServiceManager::basicDiscovery();
