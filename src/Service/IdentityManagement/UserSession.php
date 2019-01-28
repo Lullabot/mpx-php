@@ -2,6 +2,7 @@
 
 namespace Lullabot\Mpx\Service\IdentityManagement;
 
+use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
 use Lullabot\Mpx\Token;
@@ -64,14 +65,17 @@ class UserSession
      *
      * @param UserInterface  $user           The user to authenticate as.
      * @param Client         $client         The client used to access mpx.
-     * @param StoreInterface $store          The lock backend to store locks in.
-     * @param TokenCachePool $tokenCachePool The cache of authentication tokens.
+     * @param StoreInterface $store          (optional) The lock backend to store locks in.
+     * @param TokenCachePool $tokenCachePool (optional) The cache of authentication tokens.
      */
-    public function __construct(UserInterface $user, Client $client, StoreInterface $store, TokenCachePool $tokenCachePool)
+    public function __construct(UserInterface $user, Client $client, StoreInterface $store = null, TokenCachePool $tokenCachePool = null)
     {
         $this->user = $user;
         $this->client = $client;
         $this->store = $store;
+        if (!$tokenCachePool) {
+            $tokenCachePool = new ArrayCachePool();
+        }
         $this->tokenCachePool = $tokenCachePool;
         $this->logger = new NullLogger();
     }
@@ -169,12 +173,14 @@ class UserSession
      */
     protected function signInWithLock(int $duration = null): Token
     {
-        $factory = new Factory($this->store);
-        $factory->setLogger($this->logger);
-        $lock = $factory->createLock($this->user->getMpxUsername(), 10);
+        if ($this->store) {
+            $factory = new Factory($this->store);
+            $factory->setLogger($this->logger);
+            $lock = $factory->createLock($this->user->getMpxUsername(), 10);
 
-        // Blocking means this will throw an exception on failure.
-        $lock->acquire(true);
+            // Blocking means this will throw an exception on failure.
+            $lock->acquire(true);
+        }
 
         try {
             // It's possible another thread has signed in for us, so check for a token first.
