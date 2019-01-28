@@ -12,7 +12,7 @@ use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\StoreInterface;
 
 /**
- * Defines a class for authenticating a user with MPX.
+ * Defines a class for authenticating a user with mpx.
  *
  * @see http://help.theplatform.com/display/wsf2/Identity+management+service+API+reference
  * @see http://help.theplatform.com/display/wsf2/User+operations
@@ -37,7 +37,7 @@ class UserSession
     protected $client;
 
     /**
-     * The backend lock store used to store a lock when signing in to MPX.
+     * The backend lock store used to store a lock when signing in to mpx.
      *
      * @var StoreInterface
      */
@@ -58,12 +58,12 @@ class UserSession
     protected $user;
 
     /**
-     * Construct a new MPX user.
+     * Construct a new mpx user.
      *
      * @see \Psr\Log\NullLogger To disable logging of token requests.
      *
      * @param UserInterface  $user           The user to authenticate as.
-     * @param Client         $client         The client used to access MPX.
+     * @param Client         $client         The client used to access mpx.
      * @param StoreInterface $store          The lock backend to store locks in.
      * @param TokenCachePool $tokenCachePool The cache of authentication tokens.
      */
@@ -86,7 +86,7 @@ class UserSession
      * @param int  $duration (optional) The number of seconds for which the token should be valid.
      * @param bool $reset    Force fetching a new token, even if one exists.
      *
-     * @return Token A valid MPX authentication token.
+     * @return Token A valid mpx authentication token.
      */
     public function acquireToken(int $duration = null, bool $reset = false): Token
     {
@@ -127,7 +127,7 @@ class UserSession
 
         $token = $this->tokenFromResponse($data);
         $this->logger->info(
-            'Retrieved a new MPX token {token} for user {username} that expires on {date}.',
+            'Retrieved a new mpx token {token} for user {username} that expires on {date}.',
             [
                 'token' => $token->getValue(),
                 'username' => $this->user->getMpxUsername(),
@@ -144,7 +144,7 @@ class UserSession
     public function signOut()
     {
         // @todo Handle that the token may be expired.
-        // @todo Handle and log that MPX may error on the signout.
+        // @todo Handle and log that mpx may error on the signout.
         $this->client->request(
             'GET',
             self::SIGN_OUT_URL,
@@ -161,7 +161,7 @@ class UserSession
     }
 
     /**
-     * Sign in to MPX, with a lock to prevent sign-in stampedes.
+     * Sign in to mpx, with a lock to prevent sign-in stampedes.
      *
      * @param int $duration (optional) The number of seconds that the sign-in token should be valid for.
      *
@@ -190,7 +190,7 @@ class UserSession
     /**
      * Instantiate and cache a token.
      *
-     * @param array $data The MPX signIn() response data.
+     * @param array $data The mpx signIn() response data.
      *
      * @return Token The new token.
      */

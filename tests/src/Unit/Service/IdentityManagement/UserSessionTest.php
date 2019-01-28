@@ -16,7 +16,7 @@ use Symfony\Component\Lock\Exception\LockConflictedException;
 use Symfony\Component\Lock\StoreInterface;
 
 /**
- * Tests MPX user accounts.
+ * Tests mpx user accounts.
  *
  * @coversDefaultClass \Lullabot\Mpx\Service\IdentityManagement\UserSession
  */
@@ -87,7 +87,7 @@ class UserSessionTest extends TestCase
     }
 
     /**
-     * Test that resetting a token executes a new MPX request.
+     * Test that resetting a token executes a new mpx request.
      *
      * @covers ::acquireToken
      */
@@ -111,7 +111,7 @@ class UserSessionTest extends TestCase
             ->with('Expiration defined for "{resource}" lock for "{ttl}" seconds.');
         $logger->expects($this->at(2))->method('info')
             ->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
+                $this->assertEquals('Retrieved a new mpx token {token} for user {username} that expires on {date}.', $message);
                 $this->assertArraySubset([
                     'token' => 'TOKEN-VALUE',
                     'username' => 'mpx/USER-NAME',
@@ -124,7 +124,7 @@ class UserSessionTest extends TestCase
             ->with('Expiration defined for "{resource}" lock for "{ttl}" seconds.');
         $logger->expects($this->at(5))->method('info')
             ->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
+                $this->assertEquals('Retrieved a new mpx token {token} for user {username} that expires on {date}.', $message);
                 $this->assertArraySubset([
                     'token' => 'TOKEN-VALUE',
                     'username' => 'mpx/USER-NAME',
@@ -193,7 +193,7 @@ class UserSessionTest extends TestCase
 
             $logger->expects($this->at($call++))->method('info')
                 ->willReturnCallback(function ($message, $context) {
-                    $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
+                    $this->assertEquals('Retrieved a new mpx token {token} for user {username} that expires on {date}.', $message);
                     $this->assertArraySubset([
                         'token' => 'TOKEN-VALUE',
                         'username' => 'mpx/USER-NAME',
