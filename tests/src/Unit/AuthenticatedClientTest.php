@@ -9,6 +9,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
+use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
@@ -238,6 +239,29 @@ class AuthenticatedClientTest extends TestCase
             ->willReturn(new Token('mpx/USER-ID', 'abcdef', $duration));
         $authenticatedClient->setTokenDuration($duration);
         $authenticatedClient->request('GET', 'https://www.example.com/');
+    }
+
+    /**
+     * @covers ::hasAccount
+     * @covers ::getAccount
+     */
+    public function testGetAccount()
+    {
+        /** @var Client|\PHPUnit\Framework\MockObject\MockObject $client */
+        $client = $this->getMockBuilder(Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        /** @var UserSession|\PHPUnit\Framework\MockObject\MockObject $userSession */
+        $userSession = $this->getMockBuilder(UserSession::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $account = new Account();
+        $authenticatedClient = new AuthenticatedClient($client, $userSession, $account);
+        $this->assertTrue($authenticatedClient->hasAccount());
+
+        $this->assertSame($account, $authenticatedClient->getAccount());
     }
 
     /**

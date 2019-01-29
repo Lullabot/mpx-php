@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\DateTime\NullDateTime;
 use Lullabot\Mpx\DataService\ObjectBase;
-use Lullabot\Mpx\DataService\PublicIdentifierInterface;
+use Lullabot\Mpx\DataService\PublicIdWithGuidInterface;
 
 /**
  * FeedConfig represents the configuration of a feed.
@@ -19,7 +19,7 @@ use Lullabot\Mpx\DataService\PublicIdentifierInterface;
  *     schemaVersion="2.2",
  * )
  */
-class FeedConfig extends ObjectBase implements PublicIdentifierInterface
+class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 {
     /**
      * The parameters that are passed to a custom feed adapter for processing at runtime.

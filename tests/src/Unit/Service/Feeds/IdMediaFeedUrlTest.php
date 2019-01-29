@@ -12,6 +12,28 @@ use PHPUnit\Framework\TestCase;
  */
 class IdMediaFeedUrlTest extends TestCase
 {
+    public function testEmptyIds()
+    {
+        $account = new Account();
+        $account->setPid('account-pid');
+        $feedConfig = new FeedConfig();
+        $feedConfig->setPid('feed-pid');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('At least one ID must be specified');
+        new IdMediaFeedUrl($account, $feedConfig, []);
+    }
+
+    public function testInvalidIds()
+    {
+        $account = new Account();
+        $account->setPid('account-pid');
+        $feedConfig = new FeedConfig();
+        $feedConfig->setPid('feed-pid');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('All IDs must be integers');
+        new IdMediaFeedUrl($account, $feedConfig, [34, '45']);
+    }
+
     public function testToUri()
     {
         $account = new Account();

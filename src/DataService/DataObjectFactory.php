@@ -81,17 +81,16 @@ class DataObjectFactory
     /**
      * Load a data object from MPX, returning a promise to it.
      *
-     * @param int         $id       The numeric ID to load.
-     * @param IdInterface $account
-     * @param bool        $readonly (optional) Load from the read-only service.
-     * @param array       $options  (optional) An array of HTTP client options.
+     * @param int   $id       The numeric ID to load.
+     * @param bool  $readonly (optional) Load from the read-only service.
+     * @param array $options  (optional) An array of HTTP client options.
      *
      * @return PromiseInterface
      */
-    public function loadByNumericId(int $id, IdInterface $account = null, bool $readonly = false, array $options = [])
+    public function loadByNumericId(int $id, bool $readonly = false, array $options = [])
     {
         $annotation = $this->dataService->getAnnotation();
-        $base = $this->getBaseUri($annotation, $account, $readonly);
+        $base = $this->getBaseUri($annotation, $readonly);
 
         $uri = new Uri($base.'/'.$id);
 
@@ -178,6 +177,10 @@ class DataObjectFactory
             'form' => 'cjson',
         ];
 
+        if ($this->authenticatedClient->hasAccount()) {
+            $options['query']['account'] = (string) $this->authenticatedClient->getAccount()->getMpxId();
+        }
+
         if ('http' == $uri->getScheme()) {
             $uri = $uri->withScheme('https');
         }
@@ -196,15 +199,13 @@ class DataObjectFactory
      *
      * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact
      *                                         matches.
-     * @param IdInterface     $account         (optional) The account context to use in the request. Defaults to the
-     *                                         account associated with the authenticated client.
      * @param array           $options         (optional) An array of HTTP client options.
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
-    public function select(ObjectListQuery $objectListQuery = null, IdInterface $account = null, array $options = []): ObjectListIterator
+    public function select(ObjectListQuery $objectListQuery = null, array $options = []): ObjectListIterator
     {
-        return new ObjectListIterator($this->selectRequest($objectListQuery, $account));
+        return new ObjectListIterator($this->selectRequest($objectListQuery, $options));
     }
 
     /**
@@ -214,13 +215,11 @@ class DataObjectFactory
      *
      * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact
      *                                         matches.
-     * @param IdInterface     $account         (optional) The account context to use in the request. Note that most
-     *                                         requests require an account context.
      * @param array           $options         (optional) An array of HTTP client options.
      *
      * @return PromiseInterface A promise to return an ObjectList.
      */
-    public function selectRequest(ObjectListQuery $objectListQuery = null, IdInterface $account = null, array $options = []): PromiseInterface
+    public function selectRequest(ObjectListQuery $objectListQuery = null, array $options = []): PromiseInterface
     {
         if (!$objectListQuery) {
             $objectListQuery = new ObjectListQuery();
@@ -238,11 +237,15 @@ class DataObjectFactory
                 'count' => true,
             ];
 
-        $uri = $this->getBaseUri($annotation, $account, true);
+        if ($this->authenticatedClient->hasAccount()) {
+            $options['query']['account'] = (string) $this->authenticatedClient->getAccount()->getMpxId();
+        }
+
+        $uri = $this->getBaseUri($annotation, true);
 
         $request = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
-            function (ResponseInterface $response) use ($objectListQuery, $account) {
-                return $this->deserializeObjectList($response, $objectListQuery, $account);
+            function (ResponseInterface $response) use ($objectListQuery) {
+                return $this->deserializeObjectList($response, $objectListQuery);
             }
         );
 
@@ -254,11 +257,10 @@ class DataObjectFactory
      *
      * @param ResponseInterface $response The response to deserialize.
      * @param ObjectListQuery   $byFields The fields used to limit the response.
-     * @param IdInterface       $account  (optional) The account used to fetch the object list.
      *
      * @return ObjectList The deserialized list.
      */
-    private function deserializeObjectList(ResponseInterface $response, ObjectListQuery $byFields, IdInterface $account = null): ObjectList
+    private function deserializeObjectList(ResponseInterface $response, ObjectListQuery $byFields): ObjectList
     {
         $data = $response->getBody();
 
@@ -275,7 +277,7 @@ class DataObjectFactory
             $item->setJson(\GuzzleHttp\json_encode($entry));
         }
         $list->setObjectListQuery($byFields);
-        $list->setDataObjectFactory($this, $account);
+        $list->setDataObjectFactory($this);
 
         return $list;
     }
@@ -284,24 +286,23 @@ class DataObjectFactory
      * Get the base URI from an annotation or service registry.
      *
      * @param DataService $annotation The annotation data is being loaded for.
-     * @param IdInterface $account    (optional) The account to use for service resolution.
      * @param bool        $readonly   (optional) Load from the read-only service.
      *
      * @return string The base URI.
      */
-    private function getBaseUri(DataService $annotation, IdInterface $account = null, bool $readonly = false): string
+    private function getBaseUri(DataService $annotation, bool $readonly = false): string
     {
         // Accounts are optional as you need to be able to load an account
         // before you can resolve services.
         if (!($base = $annotation->getBaseUri())) {
             // If no account is specified, we must use the ResolveAllUrls service instead.
-            if (!$account) {
+            if (!$this->authenticatedClient->hasAccount()) {
                 $resolver = new ResolveAllUrls($this->authenticatedClient, $this->cacheItemPool);
 
                 return $resolver->resolve($annotation->getService($readonly))->getUrl().$annotation->getPath();
             }
 
-            $resolved = $this->resolveDomain->resolve($account);
+            $resolved = $this->resolveDomain->resolve($this->authenticatedClient->getAccount());
 
             $base = $resolved->getUrl($annotation->getService($readonly)).$annotation->getPath();
         }

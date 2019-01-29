@@ -47,4 +47,20 @@ class NotificationTest extends ObjectTestBase
             }
         }
     }
+
+    public function testIsSyncResponse()
+    {
+        /** @var Notification[] $notifications */
+        $notifications = $this->serializer->deserialize('[{"id": 12345 }]', Notification::class.'[]', 'json');
+        $this->assertCount(1, $notifications);
+        $this->assertTrue($notifications[0]->isSyncResponse());
+    }
+
+    public function testIsNotSyncResponse()
+    {
+        /** @var Notification[] $notifications */
+        $notifications = $this->serializer->deserialize('[{"id": 12345, "method": "get" }]', Notification::class.'[]', 'json');
+        $this->assertCount(1, $notifications);
+        $this->assertFalse($notifications[0]->isSyncResponse());
+    }
 }
