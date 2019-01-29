@@ -2,19 +2,12 @@
 
 namespace Lullabot\Mpx\Command;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Uri;
-use Lullabot\Mpx\AuthenticatedClient;
-use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\CustomFieldInterface;
 use Lullabot\Mpx\DataService\DataObjectFactory;
-use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
 use Lullabot\Mpx\DataService\Field;
 use Lullabot\Mpx\DataService\DateTime\NullDateTime;
-use Lullabot\Mpx\Service\IdentityManagement\User;
-use Lullabot\Mpx\Service\IdentityManagement\UserSession;
-use Lullabot\Mpx\TokenCachePool;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Message\UriInterface;
@@ -22,13 +15,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Lock\Store\FlockStore;
 
 /**
  * Command to generate classes for custom mpx fields.
  */
-class CreateCustomFieldClassCommand extends ClassGenerator
+class CreateCustomFieldClassCommand extends ClassGeneratorBase
 {
     /**
      * @var PhpNamespace[]
@@ -77,7 +68,7 @@ EOD;
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!extension_loaded('intl')) {
+        if (!\extension_loaded('intl')) {
             throw new \RuntimeException('The intl extension is required to run this command.');
         }
 
@@ -94,51 +85,11 @@ EOD;
         foreach ($this->namespaceClasses as $namespaceClass) {
             $array = $namespaceClass->getClasses();
             $classType = reset($array);
-            $classFile = new StreamOutput(fopen($classType->getName().'.php', 'w'));
+            $classFile = new StreamOutput(fopen($classType->getName().'.php', 'wb'));
             $classFile->write("<?php\n\n");
             $classFile->write((string) $namespaceClass);
             fclose($classFile->getStream());
         }
-    }
-
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return DataObjectFactory
-     */
-    private function getDataObjectFactory(InputInterface $input, OutputInterface $output): DataObjectFactory
-    {
-        $helper = $this->getHelper('question');
-        if (!$username = getenv('MPX_USERNAME')) {
-            $question = new Question('Enter the mpx user name, such as mpx/you@example.com: ');
-            $username = $helper->ask($input, $output, $question);
-        }
-        if (!$password = getenv('MPX_PASSWORD')) {
-            $question = new Question('Enter the mpx password: ');
-            $question->setHidden(true)
-                ->setHiddenFallback(false);
-            $password = $helper->ask($input, $output, $question);
-        }
-
-        $config = Client::getDefaultConfiguration();
-        $client = new Client(new \GuzzleHttp\Client($config));
-        $store = new FlockStore();
-        $user = new User($username, $password);
-        $userSession = new UserSession($user, $client, $store, new TokenCachePool(new ArrayCachePool()));
-        $authenticatedClient = new AuthenticatedClient(
-            $client,
-            $userSession
-        );
-        $manager = DataServiceManager::basicDiscovery();
-        $dataService = $manager->getDataService(
-            $input->getArgument('data-service'),
-            $input->getArgument('data-object'),
-            $input->getArgument('schema')
-        );
-        $dof = new DataObjectFactory($dataService->getAnnotation()->getFieldDataService(), $authenticatedClient);
-
-        return $dof;
     }
 
     /**
@@ -211,7 +162,7 @@ EOD;
         if (!isset($this->namespaceClasses[$mpxNamespace])) {
             $nf = new \NumberFormatter('en', \NumberFormatter::SPELLOUT);
             $className = 'CustomFieldClass'.ucfirst(
-                    str_replace('-', '', $nf->format(count($this->namespaceClasses) + 1))
+                    str_replace('-', '', $nf->format(\count($this->namespaceClasses) + 1))
                 );
             $namespace = new PhpNamespace($input->getArgument('namespace'));
             $class = $namespace->addClass($className);

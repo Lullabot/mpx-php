@@ -3,6 +3,7 @@
 
 use Lullabot\Mpx\Command\CreateCustomFieldClassCommand;
 use Lullabot\Mpx\Command\CreateDataServiceClassCommand;
+use Lullabot\Mpx\Command\GetCommand;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -11,6 +12,7 @@ $application = new Symfony\Component\Console\Application;
 
 $application->add(new CreateDataServiceClassCommand());
 $application->add(new CreateCustomFieldClassCommand());
+$application->add(new GetCommand());
 
 // Run it
 $application->run();
