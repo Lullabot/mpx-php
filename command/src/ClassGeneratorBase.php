@@ -9,9 +9,8 @@ use Lullabot\Mpx\DataService\Media\TransferInfo;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\Parameter;
 use Psr\Http\Message\UriInterface;
-use Symfony\Component\Console\Command\Command;
 
-abstract class ClassGenerator extends Command
+abstract class ClassGeneratorBase extends MpxCommandBase
 {
     /**
      * Maps custom mpx field types to PHP datatypes.
@@ -31,11 +30,11 @@ abstract class ClassGenerator extends Command
         'Decimal' => 'float',
         'Expression' => 'string',
         'Float' => 'float',
-        'Image' => '\\' . Image::class,
+        'Image' => '\\'.Image::class,
         'Map<String, String>' => 'array',
         'Map<String, Integer>' => 'array',
         'Integer' => 'int',
-        'Link' => '\\' . Link::class,
+        'Link' => '\\'.Link::class,
         'Long' => 'int',
         'Map' => 'array',
         'String (64, ASCII)' => 'string',
@@ -55,7 +54,7 @@ abstract class ClassGenerator extends Command
      */
     protected function isScalarType(string $dataType): bool
     {
-        return in_array($dataType, ['int', 'float', 'string', 'bool']);
+        return \in_array($dataType, ['int', 'float', 'string', 'bool']);
     }
 
     /**
