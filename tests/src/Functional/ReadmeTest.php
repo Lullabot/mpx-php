@@ -32,9 +32,7 @@ class ReadmeTest extends FunctionalTestBase
         $client = new Client(new \GuzzleHttp\Client($defaults));
 
         $user = new User(getenv('MPX_USERNAME'), getenv('MPX_PASSWORD'));
-        $store = new FlockStore();
-        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client);
         $authenticatedClient = new AuthenticatedClient($client, $session);
 
         // This registers the annotation loader.

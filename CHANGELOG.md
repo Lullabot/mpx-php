@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `\Lullabot\Mpx\Service\Player\Url::__construct()` now typehints to a
   `PublicIdWithGuidInterface`, which is required for rendering URLs with a
   GUID.
+- `\Lullabot\Mpx\Service\IdentityManagement\UserSession` no longer requires a
+  lock and cache backend in the constructor. It's highly recommended to include
+  both for applications that have multiple threads or requests running
+  concurrently.
 
 ## [0.10.0] - 2019-01-13
 

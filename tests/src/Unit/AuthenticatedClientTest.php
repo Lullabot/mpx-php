@@ -303,7 +303,7 @@ class AuthenticatedClientTest extends TestCase
 
             $logger->expects($this->at($call++))->method('info')
                 ->willReturnCallback(function ($message, $context) {
-                    $this->assertEquals('Retrieved a new MPX token {token} for user {username} that expires on {date}.', $message);
+                    $this->assertEquals('Retrieved a new mpx token {token} for user {username} that expires on {date}.', $message);
                     $this->assertArraySubset([
                         'token' => 'TOKEN-VALUE',
                         'username' => 'mpx/USER-NAME',
