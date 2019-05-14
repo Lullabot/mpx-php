@@ -20,6 +20,7 @@ class ObjectListIteratorTest extends TestCase
      * @covers ::current
      * @covers ::next
      * @covers ::valid
+     * @covers ::getTotalResults
      */
     public function testCurrent()
     {
