@@ -125,13 +125,14 @@ class ObjectListIterator extends \NoRewindIterator
     }
 
     /**
-     * Returns the current object list page.
+     * Returns the number total results.
      *
-     * @return \Lullabot\Mpx\DataService\ObjectList
+     * @return int
+     *   The number of total results.
      */
-    public function getList(): \Lullabot\Mpx\DataService\ObjectList
+    public function getTotalResults(): int
     {
-        return $this->list;
+        return $this->list->getTotalResults();
     }
 
 }
