@@ -123,4 +123,15 @@ class ObjectListIterator extends \NoRewindIterator
         // not exist.
         return false;
     }
+
+    /**
+     * Returns the current object list page.
+     *
+     * @return \Lullabot\Mpx\DataService\ObjectList
+     */
+    public function getList(): \Lullabot\Mpx\DataService\ObjectList
+    {
+        return $this->list;
+    }
+
 }
