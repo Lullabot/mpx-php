@@ -128,7 +128,6 @@ class ObjectListIterator extends \NoRewindIterator
      * Returns the number total results.
      *
      * @return int
-     *   The number of total results.
      */
     public function getTotalResults(): int
     {
