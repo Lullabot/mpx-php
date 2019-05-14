@@ -133,5 +133,4 @@ class ObjectListIterator extends \NoRewindIterator
     {
         return $this->list->getTotalResults();
     }
-
 }
