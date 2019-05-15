@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - YYYY-MM-DD
 
+### Added
+
+- `\Lullabot\Mpx\DataService\ObjectListIterator.php` now allows the caller to
+  get the total number of mpx results, via `::getTotalResults()` method.
+
 ### Changed
 
 - New interfaces have been added, which ObjectInterface now inherits from.
