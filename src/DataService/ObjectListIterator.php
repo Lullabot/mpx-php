@@ -123,4 +123,14 @@ class ObjectListIterator extends \NoRewindIterator
         // not exist.
         return false;
     }
+
+    /**
+     * Returns the number total results.
+     *
+     * @return int
+     */
+    public function getTotalResults(): int
+    {
+        return $this->list->getTotalResults();
+    }
 }

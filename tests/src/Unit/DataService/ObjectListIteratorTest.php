@@ -20,6 +20,7 @@ class ObjectListIteratorTest extends TestCase
      * @covers ::current
      * @covers ::next
      * @covers ::valid
+     * @covers ::getTotalResults
      */
     public function testCurrent()
     {
@@ -46,6 +47,7 @@ class ObjectListIteratorTest extends TestCase
         $iterator->valid();
         $this->assertSame($second, $iterator->current());
         $this->assertEquals(1, $iterator->key());
+        $this->assertEquals(2, $iterator->getTotalResults());
     }
 
     /**
