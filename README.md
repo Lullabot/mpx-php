@@ -90,6 +90,22 @@ print "The loaded media is:\n";
 var_dump($media);
 ```
 
+## Implemented Data Services
+
+The mpx API is very broad, and this library only implements a subset of the
+whole API. However, pull requests with new data services are always welcome. As
+well, data services are discovered through annotations, so they can be included
+from other libraries as needed.
+
+| Data Service Object | Schema Version | Implementation                               | Tests                                                                                                                                  |
+|---------------------|----------------|----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| Account             | 1.0            | `\Lullabot\Mpx\DataService\Access\Account`   | \Lullabot\Mpx\Tests\Unit\DataService\Access\AccountTest<br />\Lullabot\Mpx\Tests\Functional\DataService\Account\AccountQueryTest       |
+| Feed Config         | 2.2            | `\Lullabot\Mpx\DataService\Feeds\FeedConfig` | \Lullabot\Mpx\Tests\Unit\DataService\Feeds\FeedConfigTest<br/>\Lullabot\Mpx\Tests\Functional\DataService\Feeds\FeedConfigTest          |
+| Media               | 1.10           | `\Lullabot\Mpx\DataService\Media\Media`      | \Lullabot\Mpx\Tests\Unit\DataService\Media\MediaTest<br />\Lullabot\Mpx\Tests\Functional\DataService\Media\MediaQueryTest              |
+| Media File          | 1.10           | `\Lullabot\Mpx\DataService\Media\MediaFile`  | \Lullabot\Mpx\Tests\Unit\DataService\Media\MediaFileTest<br />\Lullabot\Mpx\Tests\Functional\DataService\Media\MediaFileTest           |
+| Release             | 1.10           | `\Lullabot\Mpx\DataService\Media\Release`    | \Lullabot\Mpx\Tests\Unit\DataService\Media\ReleaseTest                                                                                 |
+| Player              | 1.6            | `\Lullabot\Mpx\DataService\Player\Player`    | \Lullabot\Mpx\Tests\Unit\DataService\Player\PlayerTest<br />\Lullabot\Mpx\Tests\Functional\DataService\Player\PlayerQueryTest          |
+
 ## Filtering results by fields and with Q Queries
 
 Calls to `select()` and `selectRequest()` can be filtered by exact-match fields
