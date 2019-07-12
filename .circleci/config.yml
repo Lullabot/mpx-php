@@ -78,8 +78,8 @@ test_and_cover: &test_and_cover
       - run: composer update -n --prefer-dist
 
       - run: |
-          [ -f /usr/local/lib/php/extensions/no-debug-non-zts-20170718/xdebug.so ] || pecl install xdebug
-          echo 'zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20170718/xdebug.so' > /usr/local/etc/php/conf.d/xdebug.ini
+          [ -f /usr/local/lib/php/extensions/no-debug-non-zts-20180731/xdebug.so ] || pecl install xdebug
+          echo 'zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20180731/xdebug.so' > /usr/local/etc/php/conf.d/xdebug.ini
 
       - save_cache:
           paths:
@@ -146,14 +146,21 @@ code_fixer: &code_fixer
       - run: vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no --path-mode=intersection -- src tests
 
 jobs:
-  build:
+  build_php73:
     docker:
-      # specify the version you desire here
-      - image: php:7.2
+      - image: php:7.3
 
     working_directory: ~/repo
 
     <<: *test_and_cover
+
+  build_php72:
+    docker:
+      - image: php:7.2
+
+    working_directory: ~/repo
+
+    <<: *test
 
   build_php71:
     docker:
@@ -180,8 +187,9 @@ workflows:
   # Declare a workflow that runs all of our jobs in parallel.
   test_cover_workflow:
     jobs:
-      - build
       - build_php71
+      - build_php72
+      - build_php73
       - code_fixer
 
   nightly:
@@ -194,6 +202,7 @@ workflows:
               only:
                 - master
     jobs:
-      - build
       - build_php71
+      - build_php72
+      - build_php73
       - code_fixer

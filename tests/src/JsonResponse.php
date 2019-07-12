@@ -16,9 +16,9 @@ class JsonResponse extends Response
     {
         if (isset($body)) {
             if (\is_string($body) && is_file($body)) {
-                $body = fopen($body, 'rb');
+                $body = fopen($body, 'r');
             } elseif (\is_string($body) && is_file(__DIR__.'/../fixtures/'.$body)) {
-                $body = fopen(__DIR__.'/../fixtures/'.$body, 'rb');
+                $body = fopen(__DIR__.'/../fixtures/'.$body, 'r');
             } elseif (\is_array($body)) {
                 $body = \GuzzleHttp\json_encode($body);
             }
