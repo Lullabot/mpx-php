@@ -160,7 +160,7 @@ jobs:
 
     working_directory: ~/repo
 
-    <<: *test_and_cover
+    <<: *test
 
   build_php71:
     docker:
