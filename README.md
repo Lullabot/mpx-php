@@ -2,6 +2,27 @@
 
 [![CircleCI](https://circleci.com/gh/Lullabot/mpx-php.svg?style=svg)](https://circleci.com/gh/Lullabot/mpx-php) [![Maintainability](https://api.codeclimate.com/v1/badges/cc44177e7a46c0d99d88/maintainability)](https://codeclimate.com/github/Lullabot/mpx-php/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/cc44177e7a46c0d99d88/test_coverage)](https://codeclimate.com/github/Lullabot/mpx-php/test_coverage) [![Packagist](https://img.shields.io/packagist/dt/lullabot/mpx-php.svg)](https://packagist.org/packages/lullabot/mpx-php)
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Quick Start](#quick-start)
+- [Example](#example)
+- [Filtering results by fields and with Q Queries](#filtering-results-by-fields-and-with-q-queries)
+- [Test client](#test-client)
+- [Logging](#logging)
+- [Implementing custom mpx fields](#implementing-custom-mpx-fields)
+  - [1. Use the console tool to create initial classes](#1-use-the-console-tool-to-create-initial-classes)
+- [Overview of main classes](#overview-of-main-classes)
+  - [Lullabot\Mpx\Client](#lullabot%5Cmpx%5Cclient)
+  - [Lullabot\Mpx\AuthenticatedClient](#lullabot%5Cmpx%5Cauthenticatedclient)
+  - [Lullabot\Mpx\Service\IdentityManagement\UserSession](#lullabot%5Cmpx%5Cservice%5Cidentitymanagement%5Cusersession)
+  - [Lullabot\Mpx\Token](#lullabot%5Cmpx%5Ctoken)
+  - [Lullabot\Mpx\TokenCachePool](#lullabot%5Cmpx%5Ctokencachepool)
+- [mpx Support](#mpx-support)
+- [Known issues](#known-issues)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Quick Start
 
