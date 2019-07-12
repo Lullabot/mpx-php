@@ -8,6 +8,7 @@
 
 - [Quick Start](#quick-start)
 - [Example](#example)
+- [Implemented Data Services](#implemented-data-services)
 - [Filtering results by fields and with Q Queries](#filtering-results-by-fields-and-with-q-queries)
 - [Test client](#test-client)
 - [Logging](#logging)
