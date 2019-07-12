@@ -13,6 +13,7 @@
 - [Logging](#logging)
 - [Implementing custom mpx fields](#implementing-custom-mpx-fields)
   - [1. Use the console tool to create initial classes](#1-use-the-console-tool-to-create-initial-classes)
+- [Related Projects](#related-projects)
 - [Overview of main classes](#overview-of-main-classes)
   - [Lullabot\Mpx\Client](#lullabot%5Cmpx%5Cclient)
   - [Lullabot\Mpx\AuthenticatedClient](#lullabot%5Cmpx%5Cauthenticatedclient)
@@ -201,6 +202,11 @@ $fields = $media->getCustomFields('http://access.auth.theplatform.com/data/Accou
 
 If a custom field class is not found, a notice will be logged and the empty
 `MissingCustomFieldsClass` will be attached in place of each set of fields.
+
+## Related Projects
+
+* [Media mpx for Drupal 8](https://github.com/Lullabot/media_mpx): Integrate mpx assets with your Drupal 8 site.
+* [Drupal Symfony Lock](https://github.com/Lullabot/drupal-symfony-lock): Use Drupal's lock store as a backend for Symfony's locking library.
 
 ## Overview of main classes
 
