@@ -2,6 +2,29 @@
 
 [![CircleCI](https://circleci.com/gh/Lullabot/mpx-php.svg?style=svg)](https://circleci.com/gh/Lullabot/mpx-php) [![Maintainability](https://api.codeclimate.com/v1/badges/cc44177e7a46c0d99d88/maintainability)](https://codeclimate.com/github/Lullabot/mpx-php/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/cc44177e7a46c0d99d88/test_coverage)](https://codeclimate.com/github/Lullabot/mpx-php/test_coverage) [![Packagist](https://img.shields.io/packagist/dt/lullabot/mpx-php.svg)](https://packagist.org/packages/lullabot/mpx-php)
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Quick Start](#quick-start)
+- [Example](#example)
+- [Implemented Data Services](#implemented-data-services)
+- [Filtering results by fields and with Q Queries](#filtering-results-by-fields-and-with-q-queries)
+- [Test client](#test-client)
+- [Logging](#logging)
+- [Implementing custom mpx fields](#implementing-custom-mpx-fields)
+  - [1. Use the console tool to create initial classes](#1-use-the-console-tool-to-create-initial-classes)
+- [Related Projects](#related-projects)
+- [Overview of main classes](#overview-of-main-classes)
+  - [Lullabot\Mpx\Client](#lullabot%5Cmpx%5Cclient)
+  - [Lullabot\Mpx\AuthenticatedClient](#lullabot%5Cmpx%5Cauthenticatedclient)
+  - [Lullabot\Mpx\Service\IdentityManagement\UserSession](#lullabot%5Cmpx%5Cservice%5Cidentitymanagement%5Cusersession)
+  - [Lullabot\Mpx\Token](#lullabot%5Cmpx%5Ctoken)
+  - [Lullabot\Mpx\TokenCachePool](#lullabot%5Cmpx%5Ctokencachepool)
+- [mpx Support](#mpx-support)
+- [Known issues](#known-issues)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Quick Start
 
@@ -67,6 +90,22 @@ $media = $mediaFactory->load(new Uri('http://data.media.theplatform.com/media/da
 print "The loaded media is:\n";
 var_dump($media);
 ```
+
+## Implemented Data Services
+
+The mpx API is very broad, and this library only implements a subset of the
+whole API. However, pull requests with new data services are always welcome. As
+well, data services are discovered through annotations, so they can be included
+from other libraries as needed.
+
+| Data Service Object | Schema Version | Implementation                               | Tests                                                                                                                                      |
+|---------------------|----------------|----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| Account             | 1.0            | `\Lullabot\Mpx\DataService\Access\Account`   | `\Lullabot\Mpx\Tests\Unit\DataService\Access\AccountTest`<br />\Lullabot\Mpx\Tests\Functional\DataService\Account\AccountQueryTest`        |
+| Feed Config         | 2.2            | `\Lullabot\Mpx\DataService\Feeds\FeedConfig` | `\Lullabot\Mpx\Tests\Unit\DataService\Feeds\FeedConfigTest`<br/>\Lullabot\Mpx\Tests\Functional\DataService\Feeds\FeedConfigTest`           |
+| Media               | 1.10           | `\Lullabot\Mpx\DataService\Media\Media`      | `\Lullabot\Mpx\Tests\Unit\DataService\Media\MediaTest`<br />\Lullabot\Mpx\Tests\Functional\DataService\Media\MediaQueryTest`               |
+| Media File          | 1.10           | `\Lullabot\Mpx\DataService\Media\MediaFile`  | `\Lullabot\Mpx\Tests\Unit\DataService\Media\MediaFileTest`<br />\Lullabot\Mpx\Tests\Functional\DataService\Media\MediaFileTest`            |
+| Release             | 1.10           | `\Lullabot\Mpx\DataService\Media\Release`    | `\Lullabot\Mpx\Tests\Unit\DataService\Media\ReleaseTest`                                                                                   |
+| Player              | 1.6            | `\Lullabot\Mpx\DataService\Player\Player`    | `\Lullabot\Mpx\Tests\Unit\DataService\Player\PlayerTest`<br />\Lullabot\Mpx\Tests\Functional\DataService\Player\PlayerQueryTest`           |
 
 ## Filtering results by fields and with Q Queries
 
@@ -180,6 +219,11 @@ $fields = $media->getCustomFields('http://access.auth.theplatform.com/data/Accou
 
 If a custom field class is not found, a notice will be logged and the empty
 `MissingCustomFieldsClass` will be attached in place of each set of fields.
+
+## Related Projects
+
+* [Media mpx for Drupal 8](https://github.com/Lullabot/media_mpx): Integrate mpx assets with your Drupal 8 site.
+* [Drupal Symfony Lock](https://github.com/Lullabot/drupal-symfony-lock): Use Drupal's lock store as a backend for Symfony's locking library.
 
 ## Overview of main classes
 
