@@ -4,12 +4,10 @@ namespace Lullabot\Mpx;
 
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\HandlerStack;
-use Lullabot\Mpx\Exception\ApiException;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
- * An MPX API client.
+ * An mpx API client.
  */
 class Client implements GuzzleClientInterface
 {
@@ -74,48 +72,6 @@ class Client implements GuzzleClientInterface
         $options['query']['httpError'] = false;
 
         return $this->client->request($method, $url, $options);
-    }
-
-    /**
-     * Handle an XML API response.
-     *
-     * @param ResponseInterface $response The response.
-     * @param string            $url      The request URL.
-     *
-     * @throws \Lullabot\Mpx\Exception\ApiException If an error occurred.
-     *
-     * @return array The decoded response data.
-     */
-    protected function handleXmlResponse(ResponseInterface $response, $url)
-    {
-        if (false !== strpos((string) $response->getBody(), 'xmlns:e="http://xml.theplatform.com/exception"')) {
-            if (preg_match('~<e:title>(.+)</e:title><e:description>(.+)</e:description><e:responseCode>(.+)</e:responseCode>~', (string) $response->getBody(), $matches)) {
-                throw new ApiException("Error {$matches[1]} on request to {$url}: {$matches[2]}", (int) $matches[3]);
-            } elseif (preg_match('~<title>(.+)</title><summary>(.+)</summary><e:responseCode>(.+)</e:responseCode>~', (string) $response->getBody(), $matches)) {
-                throw new ApiException("Error {$matches[1]} on request to {$url}: {$matches[2]}", (int) $matches[3]);
-            }
-        }
-        $data = simplexml_load_string($response->getBody()->getContents());
-        $data = [$data->getName() => static::convertXmlToArray($data)];
-
-        return $data;
-    }
-
-    /**
-     * Convert a string of XML to an associative array.
-     *
-     * @param \SimpleXMLElement $data An XML element node.
-     *
-     * @return array An array representing the XML data.
-     */
-    protected static function convertXmlToArray(\SimpleXMLElement $data)
-    {
-        $result = [];
-        foreach ((array) $data as $index => $node) {
-            $result[$index] = (\is_object($node)) ? static::convertXmlToArray($node) : trim((string) $node);
-        }
-
-        return $result;
     }
 
     /**
