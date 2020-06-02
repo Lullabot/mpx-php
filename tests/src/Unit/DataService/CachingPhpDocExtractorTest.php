@@ -88,7 +88,6 @@ class CachingPhpDocExtractorTest extends TestCase
             ['donotexist', null, null, null],
             ['staticGetter', null, null, null],
             ['staticSetter', null, null, null],
-            ['emptyVar', null, 'This should not be removed.', null],
         ];
     }
 
