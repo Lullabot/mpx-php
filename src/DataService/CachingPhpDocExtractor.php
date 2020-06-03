@@ -16,8 +16,6 @@ use Symfony\Component\PropertyInfo\Util\PhpDocTypeHelper;
  * Extracts data using a PHPDoc parser, using a cached context factory.
  *
  * @see \Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor
- *
- * @codingStandardsIgnoreStart
  */
 class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, PropertyTypeExtractorInterface
 {
