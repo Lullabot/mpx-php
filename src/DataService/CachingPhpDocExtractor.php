@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\DataService;
 
 use phpDocumentor\Reflection\DocBlock;
+use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlockFactoryInterface;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
@@ -72,6 +73,9 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         }
 
         foreach ($docBlock->getTagsByName('var') as $var) {
+            if (is_a($var, InvalidTag::class)) {
+                throw new \InvalidArgumentException(sprintf('Failed to get the description of the @var tag "%s" for class "%s". Please check that the @var tag is correctly defined.', $property, $class));
+            }
             $varDescription = $var->getDescription()->render();
 
             if (!empty($varDescription)) {
@@ -124,6 +128,9 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         $types = [];
         /** @var DocBlock\Tags\Var_|DocBlock\Tags\Return_|DocBlock\Tags\Param $tag */
         foreach ($docBlock->getTagsByName($tag) as $tag) {
+            if (is_a($tag, InvalidTag::class)) {
+                return null;
+            }
             if ($tag && null !== $tag->getType()) {
                 $types = array_merge($types, $this->phpDocTypeHelper->getTypes($tag->getType()));
             }
