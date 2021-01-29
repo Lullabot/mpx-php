@@ -168,7 +168,7 @@ jobs:
 
   code_fixer:
     docker:
-      - image: php:8.0
+      - image: php:7.4
 
     working_directory: ~/repo
 
