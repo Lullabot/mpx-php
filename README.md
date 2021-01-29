@@ -28,7 +28,7 @@
 
 ## Quick Start
 
-* PHP 7.3+
+* PHP 7.3 or PHP 7.4 (8.0 is not supported yet, help welcome!)
 * Composer
 
 `composer require lullabot/mpx-php`
