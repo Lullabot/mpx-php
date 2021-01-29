@@ -153,7 +153,7 @@ jobs:
 
     working_directory: ~/repo
 
-    <<: *test
+    <<: *test_and_cover
 
   build_php73:
     docker:
