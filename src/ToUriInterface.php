@@ -11,8 +11,6 @@ interface ToUriInterface
 {
     /**
      * Return this object as a URI.
-     *
-     * @return UriInterface
      */
     public function toUri(): UriInterface;
 

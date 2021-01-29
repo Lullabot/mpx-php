@@ -68,8 +68,6 @@ class DataService
      * Return the relative objectType of the data service, such as '/data/Media'.
      *
      * @see https://docs.theplatform.com/help/wsf-how-to-find-the-url-of-a-service-in-the-service-registry
-     *
-     * @return string
      */
     public function getObjectType(): string
     {
@@ -78,17 +76,12 @@ class DataService
 
     /**
      * Return the schema version this class implements, such as '1.10'.
-     *
-     * @return string
      */
     public function getSchemaVersion(): string
     {
         return $this->schemaVersion;
     }
 
-    /**
-     * @return string
-     */
     public function getBaseUri(): string
     {
         return !empty($this->baseUri) ? $this->baseUri : '';

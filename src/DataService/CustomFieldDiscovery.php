@@ -53,7 +53,6 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
      * @param string $namespace The namespace of the plugins.
      * @param string $directory The directory of the plugins.
      * @param $rootDir
-     * @param \Doctrine\Common\Annotations\Reader $annotationReader
      */
     public function __construct($namespace, $directory, $rootDir, Reader $annotationReader)
     {

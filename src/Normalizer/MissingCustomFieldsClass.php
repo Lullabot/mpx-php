@@ -18,6 +18,6 @@ class MissingCustomFieldsClass implements CustomFieldInterface
 {
     public function __construct(string $namespace)
     {
-        @trigger_error(sprintf('No custom field class implementation for namespace % was found.'), E_USER_NOTICE);
+        @trigger_error('No custom field class implementation for namespace % was found.', \E_USER_NOTICE);
     }
 }

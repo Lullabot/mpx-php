@@ -57,11 +57,9 @@ class DataServiceDiscovery
     /**
      * DataServiceDiscovery constructor.
      *
-     * @param string                              $namespace          The namespace of the plugins.
-     * @param string                              $directory          The directory of the plugins.
-     * @param                                     $rootDir
-     * @param \Doctrine\Common\Annotations\Reader $annotationReader
-     * @param CustomFieldManager                  $customFieldManager
+     * @param string $namespace The namespace of the plugins.
+     * @param string $directory The directory of the plugins.
+     * @param        $rootDir
      */
     public function __construct($namespace, $directory, $rootDir, Reader $annotationReader, CustomFieldManager $customFieldManager)
     {

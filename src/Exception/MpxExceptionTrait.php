@@ -19,8 +19,6 @@ trait MpxExceptionTrait
 
     /**
      * Return the error title.
-     *
-     * @return string
      */
     public function getTitle(): string
     {
@@ -29,8 +27,6 @@ trait MpxExceptionTrait
 
     /**
      * Return the error description.
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -45,8 +41,6 @@ trait MpxExceptionTrait
      * Return the request correlation ID.
      *
      * @throws \OutOfBoundsException Thrown when correlation ID is not set.
-     *
-     * @return string
      */
     public function getCorrelationId(): string
     {
@@ -61,8 +55,6 @@ trait MpxExceptionTrait
      * Return the server stack trace.
      *
      * @throws \OutOfBoundsException Thrown when the stack trace is not set.
-     *
-     * @return string
      */
     public function getServerStackTrace(): string
     {
@@ -75,8 +67,6 @@ trait MpxExceptionTrait
 
     /**
      * Return all data associated with this error.
-     *
-     * @return array
      */
     public function getData(): array
     {

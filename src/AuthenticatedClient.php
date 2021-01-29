@@ -115,8 +115,6 @@ class AuthenticatedClient implements ClientInterface
 
     /**
      * Return if this client has an account context.
-     *
-     * @return bool
      */
     public function hasAccount(): bool
     {
@@ -127,8 +125,6 @@ class AuthenticatedClient implements ClientInterface
      * Return the account to use as the context for requests.
      *
      * @throws \LogicException Thrown if an account context is not set.
-     *
-     * @return \Lullabot\Mpx\DataService\IdInterface
      */
     public function getAccount(): IdInterface
     {
@@ -268,10 +264,6 @@ class AuthenticatedClient implements ClientInterface
 
     /**
      * Determine if an MPX exception is due to a token authentication failure.
-     *
-     * @param \Exception $e
-     *
-     * @return bool
      */
     private function isTokenAuthError(\Exception $e): bool
     {
@@ -280,10 +272,6 @@ class AuthenticatedClient implements ClientInterface
 
     /**
      * Resolve or reject a promise by invoking a callable.
-     *
-     * @param \GuzzleHttp\Promise\PromiseInterface $promise
-     * @param callable                             $callable
-     * @param array                                $args
      */
     private function finallyResolve(PromiseInterface $promise, callable $callable, $args)
     {
@@ -330,10 +318,6 @@ class AuthenticatedClient implements ClientInterface
 
     /**
      * Return a new promise that waits on another promise.
-     *
-     * @param \GuzzleHttp\Promise\PromiseInterface $inner
-     *
-     * @return \GuzzleHttp\Promise\Promise
      */
     private function outerPromise(PromiseInterface $inner): Promise
     {

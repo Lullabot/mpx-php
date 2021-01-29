@@ -18,7 +18,7 @@ class NotificationTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $notificationExtractor = new NotificationTypeExtractor();

@@ -435,8 +435,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the date and time that this object was created.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -449,8 +447,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the date and time that this object was created.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
     public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
     {
@@ -459,8 +455,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -473,8 +467,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $addedByUserId
      */
     public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
     {
@@ -683,8 +675,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's checksum values.
-     *
-     * @return array
      */
     public function getChecksums(): array
     {
@@ -693,8 +683,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's checksum values.
-     *
-     * @param array $checksums
      */
     public function setChecksums(array $checksums)
     {
@@ -1023,8 +1011,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getId(): \Psr\Http\Message\UriInterface
     {
@@ -1037,8 +1023,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $id
      */
     public function setId(\Psr\Http\Message\UriInterface $id)
     {
@@ -1147,8 +1131,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the id of the Media object this object is associated with.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getMediaId(): \Psr\Http\Message\UriInterface
     {
@@ -1161,8 +1143,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the id of the Media object this object is associated with.
-     *
-     * @param \Psr\Http\Message\UriInterface $mediaId
      */
     public function setMediaId(\Psr\Http\Message\UriInterface $mediaId)
     {
@@ -1171,8 +1151,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
@@ -1185,8 +1163,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $ownerId
      */
     public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
     {
@@ -1335,8 +1311,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the id of the Server object representing the storage server that this file is on.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getServerId(): \Psr\Http\Message\UriInterface
     {
@@ -1349,8 +1323,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the id of the Server object representing the storage server that this file is on.
-     *
-     * @param \Psr\Http\Message\UriInterface $serverId
      */
     public function setServerId(\Psr\Http\Message\UriInterface $serverId)
     {
@@ -1359,8 +1331,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the id of the source MediaFile object that this file was generated from.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getSourceMediaFileId(): \Psr\Http\Message\UriInterface
     {
@@ -1373,8 +1343,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the id of the source MediaFile object that this file was generated from.
-     *
-     * @param \Psr\Http\Message\UriInterface $sourceMediaFileId
      */
     public function setSourceMediaFileId(\Psr\Http\Message\UriInterface $sourceMediaFileId)
     {
@@ -1503,8 +1471,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the id of the encoding template used to generate the file.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getTransformId(): \Psr\Http\Message\UriInterface
     {
@@ -1517,8 +1483,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the id of the encoding template used to generate the file.
-     *
-     * @param \Psr\Http\Message\UriInterface $transformId
      */
     public function setTransformId(\Psr\Http\Message\UriInterface $transformId)
     {
@@ -1527,8 +1491,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the date and time this object was last modified.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -1541,8 +1503,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the date and time this object was last modified.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
     public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
@@ -1551,8 +1511,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the id of the user that last modified this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -1565,8 +1523,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the id of the user that last modified this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
     public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {

@@ -5,8 +5,8 @@ namespace Lullabot\Mpx\DataService\Access;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\DataService\DateTime\NullDateTime;
-use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\IdInterface;
+use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\DataService\PublicIdWithGuidInterface;
 
 /**
@@ -136,8 +136,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns the date and time that this object was created.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -150,8 +148,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set the date and time that this object was created.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
     public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
     {
@@ -160,8 +156,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -174,8 +168,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $addedByUserId
      */
     public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
     {
@@ -286,8 +278,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns the globally unique URI of this object. See the Retrieving Account objectspage for information about retrieving Account objects based on this field's value.Beginning with Access management service version 2.3, some data services return ownerId field values that use the host name access.auth.theplatform.com instead of the host name mps.theplatform.com. When working with these data services, URI values with the mps.theplatform.com host name are still valid values for the byOwnerId query, and for setting the account context for an operation.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getId(): \Psr\Http\Message\UriInterface
     {
@@ -300,8 +290,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set the globally unique URI of this object. See the Retrieving Account objectspage for information about retrieving Account objects based on this field's value.Beginning with Access management service version 2.3, some data services return ownerId field values that use the host name access.auth.theplatform.com instead of the host name mps.theplatform.com. When working with these data services, URI values with the mps.theplatform.com host name are still valid values for the byOwnerId query, and for setting the account context for an operation.
-     *
-     * @param \Psr\Http\Message\UriInterface $id
      */
     public function setId(\Psr\Http\Message\UriInterface $id)
     {
@@ -330,8 +318,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns the id of the account that owns this account. An ownerId field value must be specified on create, unless an account context of exactly one account is set. Customer root accounts always have the ownerId value of urn:theplatform:auth:root. See Retrieving Account objects for information about retrieving Account objects based on this field's value.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
@@ -344,8 +330,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set the id of the account that owns this account. An ownerId field value must be specified on create, unless an account context of exactly one account is set. Customer root accounts always have the ownerId value of urn:theplatform:auth:root. See Retrieving Account objects for information about retrieving Account objects based on this field's value.
-     *
-     * @param \Psr\Http\Message\UriInterface $ownerId
      */
     public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
     {
@@ -418,8 +402,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns the date and time this object was last modified. The data service populates this field with a current timestamp each time the object is updated. See Retrieving Account objects for information about retrieving Account objects based on this field's value.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -432,8 +414,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set the date and time this object was last modified. The data service populates this field with a current timestamp each time the object is updated. See Retrieving Account objects for information about retrieving Account objects based on this field's value.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
     public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
@@ -442,8 +422,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns the id of the user that last modified this object. The data service updates this field with the id of the calling user each time the object is modified.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -456,8 +434,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set the id of the user that last modified this object. The data service updates this field with the id of the calling user each time the object is modified.
-     *
-     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
     public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {

@@ -95,41 +95,26 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
         $this->xmlNs = $xmlNs;
     }
 
-    /**
-     * @return int
-     */
     public function getStartIndex(): int
     {
         return $this->startIndex;
     }
 
-    /**
-     * @param int $startIndex
-     */
     public function setStartIndex(int $startIndex)
     {
         $this->startIndex = $startIndex;
     }
 
-    /**
-     * @return int
-     */
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
     }
 
-    /**
-     * @param int $itemsPerPage
-     */
     public function setItemsPerPage(int $itemsPerPage)
     {
         $this->itemsPerPage = $itemsPerPage;
     }
 
-    /**
-     * @return int
-     */
     public function getEntryCount(): int
     {
         return $this->entryCount;
@@ -137,8 +122,6 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
 
     /**
      * Set the number of entries in the current list.
-     *
-     * @param int $entryCount
      */
     public function setEntryCount(int $entryCount)
     {
@@ -182,9 +165,6 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
         $this->totalResults = $totalResults;
     }
 
-    /**
-     * @return ObjectListQuery
-     */
     public function getObjectListQuery(): ObjectListQuery
     {
         if (!isset($this->objectListQuery)) {
@@ -194,9 +174,6 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
         return $this->objectListQuery;
     }
 
-    /**
-     * @param ObjectListQuery $byFields
-     */
     public function setObjectListQuery(ObjectListQuery $byFields)
     {
         $this->objectListQuery = $byFields;

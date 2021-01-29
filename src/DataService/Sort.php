@@ -21,8 +21,6 @@ class Sort implements QueryPartsInterface
      *
      * @param string $field      The field to sort on, such as 'id' or 'title'.
      * @param bool   $descending (optional) True if results should be sorted descending, false otherwise.
-     *
-     * @return self
      */
     public function addSort(string $field, $descending = false): self
     {

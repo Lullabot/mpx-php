@@ -49,12 +49,6 @@ class CustomFieldManager
 
     /**
      * Returns one custom field.
-     *
-     * @param string $name
-     * @param string $objectType
-     * @param string $namespace
-     *
-     * @return DiscoveredCustomField
      */
     public function getCustomField(string $name, string $objectType, string $namespace): DiscoveredCustomField
     {

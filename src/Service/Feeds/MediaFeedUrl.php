@@ -117,8 +117,6 @@ class MediaFeedUrl implements ToUriInterface
     /**
      * Returns if this URL requests a feed response always, even if only one
      * item is in the feed.
-     *
-     * @return bool
      */
     public function isReturnsFeed(): bool
     {
@@ -128,8 +126,6 @@ class MediaFeedUrl implements ToUriInterface
     /**
      * Set if this URL requests a feed response always, even if only one
      * item is in the feed.
-     *
-     * @param bool $returnsFeed
      */
     public function setReturnsFeed(bool $returnsFeed): void
     {
@@ -201,8 +197,6 @@ class MediaFeedUrl implements ToUriInterface
      * Append the SEO terms to the end of a URI.
      *
      * @param UriInterface $uri The URI to append to.
-     *
-     * @return UriInterface
      */
     protected function appendSeoTerms(UriInterface $uri): UriInterface
     {

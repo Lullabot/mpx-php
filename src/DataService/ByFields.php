@@ -33,8 +33,6 @@ class ByFields implements QueryPartsInterface
 
     /**
      * Return all of the fields being filtered.
-     *
-     * @return array
      */
     public function toQueryParts(): array
     {

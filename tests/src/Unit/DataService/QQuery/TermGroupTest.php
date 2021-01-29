@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\QQuery;
 
-use Lullabot\Mpx\DataService\QQuery\TermGroup;
 use Lullabot\Mpx\DataService\QQuery\Term;
+use Lullabot\Mpx\DataService\QQuery\TermGroup;
 use PHPUnit\Framework\TestCase;
 
 /**

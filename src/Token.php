@@ -161,8 +161,6 @@ class Token
 
     /**
      * Return the user ID associated with this token.
-     *
-     * @return string
      */
     public function getUserId(): string
     {

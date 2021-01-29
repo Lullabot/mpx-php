@@ -2,9 +2,9 @@
 
 namespace Lullabot\Mpx\Tests\Functional\DataService\Player;
 
-use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
 use Psr\Http\Message\UriInterface;
 

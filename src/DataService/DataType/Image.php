@@ -17,9 +17,6 @@ class Image extends Link
      */
     protected $anchorHref;
 
-    /**
-     * @return UriInterface
-     */
     public function getAnchorHref(): UriInterface
     {
         if (!$this->anchorHref) {
@@ -29,9 +26,6 @@ class Image extends Link
         return $this->anchorHref;
     }
 
-    /**
-     * @param UriInterface $anchorHref
-     */
     public function setAnchorHref(UriInterface $anchorHref)
     {
         $this->anchorHref = $anchorHref;

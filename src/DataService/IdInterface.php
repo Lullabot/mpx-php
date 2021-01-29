@@ -17,15 +17,11 @@ interface IdInterface
 {
     /**
      * Returns the globally unique URI of this object.
-     *
-     * @return UriInterface
      */
     public function getMpxId(): UriInterface;
 
     /**
      * Set the globally unique URI of this object.
-     *
-     * @param UriInterface $id
      */
     public function setMpxId(UriInterface $id);
 }

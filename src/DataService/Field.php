@@ -193,8 +193,6 @@ class Field extends ObjectBase
     /**
      * Returns the date and time that this object was created
      *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getAdded(): DateTimeFormatInterface
     {
@@ -208,8 +206,6 @@ class Field extends ObjectBase
     /**
      * Set the date and time that this object was created
      *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
     public function setAdded(DateTimeFormatInterface $added)
     {
@@ -218,10 +214,8 @@ class Field extends ObjectBase
 
     /**
      * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
-    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    public function getAddedByUserId(): UriInterface
     {
         if (!$this->addedByUserId) {
             return new Uri();
@@ -232,18 +226,14 @@ class Field extends ObjectBase
 
     /**
      * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $addedByUserId
      */
-    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
+    public function setAddedByUserId(UriInterface $addedByUserId)
     {
         $this->addedByUserId = $addedByUserId;
     }
 
     /**
      * Returns the allowed values for this custom field.
-     *
-     * @return array
      */
     public function getAllowedValues(): array
     {
@@ -252,8 +242,6 @@ class Field extends ObjectBase
 
     /**
      * Set the allowed values for this custom field.
-     *
-     * @param array $allowedValues
      */
     public function setAllowedValues(array $allowedValues)
     {
@@ -382,10 +370,8 @@ class Field extends ObjectBase
 
     /**
      * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
-    public function getId(): \Psr\Http\Message\UriInterface
+    public function getId(): UriInterface
     {
         if (!$this->id) {
             return new Uri();
@@ -396,10 +382,8 @@ class Field extends ObjectBase
 
     /**
      * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $id
      */
-    public function setId(\Psr\Http\Message\UriInterface $id)
+    public function setId(UriInterface $id)
     {
         $this->id = $id;
     }
@@ -486,8 +470,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the namespace this custom field belongs to.
-     *
-     * @return UriInterface
      */
     public function getNamespace(): UriInterface
     {
@@ -586,10 +568,8 @@ class Field extends ObjectBase
 
     /**
      * Returns the id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
-    public function getOwnerId(): \Psr\Http\Message\UriInterface
+    public function getOwnerId(): UriInterface
     {
         if (!$this->ownerId) {
             return new Uri();
@@ -600,10 +580,8 @@ class Field extends ObjectBase
 
     /**
      * Set the id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $ownerId
      */
-    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
+    public function setOwnerId(UriInterface $ownerId)
     {
         $this->ownerId = $ownerId;
     }
@@ -650,8 +628,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the date and time this object was last modified.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getUpdated(): DateTimeFormatInterface
     {
@@ -664,8 +640,6 @@ class Field extends ObjectBase
 
     /**
      * Set the date and time this object was last modified.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
     public function setUpdated(DateTimeFormatInterface $updated)
     {
@@ -674,10 +648,8 @@ class Field extends ObjectBase
 
     /**
      * Returns the id of the user that last modified this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
-    public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
+    public function getUpdatedByUserId(): UriInterface
     {
         if (!$this->updatedByUserId) {
             return new Uri();
@@ -688,10 +660,8 @@ class Field extends ObjectBase
 
     /**
      * Set the id of the user that last modified this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
-    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(UriInterface $updatedByUserId)
     {
         $this->updatedByUserId = $updatedByUserId;
     }

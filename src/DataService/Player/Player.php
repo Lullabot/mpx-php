@@ -642,8 +642,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date and time that this object was created.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -656,8 +654,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date and time that this object was created.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
     public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
     {
@@ -666,8 +662,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -680,8 +674,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $addedByUserId
      */
     public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
     {
@@ -710,8 +702,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the identifier for the advertising policy for this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAdPolicyId(): \Psr\Http\Message\UriInterface
     {
@@ -724,8 +714,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the identifier for the advertising policy for this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $adPolicyId
      */
     public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId)
     {
@@ -974,8 +962,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns identifier for the color scheme assigned to this player.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getColorSchemeId(): \Psr\Http\Message\UriInterface
     {
@@ -988,8 +974,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set identifier for the color scheme assigned to this player.
-     *
-     * @param \Psr\Http\Message\UriInterface $colorSchemeId
      */
     public function setColorSchemeId(\Psr\Http\Message\UriInterface $colorSchemeId)
     {
@@ -1178,8 +1162,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns additional attributes to include in the player HTML.
-     *
-     * @return array
      */
     public function getCustomProperties(): array
     {
@@ -1188,8 +1170,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set additional attributes to include in the player HTML.
-     *
-     * @param array $customProperties
      */
     public function setCustomProperties(array $customProperties)
     {
@@ -1238,8 +1218,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the identifier for the advertising policy to use when the player is embedded in another site.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getEmbedAdPolicyId(): \Psr\Http\Message\UriInterface
     {
@@ -1252,8 +1230,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the identifier for the advertising policy to use when the player is embedded in another site.
-     *
-     * @param \Psr\Http\Message\UriInterface $embedAdPolicyId
      */
     public function setEmbedAdPolicyId(\Psr\Http\Message\UriInterface $embedAdPolicyId)
     {
@@ -1302,8 +1278,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the identifier for the restriction to apply to this player when embedded in another site.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getEmbedRestrictionId(): \Psr\Http\Message\UriInterface
     {
@@ -1316,8 +1290,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the identifier for the restriction to apply to this player when embedded in another site.
-     *
-     * @param \Psr\Http\Message\UriInterface $embedRestrictionId
      */
     public function setEmbedRestrictionId(\Psr\Http\Message\UriInterface $embedRestrictionId)
     {
@@ -1566,8 +1538,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getId(): \Psr\Http\Message\UriInterface
     {
@@ -1580,8 +1550,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $id
      */
     public function setId(\Psr\Http\Message\UriInterface $id)
     {
@@ -1630,8 +1598,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the identifier for the layout assigned to this player.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getLayoutId(): \Psr\Http\Message\UriInterface
     {
@@ -1644,8 +1610,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the identifier for the layout assigned to this player.
-     *
-     * @param \Psr\Http\Message\UriInterface $layoutId
      */
     public function setLayoutId(\Psr\Http\Message\UriInterface $layoutId)
     {
@@ -1734,8 +1698,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
@@ -1748,8 +1710,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $ownerId
      */
     public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
     {
@@ -2038,8 +1998,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns heights of the regions in the layout.
-     *
-     * @return array
      */
     public function getRegionHeights(): array
     {
@@ -2048,8 +2006,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set heights of the regions in the layout.
-     *
-     * @param array $regionHeights
      */
     public function setRegionHeights(array $regionHeights)
     {
@@ -2058,8 +2014,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns widths of the regions in the layout.
-     *
-     * @return array
      */
     public function getRegionWidths(): array
     {
@@ -2068,8 +2022,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set widths of the regions in the layout.
-     *
-     * @param array $regionWidths
      */
     public function setRegionWidths(array $regionWidths)
     {
@@ -2098,8 +2050,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the identifier of the restriction to apply to this player.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getRestrictionId(): \Psr\Http\Message\UriInterface
     {
@@ -2112,8 +2062,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the identifier of the restriction to apply to this player.
-     *
-     * @param \Psr\Http\Message\UriInterface $restrictionId
      */
     public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId)
     {
@@ -2282,8 +2230,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns identifier for the skin object to apply this player.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getSkinId(): \Psr\Http\Message\UriInterface
     {
@@ -2296,8 +2242,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set identifier for the skin object to apply this player.
-     *
-     * @param \Psr\Http\Message\UriInterface $skinId
      */
     public function setSkinId(\Psr\Http\Message\UriInterface $skinId)
     {
@@ -2366,8 +2310,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date and time this object was last modified.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -2380,8 +2322,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date and time this object was last modified.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
     public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
@@ -2390,8 +2330,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the user that last modified this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -2404,8 +2342,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the user that last modified this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
     public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {

@@ -51,10 +51,6 @@ class DataServiceManager
     /**
      * Returns one data service by service.
      *
-     * @param string $name
-     * @param string $objectType
-     * @param string $schema
-     *
      * @return DiscoveredDataService
      */
     public function getDataService(string $name, string $objectType, string $schema)

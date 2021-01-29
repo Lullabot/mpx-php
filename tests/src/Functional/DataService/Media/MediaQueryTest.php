@@ -2,11 +2,11 @@
 
 namespace Lullabot\Mpx\Tests\Functional\DataService\Media;
 
-use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\ObjectInterface;
 use Lullabot\Mpx\DataService\ObjectList;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\Range;
 use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
 use Psr\Http\Message\UriInterface;

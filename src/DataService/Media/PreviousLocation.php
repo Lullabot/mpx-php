@@ -54,8 +54,6 @@ class PreviousLocation
 
     /**
      * Returns the MediaFile serverId value at the time moveFile was called.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getServerId(): \Psr\Http\Message\UriInterface
     {
@@ -68,8 +66,6 @@ class PreviousLocation
 
     /**
      * Set the MediaFile serverId value at the time moveFile was called.
-     *
-     * @param \Psr\Http\Message\UriInterface $serverId
      */
     public function setServerId(\Psr\Http\Message\UriInterface $serverId)
     {

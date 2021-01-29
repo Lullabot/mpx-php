@@ -17,8 +17,7 @@ class AvailabilityCalculator
     /**
      * Return if the media is available as of the given time.
      *
-     * @param Media $media
-     * @param       $time
+     * @param $time
      *
      * @return bool
      */
@@ -30,8 +29,7 @@ class AvailabilityCalculator
     /**
      * Return if the media is expired as of the given time.
      *
-     * @param Media $media
-     * @param       $time
+     * @param $time
      *
      * @return bool
      */
@@ -43,10 +41,6 @@ class AvailabilityCalculator
     /**
      * Return if a time is between a start and end time.
      *
-     * @param \DateTime               $time
-     * @param DateTimeFormatInterface $start
-     * @param DateTimeFormatInterface $end
-     *
      * @return bool
      */
     private function between(\DateTime $time, DateTimeFormatInterface $start, DateTimeFormatInterface $end)
@@ -56,9 +50,6 @@ class AvailabilityCalculator
 
     /**
      * Return if a time is equal to or after the other time.
-     *
-     * @param \DateTime               $time
-     * @param DateTimeFormatInterface $other
      *
      * @return bool
      */
@@ -83,8 +74,6 @@ class AvailabilityCalculator
     /**
      * Return if a given time is the Unix epoch.
      *
-     * @param ConcreteDateTimeInterface $concreteDateTime
-     *
      * @return bool
      */
     private function isEpoch(ConcreteDateTimeInterface $concreteDateTime)
@@ -94,9 +83,6 @@ class AvailabilityCalculator
 
     /**
      * Return if a time is equal to or before the other time.
-     *
-     * @param \DateTime               $time
-     * @param DateTimeFormatInterface $other
      *
      * @return bool
      */

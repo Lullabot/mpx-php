@@ -20,12 +20,13 @@ class ConcreteDateTime implements ConcreteDateTimeInterface
     /**
      * Construct a new ConcreteDateTime from a time string.
      *
-     * @param string        $time
-     * @param \DateTimeZone $timezone
+     * @param string $time
+     *
+     * @return \Lullabot\Mpx\DataService\DateTime\ConcreteDateTime
+     *
+     * @throws \Exception
      *
      * @see http://php.net/manual/en/datetime.construct.php
-     *
-     * @return self
      */
     public static function fromString($time = 'now', \DateTimeZone $timezone = null): self
     {

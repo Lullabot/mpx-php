@@ -36,8 +36,6 @@ class ResolveAllUrls extends ResolveBase
      * Fetch URLs and return the response.
      *
      * @param string $service The service to find URLs for, such as 'Media Data Service'.
-     *
-     * @return ResolveAllUrlsResponse
      */
     public function resolve(string $service): ResolveAllUrlsResponse
     {
@@ -69,11 +67,6 @@ class ResolveAllUrls extends ResolveBase
         return $resolved;
     }
 
-    /**
-     * @param string $key_part
-     *
-     * @return string
-     */
     protected function cacheKey(string $key_part): string
     {
         $key = md5('resolveAllUrls'.$key_part.self::SCHEMA_VERSION);

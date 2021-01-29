@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
-use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\Media\MediaFile;
 use Lullabot\Mpx\DataService\Media\PreviousLocation;
 use Lullabot\Mpx\DataService\Media\Release;
@@ -26,7 +26,7 @@ class MediaFileTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->loadFixture('mediafile-object.json', new DataServiceExtractor());

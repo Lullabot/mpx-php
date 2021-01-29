@@ -25,10 +25,6 @@ class Range implements QueryPartsInterface
 
     /**
      * The start index of this range.
-     *
-     * @param int $startIndex
-     *
-     * @return self
      */
     public function setStartIndex(int $startIndex): self
     {
@@ -45,8 +41,6 @@ class Range implements QueryPartsInterface
      * Set the end index of this range.
      *
      * @param int $endIndex
-     *
-     * @return self
      */
     public function setEndIndex($endIndex): self
     {
@@ -126,7 +120,7 @@ class Range implements QueryPartsInterface
         // \Lullabot\Mpx\Tests\Functional\DataService\Media\MediaQueryTest) should use a constant amount of memory per
         // page. 250 comes from tests on macOS with PHP 7.2 - going to 300 results causes an obvious memory leak.
         if ($this->endIndex - $this->startIndex > 250) {
-            @trigger_error('PHP may leak memory with large result pages. Consider reducing the number of results per page.', E_USER_DEPRECATED);
+            @trigger_error('PHP may leak memory with large result pages. Consider reducing the number of results per page.', \E_USER_DEPRECATED);
         }
 
         return ['range' => $this->startIndex.'-'.$this->endIndex];

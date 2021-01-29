@@ -63,8 +63,6 @@ class DataServiceExtractor extends CachingPhpDocExtractor
 
     /**
      * Set the array of namespace mappings.
-     *
-     * @param array $xmlns
      */
     public function setNamespaceMapping(array $xmlns)
     {
@@ -98,20 +96,13 @@ class DataServiceExtractor extends CachingPhpDocExtractor
      * Return the type for a custom field class.
      *
      * @param string $prefix The prefix of the namespace.
-     *
-     * @return array
      */
     private function customFieldInstance($prefix): array
     {
         $ns = $this->xmlns[$prefix];
 
         if (!$discoveredCustomField = $this->customFields[$ns]) {
-            throw new LogicException(
-                sprintf(
-                    'No custom field class was found for %s. setCustomFields() must be called before using this extractor.',
-                    $ns
-                )
-            );
+            throw new LogicException(sprintf('No custom field class was found for %s. setCustomFields() must be called before using this extractor.', $ns));
         }
 
         return [new Type('object', false, $discoveredCustomField->getClass())];
@@ -119,8 +110,6 @@ class DataServiceExtractor extends CachingPhpDocExtractor
 
     /**
      * Return the type for an array of custom fields, indexed by a string.
-     *
-     * @return array
      */
     private function customFieldsArrayType(): array
     {
@@ -132,8 +121,6 @@ class DataServiceExtractor extends CachingPhpDocExtractor
 
     /**
      * Return the type of an array of entries used in an object list.
-     *
-     * @return array
      */
     private function entriesType(): array
     {

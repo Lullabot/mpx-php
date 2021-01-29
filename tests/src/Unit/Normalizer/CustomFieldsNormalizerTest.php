@@ -166,7 +166,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getAddedByUserId(): \Psr\Http\Message\UriInterface
+    public function getAddedByUserId(): UriInterface
     {
         return $this->addedByUserId;
     }
@@ -182,7 +182,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getId(): \Psr\Http\Message\UriInterface
+    public function getId(): UriInterface
     {
         return $this->id;
     }
@@ -198,7 +198,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getOwnerId(): \Psr\Http\Message\UriInterface
+    public function getOwnerId(): UriInterface
     {
         return $this->ownerId;
     }
@@ -284,14 +284,14 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
+    public function getUpdatedByUserId(): UriInterface
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(UriInterface $updatedByUserId)
     {
     }
 

@@ -41,9 +41,6 @@ class ResolveAllUrlsResponse
         $this->resolveAllUrlsResponse = $resolvedAllUrls;
     }
 
-    /**
-     * @param string $service
-     */
     public function setService(string $service)
     {
         $this->service = $service;
@@ -53,8 +50,6 @@ class ResolveAllUrlsResponse
      * Return the resolved URL for this service.
      *
      * @param bool $insecure (optional) Set to true to request the insecure version of this service.
-     *
-     * @return UriInterface
      */
     public function getUrl(bool $insecure = false): UriInterface
     {
@@ -67,9 +62,6 @@ class ResolveAllUrlsResponse
         return $url->withScheme('https');
     }
 
-    /**
-     * @return string
-     */
     public function getService(): string
     {
         return $this->service;

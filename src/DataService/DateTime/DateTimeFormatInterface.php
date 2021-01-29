@@ -26,8 +26,6 @@ interface DateTimeFormatInterface
     /**
      * Returns date formatted according to given format.
      *
-     * @param string $format
-     *
      * @return string The formatted date, or an empty string if no date is available.
      *
      * @see http://php.net/manual/en/datetime.format.php

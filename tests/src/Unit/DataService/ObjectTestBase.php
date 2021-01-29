@@ -80,7 +80,6 @@ abstract class ObjectTestBase extends TestCase
 
     /**
      * @param $class
-     * @param string $field
      * @param $expected
      */
     protected function assertObjectClass($class, string $field, $expected)
@@ -100,8 +99,7 @@ abstract class ObjectTestBase extends TestCase
     }
 
     /**
-     * @param        $class
-     * @param string $field
+     * @param $class
      *
      * @return object
      */
