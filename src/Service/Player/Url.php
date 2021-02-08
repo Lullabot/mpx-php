@@ -148,7 +148,7 @@ class Url implements ToUriInterface
      */
     public function withAutoplay(bool $autoPlay): self
     {
-        if ($this->autoPlay == $autoPlay) {
+        if ($this->autoPlay === $autoPlay) {
             return $this;
         }
 
@@ -167,7 +167,7 @@ class Url implements ToUriInterface
      */
     public function withPlayAll(bool $playAll): self
     {
-        if ($this->playAll == $playAll) {
+        if ($this->playAll === $playAll) {
             return $this;
         }
 
@@ -182,7 +182,7 @@ class Url implements ToUriInterface
      */
     public function withEmbed(bool $embed): self
     {
-        if ($this->embed == $embed) {
+        if ($this->embed === $embed) {
             return $this;
         }
 
