@@ -5,9 +5,9 @@ namespace Lullabot\Mpx\Tests\Unit\DataService;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Lullabot\Mpx\DataService\Access\Account;
-use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\ObjectList;
+use Lullabot\Mpx\DataService\ObjectListQuery;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,7 +25,7 @@ class ObjectListTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->list = new ObjectList();

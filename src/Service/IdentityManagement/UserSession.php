@@ -114,8 +114,6 @@ class UserSession
      * Sign in the user and return the current token.
      *
      * @param int $duration (optional) The number of seconds for which the token should be valid.
-     *
-     * @return Token
      */
     protected function signIn($duration = null): Token
     {
@@ -135,7 +133,7 @@ class UserSession
             [
                 'token' => $token->getValue(),
                 'username' => $this->user->getMpxUsername(),
-                'date' => date(DATE_ISO8601, $token->getExpiration()),
+                'date' => date(\DATE_ISO8601, $token->getExpiration()),
             ]
         );
 
@@ -168,8 +166,6 @@ class UserSession
      * Sign in to mpx, with a lock to prevent sign-in stampedes.
      *
      * @param int $duration (optional) The number of seconds that the sign-in token should be valid for.
-     *
-     * @return Token
      */
     protected function signInWithLock(int $duration = null): Token
     {

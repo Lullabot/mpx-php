@@ -310,11 +310,6 @@ class DataObjectFactory
         return $base;
     }
 
-    /**
-     * @param PropertyTypeExtractorInterface $dataServiceExtractor
-     *
-     * @return Serializer
-     */
     private function getObjectSerializer(PropertyTypeExtractorInterface $dataServiceExtractor): Serializer
     {
         // First, we need an encoder that filters out null values.

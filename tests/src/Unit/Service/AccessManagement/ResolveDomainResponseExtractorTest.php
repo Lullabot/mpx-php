@@ -3,8 +3,8 @@
 namespace Lullabot\Mpx\Tests\Unit\Service\AccessManagement;
 
 use GuzzleHttp\Psr7\Uri;
-use Lullabot\Mpx\Service\AccessManagement\ResolveDomainResponseExtractor;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomainResponse;
+use Lullabot\Mpx\Service\AccessManagement\ResolveDomainResponseExtractor;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PropertyInfo\Type;
 

@@ -159,8 +159,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date and time that this object was created.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -173,8 +171,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date and time that this object was created.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
     public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
     {
@@ -183,8 +179,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -197,8 +191,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $addedByUserId
      */
     public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
     {
@@ -207,8 +199,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the AdPolicy object this object is associated with.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAdPolicyId(): \Psr\Http\Message\UriInterface
     {
@@ -221,8 +211,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the AdPolicy object this object is associated with.
-     *
-     * @param \Psr\Http\Message\UriInterface $adPolicyId
      */
     public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId)
     {
@@ -291,8 +279,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the MediaFile object this object is associated with.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getFileId(): \Psr\Http\Message\UriInterface
     {
@@ -305,8 +291,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the MediaFile object this object is associated with.
-     *
-     * @param \Psr\Http\Message\UriInterface $fileId
      */
     public function setFileId(\Psr\Http\Message\UriInterface $fileId)
     {
@@ -335,8 +319,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getId(): \Psr\Http\Message\UriInterface
     {
@@ -349,8 +331,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $id
      */
     public function setId(\Psr\Http\Message\UriInterface $id)
     {
@@ -379,8 +359,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the Media object this object is associated with.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getMediaId(): \Psr\Http\Message\UriInterface
     {
@@ -393,8 +371,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the Media object this object is associated with.
-     *
-     * @param \Psr\Http\Message\UriInterface $mediaId
      */
     public function setMediaId(\Psr\Http\Message\UriInterface $mediaId)
     {
@@ -403,8 +379,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
@@ -417,8 +391,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $ownerId
      */
     public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
     {
@@ -467,8 +439,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the Restriction object this object is associated with.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getRestrictionId(): \Psr\Http\Message\UriInterface
     {
@@ -481,8 +451,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the Restriction object this object is associated with.
-     *
-     * @param \Psr\Http\Message\UriInterface $restrictionId
      */
     public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId)
     {
@@ -511,8 +479,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date and time this object was last modified.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -525,8 +491,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date and time this object was last modified.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
     public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
@@ -535,8 +499,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the user that last modified this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -549,8 +511,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the user that last modified this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
     public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {
@@ -559,8 +519,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the public URL for this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getUrl(): \Psr\Http\Message\UriInterface
     {
@@ -573,8 +531,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the public URL for this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $url
      */
     public function setUrl(\Psr\Http\Message\UriInterface $url)
     {

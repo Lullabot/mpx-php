@@ -52,8 +52,6 @@ class PlugInInstance
 
     /**
      * Get the unique identifier for the plug-in.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getPlugInId(): \Psr\Http\Message\UriInterface
     {
@@ -62,8 +60,6 @@ class PlugInInstance
 
     /**
      * Set the unique identifier for the plug-in.
-     *
-     * @param \Psr\Http\Message\UriInterface $plugInId
      */
     public function setPlugInId(\Psr\Http\Message\UriInterface $plugInId)
     {
@@ -72,8 +68,6 @@ class PlugInInstance
 
     /**
      * Get the identifier for the region that hosts the component that will load the plug-in.
-     *
-     * @return string
      */
     public function getRegionName(): string
     {
@@ -82,8 +76,6 @@ class PlugInInstance
 
     /**
      * Set the identifier for the region that hosts the component that will load the plug-in.
-     *
-     * @param string $regionName
      */
     public function setRegionName(string $regionName)
     {

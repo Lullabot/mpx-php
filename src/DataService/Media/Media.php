@@ -403,8 +403,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the AdPolicy associated with this content.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAdPolicyId(): \Psr\Http\Message\UriInterface
     {
@@ -417,8 +415,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the AdPolicy associated with this content.
-     *
-     * @param \Psr\Http\Message\UriInterface $adPolicyId
      */
     public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId)
     {
@@ -427,8 +423,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date and time that this object was created.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -441,8 +435,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date and time that this object was created.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
     public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
     {
@@ -451,8 +443,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -465,8 +455,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $addedByUserId
      */
     public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
     {
@@ -535,8 +523,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a map that contains localized versions of this object's author value.
-     *
-     * @return array
      */
     public function getAuthorLocalized(): array
     {
@@ -545,8 +531,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a map that contains localized versions of this object's author value.
-     *
-     * @param array $authorLocalized
      */
     public function setAuthorLocalized(array $authorLocalized)
     {
@@ -615,8 +599,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date that this content becomes available for playback.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getAvailableDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -629,8 +611,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date that this content becomes available for playback.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $availableDate
      */
     public function setAvailableDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $availableDate)
     {
@@ -739,8 +719,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a map that contains localized versions of this object's copyright value.
-     *
-     * @return array
      */
     public function getCopyrightLocalized(): array
     {
@@ -749,8 +727,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a map that contains localized versions of this object's copyright value.
-     *
-     * @param array $copyrightLocalized
      */
     public function setCopyrightLocalized(array $copyrightLocalized)
     {
@@ -779,8 +755,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a map that contains localized versions of this object's copyrightUrl value.
-     *
-     * @return array
      */
     public function getCopyrightUrlLocalized(): array
     {
@@ -789,8 +763,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a map that contains localized versions of this object's copyrightUrl value.
-     *
-     * @param array $copyrightUrlLocalized
      */
     public function setCopyrightUrlLocalized(array $copyrightUrlLocalized)
     {
@@ -839,8 +811,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the streamingUrl of the default thumbnail for this Media.
-     *
-     * @return Uri
      */
     public function getDefaultThumbnailUrl(): Uri
     {
@@ -879,8 +849,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a map that contains localized versions of this object's description value.
-     *
-     * @return array
      */
     public function getDescriptionLocalized(): array
     {
@@ -889,8 +857,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a map that contains localized versions of this object's description value.
-     *
-     * @param array $descriptionLocalized
      */
     public function setDescriptionLocalized(array $descriptionLocalized)
     {
@@ -919,8 +885,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date that this content expires and is no longer available for playback.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getExpirationDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -933,8 +897,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date that this content expires and is no longer available for playback.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $expirationDate
      */
     public function setExpirationDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $expirationDate)
     {
@@ -943,8 +905,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns reserved for future use.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getFileSourceMediaId(): \Psr\Http\Message\UriInterface
     {
@@ -957,8 +917,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set reserved for future use.
-     *
-     * @param \Psr\Http\Message\UriInterface $fileSourceMediaId
      */
     public function setFileSourceMediaId(\Psr\Http\Message\UriInterface $fileSourceMediaId)
     {
@@ -987,8 +945,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getId(): \Psr\Http\Message\UriInterface
     {
@@ -1001,8 +957,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $id
      */
     public function setId(\Psr\Http\Message\UriInterface $id)
     {
@@ -1031,8 +985,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a map that contains localized versions of this object's keywords value.
-     *
-     * @return array
      */
     public function getKeywordsLocalized(): array
     {
@@ -1041,8 +993,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a map that contains localized versions of this object's keywords value.
-     *
-     * @param array $keywordsLocalized
      */
     public function setKeywordsLocalized(array $keywordsLocalized)
     {
@@ -1071,8 +1021,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a map that contains localized versions of this object's link value.
-     *
-     * @return array
      */
     public function getLinkLocalized(): array
     {
@@ -1081,8 +1029,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a map that contains localized versions of this object's link value.
-     *
-     * @param array $linkLocalized
      */
     public function setLinkLocalized(array $linkLocalized)
     {
@@ -1151,8 +1097,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
@@ -1165,8 +1109,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $ownerId
      */
     public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
     {
@@ -1195,8 +1137,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the ID of the Program that represents this media. The GUID URI is recommended.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getProgramId(): \Psr\Http\Message\UriInterface
     {
@@ -1209,8 +1149,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the ID of the Program that represents this media. The GUID URI is recommended.
-     *
-     * @param \Psr\Http\Message\UriInterface $programId
      */
     public function setProgramId(\Psr\Http\Message\UriInterface $programId)
     {
@@ -1239,8 +1177,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the Provider that represents the account that shared this Media.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getProviderId(): \Psr\Http\Message\UriInterface
     {
@@ -1253,8 +1189,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the Provider that represents the account that shared this Media.
-     *
-     * @param \Psr\Http\Message\UriInterface $providerId
      */
     public function setProviderId(\Psr\Http\Message\UriInterface $providerId)
     {
@@ -1263,8 +1197,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the original release date or airdate of this Media object's content.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getPubDate(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -1277,8 +1209,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the original release date or airdate of this Media object's content.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $pubDate
      */
     public function setPubDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $pubDate)
     {
@@ -1287,8 +1217,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the public URL for this media.
-     *
-     * @return Uri
      */
     public function getPublicUrl(): Uri
     {
@@ -1297,8 +1225,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the public URL for this media.
-     *
-     * @param Uri $publicUrl
      */
     public function setPublicUrl(Uri $publicUrl)
     {
@@ -1327,8 +1253,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the Restriction associated with this content.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getRestrictionId(): \Psr\Http\Message\UriInterface
     {
@@ -1341,8 +1265,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the Restriction associated with this content.
-     *
-     * @param \Psr\Http\Message\UriInterface $restrictionId
      */
     public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId)
     {
@@ -1351,8 +1273,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the ID of the Program that represents the series to which this media belongs. The GUID URI is recommended.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getSeriesId(): \Psr\Http\Message\UriInterface
     {
@@ -1365,8 +1285,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the ID of the Program that represents the series to which this media belongs. The GUID URI is recommended.
-     *
-     * @param \Psr\Http\Message\UriInterface $seriesId
      */
     public function setSeriesId(\Psr\Http\Message\UriInterface $seriesId)
     {
@@ -1395,8 +1313,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a map that contains localized versions of this object's text value.
-     *
-     * @return array
      */
     public function getTextLocalized(): array
     {
@@ -1405,8 +1321,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a map that contains localized versions of this object's text value.
-     *
-     * @param array $textLocalized
      */
     public function setTextLocalized(array $textLocalized)
     {
@@ -1455,8 +1369,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a map that contains localized versions of this object's title value.
-     *
-     * @return array
      */
     public function getTitleLocalized(): array
     {
@@ -1465,8 +1377,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a map that contains localized versions of this object's title value.
-     *
-     * @param array $titleLocalized
      */
     public function setTitleLocalized(array $titleLocalized)
     {
@@ -1475,8 +1385,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date and time this object was last modified.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -1489,8 +1397,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date and time this object was last modified.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
     public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
@@ -1499,8 +1405,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the user that last modified this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -1513,8 +1417,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the user that last modified this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
     public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {

@@ -35,9 +35,6 @@ class DiscoveredCustomField
         $this->annotation = $annotation;
     }
 
-    /**
-     * @return string
-     */
     public function getClass(): string
     {
         return $this->class;

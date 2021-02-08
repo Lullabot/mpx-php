@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
-use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\Media\Release;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
@@ -19,7 +19,7 @@ class ReleaseTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $dataServiceExtractor = new DataServiceExtractor();

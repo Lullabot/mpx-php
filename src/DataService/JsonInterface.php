@@ -14,8 +14,6 @@ interface JsonInterface
 {
     /**
      * Set the original JSON representation of this object.
-     *
-     * @param string $json
      */
     public function setJson(string $json);
 

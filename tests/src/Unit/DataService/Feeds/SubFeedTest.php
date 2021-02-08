@@ -18,7 +18,7 @@ class SubFeedTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $dataServiceExtractor = new DataServiceExtractor();

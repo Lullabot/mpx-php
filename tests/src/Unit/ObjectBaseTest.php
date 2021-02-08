@@ -103,8 +103,6 @@ class DummyObjectBase extends ObjectBase
 
     /**
      * Returns the id of the account that owns this object.
-     *
-     * @return UriInterface
      */
     public function getOwnerId(): UriInterface
     {
@@ -189,14 +187,14 @@ class DummyObjectBase extends ObjectBase
     /**
      * {@inheritdoc}
      */
-    public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
+    public function getUpdatedByUserId(): UriInterface
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(UriInterface $updatedByUserId)
     {
     }
 

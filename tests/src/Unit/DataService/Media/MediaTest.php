@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService\Media;
 
-use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\Media\AvailabilityWindow;
 use Lullabot\Mpx\DataService\Media\CategoryInfo;
 use Lullabot\Mpx\DataService\Media\Chapter;
@@ -25,7 +25,7 @@ class MediaTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $dataServiceExtractor = new DataServiceExtractor();

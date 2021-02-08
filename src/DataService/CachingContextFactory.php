@@ -20,8 +20,6 @@ final class CachingContextFactory
     /**
      * Build a Context given a Class Reflection.
      *
-     * @param \Reflector $reflector
-     *
      * @see Context for more information on Contexts.
      *
      * @return Context
@@ -65,10 +63,10 @@ final class CachingContextFactory
 
             while ($tokens->valid()) {
                 switch ($tokens->current()[0]) {
-                    case T_NAMESPACE:
+                    case \T_NAMESPACE:
                         $currentNamespace = $this->parseNamespace($tokens);
                         break;
-                    case T_CLASS:
+                    case \T_CLASS:
                         // Fast-forward the iterator through the class so that any
                         // T_USE tokens found within are skipped - these are not
                         // valid namespace use statements so should be ignored.
@@ -76,8 +74,8 @@ final class CachingContextFactory
                         $firstBraceFound = false;
                         while ($tokens->valid() && ($braceLevel > 0 || !$firstBraceFound)) {
                             if ('{' === $tokens->current()
-                                || T_CURLY_OPEN === $tokens->current()[0]
-                                || T_DOLLAR_OPEN_CURLY_BRACES === $tokens->current()[0]) {
+                                || \T_CURLY_OPEN === $tokens->current()[0]
+                                || \T_DOLLAR_OPEN_CURLY_BRACES === $tokens->current()[0]) {
                                 if (!$firstBraceFound) {
                                     $firstBraceFound = true;
                                 }
@@ -90,7 +88,7 @@ final class CachingContextFactory
                             $tokens->next();
                         }
                         break;
-                    case T_USE:
+                    case \T_USE:
                         if ($currentNamespace === $namespace) {
                             $useStatements = array_merge($useStatements, $this->parseUseStatement($tokens));
                         }
@@ -108,8 +106,6 @@ final class CachingContextFactory
     /**
      * Deduce the name from tokens when we are at the T_NAMESPACE token.
      *
-     * @param \ArrayIterator $tokens
-     *
      * @return string
      */
     private function parseNamespace(\ArrayIterator $tokens)
@@ -118,7 +114,7 @@ final class CachingContextFactory
         $this->skipToNextStringOrNamespaceSeparator($tokens);
 
         $name = '';
-        while ($tokens->valid() && (T_STRING === $tokens->current()[0] || T_NS_SEPARATOR === $tokens->current()[0])
+        while ($tokens->valid() && (\T_STRING === $tokens->current()[0] || \T_NS_SEPARATOR === $tokens->current()[0])
         ) {
             $name .= $tokens->current()[1];
             $tokens->next();
@@ -129,8 +125,6 @@ final class CachingContextFactory
 
     /**
      * Deduce the names of all imports when we are at the T_USE token.
-     *
-     * @param \ArrayIterator $tokens
      *
      * @return string[]
      */
@@ -154,12 +148,10 @@ final class CachingContextFactory
 
     /**
      * Fast-forwards the iterator as longs as we don't encounter a T_STRING or T_NS_SEPARATOR token.
-     *
-     * @param \ArrayIterator $tokens
      */
     private function skipToNextStringOrNamespaceSeparator(\ArrayIterator $tokens)
     {
-        while ($tokens->valid() && (T_STRING !== $tokens->current()[0]) && (T_NS_SEPARATOR !== $tokens->current()[0])) {
+        while ($tokens->valid() && (\T_STRING !== $tokens->current()[0]) && (\T_NS_SEPARATOR !== $tokens->current()[0])) {
             $tokens->next();
         }
     }
@@ -167,8 +159,6 @@ final class CachingContextFactory
     /**
      * Deduce the namespace name and alias of an import when we are at the T_USE token or have not reached the end of
      * a USE statement yet.
-     *
-     * @param \ArrayIterator $tokens
      *
      * @return string
      */
@@ -179,10 +169,10 @@ final class CachingContextFactory
             && (self::T_LITERAL_USE_SEPARATOR !== $tokens->current()[0])
             && (self::T_LITERAL_END_OF_USE !== $tokens->current()[0])
         ) {
-            if (T_AS === $tokens->current()[0]) {
+            if (\T_AS === $tokens->current()[0]) {
                 $result[] = '';
             }
-            if (T_STRING === $tokens->current()[0] || T_NS_SEPARATOR === $tokens->current()[0]) {
+            if (\T_STRING === $tokens->current()[0] || \T_NS_SEPARATOR === $tokens->current()[0]) {
                 $result[\count($result) - 1] .= $tokens->current()[1];
             }
             $tokens->next();

@@ -27,7 +27,7 @@ class Middleware
             return function (RequestInterface $request, array $options) use ($handler) {
                 // We only need to process after the request has been sent.
                 return $handler($request, $options)->then(
-                    function (ResponseInterface $response) use ($request, $handler) {
+                    function (ResponseInterface $response) use ($request) {
                         // While it's not documented, we want to be sure that
                         // any 4XX or 5XX errors that break through suppression
                         // are still parsed. In other words, this handler should

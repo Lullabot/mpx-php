@@ -12,22 +12,16 @@ interface ObjectInterface extends IdInterface, GuidInterface, JsonInterface
 {
     /**
      * Returns the globally unique URI of this object.
-     *
-     * @return UriInterface
      */
     public function getId(): UriInterface;
 
     /**
      * Set the globally unique URI of this object.
-     *
-     * @param UriInterface $id
      */
     public function setId(UriInterface $id);
 
     /**
      * Returns the date and time that this object was created.
-     *
-     * @return DateTimeFormatInterface
      */
     public function getAdded(): DateTimeFormatInterface;
 
@@ -40,15 +34,11 @@ interface ObjectInterface extends IdInterface, GuidInterface, JsonInterface
 
     /**
      * Returns the id of the user that created this object.
-     *
-     * @return UriInterface
      */
     public function getAddedByUserId(): UriInterface;
 
     /**
      * Set the id of the user that created this object.
-     *
-     * @param UriInterface $addedByUserId
      */
     public function setAddedByUserId(UriInterface $addedByUserId);
 
@@ -110,31 +100,23 @@ interface ObjectInterface extends IdInterface, GuidInterface, JsonInterface
 
     /**
      * Returns the date and time this object was last modified.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getUpdated(): DateTimeFormatInterface;
 
     /**
      * Set the date and time this object was last modified.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
     public function setUpdated(DateTimeFormatInterface $updated);
 
     /**
      * Returns the id of the user that last modified this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
-    public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface;
+    public function getUpdatedByUserId(): UriInterface;
 
     /**
      * Set the id of the user that last modified this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
-    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId);
+    public function setUpdatedByUserId(UriInterface $updatedByUserId);
 
     /**
      * Returns this object's modification version, used for optimistic locking.

@@ -91,8 +91,6 @@ class Url implements ToUriInterface
 
     /**
      * Return the URL for this player and media.
-     *
-     * @return UriInterface
      */
     public function toUri(): UriInterface
     {
@@ -165,8 +163,6 @@ class Url implements ToUriInterface
      *
      * @see https://docs.theplatform.com/help/player-player-playall
      *
-     * @param bool $playAll
-     *
      * @return Url
      */
     public function withPlayAll(bool $playAll): self
@@ -182,8 +178,6 @@ class Url implements ToUriInterface
     }
 
     /**
-     * @param bool $embed
-     *
      * @return Url
      */
     public function withEmbed(bool $embed): self

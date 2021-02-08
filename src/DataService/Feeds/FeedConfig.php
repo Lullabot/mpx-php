@@ -337,8 +337,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date and time that this object was created.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getAdded(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -351,8 +349,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date and time that this object was created.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added
      */
     public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
     {
@@ -361,8 +357,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the user that created this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAddedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -375,8 +369,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the user that created this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $addedByUserId
      */
     public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
     {
@@ -405,8 +397,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the AdPolicy that is applied to the feed.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getAdPolicyId(): \Psr\Http\Message\UriInterface
     {
@@ -419,8 +409,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the AdPolicy that is applied to the feed.
-     *
-     * @param \Psr\Http\Message\UriInterface $adPolicyId
      */
     public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId)
     {
@@ -669,8 +657,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the globally unique URI of this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getId(): \Psr\Http\Message\UriInterface
     {
@@ -683,8 +669,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the globally unique URI of this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $id
      */
     public function setId(\Psr\Http\Message\UriInterface $id)
     {
@@ -793,8 +777,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the account that owns this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getOwnerId(): \Psr\Http\Message\UriInterface
     {
@@ -807,8 +789,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the account that owns this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $ownerId
      */
     public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
     {
@@ -937,8 +917,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the Restriction that is applied to the feed.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getRestrictionId(): \Psr\Http\Message\UriInterface
     {
@@ -951,8 +929,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the Restriction that is applied to the feed.
-     *
-     * @param \Psr\Http\Message\UriInterface $restrictionId
      */
     public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId)
     {
@@ -1081,8 +1057,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the date and time this object was last modified.
-     *
-     * @return \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     public function getUpdated(): \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
     {
@@ -1095,8 +1069,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the date and time this object was last modified.
-     *
-     * @param \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated
      */
     public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
     {
@@ -1105,8 +1077,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the id of the user that last modified this object.
-     *
-     * @return \Psr\Http\Message\UriInterface
      */
     public function getUpdatedByUserId(): \Psr\Http\Message\UriInterface
     {
@@ -1119,8 +1089,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the id of the user that last modified this object.
-     *
-     * @param \Psr\Http\Message\UriInterface $updatedByUserId
      */
     public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
     {

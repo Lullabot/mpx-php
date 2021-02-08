@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
-use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\Field;
 
 /**
@@ -18,7 +18,7 @@ class FieldTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $dataServiceExtractor = new DataServiceExtractor();

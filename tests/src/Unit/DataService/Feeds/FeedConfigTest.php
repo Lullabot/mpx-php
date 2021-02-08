@@ -3,8 +3,8 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService\Feeds;
 
 use GuzzleHttp\Psr7\Uri;
-use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DataServiceExtractor;
+use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\Feeds\FeedConfig;
 use Lullabot\Mpx\Tests\Unit\DataService\ObjectTestBase;
 
@@ -20,7 +20,7 @@ class FeedConfigTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $dataServiceExtractor = new DataServiceExtractor();

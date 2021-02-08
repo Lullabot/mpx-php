@@ -76,8 +76,6 @@ class Chapter
 
     /**
      * Returns a link to the thumbnail image for this chapter.
-     *
-     * @return Uri
      */
     public function getThumbnailUrl(): Uri
     {

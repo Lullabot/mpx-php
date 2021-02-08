@@ -64,17 +64,12 @@ class Term implements QueryPartsInterface, TermInterface
      */
     private $wrap;
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;
     }
 
     /**
-     * @param string $value
-     *
      * @return Term
      */
     public function setValue(string $value): self
@@ -84,17 +79,12 @@ class Term implements QueryPartsInterface, TermInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getField(): string
     {
         return $this->field;
     }
 
     /**
-     * @param string $field
-     *
      * @return Term
      */
     public function setField(string $field): self
@@ -104,17 +94,12 @@ class Term implements QueryPartsInterface, TermInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getMatchType(): string
     {
         return $this->matchType;
     }
 
     /**
-     * @param string $matchType
-     *
      * @return Term
      */
     public function setMatchType(string $matchType): self
@@ -128,17 +113,12 @@ class Term implements QueryPartsInterface, TermInterface
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getBoost(): int
     {
         return $this->boost;
     }
 
     /**
-     * @param int $boost
-     *
      * @return Term
      */
     public function setBoost(int $boost): self
@@ -148,17 +128,12 @@ class Term implements QueryPartsInterface, TermInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getNamespace(): string
     {
         return $this->namespace;
     }
 
     /**
-     * @param string $namespace
-     *
      * @return Term
      */
     public function setNamespace(string $namespace): self
@@ -187,9 +162,6 @@ class Term implements QueryPartsInterface, TermInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isExclude(): bool
     {
         return '-' == $this->plusMinus;
@@ -228,9 +200,6 @@ class Term implements QueryPartsInterface, TermInterface
         $this->namespace = $namespace;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         $value = '';

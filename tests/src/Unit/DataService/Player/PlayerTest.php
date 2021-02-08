@@ -21,7 +21,7 @@ class PlayerTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->loadFixture('player-object.json', new ReflectionExtractor());

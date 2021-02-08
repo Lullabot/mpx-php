@@ -32,9 +32,6 @@ class Link
      */
     protected $type;
 
-    /**
-     * @return UriInterface
-     */
     public function getHref(): UriInterface
     {
         if (!$this->href) {
@@ -44,9 +41,6 @@ class Link
         return $this->href;
     }
 
-    /**
-     * @param UriInterface $href
-     */
     public function setHref(UriInterface $href)
     {
         $this->href = $href;

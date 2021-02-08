@@ -37,9 +37,6 @@ class DiscoveredDataService
         $this->customFields = $customFields;
     }
 
-    /**
-     * @return string
-     */
     public function getClass(): string
     {
         return $this->class;
