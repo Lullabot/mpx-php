@@ -44,21 +44,32 @@ class UrlTest extends TestCase
 
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid', (string) $player_url->toUri());
 
+        $player_url = new Url($account, $player, $media);
         $player_url = $player_url->withAutoplay(true)
             ->withPlayAll(true);
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoPlay=true&playAll=true', (string) $player_url);
 
+        $player_url = new Url($account, $player, $media);
         $player_url = $player_url->withAutoplay(false)
             ->withPlayAll(false);
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
 
+        $player_url = new Url($account, $player, $media);
         $player_url = $player_url->withEmbed(true);
-        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/embed/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/embed/select/media/media-pid', (string) $player_url);
 
+        $player_url = new Url($account, $player, $media);
         $player_url = $player_url->withMediaByGuid();
-        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/embed/select/media/guid/123456/the-guid?autoPlay=false&playAll=false', (string) $player_url);
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/guid/123456/the-guid', (string) $player_url);
 
+        $player_url = new Url($account, $player, $media);
         $player_url = $player_url->withMediaByPublicId();
+        $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/select/media/media-pid', (string) $player_url);
+
+        $player_url = new Url($account, $player, $media);
+        $player_url = $player_url->withEmbed(true)
+            ->withAutoplay(false)
+            ->withPlayAll(false);
         $this->assertEquals('https://player.theplatform.com/p/account-pid/player-pid/embed/select/media/media-pid?autoPlay=false&playAll=false', (string) $player_url);
     }
 }
