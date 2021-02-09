@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2021-02-09
+
+### Added
+
+- Run tests on PHP 7.4
+- Add .codeclimate.yml to exclude coverage for certain files
+
+### Changed
+
+- Fix a bug in the player URL class that in some cases would result in a FALSE
+  value for autoPlay not making it into the final URL
+- Fix tests
+- Documentation updates
+- Coding standards fixes
+
+## [1.0.0] - 2019-07-23
+
+This release is identical to 1.0.0-rc1
+
 ## [1.0.0-rc1] - 2019-07-15
 
 ### Removed
