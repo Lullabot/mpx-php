@@ -29,7 +29,8 @@
     "symfony/console": "^3.4",
     "namshi/cuzzle": "^2.0",
     "rtheunissen/guzzle-log-middleware": "^0.4.1",
-    "mockery/mockery": "^1.0"
+    "mockery/mockery": "^1.0",
+    "symfony/phpunit-bridge": "5.2.x-dev"
   },
   "autoload": {
     "psr-4": {
