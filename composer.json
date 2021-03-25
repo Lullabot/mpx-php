@@ -30,7 +30,7 @@
     "namshi/cuzzle": "^2.0",
     "rtheunissen/guzzle-log-middleware": "^0.4.1",
     "mockery/mockery": "^1.0",
-    "symfony/phpunit-bridge": "5.2.x-dev#448f9f36df6a9468ff4206adc98acbc1b3d2d3d6"
+    "symfony/phpunit-bridge": "5.2.x-dev#f2f94fd78379cdcdef09dd5025af791301913968"
   },
   "autoload": {
     "psr-4": {
