@@ -15,7 +15,7 @@
     "psr/log": "^1.0",
     "cache/cache": "dev-master#83fabc5bad8b90f7981c97898345df8935b0bf55",
     "symfony/serializer": "^3.4 || ^4.4",
-    "symfony/property-access": "^3.4",
+    "symfony/property-access": "^3.4 || ^4.4",
     "doctrine/annotations": "^1.2",
     "symfony/property-info": "^3.4",
     "symfony/lock": "^3.4",
