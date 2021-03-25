@@ -30,7 +30,7 @@ class NotificationTypeExtractor extends ReflectionExtractor
     /**
      * {@inheritdoc}
      */
-    public function getTypes($class, $property, array $context = [])
+    public function getTypes($class, $property, array $context = []): ?array
     {
         if ('entry' !== $property) {
             return parent::getTypes($class, $property, $context);
