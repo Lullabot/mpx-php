@@ -78,7 +78,7 @@ test_and_cover: &test_and_cover
       - run: composer update -n --prefer-dist
 
       - run: |
-          [ -f /usr/local/etc/php/conf.d/xdebug.ini] || rm /usr/local/etc/php/conf.d/xdebug.ini
+          rm -f /usr/local/etc/php/conf.d/xdebug.ini
 
       - run: |
           [ -f /usr/local/lib/php/extensions/no-debug-non-zts-20200930/xdebug.so] || pecl install xdebug
