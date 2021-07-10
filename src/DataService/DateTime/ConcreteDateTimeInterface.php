@@ -16,6 +16,9 @@ namespace Lullabot\Mpx\DataService\DateTime;
  *          $date->getDateTime()->getTimestamp();
  *      }
  * @endcode
+ *
+ * The above example shows the use of a concrete ConcreteDateTimeInterface
+ * object.
  */
 interface ConcreteDateTimeInterface extends DateTimeFormatInterface
 {

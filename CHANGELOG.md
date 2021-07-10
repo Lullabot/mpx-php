@@ -6,9 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## Changed
+### Changed
 
 - Updated Symfony dependencies to allow for ^4.4.
+
+## [1.0.4] - 2021-07-10
+
+### Changed
+
+- Changed the annotations that ended in @endcode to have some trailing text to
+  avoid an issue with doctrine/annotations:1.4.0 and PHP 7.4. This allows
+  lullabot/mpx-php to be used with tests passing cleanly with
+  drupal/core-recommended:^8.9.
 
 ## [1.0.3] - 2021-02-11
 
