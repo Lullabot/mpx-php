@@ -60,6 +60,9 @@ class DataObjectFactoryTest extends TestCase
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
@@ -96,6 +99,9 @@ class DataObjectFactoryTest extends TestCase
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $account = new Account();
         $account->setId(new Uri('http://example.com/1'));
@@ -125,6 +131,9 @@ class DataObjectFactoryTest extends TestCase
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
@@ -159,6 +168,9 @@ class DataObjectFactoryTest extends TestCase
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
@@ -182,6 +194,9 @@ class DataObjectFactoryTest extends TestCase
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
@@ -207,6 +222,9 @@ class DataObjectFactoryTest extends TestCase
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
@@ -239,6 +257,9 @@ class DataObjectFactoryTest extends TestCase
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);

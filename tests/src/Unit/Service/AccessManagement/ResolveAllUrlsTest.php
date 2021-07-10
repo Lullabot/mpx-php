@@ -39,10 +39,12 @@ class ResolveAllUrlsTest extends TestCase
             new JsonResponse(200, [], 'resolveAllUrls.json'),
         ]);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface $store */
+        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
-
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $session = new AuthenticatedClient($client, $userSession);

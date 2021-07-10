@@ -42,6 +42,9 @@ class UserSessionTest extends TestCase
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
@@ -70,6 +73,9 @@ class UserSessionTest extends TestCase
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         /** @var \Psr\Log\LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
@@ -100,6 +106,9 @@ class UserSessionTest extends TestCase
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
