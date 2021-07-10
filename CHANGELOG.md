@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2021-07-10
+
+### Changed
+
+- Changed the annotations that ended in @endcode to have some trailing text to
+  avoid an issue with doctrine/annotations:1.4.0 and PHP 7.4. This allows
+  lullabot/mpx-php to be used with tests passing cleanly with
+  drupal/core-recommended:^8.9.
+
 ## [1.0.3] - 2021-02-11
 
 ### Added

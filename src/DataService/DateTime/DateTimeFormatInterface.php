@@ -20,6 +20,9 @@ namespace Lullabot\Mpx\DataService\DateTime;
  *      // $formatted will be '' if the media object's published date is undefined.
  *      $formatted = $date->format('Y-m-d H:i:s');
  * @endcode
+ *
+ * The above example shows working with a DateTimeFormatInterface object,
+ * demonstrating an empty return from the format method when the date is empty.
  */
 interface DateTimeFormatInterface
 {
