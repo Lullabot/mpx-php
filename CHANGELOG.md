@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Changed the annotations that ended in @endcode to have some trailing text to
+- Changed the annotations that ended in @endcode to have some trailing docs to
   avoid an issue with doctrine/annotations:1.4.0 and PHP 7.4. This allows
   lullabot/mpx-php to be used with tests passing cleanly with
   drupal/core-recommended:^8.9.
