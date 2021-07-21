@@ -62,6 +62,9 @@ class AuthenticatedClientTest extends TestCase
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
@@ -104,6 +107,9 @@ class AuthenticatedClientTest extends TestCase
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(2);
@@ -143,6 +149,9 @@ class AuthenticatedClientTest extends TestCase
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);
@@ -180,6 +189,9 @@ class AuthenticatedClientTest extends TestCase
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)
             ->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
 
         $logger = $this->fetchTokenLogger(1);

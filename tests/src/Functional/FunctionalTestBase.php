@@ -82,6 +82,9 @@ abstract class FunctionalTestBase extends TestCase
         // for the lock to fail so we can stub out the entire class.
         /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
         $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $store->expects($this->any())
+            ->method('exists')
+            ->willReturn(false);
 
         $user = new User($username, $password);
         $this->userSession = new UserSession($user, $this->client, $store, new TokenCachePool(new ArrayCachePool()));

@@ -20,6 +20,9 @@
              Note this will EXPOSE PASSWORDS AND TOKENS in logs, so
              this should only be enabled on local environments. -->
         <env name="MPX_LOG_CURL" value="false" />
+        <!-- Watch for deprecations, but only fail on direct deprecations,
+             not indirect ones. -->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[direct]=0" />
     </php>
 
     <testsuites>
@@ -39,4 +42,7 @@
       <log type="junit" target="build/logs/results.xml"/>
       <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+    </listeners>
 </phpunit>

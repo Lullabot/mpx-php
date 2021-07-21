@@ -26,9 +26,9 @@ class CachingPhpDocExtractorTest extends TestCase
      */
     public function testExtract($property, array $type = null, $shortDescription, $longDescription)
     {
-        $this->assertEquals($type, $this->extractor->getTypes('Symfony\Component\PropertyInfo\Tests\Fixtures\Dummy', $property));
-        $this->assertSame($shortDescription, $this->extractor->getShortDescription('Symfony\Component\PropertyInfo\Tests\Fixtures\Dummy', $property));
-        $this->assertSame($longDescription, $this->extractor->getLongDescription('Symfony\Component\PropertyInfo\Tests\Fixtures\Dummy', $property));
+        $this->assertEquals($type, $this->extractor->getTypes('Lullabot\Mpx\Tests\Fixtures\Dummy', $property));
+        $this->assertSame($shortDescription, $this->extractor->getShortDescription('Lullabot\Mpx\Tests\Fixtures\Dummy', $property));
+        $this->assertSame($longDescription, $this->extractor->getLongDescription('Lullabot\Mpx\Tests\Fixtures\Dummy', $property));
     }
 
     public function testParamTagTypeIsOmitted()
@@ -43,7 +43,7 @@ class CachingPhpDocExtractorTest extends TestCase
     {
         $customExtractor = new CachingPhpDocExtractor(null, ['add', 'remove'], ['is', 'can']);
 
-        $this->assertEquals($type, $customExtractor->getTypes('Symfony\Component\PropertyInfo\Tests\Fixtures\Dummy', $property));
+        $this->assertEquals($type, $customExtractor->getTypes('Lullabot\Mpx\Tests\Fixtures\Dummy', $property));
     }
 
     /**
@@ -53,7 +53,7 @@ class CachingPhpDocExtractorTest extends TestCase
     {
         $noPrefixExtractor = new CachingPhpDocExtractor(null, [], [], []);
 
-        $this->assertEquals($type, $noPrefixExtractor->getTypes('Symfony\Component\PropertyInfo\Tests\Fixtures\Dummy', $property));
+        $this->assertEquals($type, $noPrefixExtractor->getTypes('Lullabot\Mpx\Tests\Fixtures\Dummy', $property));
     }
 
     public function typesProvider()
@@ -76,10 +76,10 @@ class CachingPhpDocExtractorTest extends TestCase
                 null,
             ],
             ['bal', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime')], null, null],
-            ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'Symfony\Component\PropertyInfo\Tests\Fixtures\ParentDummy')], null, null],
+            ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'Lullabot\Mpx\Tests\Fixtures\ParentDummy')], null, null],
             ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', [new Type(Type::BUILTIN_TYPE_INT)], 'A.', null],
-            ['b', [new Type(Type::BUILTIN_TYPE_OBJECT, true, 'Symfony\Component\PropertyInfo\Tests\Fixtures\ParentDummy')], 'B.', null],
+            ['b', [new Type(Type::BUILTIN_TYPE_OBJECT, true, 'Lullabot\Mpx\Tests\Fixtures\ParentDummy')], 'B.', null],
             ['c', [new Type(Type::BUILTIN_TYPE_BOOL, true)], null, null],
             ['d', [new Type(Type::BUILTIN_TYPE_BOOL)], null, null],
             ['e', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_RESOURCE))], null, null],
@@ -111,7 +111,7 @@ class CachingPhpDocExtractorTest extends TestCase
                 null,
             ],
             ['bal', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime')], null, null],
-            ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'Symfony\Component\PropertyInfo\Tests\Fixtures\ParentDummy')], null, null],
+            ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'Lullabot\Mpx\Tests\Fixtures\ParentDummy')], null, null],
             ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', null, 'A.', null],
             ['b', null, 'B.', null],
@@ -146,7 +146,7 @@ class CachingPhpDocExtractorTest extends TestCase
                 null,
             ],
             ['bal', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime')], null, null],
-            ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'Symfony\Component\PropertyInfo\Tests\Fixtures\ParentDummy')], null, null],
+            ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'Lullabot\Mpx\Tests\Fixtures\ParentDummy')], null, null],
             ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', null, 'A.', null],
             ['b', null, 'B.', null],

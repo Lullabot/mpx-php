@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2021-07-21
+
+### Changed
+
+- Updated Symfony dependencies to allow for ^4.4.
+- Updated \Lullabot\Mpx\DataService\NotificationTypeExtractor::getTypes to have
+  a nullable array typed return.
+
 ## [1.0.4] - 2021-07-10
 
 ### Changed
