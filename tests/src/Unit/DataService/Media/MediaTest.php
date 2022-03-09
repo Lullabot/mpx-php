@@ -75,12 +75,14 @@ class MediaTest extends ObjectTestBase
         // Test against the default media fixture loaded in the setup method.
         $object = $this->deserialize($this->class, 'defaultThumbnailUrl');
         $this->assertEquals(new Uri('ftp://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_320x240.jpg'), $object->getDefaultThumbnailUri());
+        $this->assertEquals(new Uri('ftp://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_320x240.jpg'), $object->getDefaultThumbnailUri(false));
         // Load a different media fixture to test the ssl substitution.
         $dataServiceExtractor = new DataServiceExtractor();
         $dataServiceExtractor->setClass($this->class);
         $this->loadFixture('media-object-substitutions.json', $dataServiceExtractor);
         $object = $this->deserialize($this->class, 'defaultThumbnailUrl');
         $this->assertEquals(new Uri('https://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_320x240.jpg'), $object->getDefaultThumbnailUri());
+        $this->assertEquals(new Uri('http://winnas01.theplatform.com/Content/Video/thePlatform_Documentation_-_SA/3/494/ian_1_flexible_320x240.jpg'), $object->getDefaultThumbnailUri(false));
     }
 
     /**
