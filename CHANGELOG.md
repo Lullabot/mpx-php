@@ -8,8 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- New method \Lullabot\Mpx\DataService\Media\Media::getDefaultThumbnailUri
-  that includes known substitutions against the defaultThumbnailUri.
+- New method
+  \Lullabot\Mpx\DataService\Media\Media::getNormalizedDefaultThumbnailUrl
+  that includes known substitutions against the defaultThumbnailUrl.
 
 ## [1.0.6] - 2022-03-03
 
