@@ -842,19 +842,18 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
      *
      * - ssl: https://docs.theplatform.com/help/media-delivery-urls#tp-toc38
      *
-     * @param bool $ssl
-     *   TRUE for SSL substitution, otherwise FALSE.
+     * @param bool $ssl TRUE for SSL substitution, otherwise FALSE.
      *
-     * @return \GuzzleHttp\Psr7\Uri
-     *   Uri object for the default thumbnail url with known dynamic URL
-     *   substitution done.
+     * @return \GuzzleHttp\Psr7\Uri Uri object for the default thumbnail url
+     *                              with known dynamic URL substitution done.
      *
      * @see https://docs.theplatform.com/help/media-delivery-urls#tp-toc38
      */
-    public function getDefaultThumbnailUri(bool $ssl = TRUE): Uri
+    public function getDefaultThumbnailUri(bool $ssl = true): Uri
     {
         $defaultThumbnailUrl = urldecode($this->getDefaultThumbnailUrl());
         $defaultThumbnailUrl = preg_replace('~\{ssl:(.*?):(.*?)\}~', $ssl ? '$1' : '$2', $defaultThumbnailUrl);
+
         return new Uri($defaultThumbnailUrl);
     }
 
