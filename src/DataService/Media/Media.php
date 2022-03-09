@@ -173,7 +173,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The streamingUrl of the default thumbnail for this Media.
      *
-     * @var Uri
+     * @var string
      */
     protected $defaultThumbnailUrl;
 
@@ -811,8 +811,14 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the streamingUrl of the default thumbnail for this Media.
+     *
+     * Note that the defaultThumbnailUrl may include dynamic URL substitution
+     * parameters. Use getDefaultThumbnailUri() to get a Uri object with
+     * dynamic URL substitution parameters resolved.
+     *
+     * @see https://docs.theplatform.com/help/media-delivery-urls
      */
-    public function getDefaultThumbnailUrl(): Uri
+    public function getDefaultThumbnailUrl(): string
     {
         return $this->defaultThumbnailUrl;
     }
@@ -820,11 +826,36 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the streamingUrl of the default thumbnail for this Media.
      *
-     * @param Uri
+     * @param string
      */
     public function setDefaultThumbnailUrl($defaultThumbnailUrl)
     {
         $this->defaultThumbnailUrl = $defaultThumbnailUrl;
+    }
+
+    /**
+     * Get the default thumbnail uri with dynamic URL substitution applied.
+     *
+     * Note that the defaultThumbnailUrl may include dynamic URL substitution
+     * parameters. Here we make an attempt at substituting known parameters.
+     * The substitution is not exhaustive. It currently includes:
+     *
+     * - ssl: https://docs.theplatform.com/help/media-delivery-urls#tp-toc38
+     *
+     * @param bool $ssl
+     *   TRUE for SSL substitution, otherwise FALSE.
+     *
+     * @return \GuzzleHttp\Psr7\Uri
+     *   Uri object for the default thumbnail url with known dynamic URL
+     *   substitution done.
+     *
+     * @see https://docs.theplatform.com/help/media-delivery-urls#tp-toc38
+     */
+    public function getDefaultThumbnailUri(bool $ssl = TRUE): Uri
+    {
+        $defaultThumbnailUrl = urldecode($this->getDefaultThumbnailUrl());
+        $defaultThumbnailUrl = preg_replace('~\{ssl:(.*?):(.*?)\}~', $ssl ? '$1' : '$2', $defaultThumbnailUrl);
+        return new Uri($defaultThumbnailUrl);
     }
 
     /**
