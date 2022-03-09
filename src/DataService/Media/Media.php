@@ -811,6 +811,12 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the streamingUrl of the default thumbnail for this Media.
+     *
+     * Note that the defaultThumbnailUrl may include dynamic URL substitution
+     * parameters. Use getNormalizedDefaultThumbnailUrl() to get a Uri object
+     * with dynamic URL substitution parameters resolved.
+     *
+     * @see https://docs.theplatform.com/help/media-delivery-urls
      */
     public function getDefaultThumbnailUrl(): Uri
     {
@@ -825,6 +831,30 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     public function setDefaultThumbnailUrl($defaultThumbnailUrl)
     {
         $this->defaultThumbnailUrl = $defaultThumbnailUrl;
+    }
+
+    /**
+     * Get the default thumbnail URL with dynamic URL substitution applied.
+     *
+     * Note that the defaultThumbnailUrl may include dynamic URL substitution
+     * parameters. Here we make an attempt at substituting known parameters.
+     * The substitution is not exhaustive. It currently includes:
+     *
+     * - ssl: https://docs.theplatform.com/help/media-delivery-urls#tp-toc38
+     *
+     * @param bool $ssl TRUE for SSL substitution, otherwise FALSE.
+     *
+     * @return \GuzzleHttp\Psr7\Uri A Uri object for the default thumbnail url
+     *                              with known dynamic URL substitution done.
+     *
+     * @see https://docs.theplatform.com/help/media-delivery-urls#tp-toc38
+     */
+    public function getNormalizedDefaultThumbnailUrl(bool $ssl = true): Uri
+    {
+        $defaultThumbnailUrl = urldecode((string) $this->getDefaultThumbnailUrl());
+        $defaultThumbnailUrl = preg_replace('~\{ssl:(.*?):(.*?)\}~', $ssl ? '$1' : '$2', $defaultThumbnailUrl);
+
+        return new Uri($defaultThumbnailUrl);
     }
 
     /**
