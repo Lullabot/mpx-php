@@ -51,5 +51,10 @@
   },
   "scripts": {
     "csFix": "vendor/bin/php-cs-fixer fix -v"
+  },
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
   }
 }
