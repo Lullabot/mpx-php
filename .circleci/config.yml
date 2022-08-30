@@ -183,7 +183,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
     jobs:
       - build_php74
       - code_fixer

@@ -141,9 +141,9 @@ thePlatform provides a
 that can be used for quick testing of Media Data Service APIs. Unfortunately,
 the client can not be used for other data service APIs. To test those, see the
 functional tests in
-[tests/src/Functional](https://github.com/Lullabot/mpx-php/tree/master/tests/src/Functional)
+[tests/src/Functional](https://github.com/Lullabot/mpx-php/tree/main/tests/src/Functional)
 and the configuration in
-[phpunit.xml.dist](https://github.com/Lullabot/mpx-php/blob/master/phpunit.xml.dist).
+[phpunit.xml.dist](https://github.com/Lullabot/mpx-php/blob/main/phpunit.xml.dist).
 
 ## Logging
 
