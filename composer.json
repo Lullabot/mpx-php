@@ -24,7 +24,7 @@
     "psr/http-message": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.5||^7.0",
+    "phpunit/phpunit": "^8.0 || ^9.0",
     "friendsofphp/php-cs-fixer": "2.18.2",
     "nette/php-generator": "^3.0",
     "symfony/console": "^3.4",
@@ -34,7 +34,8 @@
     "symfony/phpunit-bridge": "5.2.x-dev#f2f94fd78379cdcdef09dd5025af791301913968",
     "phpstan/phpstan": "^0.12.82",
     "phpstan/phpstan-deprecation-rules": "^0.12.6",
-    "phpstan/extension-installer": "^1.1"
+    "phpstan/extension-installer": "^1.1",
+    "dms/phpunit-arraysubset-asserts": "^0.4.0"
   },
   "autoload": {
     "psr-4": {

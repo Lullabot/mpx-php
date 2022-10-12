@@ -18,6 +18,6 @@ class ResolveAllUrlsTest extends FunctionalTestBase
         /** @var ResolveAllUrls $resolved */
         $resolver = new ResolveAllUrls($this->authenticatedClient);
         $resolved = $resolver->resolve('Media Data Service');
-        $this->assertInternalType('string', $resolved->getService());
+        $this->assertIsString($resolved->getService());
     }
 }

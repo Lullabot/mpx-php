@@ -25,7 +25,7 @@ class ObjectListTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->list = new ObjectList();

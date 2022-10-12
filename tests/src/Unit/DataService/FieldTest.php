@@ -18,7 +18,7 @@ class FieldTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $dataServiceExtractor = new DataServiceExtractor();
@@ -47,7 +47,7 @@ class FieldTest extends ObjectTestBase
     public function getSetMethods()
     {
         $tests = parent::getSetMethods();
-        $tests['added'] = ['added', new \Lullabot\Mpx\DataService\DateTime\ConcreteDateTime(\DateTime::createFromFormat('U.u', '1236030615.000'))];
+        $tests['added'] = ['added', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1236030615.000'))];
         $tests['updated'] = ['updated', new ConcreteDateTime(\DateTime::createFromFormat('U.u', '1236030615.000'))];
 
         return $tests;

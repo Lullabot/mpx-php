@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -26,6 +27,7 @@ use Symfony\Component\Lock\StoreInterface;
  */
 class AuthenticatedClientTest extends TestCase
 {
+    use ArraySubsetAsserts;
     use MockClientTrait;
 
     /**
