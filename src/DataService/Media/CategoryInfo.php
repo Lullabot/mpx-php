@@ -88,7 +88,8 @@ class CategoryInfo
     /**
      * Convert this object the category name.
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->getName();
     }
 }
