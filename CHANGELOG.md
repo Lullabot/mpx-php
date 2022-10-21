@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.2] - 2022-10-17
+
+### Changed
+
+- Fixed a bug mapping media categories.
+
 ## [1.1.1] - 2022-08-30
 
 ### Changed

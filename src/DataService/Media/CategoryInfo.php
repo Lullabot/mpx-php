@@ -84,4 +84,12 @@ class CategoryInfo
     {
         $this->scheme = $scheme;
     }
+
+    /**
+     * Convert this object the category name.
+     */
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }
