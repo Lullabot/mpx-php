@@ -23,7 +23,7 @@ class Chapter
     /**
      * A link to the thumbnail image for this chapter.
      *
-     * @var Uri
+     * @var \GuzzleHttp\Psr7\Uri
      */
     protected $thumbnailUrl;
 
