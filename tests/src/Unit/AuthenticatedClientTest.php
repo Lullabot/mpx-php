@@ -322,7 +322,7 @@ class AuthenticatedClientTest extends TestCase
                         'token' => 'TOKEN-VALUE',
                         'username' => 'mpx/USER-NAME',
                     ], $context);
-                    $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
+                    $this->assertMatchesRegularExpression('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
                 });
         }
 
