@@ -4,7 +4,6 @@ namespace Lullabot\Mpx\DataService;
 
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyAccessExtractorInterface;
-use Symfony\Component\PropertyInfo\PropertyInitializableExtractorInterface;
 use Symfony\Component\PropertyInfo\PropertyListExtractorInterface;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\PropertyInfo\Type;
@@ -12,7 +11,7 @@ use Symfony\Component\PropertyInfo\Type;
 /**
  * A property extractor to extract the type from a notification entry.
  */
-class NotificationTypeExtractor implements PropertyListExtractorInterface, PropertyTypeExtractorInterface, PropertyAccessExtractorInterface, PropertyInitializableExtractorInterface
+class NotificationTypeExtractor implements PropertyListExtractorInterface, PropertyTypeExtractorInterface, PropertyAccessExtractorInterface
 {
     /**
      * The class each entry is, such as \Lullabot\Mpx\DataService\Media\Media.
@@ -86,17 +85,6 @@ class NotificationTypeExtractor implements PropertyListExtractorInterface, Prope
     public function isWritable($class, $property, array $context = [])
     {
         return $this->reflectionExtractor->isWritable($class, $property, $context);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isInitializable(
-        string $class,
-        string $property,
-        array $context = []
-    ): ?bool {
-        return $this->reflectionExtractor->isInitializable($class, $property, $context);
     }
 
     /**
