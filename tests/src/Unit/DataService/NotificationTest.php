@@ -21,7 +21,7 @@ class NotificationTest extends ObjectTestBase
     protected function setUp(): void
     {
         parent::setUp();
-        $notificationExtractor = new NotificationTypeExtractor();
+        $notificationExtractor = NotificationTypeExtractor::create();
         $notificationExtractor->setClass(Media::class);
         $this->loadFixture('notification.json', $notificationExtractor);
     }

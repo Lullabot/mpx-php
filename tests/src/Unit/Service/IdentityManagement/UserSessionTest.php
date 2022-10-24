@@ -130,6 +130,7 @@ class UserSessionTest extends TestCase
                     } catch (ExpectationFailedException $e) {
                         return false;
                     }
+
                     return true;
                 })],
                 ['Successfully acquired the "{resource}" lock.'],
@@ -144,6 +145,7 @@ class UserSessionTest extends TestCase
                     } catch (ExpectationFailedException $e) {
                         return false;
                     }
+
                     return true;
                 })]
             );
@@ -198,7 +200,6 @@ class UserSessionTest extends TestCase
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
 
-        $call = 0;
         for ($tokens = 0; $tokens < $count; ++$tokens) {
             // Since our class instantiates the Lock and passes in the logger, we have to expect these method calls
             // if we want to assert the last method call in this loop.
@@ -215,6 +216,7 @@ class UserSessionTest extends TestCase
                         } catch (ExpectationFailedException $e) {
                             return false;
                         }
+
                         return true;
                     })]
                 );

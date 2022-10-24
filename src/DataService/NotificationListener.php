@@ -165,7 +165,7 @@ class NotificationListener
         $encoders = [new JsonEncoder()];
 
         // Attempt normalizing each key in this order, including denormalizing recursively.
-        $extractor = new NotificationTypeExtractor();
+        $extractor = NotificationTypeExtractor::create();
         $extractor->setClass($this->service->getClass());
         $normalizers = [
             new UnixMillisecondNormalizer(),

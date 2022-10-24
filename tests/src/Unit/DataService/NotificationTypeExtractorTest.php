@@ -20,7 +20,7 @@ class NotificationTypeExtractorTest extends TestCase
      */
     public function testGetTypes()
     {
-        $extractor = new NotificationTypeExtractor();
+        $extractor = NotificationTypeExtractor::create();
         $extractor->setClass(static::class);
         $type = $extractor->getTypes('', 'entry');
         $this->assertEquals(static::class, $type[0]->getClassName());
@@ -33,7 +33,7 @@ class NotificationTypeExtractorTest extends TestCase
      */
     public function testNotEntry()
     {
-        $extractor = new NotificationTypeExtractor();
+        $extractor = NotificationTypeExtractor::create();
         $extractor->setClass(static::class);
         $this->assertNull($extractor->getTypes('', 'not-entry'));
     }
@@ -45,7 +45,7 @@ class NotificationTypeExtractorTest extends TestCase
      */
     public function testClassNotSet()
     {
-        $extractor = new NotificationTypeExtractor();
+        $extractor = NotificationTypeExtractor::create();
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('setClass() must be called before using this extractor.');
         $extractor->getTypes('', 'entry');
