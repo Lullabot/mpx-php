@@ -3,15 +3,13 @@
 namespace Lullabot\Mpx\DataService;
 
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-use Symfony\Component\PropertyInfo\PropertyAccessExtractorInterface;
-use Symfony\Component\PropertyInfo\PropertyListExtractorInterface;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\PropertyInfo\Type;
 
 /**
  * A property extractor to extract the type from a notification entry.
  */
-class NotificationTypeExtractor implements PropertyListExtractorInterface, PropertyTypeExtractorInterface, PropertyAccessExtractorInterface
+class NotificationTypeExtractor implements PropertyTypeExtractorInterface
 {
     /**
      * The class each entry is, such as \Lullabot\Mpx\DataService\Media\Media.
@@ -23,14 +21,14 @@ class NotificationTypeExtractor implements PropertyListExtractorInterface, Prope
     /**
      * Decorated ReflectionExtractor instance.
      */
-    protected ReflectionExtractor $reflectionExtractor;
+    protected PropertyTypeExtractorInterface $reflectionExtractor;
 
     /**
      * NotificationTypeReflectionExtractorDecorator constructor.
      *
-     * @param \Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor $reflectionExtractor Reflection extractor instance to decorate.
+     * @param \Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface $reflectionExtractor Reflection extractor instance to decorate.
      */
-    public function __construct(ReflectionExtractor $reflectionExtractor)
+    public function __construct(PropertyTypeExtractorInterface $reflectionExtractor)
     {
         $this->reflectionExtractor = $reflectionExtractor;
     }
@@ -69,29 +67,5 @@ class NotificationTypeExtractor implements PropertyListExtractorInterface, Prope
         }
 
         return [new Type('object', false, $this->class)];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isReadable($class, $property, array $context = [])
-    {
-        return $this->reflectionExtractor->isReadable($class, $property, $context);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isWritable($class, $property, array $context = [])
-    {
-        return $this->reflectionExtractor->isWritable($class, $property, $context);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getProperties($class, array $context = [])
-    {
-        return $this->reflectionExtractor->getProperties($class, $context);
     }
 }
