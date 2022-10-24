@@ -14,7 +14,7 @@
     "guzzlehttp/psr7": "^1.0",
     "psr/log": "^1.0",
     "symfony/serializer": "^3.4 || ^4.4",
-    "symfony/property-access": "^3.4 || ^4.4",
+    "symfony/property-access": "^4.4",
     "doctrine/annotations": "^1.2",
     "symfony/property-info": "^3.4 || ^4.4",
     "symfony/lock": "^3.4 || ^4.4",
