@@ -13,7 +13,7 @@ use Psr\Http\Message\UriInterface;
 class Image extends Link
 {
     /**
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $anchorHref;
 

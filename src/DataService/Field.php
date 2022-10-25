@@ -116,7 +116,7 @@ class Field extends ObjectBase
     /**
      * The namespace this custom field belongs to.
      *
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $namespace;
 

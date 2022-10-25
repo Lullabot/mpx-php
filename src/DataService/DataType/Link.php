@@ -13,7 +13,7 @@ use Psr\Http\Message\UriInterface;
 class Link
 {
     /**
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $href;
 
