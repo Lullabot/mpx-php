@@ -22,7 +22,7 @@ class UriNormalizerTest extends TestCase
     {
         $normalizer = new UriNormalizer();
         $expected = $normalizer->normalize(new Uri('http://example.com'));
-        $this->assertInternalType('string', $expected);
+        $this->assertIsString($expected);
         $this->assertEquals('http://example.com', $expected);
     }
 

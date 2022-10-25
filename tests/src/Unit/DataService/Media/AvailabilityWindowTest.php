@@ -19,7 +19,7 @@ class AvailabilityWindowTest extends ObjectTestBase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $dataServiceExtractor = new DataServiceExtractor();

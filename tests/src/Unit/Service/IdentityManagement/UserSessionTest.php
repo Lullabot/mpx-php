@@ -3,12 +3,14 @@
 namespace Lullabot\Mpx\Tests\Unit\Service\IdentityManagement;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -22,6 +24,7 @@ use Symfony\Component\Lock\StoreInterface;
  */
 class UserSessionTest extends TestCase
 {
+    use ArraySubsetAsserts;
     use MockClientTrait;
 
     /**
@@ -80,8 +83,8 @@ class UserSessionTest extends TestCase
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
 
-        $logger->expects($this->at(0))->method('info')
-            ->with('Successfully acquired the "{resource}" lock.');
+        $logger->expects($this->any())->method('info')
+            ->withConsecutive(['Successfully acquired the "{resource}" lock.']);
 
         $user = new User('mpx/USER-NAME', 'incorrect-password');
         $userSession = new UserSession($user, $client, $store, new TokenCachePool(new ArrayCachePool()));
@@ -114,32 +117,38 @@ class UserSessionTest extends TestCase
         /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
-        $logger->expects($this->at(0))->method('info')
-            ->with('Successfully acquired the "{resource}" lock.');
-        $logger->expects($this->at(1))->method('info')
-            ->with('Expiration defined for "{resource}" lock for "{ttl}" seconds.');
-        $logger->expects($this->at(2))->method('info')
-            ->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new mpx token {token} for user {username} that expires on {date}.', $message);
-                $this->assertArraySubset([
-                    'token' => 'TOKEN-VALUE',
-                    'username' => 'mpx/USER-NAME',
-                ], $context);
-                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-            });
-        $logger->expects($this->at(3))->method('info')
-            ->with('Successfully acquired the "{resource}" lock.');
-        $logger->expects($this->at(4))->method('info')
-            ->with('Expiration defined for "{resource}" lock for "{ttl}" seconds.');
-        $logger->expects($this->at(5))->method('info')
-            ->willReturnCallback(function ($message, $context) {
-                $this->assertEquals('Retrieved a new mpx token {token} for user {username} that expires on {date}.', $message);
-                $this->assertArraySubset([
-                    'token' => 'TOKEN-VALUE',
-                    'username' => 'mpx/USER-NAME',
-                ], $context);
-                $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-            });
+        $logger->expects($this->any())->method('info')
+            ->withConsecutive(['Successfully acquired the "{resource}" lock.'],
+                ['Expiration defined for "{resource}" lock for "{ttl}" seconds.'],
+                ['Retrieved a new mpx token {token} for user {username} that expires on {date}.', $this->callback(function ($context) {
+                    try {
+                        $this->assertArraySubset([
+                            'token' => 'TOKEN-VALUE',
+                            'username' => 'mpx/USER-NAME',
+                        ], $context);
+                        $this->assertMatchesRegularExpression('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
+                    } catch (ExpectationFailedException $e) {
+                        return false;
+                    }
+
+                    return true;
+                })],
+                ['Successfully acquired the "{resource}" lock.'],
+                ['Expiration defined for "{resource}" lock for "{ttl}" seconds.'],
+                ['Retrieved a new mpx token {token} for user {username} that expires on {date}.', $this->callback(function ($context) {
+                    try {
+                        $this->assertArraySubset([
+                            'token' => 'TOKEN-VALUE',
+                            'username' => 'mpx/USER-NAME',
+                        ], $context);
+                        $this->assertMatchesRegularExpression('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
+                    } catch (ExpectationFailedException $e) {
+                        return false;
+                    }
+
+                    return true;
+                })]
+            );
 
         $user = new User('mpx/USER-NAME', 'correct-password');
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
@@ -191,24 +200,26 @@ class UserSessionTest extends TestCase
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
 
-        $call = 0;
         for ($tokens = 0; $tokens < $count; ++$tokens) {
             // Since our class instantiates the Lock and passes in the logger, we have to expect these method calls
             // if we want to assert the last method call in this loop.
-            $logger->expects($this->at($call++))->method('info')
-                ->with('Successfully acquired the "{resource}" lock.');
-            $logger->expects($this->at($call++))->method('info')
-                ->with('Expiration defined for "{resource}" lock for "{ttl}" seconds.');
+            $logger->expects($this->any())->method('info')
+                ->withConsecutive(['Successfully acquired the "{resource}" lock.'],
+                    ['Expiration defined for "{resource}" lock for "{ttl}" seconds.'],
+                    ['Retrieved a new mpx token {token} for user {username} that expires on {date}.', $this->callback(function ($context) {
+                        try {
+                            $this->assertArraySubset([
+                                'token' => 'TOKEN-VALUE',
+                                'username' => 'mpx/USER-NAME',
+                            ], $context);
+                            $this->assertMatchesRegularExpression('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
+                        } catch (ExpectationFailedException $e) {
+                            return false;
+                        }
 
-            $logger->expects($this->at($call++))->method('info')
-                ->willReturnCallback(function ($message, $context) {
-                    $this->assertEquals('Retrieved a new mpx token {token} for user {username} that expires on {date}.', $message);
-                    $this->assertArraySubset([
-                        'token' => 'TOKEN-VALUE',
-                        'username' => 'mpx/USER-NAME',
-                    ], $context);
-                    $this->assertRegExp('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-                });
+                        return true;
+                    })]
+                );
         }
 
         return $logger;

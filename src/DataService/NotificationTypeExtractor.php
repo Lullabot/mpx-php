@@ -3,12 +3,13 @@
 namespace Lullabot\Mpx\DataService;
 
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\PropertyInfo\Type;
 
 /**
  * A property extractor to extract the type from a notification entry.
  */
-class NotificationTypeExtractor extends ReflectionExtractor
+class NotificationTypeExtractor implements PropertyTypeExtractorInterface
 {
     /**
      * The class each entry is, such as \Lullabot\Mpx\DataService\Media\Media.
@@ -16,6 +17,31 @@ class NotificationTypeExtractor extends ReflectionExtractor
      * @var string
      */
     protected $class;
+
+    /**
+     * Decorated ReflectionExtractor instance.
+     */
+    protected PropertyTypeExtractorInterface $reflectionExtractor;
+
+    /**
+     * NotificationTypeReflectionExtractorDecorator constructor.
+     *
+     * @param \Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface $reflectionExtractor Reflection extractor instance to decorate.
+     */
+    public function __construct(PropertyTypeExtractorInterface $reflectionExtractor)
+    {
+        $this->reflectionExtractor = $reflectionExtractor;
+    }
+
+    /**
+     * Create a new NotificationTypeExtractor.
+     *
+     * @return static
+     */
+    public static function create(): self
+    {
+        return new static(new ReflectionExtractor());
+    }
 
     /**
      * Set the class that is being extracted, such as \Lullabot\Mpx\DataService\Media\Media.
@@ -33,7 +59,7 @@ class NotificationTypeExtractor extends ReflectionExtractor
     public function getTypes($class, $property, array $context = []): ?array
     {
         if ('entry' !== $property) {
-            return parent::getTypes($class, $property, $context);
+            return $this->reflectionExtractor->getTypes($class, $property, $context);
         }
 
         if (!isset($this->class)) {

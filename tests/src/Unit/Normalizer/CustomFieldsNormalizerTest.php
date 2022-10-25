@@ -10,6 +10,7 @@ use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\Normalizer\CustomFieldsNormalizer;
 use Lullabot\Mpx\Normalizer\MissingCustomFieldsClass;
+use Lullabot\Mpx\Tests\SerializerDenormalizerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UriInterface;
@@ -50,7 +51,7 @@ class CustomFieldsNormalizerTest extends TestCase
         ]);
 
         /** @var SerializerInterface|MockObject|DenormalizerInterface $serializer */
-        $serializer = $this->getMockBuilder([SerializerInterface::class, DenormalizerInterface::class])
+        $serializer = $this->getMockBuilder(SerializerDenormalizerInterface::class)
             ->getMock();
         $serializer->expects($this->once())->method('denormalize')
             ->with($data['data'], DummyCustomFields::class)

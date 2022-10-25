@@ -85,7 +85,7 @@ class TokenTest extends TestCase
     public function testCreated()
     {
         $token = new Token('https://identity.auth.theplatform.com/idm/data/User/mpx/2685072', 'value', 59);
-        $this->assertInternalType('integer', $token->getCreated());
+        $this->assertIsInt($token->getCreated());
     }
 
     /**
