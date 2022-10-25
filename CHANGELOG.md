@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.4] - 2022-10-25
+
+### Changed
+
+- Replace pinned version of cache/cache with cache/array-adapter.
+- Adjust dependencies to allow installation on PHP 8.
+- Fix tests using newer version of phpunit.
+
 ## [1.1.3] - 2022-10-25
 
 ### Changed
