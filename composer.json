@@ -10,7 +10,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.4",
-    "guzzlehttp/guzzle": "^6.3",
+    "guzzlehttp/guzzle": "^6.3 || ^7.4.5",
     "guzzlehttp/psr7": "^1.0",
     "psr/log": "^1.0",
     "symfony/serializer": "^3.4 || ^4.4",
