@@ -12,7 +12,6 @@ use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
-use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -67,9 +66,13 @@ abstract class MpxCommandBase extends Command
         $config = Client::getDefaultConfiguration();
 
         $cl = new ConsoleLogger($output);
-        /** @var $handler \GuzzleHttp\HandlerStack */
-        $handler = $config['handler'];
-        $handler->after('cookies', new CurlFormatterMiddleware($cl));
+
+        // Cuzzle is a soft & optional dependency. Its classes may not exist.
+        if (class_exists('Namshi\Cuzzle\Middleware\CurlFormatterMiddleware')) { // phpcs:ignore
+            /** @var $handler \GuzzleHttp\HandlerStack */
+            $handler = $config['handler'];
+            $handler->after('cookies', new Namshi\Cuzzle\Middleware\CurlFormatterMiddleware($cl)); // phpcs:ignore
+        }
 
         $responseLogger = new Logger($cl);
         $responseLogger->setLogLevel(LogLevel::DEBUG);
