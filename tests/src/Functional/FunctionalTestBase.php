@@ -12,7 +12,6 @@ use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
-use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Logger\ConsoleLogger;
@@ -62,17 +61,14 @@ abstract class FunctionalTestBase extends TestCase
 
         $config = Client::getDefaultConfiguration();
 
-        if (getenv('MPX_LOG_CURL')) {
+        if (getenv('MPX_LOGGER')) {
             $output = new ConsoleOutput();
             $output->setVerbosity(ConsoleOutput::VERBOSITY_DEBUG);
-            $cl = new ConsoleLogger($output);
-            /** @var $handler \GuzzleHttp\HandlerStack */
-            $handler = $config['handler'];
-            $handler->after('cookies', new CurlFormatterMiddleware($cl));
-
-            $responseLogger = new Logger($cl);
+            $responseLogger = new Logger(new ConsoleLogger($output));
             $responseLogger->setLogLevel(LogLevel::DEBUG);
             $responseLogger->setFormatter(new MessageFormatter(MessageFormatter::DEBUG));
+            /** @var $handler \GuzzleHttp\HandlerStack */
+            $handler = $config['handler'];
             $handler->after('cookies', $responseLogger);
         }
 

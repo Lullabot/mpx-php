@@ -65,18 +65,10 @@ abstract class MpxCommandBase extends Command
 
         $config = Client::getDefaultConfiguration();
 
-        $cl = new ConsoleLogger($output);
-
-        // Cuzzle is a soft & optional dependency. Its classes may not exist.
-        if (class_exists('Namshi\Cuzzle\Middleware\CurlFormatterMiddleware')) { // phpcs:ignore
-            /** @var $handler \GuzzleHttp\HandlerStack */
-            $handler = $config['handler'];
-            $handler->after('cookies', new Namshi\Cuzzle\Middleware\CurlFormatterMiddleware($cl)); // phpcs:ignore
-        }
-
-        $responseLogger = new Logger($cl);
+        $responseLogger = new Logger(new ConsoleLogger($output));
         $responseLogger->setLogLevel(LogLevel::DEBUG);
         $responseLogger->setFormatter(new MessageFormatter(MessageFormatter::DEBUG));
+        $handler = $config['handler'];
         $handler->after('cookies', $responseLogger);
 
         $client = new Client(new \GuzzleHttp\Client($config));
