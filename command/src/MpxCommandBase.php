@@ -12,7 +12,6 @@ use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
-use Namshi\Cuzzle\Middleware\CurlFormatterMiddleware;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -66,14 +65,10 @@ abstract class MpxCommandBase extends Command
 
         $config = Client::getDefaultConfiguration();
 
-        $cl = new ConsoleLogger($output);
-        /** @var $handler \GuzzleHttp\HandlerStack */
-        $handler = $config['handler'];
-        $handler->after('cookies', new CurlFormatterMiddleware($cl));
-
-        $responseLogger = new Logger($cl);
+        $responseLogger = new Logger(new ConsoleLogger($output));
         $responseLogger->setLogLevel(LogLevel::DEBUG);
         $responseLogger->setFormatter(new MessageFormatter(MessageFormatter::DEBUG));
+        $handler = $config['handler'];
         $handler->after('cookies', $responseLogger);
 
         $client = new Client(new \GuzzleHttp\Client($config));
