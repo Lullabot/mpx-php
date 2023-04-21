@@ -150,9 +150,9 @@ code_fixer: &code_fixer
       - run: vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no --path-mode=intersection -- src tests
 
 jobs:
-  build_php74:
+  build_php81:
     docker:
-      - image: php:7.4
+      - image: cimg/php:8.1
 
     working_directory: ~/repo
 
@@ -160,7 +160,7 @@ jobs:
 
   code_fixer:
     docker:
-      - image: php:7.4
+      - image: cimg/php:8.1
 
     working_directory: ~/repo
 
@@ -172,7 +172,7 @@ workflows:
   # Declare a workflow that runs all of our jobs in parallel.
   test_cover_workflow:
     jobs:
-      - build_php74
+      - build_php81
       - code_fixer
 
   nightly:
@@ -185,5 +185,5 @@ workflows:
               only:
                 - main
     jobs:
-      - build_php74
+      - build_php81
       - code_fixer
