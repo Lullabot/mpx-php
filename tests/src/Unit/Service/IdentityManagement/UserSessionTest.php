@@ -127,7 +127,7 @@ class UserSessionTest extends TestCase
                             'username' => 'mpx/USER-NAME',
                         ], $context);
                         $this->assertMatchesRegularExpression('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-                    } catch (ExpectationFailedException $e) {
+                    } catch (ExpectationFailedException) {
                         return false;
                     }
 
@@ -142,7 +142,7 @@ class UserSessionTest extends TestCase
                             'username' => 'mpx/USER-NAME',
                         ], $context);
                         $this->assertMatchesRegularExpression('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-                    } catch (ExpectationFailedException $e) {
+                    } catch (ExpectationFailedException) {
                         return false;
                     }
 
@@ -213,7 +213,7 @@ class UserSessionTest extends TestCase
                                 'username' => 'mpx/USER-NAME',
                             ], $context);
                             $this->assertMatchesRegularExpression('!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!', $context['date']);
-                        } catch (ExpectationFailedException $e) {
+                        } catch (ExpectationFailedException) {
                             return false;
                         }
 

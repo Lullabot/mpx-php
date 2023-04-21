@@ -186,9 +186,7 @@ class DataObjectFactory
         }
 
         $response = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
-            function (ResponseInterface $response) {
-                return $this->deserialize($response->getBody(), $this->dataService->getClass());
-            }
+            fn(ResponseInterface $response) => $this->deserialize($response->getBody(), $this->dataService->getClass())
         );
 
         return $response;
@@ -244,9 +242,7 @@ class DataObjectFactory
         $uri = $this->getBaseUri($annotation, true);
 
         $request = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
-            function (ResponseInterface $response) use ($objectListQuery) {
-                return $this->deserializeObjectList($response, $objectListQuery);
-            }
+            fn(ResponseInterface $response) => $this->deserializeObjectList($response, $objectListQuery)
         );
 
         return $request;

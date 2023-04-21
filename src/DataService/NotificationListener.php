@@ -51,11 +51,6 @@ class NotificationListener
     protected $service;
 
     /**
-     * @var string
-     */
-    private $clientId;
-
-    /**
      * NotificationListener constructor.
      *
      * This method always uses the read-only version of a service.
@@ -67,9 +62,8 @@ class NotificationListener
      * @param string                            $clientId      A string to identify this client in debugging.
      * @param CacheItemPoolInterface|null       $cacheItemPool (optional) The cache for API metadata.
      */
-    public function __construct(AuthenticatedClient $session, DiscoveredDataService $service, string $clientId, CacheItemPoolInterface $cacheItemPool = null)
+    public function __construct(AuthenticatedClient $session, DiscoveredDataService $service, private readonly string $clientId, CacheItemPoolInterface $cacheItemPool = null)
     {
-        $this->clientId = $clientId;
         $this->authenticatedClient = $session;
         $this->service = $service;
 
@@ -149,9 +143,7 @@ class NotificationListener
 
         return $this->authenticatedClient->requestAsync('GET', $this->uri, [
             'query' => $query,
-        ])->then(function (ResponseInterface $response) {
-            return $this->deserializeResponse($response);
-        });
+        ])->then(fn(ResponseInterface $response) => $this->deserializeResponse($response));
     }
 
     /**

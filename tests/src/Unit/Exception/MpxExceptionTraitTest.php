@@ -186,8 +186,7 @@ class MpxExceptionTraitTest extends TestCase
             'title' => 'the title',
         ];
         $data = array_map(function ($value) use (&$required) {
-            end($required);
-            $key = key($required);
+            $key = array_key_last($required);
             array_pop($required);
 
             return [$required, $key];
@@ -213,8 +212,7 @@ class MpxExceptionTraitTest extends TestCase
             ],
         ];
         $data = array_map(function ($value) use (&$required) {
-            end($required);
-            $key = key($required);
+            $key = array_key_last($required);
             array_pop($required);
 
             return [[$required], $key];

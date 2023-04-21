@@ -19,18 +19,18 @@ use Symfony\Component\PropertyInfo\Util\PhpDocTypeHelper;
  */
 class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, PropertyTypeExtractorInterface
 {
-    const PROPERTY = 0;
-    const ACCESSOR = 1;
-    const MUTATOR = 2;
+    final public const PROPERTY = 0;
+    final public const ACCESSOR = 1;
+    final public const MUTATOR = 2;
 
     /**
      * @var DocBlock[]
      */
-    private $docBlocks = [];
+    private array $docBlocks = [];
 
-    private $docBlockFactory;
-    private $contextFactory;
-    private $phpDocTypeHelper;
+    private readonly \phpDocumentor\Reflection\DocBlockFactoryInterface|\phpDocumentor\Reflection\DocBlockFactory $docBlockFactory;
+    private readonly \Lullabot\Mpx\DataService\CachingContextFactory $contextFactory;
+    private readonly \Symfony\Component\PropertyInfo\Util\PhpDocTypeHelper $phpDocTypeHelper;
     private $mutatorPrefixes;
     private $accessorPrefixes;
     private $arrayMutatorPrefixes;
@@ -44,15 +44,15 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
     public function __construct(DocBlockFactoryInterface $docBlockFactory = null, array $mutatorPrefixes = null, array $accessorPrefixes = null, array $arrayMutatorPrefixes = null)
     {
         if (!class_exists(DocBlockFactory::class)) {
-            throw new \RuntimeException(sprintf('Unable to use the "%s" class as the "phpdocumentor/reflection-docblock" package is not installed.', __CLASS__));
+            throw new \RuntimeException(sprintf('Unable to use the "%s" class as the "phpdocumentor/reflection-docblock" package is not installed.', self::class));
         }
 
         $this->docBlockFactory = $docBlockFactory ?: DocBlockFactory::createInstance();
         $this->contextFactory = new CachingContextFactory();
         $this->phpDocTypeHelper = new PhpDocTypeHelper();
-        $this->mutatorPrefixes = null !== $mutatorPrefixes ? $mutatorPrefixes : ReflectionExtractor::$defaultMutatorPrefixes;
-        $this->accessorPrefixes = null !== $accessorPrefixes ? $accessorPrefixes : ReflectionExtractor::$defaultAccessorPrefixes;
-        $this->arrayMutatorPrefixes = null !== $arrayMutatorPrefixes ? $arrayMutatorPrefixes : ReflectionExtractor::$defaultArrayMutatorPrefixes;
+        $this->mutatorPrefixes = $mutatorPrefixes ?? ReflectionExtractor::$defaultMutatorPrefixes;
+        $this->accessorPrefixes = $accessorPrefixes ?? ReflectionExtractor::$defaultAccessorPrefixes;
+        $this->arrayMutatorPrefixes = $arrayMutatorPrefixes ?? ReflectionExtractor::$defaultArrayMutatorPrefixes;
     }
 
     /**
@@ -61,7 +61,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
     public function getShortDescription($class, $property, array $context = [])
     {
         /** @var $docBlock DocBlock */
-        list($docBlock) = $this->getDocBlock($class, $property);
+        [$docBlock] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
             return;
         }
@@ -90,7 +90,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
     public function getLongDescription($class, $property, array $context = [])
     {
         /** @var $docBlock DocBlock */
-        list($docBlock) = $this->getDocBlock($class, $property);
+        [$docBlock] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
             return;
         }
@@ -106,7 +106,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
     public function getTypes($class, $property, array $context = [])
     {
         /** @var $docBlock DocBlock */
-        list($docBlock, $source, $prefix) = $this->getDocBlock($class, $property);
+        [$docBlock, $source, $prefix] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
             return;
         }
@@ -171,18 +171,18 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
                     $data = [$docBlock, self::PROPERTY, null];
                     break;
 
-                case list($docBlock) = $this->getDocBlockFromMethod($class, $ucFirstProperty, self::ACCESSOR):
+                case [$docBlock] = $this->getDocBlockFromMethod($class, $ucFirstProperty, self::ACCESSOR):
                     $data = [$docBlock, self::ACCESSOR, null];
                     break;
 
-                case list($docBlock, $prefix) = $this->getDocBlockFromMethod($class, $ucFirstProperty, self::MUTATOR):
+                case [$docBlock, $prefix] = $this->getDocBlockFromMethod($class, $ucFirstProperty, self::MUTATOR):
                     $data = [$docBlock, self::MUTATOR, $prefix];
                     break;
 
                 default:
                     $data = [null, null, null];
             }
-        } catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException) {
             $data = [null, null, null];
         }
 
@@ -197,12 +197,12 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
      *
      * @return DocBlock|null
      */
-    private function getDocBlockFromProperty($class, $property)
+    private function getDocBlockFromProperty($class, $property): ?\phpDocumentor\Reflection\DocBlock
     {
         // Use a ReflectionProperty instead of $class to get the parent class if applicable
         try {
             $reflectionProperty = new \ReflectionProperty($class, $property);
-        } catch (\ReflectionException $e) {
+        } catch (\ReflectionException) {
             return;
         }
 
@@ -218,7 +218,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
      *
      * @return array|null
      */
-    private function getDocBlockFromMethod($class, $ucFirstProperty, $type)
+    private function getDocBlockFromMethod($class, $ucFirstProperty, $type): ?array
     {
         $prefixes = self::ACCESSOR === $type ? $this->accessorPrefixes : $this->mutatorPrefixes;
         $prefix = null;
@@ -238,7 +238,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
                 ) {
                     break;
                 }
-            } catch (\ReflectionException $e) {
+            } catch (\ReflectionException) {
                 // Try the next prefix if the method doesn't exist
             }
         }

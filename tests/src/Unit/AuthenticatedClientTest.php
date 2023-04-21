@@ -248,7 +248,7 @@ class AuthenticatedClientTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
-        $duration = rand(1, 3600);
+        $duration = random_int(1, 3600);
         $userSession->expects($this->once())->method('acquireToken')
             ->with($duration, false)
             ->willReturn(new Token('mpx/USER-ID', 'abcdef', $duration));
@@ -319,7 +319,7 @@ class AuthenticatedClientTest extends TestCase
                                 'Retrieved a new mpx token {token} for user {username} that expires on {date}.',
                                 $message
                             );
-                        } catch (ExpectationFailedException $e) {
+                        } catch (ExpectationFailedException) {
                             return false;
                         }
 
@@ -334,7 +334,7 @@ class AuthenticatedClientTest extends TestCase
                                 '!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!',
                                 $context['date']
                             );
-                        } catch (ExpectationFailedException $e) {
+                        } catch (ExpectationFailedException) {
                             return false;
                         }
 

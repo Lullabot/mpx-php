@@ -38,7 +38,7 @@ class ObjectListTest extends TestCase
      * @param mixed  $value  The value to set and get.
      * @dataProvider getSetData
      */
-    public function testGetSet($method, $value)
+    public function testGetSet($method, mixed $value)
     {
         $get = 'get'.ucfirst($method);
         $set = 'set'.ucfirst($method);
@@ -53,11 +53,11 @@ class ObjectListTest extends TestCase
     {
         return [
             ['xmlNs', ['first', 'second']],
-            ['startIndex', rand(1, getrandmax())],
-            ['itemsPerPage', rand(1, getrandmax())],
-            ['entryCount', rand(1, getrandmax())],
+            ['startIndex', random_int(1, mt_getrandmax())],
+            ['itemsPerPage', random_int(1, mt_getrandmax())],
+            ['entryCount', random_int(1, mt_getrandmax())],
             ['entries', [new \stdClass()]],
-            ['totalResults', rand(1, getrandmax())],
+            ['totalResults', random_int(1, mt_getrandmax())],
             ['objectListQuery', new ObjectListQuery()],
         ];
     }

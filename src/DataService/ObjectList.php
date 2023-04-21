@@ -206,7 +206,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
      *
      * @return PromiseInterface|bool A promise to the next ObjectList, or false if no list exists.
      */
-    public function nextList()
+    public function nextList(): \GuzzleHttp\Promise\PromiseInterface|bool
     {
         if (!$this->hasNext()) {
             return false;
@@ -258,7 +258,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->getEntries()[$offset]);
     }
@@ -274,7 +274,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->entries[$offset] = $value;
     }
@@ -282,7 +282,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->entries[$offset]);
     }
@@ -290,7 +290,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->entries[$this->position];
     }
@@ -298,7 +298,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->position;
     }
@@ -306,7 +306,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->entries[$this->position]);
     }
@@ -314,7 +314,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -322,7 +322,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
@@ -330,7 +330,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function setJson(string $json)
+    public function setJson(string $json): void
     {
         $this->json = \GuzzleHttp\json_decode($json, true);
     }
@@ -338,7 +338,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function getJson()
+    public function getJson(): array
     {
         if (!$this->json) {
             throw new \LogicException('This object has no original JSON representation available');

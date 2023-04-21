@@ -13,39 +13,11 @@ use Symfony\Component\Finder\SplFileInfo;
 class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
 {
     /**
-     * The namespace to search within, such as '\Lullabot\Mpx'.
-     *
-     * @var string
-     */
-    private $namespace;
-
-    /**
-     * The root directory of the namespace, such as 'src'.
-     *
-     * @var string
-     */
-    private $directory;
-
-    /**
-     * The class to use for reading annotations.
-     *
-     * @var \Doctrine\Common\Annotations\Reader
-     */
-    private $annotationReader;
-
-    /**
-     * The root directory to discover from, containing the namespace directory.
-     *
-     * @var string
-     */
-    private $rootDir;
-
-    /**
      * The array of discovered data services.
      *
      * @var DiscoveredCustomField[]
      */
-    private $customFields = [];
+    private array $customFields = [];
 
     /**
      * CustomFieldDiscovery constructor.
@@ -53,13 +25,21 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
      * @param string $namespace The namespace of the plugins.
      * @param string $directory The directory of the plugins.
      * @param $rootDir
+     * @param string $rootDir
      */
-    public function __construct($namespace, $directory, $rootDir, Reader $annotationReader)
+    public function __construct(
+        private $namespace,
+        private $directory,
+        /**
+         * The root directory to discover from, containing the namespace directory.
+         */
+        private $rootDir,
+        /**
+         * The class to use for reading annotations.
+         */
+        private readonly Reader $annotationReader
+    )
     {
-        $this->namespace = $namespace;
-        $this->annotationReader = $annotationReader;
-        $this->directory = $directory;
-        $this->rootDir = $rootDir;
     }
 
     /**
@@ -119,7 +99,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
         /** @var CustomField $annotation */
         if ($annotation = $this->annotationReader->getClassAnnotation(
             new \ReflectionClass($class),
-            'Lullabot\Mpx\DataService\Annotation\CustomField'
+            \Lullabot\Mpx\DataService\Annotation\CustomField::class
         )) {
             if (!is_subclass_of($class, CustomFieldInterface::class)) {
                 throw new \RuntimeException(sprintf('%s must implement %s.', $class, CustomFieldInterface::class));

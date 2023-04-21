@@ -8,18 +8,12 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 class CustomFieldManager
 {
     /**
-     * @var \Lullabot\Mpx\DataService\CustomFieldDiscoveryInterface
-     */
-    private $discovery;
-
-    /**
      * CustomFieldManager constructor.
      *
      * @param CustomFieldDiscoveryInterface $discovery The class used to discover custom field implementations.
      */
-    public function __construct(CustomFieldDiscoveryInterface $discovery)
+    public function __construct(private readonly CustomFieldDiscoveryInterface $discovery)
     {
-        $this->discovery = $discovery;
     }
 
     /**

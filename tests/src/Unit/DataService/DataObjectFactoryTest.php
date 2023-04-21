@@ -228,7 +228,7 @@ class DataObjectFactoryTest extends TestCase
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
-        $media = $factory->loadByNumericId(2602559)->wait();
+        $media = $factory->loadByNumericId(2_602_559)->wait();
         $this->assertInstanceOf(Media::class, $media);
         $this->assertEquals('http://data.media.theplatform.com/media/data/Media/2602559', $media->getId());
     }
@@ -265,7 +265,7 @@ class DataObjectFactoryTest extends TestCase
         $factory = new DataObjectFactory($service, $authenticatedClient);
 
         /** @var Media $media */
-        $media = $factory->loadByNumericId(2602559)->wait();
+        $media = $factory->loadByNumericId(2_602_559)->wait();
         $customFields = $media->getCustomFields();
         $this->assertInstanceOf(SeriesCustomField::class, $customFields['http://www.example.com/xml']);
 

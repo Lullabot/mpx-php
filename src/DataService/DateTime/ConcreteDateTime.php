@@ -7,14 +7,8 @@ namespace Lullabot\Mpx\DataService\DateTime;
  */
 class ConcreteDateTime implements ConcreteDateTimeInterface
 {
-    /**
-     * @var \DateTime
-     */
-    private $dateTime;
-
-    public function __construct(\DateTime $dateTime)
+    public function __construct(private readonly \DateTime $dateTime)
     {
-        $this->dateTime = $dateTime;
     }
 
     /**

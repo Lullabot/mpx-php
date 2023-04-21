@@ -25,12 +25,12 @@ class ResolveAllUrls extends ResolveBase
      * The URL of the method. Note that we hardcode the whole path as this is
      * where other services are bootstrapped from.
      */
-    const RESOLVE_ALL_URLS_URL = 'https://access.auth.theplatform.com/web/Registry/resolveAllUrls';
+    final public const RESOLVE_ALL_URLS_URL = 'https://access.auth.theplatform.com/web/Registry/resolveAllUrls';
 
     /**
      * While this method is not a data service, it still has a schema version.
      */
-    const SCHEMA_VERSION = '1.0';
+    final public const SCHEMA_VERSION = '1.0';
 
     /**
      * Fetch URLs and return the response.

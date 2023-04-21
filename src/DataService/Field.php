@@ -303,7 +303,7 @@ class Field extends ObjectBase
      *
      * @param mixed $defaultValue
      */
-    public function setDefaultValue($defaultValue)
+    public function setDefaultValue(mixed $defaultValue)
     {
         $this->defaultValue = $defaultValue;
     }

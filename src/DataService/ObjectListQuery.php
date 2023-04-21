@@ -34,7 +34,7 @@ class ObjectListQuery implements QueryPartsInterface
     /**
      * @var QueryPartsInterface[]
      */
-    private $fields = [];
+    private array $fields = [];
 
     /**
      * ObjectListQuery constructor.

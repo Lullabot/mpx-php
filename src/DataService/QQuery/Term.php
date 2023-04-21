@@ -10,7 +10,7 @@ use Lullabot\Mpx\DataService\QueryPartsInterface;
  * @see TermGroup
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter
  */
-class Term implements QueryPartsInterface, TermInterface
+class Term implements QueryPartsInterface, TermInterface, \Stringable
 {
     /**
      * Character sequences that must be escaped from term values.
@@ -23,7 +23,7 @@ class Term implements QueryPartsInterface, TermInterface
      *
      * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter#tp-toc31
      */
-    const ESCAPE_CHARACTERS = [
+    final public const ESCAPE_CHARACTERS = [
         '\\' => '\\\\',
         '+' => '\+',
         '-' => '\-',
@@ -45,24 +45,9 @@ class Term implements QueryPartsInterface, TermInterface
         ';' => '\;',
     ];
 
-    /**
-     * @var string
-     */
-    private $value;
-    /**
-     * @var string
-     */
-    private $field;
+    private ?string $matchType = null;
 
-    /**
-     * @var string
-     */
-    private $matchType;
-
-    /**
-     * @var bool
-     */
-    private $wrap;
+    private ?bool $wrap = null;
 
     public function getValue(): string
     {
@@ -118,9 +103,6 @@ class Term implements QueryPartsInterface, TermInterface
         return $this->boost;
     }
 
-    /**
-     * @return Term
-     */
     public function setBoost(int $boost): self
     {
         $this->boost = $boost;
@@ -133,9 +115,6 @@ class Term implements QueryPartsInterface, TermInterface
         return $this->namespace;
     }
 
-    /**
-     * @return Term
-     */
     public function setNamespace(string $namespace): self
     {
         $this->namespace = $namespace;
@@ -169,8 +148,6 @@ class Term implements QueryPartsInterface, TermInterface
 
     /**
      * @param string $exclude
-     *
-     * @return Term
      */
     public function exclude(): self
     {
@@ -179,25 +156,12 @@ class Term implements QueryPartsInterface, TermInterface
         return $this;
     }
 
-    /**
-     * @var int
-     */
-    private $boost;
-    /**
-     * @var string
-     */
-    private $namespace;
+    private ?int $boost = null;
 
-    /**
-     * @var string
-     */
-    private $plusMinus;
+    private ?string $plusMinus = null;
 
-    public function __construct(string $value, string $field = null, string $namespace = null)
+    public function __construct(private string $value, private string $field = null, private string $namespace = null)
     {
-        $this->value = $value;
-        $this->field = $field;
-        $this->namespace = $namespace;
     }
 
     public function __toString(): string

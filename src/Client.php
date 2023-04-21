@@ -45,7 +45,7 @@ class Client implements GuzzleClientInterface
      *
      * @return array An array of configuration options suitable for use with Guzzle.
      */
-    public static function getDefaultConfiguration($handler = null)
+    public static function getDefaultConfiguration(mixed $handler = null)
     {
         $config = [
             'headers' => [

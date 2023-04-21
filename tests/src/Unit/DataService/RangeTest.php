@@ -19,8 +19,8 @@ class RangeTest extends TestCase
     public function testNextRange()
     {
         $list = new ObjectList();
-        $start = rand(1, getrandmax());
-        $entryCount = rand(1, 10);
+        $start = random_int(1, mt_getrandmax());
+        $entryCount = random_int(1, 10);
         $list->setStartIndex($start);
         $list->setEntryCount($entryCount);
         $list->setItemsPerPage($entryCount);
@@ -39,8 +39,8 @@ class RangeTest extends TestCase
     public function testToQueryParts()
     {
         $range = new Range();
-        $start = rand(1, getrandmax());
-        $end = $start + rand(1, 10);
+        $start = random_int(1, mt_getrandmax());
+        $end = $start + random_int(1, 10);
         $parts = $range->setStartIndex($start)
             ->setEndIndex($end)
             ->toQueryParts();
@@ -86,12 +86,12 @@ class RangeTest extends TestCase
     public function testNextRanges()
     {
         $list = new ObjectList();
-        $start = rand(1, getrandmax());
-        $entryCount = rand(1, 10);
+        $start = random_int(1, mt_getrandmax());
+        $entryCount = random_int(1, 10);
         $list->setStartIndex($start);
         $list->setEntryCount($entryCount);
         $list->setItemsPerPage($entryCount);
-        $remainingPages = rand(1, 10);
+        $remainingPages = random_int(1, 10);
         $list->setTotalResults($start + ($entryCount * $remainingPages));
         $ranges = Range::nextRanges($list);
 

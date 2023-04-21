@@ -42,18 +42,18 @@ class CreateDataServiceClassCommand extends ClassGeneratorBase
             }
             ++$index;
 
-            list($field_name, $attributes, $data_type, $description) = $row;
+            [$field_name, $attributes, $data_type, $description] = $row;
             if (empty($description)) {
                 continue;
             }
 
-            if (strrpos($description, '.') !== (\strlen($description) - 1)) {
+            if (strrpos((string) $description, '.') !== (\strlen((string) $description) - 1)) {
                 $description .= '.';
             }
 
             // Map MPX documentation datatypes to PHP datatypes.
             foreach (static::TYPE_MAP as $search => $replace) {
-                $data_type = str_replace($search, $replace, $data_type);
+                $data_type = str_replace($search, $replace, (string) $data_type);
             }
 
             // Add the protected property.
@@ -70,7 +70,7 @@ class CreateDataServiceClassCommand extends ClassGeneratorBase
             // Add a get method for the property.
             $get = $class->addMethod('get'.ucfirst($property->getName()));
             $get->setVisibility('public');
-            $get->addComment('Returns '.lcfirst($description));
+            $get->addComment('Returns '.lcfirst((string) $description));
             $get->addComment('');
             $get->addComment('@return '.$data_type);
 
@@ -97,7 +97,7 @@ class CreateDataServiceClassCommand extends ClassGeneratorBase
             // Add a set method for the property.
             $set = $class->addMethod('set'.ucfirst($property->getName()));
             $set->setVisibility('public');
-            $set->addComment('Set '.lcfirst($description));
+            $set->addComment('Set '.lcfirst((string) $description));
             $set->addComment('');
             $set->addComment('@param '.$data_type.' $'.$field_name);
             $parameter = $set->addParameter($field_name);

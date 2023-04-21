@@ -19,12 +19,12 @@ class ResolveDomain extends ResolveBase
     /**
      * The method endpoint (this is not a true REST service).
      */
-    const RESOLVE_DOMAIN_URL = 'https://access.auth.theplatform.com/web/Registry/resolveDomain';
+    final public const RESOLVE_DOMAIN_URL = 'https://access.auth.theplatform.com/web/Registry/resolveDomain';
 
     /**
      * The schema version of resolveDomain.
      */
-    const SCHEMA_VERSION = '1.0';
+    final public const SCHEMA_VERSION = '1.0';
 
     /**
      * Resolve all URLs for an account.

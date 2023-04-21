@@ -71,7 +71,7 @@ class ObjectListIterator extends \NoRewindIterator
     /**
      * {@inheritdoc}
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->list[$this->relative];
     }
@@ -79,7 +79,7 @@ class ObjectListIterator extends \NoRewindIterator
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
@@ -87,7 +87,7 @@ class ObjectListIterator extends \NoRewindIterator
     /**
      * {@inheritdoc}
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->position;
     }
@@ -95,7 +95,7 @@ class ObjectListIterator extends \NoRewindIterator
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    public function valid(): bool
     {
         // Initial setup if this is the first page.
         if (empty($this->list)) {

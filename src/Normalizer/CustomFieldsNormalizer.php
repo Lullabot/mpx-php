@@ -28,20 +28,17 @@ class CustomFieldsNormalizer implements DenormalizerInterface
     use SerializerAwareTrait;
 
     /**
-     * The array of discovered custom field classes, indexed by namespace.
-     *
-     * @var DiscoveredCustomField[]
-     */
-    private $customFields;
-
-    /**
      * CustomFieldsNormalizer constructor.
      *
      * @param DiscoveredCustomField[] $customFields An array of discovered custom field classes, indexed by namespace.
      */
-    public function __construct(array $customFields)
+    public function __construct(
+        /**
+         * The array of discovered custom field classes, indexed by namespace.
+         */
+        private array $customFields
+    )
     {
-        $this->customFields = $customFields;
     }
 
     /**

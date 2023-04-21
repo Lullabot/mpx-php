@@ -25,12 +25,12 @@ class UserSession
     /**
      * The URL to sign in a user.
      */
-    const SIGN_IN_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signIn';
+    final public const SIGN_IN_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signIn';
 
     /**
      * The URL to sign out a given token for a user.
      */
-    const SIGN_OUT_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut';
+    final public const SIGN_OUT_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut';
 
     /**
      * @var Client
@@ -103,7 +103,7 @@ class UserSession
         // token between the above delete and the next try block.
         try {
             $token = $this->tokenCachePool->getToken($this);
-        } catch (TokenNotFoundException $e) {
+        } catch (TokenNotFoundException) {
             $token = $this->signInWithLock($duration);
         }
 
@@ -181,7 +181,7 @@ class UserSession
         try {
             // It's possible another thread has signed in for us, so check for a token first.
             $token = $this->tokenCachePool->getToken($this);
-        } catch (TokenNotFoundException $e) {
+        } catch (TokenNotFoundException) {
             // We have the lock, and there's no token, so sign in.
             $token = $this->signIn($duration);
         }

@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
  */
 class UnixMillisecondNormalizer extends DateTimeNormalizer
 {
-    private static $supportedTypes = [
+    private static array $supportedTypes = [
         DateTimeFormatInterface::class => true,
         ConcreteDateTimeInterface::class => true,
         ConcreteDateTime::class => true,

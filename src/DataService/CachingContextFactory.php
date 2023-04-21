@@ -12,10 +12,10 @@ use phpDocumentor\Reflection\Types\Context;
 final class CachingContextFactory
 {
     /** The literal used at the end of a use statement. */
-    const T_LITERAL_END_OF_USE = ';';
+    public const T_LITERAL_END_OF_USE = ';';
 
     /** The literal used between sets of use statements */
-    const T_LITERAL_USE_SEPARATOR = ',';
+    public const T_LITERAL_USE_SEPARATOR = ',';
 
     /**
      * Build a Context given a Class Reflection.
@@ -59,7 +59,7 @@ final class CachingContextFactory
             $namespace = trim($namespace, '\\');
             $useStatements = [];
             $currentNamespace = '';
-            $tokens = new \ArrayIterator(token_get_all($fileContents));
+            $tokens = new \ArrayIterator(\PhpToken::tokenize($fileContents));
 
             while ($tokens->valid()) {
                 switch ($tokens->current()[0]) {
@@ -136,7 +136,7 @@ final class CachingContextFactory
         while ($continue) {
             $this->skipToNextStringOrNamespaceSeparator($tokens);
 
-            list($alias, $fqnn) = $this->extractUseStatement($tokens);
+            [$alias, $fqnn] = str_split($this->extractUseStatement($tokens));
             $uses[$alias] = $fqnn;
             if (self::T_LITERAL_END_OF_USE === $tokens->current()[0]) {
                 $continue = false;

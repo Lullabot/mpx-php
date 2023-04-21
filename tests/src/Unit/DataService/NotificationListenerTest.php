@@ -36,7 +36,7 @@ class NotificationListenerTest extends TestCase
      */
     public function testSync()
     {
-        $notification_id = rand(1, getrandmax());
+        $notification_id = random_int(1, mt_getrandmax());
 
         $account_id = 'https://www.example.com/12345';
         $account = new Account();
@@ -130,7 +130,7 @@ class NotificationListenerTest extends TestCase
             $this->assertEquals('http://data.media.theplatform.com/media/data/Media/'.$index, $media->getId());
             $this->assertEquals('http://access.auth.theplatform.com/data/Account/'.$index, $media->getOwnerId());
             $this->assertEquals('https://identity.auth.theplatform.com/idm/data/User/service/'.$index, $media->getUpdatedByUserId());
-            $this->assertEquals(1521790000 + ($index - 1) * 1000, $media->getUpdated()->format('U'));
+            $this->assertEquals(1_521_790_000 + ($index - 1) * 1000, $media->getUpdated()->format('U'));
         }
     }
 }

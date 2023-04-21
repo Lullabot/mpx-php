@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\DataService\Media;
 
-class CategoryInfo
+class CategoryInfo implements \Stringable
 {
     /**
      * The Category object's fullTitle value.
@@ -90,6 +90,6 @@ class CategoryInfo
      */
     public function __toString(): string
     {
-        return $this->getName();
+        return (string) $this->getName();
     }
 }
