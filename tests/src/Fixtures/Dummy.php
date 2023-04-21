@@ -42,6 +42,7 @@ class Dummy extends ParentDummy
 
     /**
      * @var \DateTime[]
+     *
      * @Groups({"a", "b"})
      */
     public $collection;
@@ -105,8 +106,6 @@ class Dummy extends ParentDummy
 
     /**
      * This should not be removed.
-     *
-     * @var
      */
     public $emptyVar;
 

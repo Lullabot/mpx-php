@@ -36,6 +36,7 @@ class ObjectListTest extends TestCase
      *
      * @param string $method The method base name to test.
      * @param mixed  $value  The value to set and get.
+     *
      * @dataProvider getSetData
      */
     public function testGetSet($method, mixed $value)

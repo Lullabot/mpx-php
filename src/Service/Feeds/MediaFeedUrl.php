@@ -16,6 +16,7 @@ use Psr\Http\Message\UriInterface;
  *
  * @code
  *      http[s]://feed.media.theplatform.com/f/<account PID>/<feed PID>[/<feed type>][/feed][/<ID>][/guid/<owner ID>/<GUIDs>][/<SEO terms>][?<query parameters>]
+ *
  * @endcode
  *
  * While mpx supports http URLs, this class only supports https URLs by default.

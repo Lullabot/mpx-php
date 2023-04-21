@@ -36,9 +36,9 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
     private $arrayMutatorPrefixes;
 
     /**
-     * @param string[]|null            $mutatorPrefixes
-     * @param string[]|null            $accessorPrefixes
-     * @param string[]|null            $arrayMutatorPrefixes
+     * @param string[]|null $mutatorPrefixes
+     * @param string[]|null $accessorPrefixes
+     * @param string[]|null $arrayMutatorPrefixes
      */
     public function __construct(DocBlockFactoryInterface $docBlockFactory = null, array $mutatorPrefixes = null, array $accessorPrefixes = null, array $arrayMutatorPrefixes = null)
     {
@@ -194,13 +194,13 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
      * @param string $class
      * @param string $property
      */
-    private function getDocBlockFromProperty($class, $property): ?\phpDocumentor\Reflection\DocBlock
+    private function getDocBlockFromProperty($class, $property): ?DocBlock
     {
         // Use a ReflectionProperty instead of $class to get the parent class if applicable
         try {
             $reflectionProperty = new \ReflectionProperty($class, $property);
         } catch (\ReflectionException) {
-            return NULL;
+            return null;
         }
 
         return $this->docBlockFactory->create($reflectionProperty, $this->contextFactory->createFromReflector($reflectionProperty->getDeclaringClass()));
@@ -239,7 +239,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         }
 
         if (!isset($reflectionMethod)) {
-            return NULL;
+            return null;
         }
 
         return [$this->docBlockFactory->create($reflectionMethod, $this->contextFactory->createFromReflector($reflectionMethod)), $prefix];

@@ -120,6 +120,7 @@ class TokenTest extends TestCase
      * Test missing required keys within a signInResponse.
      *
      * @dataProvider validateDataProvider
+     *
      * @covers ::validateData
      */
     public function testInvalidResponseData($data, $key)

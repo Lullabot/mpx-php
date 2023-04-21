@@ -206,7 +206,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
      *
      * @return PromiseInterface|bool A promise to the next ObjectList, or false if no list exists.
      */
-    public function nextList(): \GuzzleHttp\Promise\PromiseInterface | bool
+    public function nextList(): PromiseInterface|bool
     {
         if (!$this->hasNext()) {
             return false;

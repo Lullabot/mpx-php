@@ -18,7 +18,7 @@ class MpxExceptionFactory
         ResponseInterface $response,
         \Exception $previous = null,
         array $ctx = []
-    ): ClientException | \Lullabot\Mpx\Exception\ServerException {
+    ): ClientException|ServerException {
         $data = \GuzzleHttp\json_decode($response->getBody(), true);
         MpxExceptionTrait::validateData($data);
 
@@ -30,7 +30,7 @@ class MpxExceptionFactory
     /**
      * Create a new MPX API exception from a notification.
      */
-    public static function createFromNotificationException(RequestInterface $request, ResponseInterface $response, \Exception $previous = null, array $ctx = []): ClientException | \Lullabot\Mpx\Exception\ServerException
+    public static function createFromNotificationException(RequestInterface $request, ResponseInterface $response, \Exception $previous = null, array $ctx = []): ClientException|ServerException
     {
         $data = \GuzzleHttp\json_decode($response->getBody(), true);
         MpxExceptionTrait::validateNotificationData($data);
@@ -47,7 +47,7 @@ class MpxExceptionFactory
         ResponseInterface $altered,
         \Exception $previous = null,
         array $ctx = []
-    ): ClientException | \Lullabot\Mpx\Exception\ServerException {
+    ): ClientException|ServerException {
         if ($altered->getStatusCode() >= 400 && $altered->getStatusCode() < 500) {
             return new ClientException($request, $altered, $previous, $ctx);
         }

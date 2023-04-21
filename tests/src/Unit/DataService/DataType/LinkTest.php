@@ -16,6 +16,7 @@ class LinkTest extends TestCase
      *
      * @param string $property
      * @param string $value
+     *
      * @dataProvider getSetMethodDataProvider
      */
     public function testGetSet($property, $value)

@@ -1,6 +1,6 @@
 <?php
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRules(array(
         '@Symfony' => true,
         '@Symfony:risky' => true,
@@ -14,7 +14,6 @@ return PhpCsFixer\Config::create()
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->in(__DIR__.'/src')
-            ->in(__DIR__.'/tests/src')
-            ->exclude('Fixtures')
+            ->in(__DIR__.'/tests')
     )
 ;

@@ -3,7 +3,6 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use function GuzzleHttp\Psr7\parse_query;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
@@ -18,6 +17,8 @@ use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\Lock\StoreInterface;
+
+use function GuzzleHttp\Psr7\parse_query;
 
 /**
  * Tests listening for notifications.
@@ -119,7 +120,7 @@ class NotificationListenerTest extends TestCase
 
             $this->assertEquals($index, $notification->getId());
 
-            (1 == $index ? $method = 'put' : $method = 'post');
+            1 == $index ? $method = 'put' : $method = 'post';
             $this->assertEquals($method, $notification->getMethod());
             $this->assertEquals('Media', $notification->getType());
 

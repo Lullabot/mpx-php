@@ -29,7 +29,7 @@ class CJsonEncoder extends JsonEncoder
      *
      * @param array &$data The data to filter.
      */
-    protected function cleanup(array & $data)
+    protected function cleanup(array &$data)
     {
         foreach ($data as &$value) {
             if (\is_array($value)) {
@@ -55,7 +55,7 @@ class CJsonEncoder extends JsonEncoder
      *
      * @param array &$decoded The data to decode.
      */
-    protected function decodeCustomFields(& $decoded)
+    protected function decodeCustomFields(&$decoded)
     {
         // @todo This is O(namespaces * entries) and can be optimized.
         foreach ($decoded['$xmlns'] as $prefix => $namespace) {
@@ -77,7 +77,7 @@ class CJsonEncoder extends JsonEncoder
      * @param string $namespace The namespace identifier.
      * @param array  $object    The object data to decode.
      */
-    protected function decodeObject($prefix, $namespace, & $object)
+    protected function decodeObject($prefix, $namespace, &$object)
     {
         $customFields = ['namespace' => $namespace];
         foreach ($object as $key => $value) {

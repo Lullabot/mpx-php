@@ -24,7 +24,6 @@ class DataServiceDiscovery
      *
      * @param string $namespace The namespace of the plugins.
      * @param string $directory The directory of the plugins.
-     * @param        $rootDir
      * @param string $rootDir
      */
     public function __construct(

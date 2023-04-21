@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 namespace Lullabot\Mpx\Tests\Unit\DataService {
-// Added imports on purpose as mock for the unit tests, please do not remove.
+    // Added imports on purpose as mock for the unit tests, please do not remove.
     use Lullabot\Mpx\DataService\CachingContextFactory;
     use Mockery as m;
     use phpDocumentor\Reflection\DocBlock;
@@ -13,6 +13,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
 
     /**
      * @coversDefaultClass \Lullabot\Mpx\DataService\CachingContextFactory
+     *
      * @covers ::<private>
      */
     class CachingContextFactoryTest extends TestCase

@@ -151,7 +151,7 @@ class Term implements QueryPartsInterface, TermInterface, \Stringable
 
     private ?string $plusMinus = null;
 
-    public function __construct(private string $value, private string $field = null, private string $namespace = null)
+    public function __construct(private string $value, private ?string $field = null, private ?string $namespace = null)
     {
     }
 

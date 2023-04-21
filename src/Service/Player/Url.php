@@ -2,12 +2,13 @@
 
 namespace Lullabot\Mpx\Service\Player;
 
-use function GuzzleHttp\Psr7\build_query;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Lullabot\Mpx\DataService\PublicIdWithGuidInterface;
 use Lullabot\Mpx\ToUriInterface;
 use Psr\Http\Message\UriInterface;
+
+use function GuzzleHttp\Psr7\build_query;
 
 /**
  * Represents a player URL, suitable for embedding with an iframe.

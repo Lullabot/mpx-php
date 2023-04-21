@@ -15,6 +15,7 @@ class MediaFeedUrlTest extends TestCase
 {
     /**
      * @param string $property
+     *
      * @dataProvider getSetDataProvider
      */
     public function testGetSet($get, $set, mixed $value)

@@ -56,10 +56,6 @@ abstract class ObjectTestBase extends TestCase
         return $tests;
     }
 
-    /**
-     * @param $fixture
-     * @param $propertyTypeExtractor
-     */
     protected function loadFixture($fixture, PropertyTypeExtractorInterface $propertyTypeExtractor)
     {
         $encoders = [new CJsonEncoder()];
@@ -78,10 +74,6 @@ abstract class ObjectTestBase extends TestCase
         $this->decoded = \GuzzleHttp\json_decode($data, true);
     }
 
-    /**
-     * @param $class
-     * @param $expected
-     */
     protected function assertObjectClass($class, string $field, $expected)
     {
         $object = $this->deserialize($class, $field);
@@ -99,8 +91,6 @@ abstract class ObjectTestBase extends TestCase
     }
 
     /**
-     * @param $class
-     *
      * @return object
      */
     protected function deserialize($class, string $field)
