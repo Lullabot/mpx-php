@@ -4,7 +4,9 @@ namespace Lullabot\Mpx;
 
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * An mpx API client.
@@ -64,7 +66,7 @@ class Client implements GuzzleClientInterface
     /**
      * {@inheritdoc}
      */
-    public function request($method = 'GET', $url = null, array $options = [])
+    public function request($method = 'GET', $url = null, array $options = []): ResponseInterface
     {
         // MPX forces all JSON requests to return HTTP 200, even with an error.
         // We force all requests (including XML) to suppress errors so we can
@@ -77,7 +79,7 @@ class Client implements GuzzleClientInterface
     /**
      * {@inheritdoc}
      */
-    public function send(RequestInterface $request, array $options = [])
+    public function send(RequestInterface $request, array $options = []): ResponseInterface
     {
         return $this->client->send($request, $options);
     }
@@ -85,7 +87,7 @@ class Client implements GuzzleClientInterface
     /**
      * {@inheritdoc}
      */
-    public function sendAsync(RequestInterface $request, array $options = [])
+    public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         return $this->client->sendAsync($request, $options);
     }
@@ -93,7 +95,7 @@ class Client implements GuzzleClientInterface
     /**
      * {@inheritdoc}
      */
-    public function requestAsync($method, $uri, array $options = [])
+    public function requestAsync($method, $uri, array $options = []): PromiseInterface
     {
         return $this->client->requestAsync($method, $uri, $options);
     }
