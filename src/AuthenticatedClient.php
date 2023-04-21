@@ -9,6 +9,7 @@ use Lullabot\Mpx\DataService\IdInterface;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class AuthenticatedClient implements ClientInterface
 {
@@ -66,7 +67,7 @@ class AuthenticatedClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function send(RequestInterface $request, array $options = [])
+    public function send(RequestInterface $request, array $options = []): ResponseInterface
     {
         return $this->sendWithRetry($request, $options);
     }
@@ -74,7 +75,7 @@ class AuthenticatedClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function sendAsync(RequestInterface $request, array $options = [])
+    public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         return $this->sendAsyncWithRetry($request, $options);
     }
@@ -82,7 +83,7 @@ class AuthenticatedClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function request($method, $uri, array $options = [])
+    public function request($method, $uri, array $options = []): ResponseInterface
     {
         return $this->requestWithRetry($method, $uri, $options);
     }
@@ -90,7 +91,7 @@ class AuthenticatedClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function requestAsync($method, $uri, array $options = [])
+    public function requestAsync($method, $uri, array $options = []): PromiseInterface
     {
         return $this->requestAsyncWithRetry($method, $uri, $options);
     }
@@ -108,7 +109,7 @@ class AuthenticatedClient implements ClientInterface
      *
      * @param int|null $duration The duration in seconds, or null to not use a specific lifetime.
      */
-    public function setTokenDuration(int $duration = null)
+    public function setTokenDuration(int $duration = null): void
     {
         $this->duration = $duration;
     }
