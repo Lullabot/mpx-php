@@ -136,8 +136,6 @@ class Dummy extends ParentDummy
 
     /**
      * B.
-     *
-     * @param ParentDummy|null $parent
      */
     public function setB(ParentDummy $parent = null)
     {

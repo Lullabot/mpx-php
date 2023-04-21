@@ -200,7 +200,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         try {
             $reflectionProperty = new \ReflectionProperty($class, $property);
         } catch (\ReflectionException) {
-            return;
+            return NULL;
         }
 
         return $this->docBlockFactory->create($reflectionProperty, $this->contextFactory->createFromReflector($reflectionProperty->getDeclaringClass()));
@@ -239,7 +239,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         }
 
         if (!isset($reflectionMethod)) {
-            return;
+            return NULL;
         }
 
         return [$this->docBlockFactory->create($reflectionMethod, $this->contextFactory->createFromReflector($reflectionMethod)), $prefix];

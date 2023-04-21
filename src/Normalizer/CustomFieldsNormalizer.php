@@ -33,12 +33,11 @@ class CustomFieldsNormalizer implements DenormalizerInterface
      * @param DiscoveredCustomField[] $customFields An array of discovered custom field classes, indexed by namespace.
      */
     public function __construct(
-        /**
+        /*
          * The array of discovered custom field classes, indexed by namespace.
          */
         private array $customFields
-    )
-    {
+    ) {
     }
 
     /**

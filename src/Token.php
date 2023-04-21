@@ -141,8 +141,6 @@ class Token implements \Stringable
 
     /**
      * Return the value of this token.
-     *
-     * @return string
      */
     public function __toString(): string
     {

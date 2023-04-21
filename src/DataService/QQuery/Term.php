@@ -23,7 +23,7 @@ class Term implements QueryPartsInterface, TermInterface, \Stringable
      *
      * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter#tp-toc31
      */
-    final public const ESCAPE_CHARACTERS = [
+    public const ESCAPE_CHARACTERS = [
         '\\' => '\\\\',
         '+' => '\+',
         '-' => '\-',

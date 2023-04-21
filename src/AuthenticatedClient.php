@@ -163,7 +163,7 @@ class AuthenticatedClient implements ClientInterface
      * @param \Psr\Http\Message\RequestInterface $request The request to send.
      * @param array                              $options Request options to apply.
      */
-    private function sendAsyncWithRetry(RequestInterface $request, array $options): \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
+    private function sendAsyncWithRetry(RequestInterface $request, array $options): \GuzzleHttp\Promise\PromiseInterface | \Psr\Http\Message\RequestInterface
     {
         // This is the initial API request that we expect to pass.
         $merged = $this->mergeAuth($options);
@@ -228,7 +228,7 @@ class AuthenticatedClient implements ClientInterface
      * @param string|\Psr\Http\Message\UriInterface $uri     URI object or string.
      * @param array                                 $options Request options to apply.
      */
-    private function requestAsyncWithRetry(string $method, string|\Psr\Http\Message\UriInterface $uri, array $options): \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
+    private function requestAsyncWithRetry(string $method, string | \Psr\Http\Message\UriInterface $uri, array $options): \GuzzleHttp\Promise\PromiseInterface | \Psr\Http\Message\RequestInterface
     {
         // This is the initial API request that we expect to pass.
         $merged = $this->mergeAuth($options);
@@ -294,7 +294,7 @@ class AuthenticatedClient implements ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface The response.
      */
-    private function requestWithRetry(string $method, string|\Psr\Http\Message\UriInterface $uri, array $options)
+    private function requestWithRetry(string $method, string | \Psr\Http\Message\UriInterface $uri, array $options)
     {
         try {
             $merged = $this->mergeAuth($options);

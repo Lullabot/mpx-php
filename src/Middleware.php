@@ -23,7 +23,7 @@ class Middleware
         // Guzzle's built-in middlewares also have this level of nested
         // functions, so we follow the same pattern even though it's difficult
         // to read.
-        return fn(callable $handler) => fn(RequestInterface $request, array $options) => // We only need to process after the request has been sent.
+        return fn (callable $handler) => fn (RequestInterface $request, array $options) => // We only need to process after the request has been sent.
 $handler($request, $options)->then(
             function (ResponseInterface $response) use ($request) {
                 // While it's not documented, we want to be sure that

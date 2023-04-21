@@ -30,16 +30,15 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
     public function __construct(
         private $namespace,
         private $directory,
-        /**
+        /*
          * The root directory to discover from, containing the namespace directory.
          */
         private $rootDir,
-        /**
+        /*
          * The class to use for reading annotations.
          */
         private readonly Reader $annotationReader
-    )
-    {
+    ) {
     }
 
     /**

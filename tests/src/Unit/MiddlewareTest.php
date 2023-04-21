@@ -107,7 +107,7 @@ class MiddlewareTest extends TestCase
      */
     private function getResponse(RequestInterface $request, ResponseInterface $response, callable $errorHandler)
     {
-        $handler = fn(RequestInterface $request, array $options) => new FulfilledPromise($response);
+        $handler = fn (RequestInterface $request, array $options) => new FulfilledPromise($response);
         $fn = $errorHandler($handler);
 
         /** @var \GuzzleHttp\Promise\FulfilledPromise $promise */

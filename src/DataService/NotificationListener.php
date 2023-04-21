@@ -143,7 +143,7 @@ class NotificationListener
 
         return $this->authenticatedClient->requestAsync('GET', $this->uri, [
             'query' => $query,
-        ])->then(fn(ResponseInterface $response) => $this->deserializeResponse($response));
+        ])->then(fn (ResponseInterface $response) => $this->deserializeResponse($response));
     }
 
     /**
