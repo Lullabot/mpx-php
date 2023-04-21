@@ -30,7 +30,7 @@ test: &test
               exit 1
           fi
 
-          php composer-setup.php --quiet --install-dir /usr/local/bin --filename composer
+          php composer-setup.php --quiet --install-dir $HOME/.local/bin --filename composer
 
       - run: composer update -n --prefer-dist $COMPOSER_FLAGS
 
@@ -147,7 +147,7 @@ code_fixer: &code_fixer
           key: v2-test-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "composer.json" }}-{{ checksum ".circleci/config.yml" }}
 
       # Run tests!
-      - run: vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no --path-mode=intersection -- src tests
+      - run: PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no --path-mode=intersection -- src tests
 
 jobs:
   build_php81:
