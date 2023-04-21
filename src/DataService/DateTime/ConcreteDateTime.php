@@ -16,10 +16,8 @@ class ConcreteDateTime implements ConcreteDateTimeInterface
      *
      * @param string $time
      *
-     * @return \Lullabot\Mpx\DataService\DateTime\ConcreteDateTime
      *
      * @throws \Exception
-     *
      * @see http://php.net/manual/en/datetime.construct.php
      */
     public static function fromString($time = 'now', \DateTimeZone $timezone = null): self

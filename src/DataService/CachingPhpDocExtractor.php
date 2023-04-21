@@ -36,7 +36,6 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
     private $arrayMutatorPrefixes;
 
     /**
-     * @param DocBlockFactoryInterface $docBlockFactory
      * @param string[]|null            $mutatorPrefixes
      * @param string[]|null            $accessorPrefixes
      * @param string[]|null            $arrayMutatorPrefixes
@@ -194,8 +193,6 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
      *
      * @param string $class
      * @param string $property
-     *
-     * @return DocBlock|null
      */
     private function getDocBlockFromProperty($class, $property): ?\phpDocumentor\Reflection\DocBlock
     {
@@ -215,8 +212,6 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
      * @param string $class
      * @param string $ucFirstProperty
      * @param int    $type
-     *
-     * @return array|null
      */
     private function getDocBlockFromMethod($class, $ucFirstProperty, $type): ?array
     {

@@ -111,8 +111,6 @@ class Url implements ToUriInterface, \Stringable
      * @see https://docs.theplatform.com/help/player-player-autoplay
      *
      * @param bool $autoPlay True to enable autoPlay, false otherwise.
-     *
-     * @return Url
      */
     public function withAutoplay(bool $autoPlay): self
     {
@@ -130,8 +128,6 @@ class Url implements ToUriInterface, \Stringable
      * Override the player's playAll setting for playlist auto-advance for this URL.
      *
      * @see https://docs.theplatform.com/help/player-player-playall
-     *
-     * @return Url
      */
     public function withPlayAll(bool $playAll): self
     {
@@ -145,9 +141,6 @@ class Url implements ToUriInterface, \Stringable
         return $url;
     }
 
-    /**
-     * @return Url
-     */
     public function withEmbed(bool $embed): self
     {
         if ($this->embed === $embed) {
@@ -162,8 +155,6 @@ class Url implements ToUriInterface, \Stringable
 
     /**
      * Return a Url using media reference GUIDs instead of media public IDs.
-     *
-     * @return Url
      */
     public function withMediaByGuid(): self
     {
@@ -179,8 +170,6 @@ class Url implements ToUriInterface, \Stringable
 
     /**
      * Return a Url using media public IDs instead of media reference Ids.
-     *
-     * @return Url
      */
     public function withMediaByPublicId(): self
     {

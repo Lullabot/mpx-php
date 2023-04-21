@@ -54,9 +54,6 @@ class Term implements QueryPartsInterface, TermInterface, \Stringable
         return $this->value;
     }
 
-    /**
-     * @return Term
-     */
     public function setValue(string $value): self
     {
         $this->value = $value;
@@ -69,9 +66,6 @@ class Term implements QueryPartsInterface, TermInterface, \Stringable
         return $this->field;
     }
 
-    /**
-     * @return Term
-     */
     public function setField(string $field): self
     {
         $this->field = $field;
@@ -84,9 +78,6 @@ class Term implements QueryPartsInterface, TermInterface, \Stringable
         return $this->matchType;
     }
 
-    /**
-     * @return Term
-     */
     public function setMatchType(string $matchType): self
     {
         if (!isset($this->field)) {

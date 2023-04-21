@@ -12,8 +12,6 @@ class MpxExceptionFactory
 {
     /**
      * Create a new MPX API exception.
-     *
-     * @return \Lullabot\Mpx\Exception\ClientException|\Lullabot\Mpx\Exception\ServerException
      */
     public static function create(
         RequestInterface $request,
@@ -31,8 +29,6 @@ class MpxExceptionFactory
 
     /**
      * Create a new MPX API exception from a notification.
-     *
-     * @return ClientException|ServerException
      */
     public static function createFromNotificationException(RequestInterface $request, ResponseInterface $response, \Exception $previous = null, array $ctx = []): \Lullabot\Mpx\Exception\ClientException|\Lullabot\Mpx\Exception\ServerException
     {
@@ -47,9 +43,7 @@ class MpxExceptionFactory
     /**
      * Create a client or server exception.
      *
-     * @param \Exception $previous
      *
-     * @return ClientException|ServerException
      */
     private static function createException(RequestInterface $request,
         ResponseInterface $altered,

@@ -163,16 +163,10 @@ class Dummy extends ParentDummy
     {
     }
 
-    /**
-     * @param self $self
-     */
     public function setSelf(self $self)
     {
     }
 
-    /**
-     * @param parent $realParent
-     */
     public function setRealParent(parent $realParent)
     {
     }

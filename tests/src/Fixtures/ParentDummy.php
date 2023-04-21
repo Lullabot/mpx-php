@@ -48,10 +48,7 @@ class ParentDummy
      */
     public $files;
 
-    /**
-     * @return bool|null
-     */
-    public function isC()
+    public function isC(): ?bool
     {
     }
 
@@ -69,9 +66,6 @@ class ParentDummy
     {
     }
 
-    /**
-     * @param \DateTime $f
-     */
     public function removeF(\DateTime $f)
     {
     }

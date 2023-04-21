@@ -162,8 +162,6 @@ class AuthenticatedClient implements ClientInterface
      *
      * @param \Psr\Http\Message\RequestInterface $request The request to send.
      * @param array                              $options Request options to apply.
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
      */
     private function sendAsyncWithRetry(RequestInterface $request, array $options): \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
     {
@@ -229,8 +227,6 @@ class AuthenticatedClient implements ClientInterface
      * @param string                                $method  HTTP method
      * @param string|\Psr\Http\Message\UriInterface $uri     URI object or string.
      * @param array                                 $options Request options to apply.
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
      */
     private function requestAsyncWithRetry(string $method, string|\Psr\Http\Message\UriInterface $uri, array $options): \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
     {

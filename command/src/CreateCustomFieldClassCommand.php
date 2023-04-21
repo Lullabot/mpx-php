@@ -93,7 +93,6 @@ EOD;
     }
 
     /**
-     * @param InputInterface $input
      * @param                $dof
      * @param                $field
      */
@@ -151,12 +150,6 @@ EOD;
         $set->addBody('$this->'.$field->getFieldName().' = '.'$'.$field->getFieldName().';');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param string         $mpxNamespace
-     *
-     * @return array
-     */
     private function getClass(InputInterface $input, string $mpxNamespace): array
     {
         if (!isset($this->namespaceClasses[$mpxNamespace])) {
@@ -185,9 +178,6 @@ EOD;
 
     /**
      * Add a property to a class.
-     *
-     * @param ClassType $class
-     * @param Field     $field
      */
     private function addProperty(ClassType $class, Field $field)
     {
@@ -207,9 +197,7 @@ EOD;
     /**
      * Get the PHP data type for a field, including mapping to arrays.
      *
-     * @param Field $field
      *
-     * @return string
      */
     private function getPhpDataType(Field $field): string
     {

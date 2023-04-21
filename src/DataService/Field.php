@@ -300,8 +300,6 @@ class Field extends ObjectBase
 
     /**
      * Set the default value for this custom field.
-     *
-     * @param mixed $defaultValue
      */
     public function setDefaultValue(mixed $defaultValue)
     {
