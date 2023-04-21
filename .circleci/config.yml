@@ -16,7 +16,7 @@ test: &test
           - v2-test-dependencies-
 
       # php:* has no zip extension and the CLI is faster to install.
-      - run: apt-get update -y && apt-get install unzip -y
+      - run: sudo apt-get update -y && sudo apt-get install unzip -y
 
       - run: |
           EXPECTED_SIGNATURE=$(curl -L https://composer.github.io/installer.sig)
@@ -59,7 +59,7 @@ test_and_cover: &test_and_cover
           - v2-test-cover-dependencies-
 
       # php:* has no zip extension and the CLI is faster to install.
-      - run: apt-get update -y && apt-get install unzip -y
+      - run: sudo apt-get update -y && sudo apt-get install unzip -y
 
       - run: |
           EXPECTED_SIGNATURE=$(curl -L https://composer.github.io/installer.sig)
@@ -108,7 +108,7 @@ test_and_cover: &test_and_cover
           path: build/logs
 
       - run: |
-          apt-get update -y && apt-get install git -y
+          sudo apt-get update -y && sudo apt-get install git -y
            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $? test-results/clover.xml
 
 code_fixer: &code_fixer
@@ -123,7 +123,7 @@ code_fixer: &code_fixer
           - v2-test-dependencies-
 
       # php:* has no zip extension and the CLI is faster to install.
-      - run: apt-get update -y && apt-get install unzip -y
+      - run: sudo apt-get update -y && sudo apt-get install unzip -y
 
       - run: |
           EXPECTED_SIGNATURE=$(curl -L https://composer.github.io/installer.sig)
