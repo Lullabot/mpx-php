@@ -5,7 +5,7 @@
       <directory suffix=".php">./src</directory>
     </include>
     <report>
-      <clover outputFile="build/coverage-logs/clover.xml"/>
+      <clover outputFile="build/logs/clover.xml"/>
     </report>
   </coverage>
   <php>
@@ -31,7 +31,7 @@
     </testsuite>
   </testsuites>
   <logging>
-    <junit outputFile="build/logs/results.xml"/>
+    <junit outputFile="build/test-results/results.xml"/>
   </logging>
   <listeners>
     <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>

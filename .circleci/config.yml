@@ -41,11 +41,11 @@ test: &test
 
       # Run tests!
       - run: |
-          mkdir -p build/logs
+          mkdir -p build/test-results
           vendor/bin/phpunit --testsuite Unit
 
       - store_test_results:
-          path: build/logs
+          path: build/test-results
 
 test_and_cover: &test_and_cover
   steps:
@@ -97,15 +97,16 @@ test_and_cover: &test_and_cover
       # run tests!
       - run: |
           mkdir -p build/logs
+          mkdir -p build/test-results
           ./cc-test-reporter before-build
           vendor/bin/phpunit --testsuite Unit
 
       - store_test_results:
-          path: build/logs
+          path: build/test-results
 
       - run: |
           sudo apt-get update -y && sudo apt-get install git -y
-           ./cc-test-reporter after-build --coverage-input-type clover --exit-code $? build/coverage-logs/clover.xml
+           ./cc-test-reporter after-build --coverage-input-type clover --exit-code $? test-results/clover.xml
 
 code_fixer: &code_fixer
   steps:
