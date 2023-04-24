@@ -96,10 +96,9 @@ test_and_cover: &test_and_cover
           mkdir -p coverage
           vendor/bin/phpunit --testsuite Unit
 
-      - persist_to_workspace:
-          root: build
-          paths:
-            - logs/clover.xml
+      - store_artifacts:
+          path: build/logs
+
       - store_test_results:
           path: build/test-results
 
