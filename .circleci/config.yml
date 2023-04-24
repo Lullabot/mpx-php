@@ -93,6 +93,7 @@ test_and_cover: &test_and_cover
       - run: |
           mkdir -p build/logs
           mkdir -p build/test-results
+          mkdir -p coverage
           vendor/bin/phpunit --testsuite Unit
 
       - persist_to_workspace:
