@@ -10,5 +10,4 @@ use Symfony\Component\Lock\PersistingStoreInterface;
  */
 interface DummyStoreInterface extends PersistingStoreInterface, BlockingStoreInterface
 {
-
 }
