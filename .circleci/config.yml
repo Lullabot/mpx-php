@@ -88,25 +88,19 @@ test_and_cover: &test_and_cover
             - /usr/local/etc/php/conf.d/xdebug.ini
 
           key: v2-test-cover-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "composer.json" }}-{{ checksum ".circleci/config.yml" }}
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
 
       # run tests!
       - run: |
           mkdir -p build/logs
           mkdir -p build/test-results
-          ./cc-test-reporter before-build
           vendor/bin/phpunit --testsuite Unit
 
+      - persist_to_workspace:
+          root: coverage
+          paths:
+            - build/logs/clover.xml
       - store_test_results:
           path: build/test-results
-
-      - run: |
-          sudo apt-get update -y && sudo apt-get install git -y
-           ./cc-test-reporter after-build --coverage-input-type clover --exit-code $? test-results/clover.xml
 
 code_fixer: &code_fixer
   steps:
