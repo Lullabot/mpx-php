@@ -105,7 +105,7 @@ test_and_cover: &test_and_cover
 
       - run: |
           sudo apt-get update -y && sudo apt-get install git -y
-           ./cc-test-reporter after-build --coverage-input-type clover --exit-code $? test-results/clover.xml
+           ./cc-test-reporter after-build --coverage-input-type clover --exit-code $? build/coverage-logs/clover.xml
 
 code_fixer: &code_fixer
   steps:
