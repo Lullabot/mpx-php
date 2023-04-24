@@ -35,7 +35,7 @@ class CategoryInfoTest extends ObjectTestBase
      *
      * @dataProvider getSetMethods
      */
-    public function testGetSet(string $field, $expected = null)
+    public function testGetSet(string $field, mixed $expected = null)
     {
         $this->assertObjectClass($this->class, $field, $expected);
     }

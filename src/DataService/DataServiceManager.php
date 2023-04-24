@@ -7,14 +7,8 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 
 class DataServiceManager
 {
-    /**
-     * @var \Lullabot\Mpx\DataService\DataServiceDiscovery
-     */
-    private $discovery;
-
-    public function __construct(DataServiceDiscovery $discovery)
+    public function __construct(private readonly DataServiceDiscovery $discovery)
     {
-        $this->discovery = $discovery;
     }
 
     /**

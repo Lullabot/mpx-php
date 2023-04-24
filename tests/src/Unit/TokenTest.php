@@ -96,7 +96,7 @@ class TokenTest extends TestCase
      */
     public function testFromResponseData()
     {
-        $data = json_decode(file_get_contents(__DIR__.'/../../fixtures/signin-success.json'), true);
+        $data = json_decode(file_get_contents(__DIR__.'/../../fixtures/signin-success.json'), true, 512, \JSON_THROW_ON_ERROR);
         $token = Token::fromResponseData($data);
         $this->assertSame('TOKEN-VALUE', (string) $token);
         $this->assertSame('TOKEN-VALUE', $token->getValue());
@@ -120,6 +120,7 @@ class TokenTest extends TestCase
      * Test missing required keys within a signInResponse.
      *
      * @dataProvider validateDataProvider
+     *
      * @covers ::validateData
      */
     public function testInvalidResponseData($data, $key)
@@ -142,8 +143,7 @@ class TokenTest extends TestCase
             'token' => 'token-value',
         ];
         $data = array_map(function ($value) use (&$required) {
-            end($required);
-            $key = key($required);
+            $key = array_key_last($required);
             array_pop($required);
 
             return [$required, $key];

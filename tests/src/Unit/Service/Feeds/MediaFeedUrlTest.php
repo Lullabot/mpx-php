@@ -15,10 +15,10 @@ class MediaFeedUrlTest extends TestCase
 {
     /**
      * @param string $property
-     * @param mixed  $value
+     *
      * @dataProvider getSetDataProvider
      */
-    public function testGetSet($get, $set, $value)
+    public function testGetSet($get, $set, mixed $value)
     {
         $account = new Account();
         $account->setPid('account-pid');

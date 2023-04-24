@@ -1451,8 +1451,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the server information required to transfer the file.
-     *
-     * @return \Lullabot\Mpx\DataService\Media\TransferInfo
      */
     public function getTransferInfo(): TransferInfo
     {
@@ -1461,8 +1459,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the server information required to transfer the file.
-     *
-     * @param \Lullabot\Mpx\DataService\Media\TransferInfo $transferInfo
      */
     public function setTransferInfo(TransferInfo $transferInfo)
     {

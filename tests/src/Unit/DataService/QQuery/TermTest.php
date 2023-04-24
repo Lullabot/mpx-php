@@ -106,8 +106,6 @@ class TermTest extends TestCase
     }
 
     /**
-     * @param $value
-     * @param $escaped
      * @dataProvider escapeDataProvider
      */
     public function testEscape($value, $escaped)

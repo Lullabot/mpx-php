@@ -2,12 +2,13 @@
 
 namespace Lullabot\Mpx\Service\Player;
 
-use function GuzzleHttp\Psr7\build_query;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Lullabot\Mpx\DataService\PublicIdWithGuidInterface;
 use Lullabot\Mpx\ToUriInterface;
 use Psr\Http\Message\UriInterface;
+
+use function GuzzleHttp\Psr7\build_query;
 
 /**
  * Represents a player URL, suitable for embedding with an iframe.
@@ -17,63 +18,34 @@ use Psr\Http\Message\UriInterface;
  * @see https://docs.theplatform.com/help/displaying-mpx-players-to-your-audience
  * @see https://docs.theplatform.com/help/generate-a-player-url-for-a-media
  */
-class Url implements ToUriInterface
+class Url implements ToUriInterface, \Stringable
 {
     /**
      * The base URL for all players.
      */
-    const BASE_URL = 'https://player.theplatform.com/p/';
-
-    /**
-     * The account the player belongs to.
-     *
-     * @var \Lullabot\Mpx\DataService\PublicIdentifierInterface
-     */
-    private $account;
-
-    /**
-     * The player object the URL is being generated for.
-     *
-     * @var PublicIdentifierInterface
-     */
-    private $player;
-
-    /**
-     * The media that is being played.
-     *
-     * @var PublicIdWithGuidInterface
-     */
-    private $media;
+    final public const BASE_URL = 'https://player.theplatform.com/p/';
 
     /**
      * Should autoPlay be overridden?
-     *
-     * @var bool
      */
-    private $autoPlay;
+    private ?bool $autoPlay = null;
 
     /**
      * Should the playAll setting be overridden?
-     *
-     * @var bool
      */
-    private $playAll;
+    private ?bool $playAll = null;
 
     /**
      * Should this player URL be rendered so it can be embedded?
      *
      * @see https://docs.theplatform.com/help/displaying-mpx-players-to-your-audience#tp-toc17
-     *
-     * @var bool
      */
-    private $embed;
+    private ?bool $embed = null;
 
     /**
      * Should this player URL be rendered using media GUIDs instead of public IDs?
-     *
-     * @var bool
      */
-    private $byGuid;
+    private ?bool $byGuid = null;
 
     /**
      * Url constructor.
@@ -82,11 +54,8 @@ class Url implements ToUriInterface
      * @param PublicIdentifierInterface $player  The player to play $media with.
      * @param PublicIdWithGuidInterface $media   The media to play.
      */
-    public function __construct(PublicIdentifierInterface $account, PublicIdentifierInterface $player, PublicIdWithGuidInterface $media)
+    public function __construct(private readonly PublicIdentifierInterface $account, private readonly PublicIdentifierInterface $player, private readonly PublicIdWithGuidInterface $media)
     {
-        $this->player = $player;
-        $this->media = $media;
-        $this->account = $account;
     }
 
     /**
@@ -132,7 +101,7 @@ class Url implements ToUriInterface
      *
      * @return string The player URL.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->toUri();
     }
@@ -143,8 +112,6 @@ class Url implements ToUriInterface
      * @see https://docs.theplatform.com/help/player-player-autoplay
      *
      * @param bool $autoPlay True to enable autoPlay, false otherwise.
-     *
-     * @return Url
      */
     public function withAutoplay(bool $autoPlay): self
     {
@@ -162,8 +129,6 @@ class Url implements ToUriInterface
      * Override the player's playAll setting for playlist auto-advance for this URL.
      *
      * @see https://docs.theplatform.com/help/player-player-playall
-     *
-     * @return Url
      */
     public function withPlayAll(bool $playAll): self
     {
@@ -177,9 +142,6 @@ class Url implements ToUriInterface
         return $url;
     }
 
-    /**
-     * @return Url
-     */
     public function withEmbed(bool $embed): self
     {
         if ($this->embed === $embed) {
@@ -194,8 +156,6 @@ class Url implements ToUriInterface
 
     /**
      * Return a Url using media reference GUIDs instead of media public IDs.
-     *
-     * @return Url
      */
     public function withMediaByGuid(): self
     {
@@ -211,8 +171,6 @@ class Url implements ToUriInterface
 
     /**
      * Return a Url using media public IDs instead of media reference Ids.
-     *
-     * @return Url
      */
     public function withMediaByPublicId(): self
     {

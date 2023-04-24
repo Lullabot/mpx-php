@@ -23,8 +23,8 @@ class UnixMillisecondNormalizerTest extends TestCase
         $normalizer = new UnixMillisecondNormalizer();
         $normalized = $normalizer->denormalize(0, \DateTime::class);
         $this->assertEquals(0, $normalized->format('U'));
-        $normalized = $normalizer->denormalize(1521719898123, \DateTime::class);
-        $this->assertEquals(1521719898.123, $normalized->format('U.u'));
+        $normalized = $normalizer->denormalize(1_521_719_898_123, \DateTime::class);
+        $this->assertEquals(1_521_719_898.123, $normalized->format('U.u'));
     }
 
     /**

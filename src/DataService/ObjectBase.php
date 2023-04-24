@@ -42,7 +42,7 @@ abstract class ObjectBase implements ObjectInterface
      */
     public function setJson(string $json)
     {
-        $this->json = \GuzzleHttp\json_decode($json, true);
+        $this->json = \GuzzleHttp\Utils::jsonDecode($json, true);
     }
 
     /**

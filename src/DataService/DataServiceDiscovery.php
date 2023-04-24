@@ -13,61 +13,35 @@ use Symfony\Component\Finder\SplFileInfo;
 class DataServiceDiscovery
 {
     /**
-     * The namespace to search within, such as '\Lullabot\Mpx'.
-     *
-     * @var string
-     */
-    private $namespace;
-
-    /**
-     * The root directory of the namespace, such as 'src'.
-     *
-     * @var string
-     */
-    private $directory;
-
-    /**
-     * The class to use for reading annotations.
-     *
-     * @var \Doctrine\Common\Annotations\Reader
-     */
-    private $annotationReader;
-
-    /**
-     * The root directory to discover from, containing the namespace directory.
-     *
-     * @var string
-     */
-    private $rootDir;
-
-    /**
      * The array of discovered data services.
      *
      * @var DiscoveredDataService[]
      */
-    private $dataServices = [];
-
-    /**
-     * The manager used to discover custom field implementations.
-     *
-     * @var CustomFieldManager
-     */
-    private $customFieldManager;
+    private array $dataServices = [];
 
     /**
      * DataServiceDiscovery constructor.
      *
      * @param string $namespace The namespace of the plugins.
      * @param string $directory The directory of the plugins.
-     * @param        $rootDir
+     * @param string $rootDir
      */
-    public function __construct($namespace, $directory, $rootDir, Reader $annotationReader, CustomFieldManager $customFieldManager)
-    {
-        $this->namespace = $namespace;
-        $this->annotationReader = $annotationReader;
-        $this->directory = $directory;
-        $this->rootDir = $rootDir;
-        $this->customFieldManager = $customFieldManager;
+    public function __construct(
+        private $namespace,
+        private $directory,
+        /*
+         * The root directory to discover from, containing the namespace directory.
+         */
+        private $rootDir,
+        /*
+         * The class to use for reading annotations.
+         */
+        private readonly Reader $annotationReader,
+        /*
+         * The manager used to discover custom field implementations.
+         */
+        private readonly CustomFieldManager $customFieldManager
+    ) {
     }
 
     /**
@@ -97,7 +71,7 @@ class DataServiceDiscovery
         foreach ($finder as $file) {
             $class = $this->classForFile($file);
             /* @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
-            $annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), 'Lullabot\Mpx\DataService\Annotation\DataService');
+            $annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), \Lullabot\Mpx\DataService\Annotation\DataService::class);
             if (!$annotation) {
                 continue;
             }

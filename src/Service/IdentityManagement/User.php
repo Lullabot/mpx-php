@@ -16,24 +16,18 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @var string
-     */
-    private $password;
-
-    /**
      * Construct a new mpx user.
      *
      * @param string $username The mpx user name, including the leading directory such as 'mpx/'.
      * @param string $password The user password.
      */
-    public function __construct($username, $password)
+    public function __construct($username, private $password)
     {
-        if (false === strpos($username, '/')) {
+        if (!str_contains($username, '/')) {
             throw new \InvalidArgumentException(sprintf('The mpx user name %s must contain a leading directory such as "mpx/"', $username));
         }
 
         $this->username = $username;
-        $this->password = $password;
     }
 
     /**

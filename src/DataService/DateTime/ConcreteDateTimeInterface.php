@@ -15,6 +15,7 @@ namespace Lullabot\Mpx\DataService\DateTime;
  *      if ($date instanceof \Lullabot\Mpx\DataService\DateTime\ConcreteDateTimeInterface) {
  *          $date->getDateTime()->getTimestamp();
  *      }
+ *
  * @endcode
  *
  * The above example shows the use of a concrete ConcreteDateTimeInterface

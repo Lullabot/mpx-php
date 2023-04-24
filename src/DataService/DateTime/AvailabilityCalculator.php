@@ -17,8 +17,6 @@ class AvailabilityCalculator
     /**
      * Return if the media is available as of the given time.
      *
-     * @param $time
-     *
      * @return bool
      */
     public function isAvailable(Media $media, \DateTime $time)
@@ -28,8 +26,6 @@ class AvailabilityCalculator
 
     /**
      * Return if the media is expired as of the given time.
-     *
-     * @param $time
      *
      * @return bool
      */

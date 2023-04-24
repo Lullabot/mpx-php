@@ -16,6 +16,7 @@ use Psr\Http\Message\UriInterface;
  *
  * @code
  *      http[s]://feed.media.theplatform.com/f/<account PID>/<feed PID>[/<feed type>][/feed][/<ID>][/guid/<owner ID>/<GUIDs>][/<SEO terms>][?<query parameters>]
+ *
  * @endcode
  *
  * While mpx supports http URLs, this class only supports https URLs by default.
@@ -28,12 +29,12 @@ use Psr\Http\Message\UriInterface;
  * @see IdMediaFeedUrl
  * @see GuidMediaFeedUrl
  */
-class MediaFeedUrl implements ToUriInterface
+class MediaFeedUrl implements ToUriInterface, \Stringable
 {
     /**
      * The base URL for all feed requests.
      */
-    const BASE_URL = 'https://feed.media.theplatform.com/f/';
+    final public const BASE_URL = 'https://feed.media.theplatform.com/f/';
 
     /**
      * The account the feed is associated with.
@@ -168,7 +169,7 @@ class MediaFeedUrl implements ToUriInterface
     /**
      * {@inheritdoc}
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->toUri();
     }

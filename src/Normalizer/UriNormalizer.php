@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class UriNormalizer implements NormalizerInterface, DenormalizerInterface
 {
-    private static $supportedTypes = [
+    private static array $supportedTypes = [
         Uri::class => true,
         UriInterface::class => true,
     ];

@@ -36,7 +36,7 @@ class NotificationTest extends ObjectTestBase
     public function testGetSet(string $field)
     {
         /** @var Notification[] $notifications */
-        $notifications = $this->serializer->deserialize(json_encode($this->decoded), Notification::class.'[]', 'json');
+        $notifications = $this->serializer->deserialize(json_encode($this->decoded, \JSON_THROW_ON_ERROR), Notification::class.'[]', 'json');
         $method = 'get'.ucfirst($field);
         foreach ($notifications as $index => $notification) {
             if ('entry' == $field) {

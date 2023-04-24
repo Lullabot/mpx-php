@@ -9,17 +9,11 @@ use Lullabot\Mpx\DataService\QueryPartsInterface;
  *
  * @see https://docs.theplatform.com/help/wsf-selecting-objects-by-using-the-q-query-parameter
  */
-class TermGroup implements QueryPartsInterface, TermInterface
+class TermGroup implements QueryPartsInterface, TermInterface, \Stringable
 {
-    /**
-     * @var array
-     */
-    private $terms = [];
+    private array $terms = [];
 
-    /**
-     * @var bool
-     */
-    private $wrap;
+    private ?bool $wrap = null;
 
     public function __construct(TermInterface $term)
     {
@@ -53,7 +47,7 @@ class TermGroup implements QueryPartsInterface, TermInterface
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $query = '';
         foreach ($this->terms as $term) {

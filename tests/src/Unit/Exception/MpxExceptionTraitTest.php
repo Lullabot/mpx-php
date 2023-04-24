@@ -2,7 +2,9 @@
 
 namespace Lullabot\Mpx\Tests\Unit\Exception;
 
+use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Exception\MpxExceptionTrait;
+use Lullabot\Mpx\Exception\ServerException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -95,6 +97,7 @@ class MpxExceptionTraitTest extends TestCase
      * @doesNotPerformAssertions
      *
      * @covers ::validateData
+     *
      * @doesNotPerformAssertions
      */
     public function testValidateData()
@@ -105,7 +108,7 @@ class MpxExceptionTraitTest extends TestCase
             'title' => 'the title',
             'description' => 'the description',
         ];
-        MpxExceptionTrait::validateData($data);
+        ClientException::validateData($data);
     }
 
     /**
@@ -153,7 +156,7 @@ class MpxExceptionTraitTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
-        MpxExceptionTrait::validateData($data);
+        ServerException::validateData($data);
     }
 
     /**
@@ -170,7 +173,7 @@ class MpxExceptionTraitTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
-        MpxExceptionTrait::validateNotificationData($data);
+        ServerException::validateNotificationData($data);
     }
 
     /**
@@ -186,8 +189,7 @@ class MpxExceptionTraitTest extends TestCase
             'title' => 'the title',
         ];
         $data = array_map(function ($value) use (&$required) {
-            end($required);
-            $key = key($required);
+            $key = array_key_last($required);
             array_pop($required);
 
             return [$required, $key];
@@ -213,8 +215,7 @@ class MpxExceptionTraitTest extends TestCase
             ],
         ];
         $data = array_map(function ($value) use (&$required) {
-            end($required);
-            $key = key($required);
+            $key = array_key_last($required);
             array_pop($required);
 
             return [[$required], $key];

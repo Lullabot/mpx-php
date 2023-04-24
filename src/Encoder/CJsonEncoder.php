@@ -37,9 +37,7 @@ class CJsonEncoder extends JsonEncoder
             }
         }
 
-        $data = array_filter($data, function ($value) {
-            return null !== $value;
-        });
+        $data = array_filter($data, fn ($value) => null !== $value);
     }
 
     /**
@@ -83,7 +81,7 @@ class CJsonEncoder extends JsonEncoder
     {
         $customFields = ['namespace' => $namespace];
         foreach ($object as $key => $value) {
-            if (false !== strpos($key, $prefix.'$')) {
+            if (str_contains($key, $prefix.'$')) {
                 $fieldName = substr($key, \strlen($prefix) + 1);
                 $customFields['data'][$fieldName] = $value;
             }

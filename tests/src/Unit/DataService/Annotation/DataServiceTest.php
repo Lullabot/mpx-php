@@ -12,9 +12,6 @@ use PHPUnit\Framework\TestCase;
 class DataServiceTest extends TestCase
 {
     /**
-     * @param $property
-     * @param $get
-     * @param $value
      * @dataProvider getSetDataProvider
      */
     public function testGetSet($property, $get, $value, $return)

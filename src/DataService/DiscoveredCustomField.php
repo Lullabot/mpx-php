@@ -10,29 +10,13 @@ use Lullabot\Mpx\DataService\Annotation\CustomField;
 class DiscoveredCustomField
 {
     /**
-     * The fully-qualified class name of the discovered class.
-     *
-     * @var string
-     */
-    private $class;
-
-    /**
-     * The annotation object attached to the class.
-     *
-     * @var CustomField
-     */
-    private $annotation;
-
-    /**
      * DiscoveredCustomField constructor.
      *
      * @param string      $class      The fully-qualified class name of the discovered class.
      * @param CustomField $annotation The annotation object attached to the class.
      */
-    public function __construct(string $class, CustomField $annotation)
+    public function __construct(private readonly string $class, private readonly CustomField $annotation)
     {
-        $this->class = $class;
-        $this->annotation = $annotation;
     }
 
     public function getClass(): string

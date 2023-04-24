@@ -20,9 +20,9 @@ interface JsonInterface
     /**
      * Return the JSON of this object as an array.
      *
-     * @throws \LogicException Thrown if no json representation is available.
-     *
      * @return array
+     *
+     * @throws \LogicException Thrown if no json representation is available.
      */
     public function getJson();
 }

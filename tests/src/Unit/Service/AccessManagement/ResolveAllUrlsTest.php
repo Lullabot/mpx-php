@@ -8,13 +8,13 @@ use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrlsResponse;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
-use Symfony\Component\Lock\StoreInterface;
 
 /**
  * Test resolving all URLs for a given MPX service.
@@ -39,8 +39,8 @@ class ResolveAllUrlsTest extends TestCase
             new JsonResponse(200, [], 'resolveAllUrls.json'),
         ]);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')
@@ -79,7 +79,7 @@ class ResolveAllUrlsTest extends TestCase
         $client = $this->getMockClient();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
 
         $user = new User('mpx/USER-NAME', 'correct-password');

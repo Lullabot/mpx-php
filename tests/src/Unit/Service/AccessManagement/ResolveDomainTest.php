@@ -10,13 +10,13 @@ use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomainResponse;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
-use Symfony\Component\Lock\StoreInterface;
 
 /**
  * Tests resolving mpx domains and services.
@@ -41,7 +41,7 @@ class ResolveDomainTest extends TestCase
         ]);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         /** @var StoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')
@@ -72,8 +72,8 @@ class ResolveDomainTest extends TestCase
             new JsonResponse(200, [], 'resolveDomain.json'),
         ]);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')

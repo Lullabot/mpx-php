@@ -23,8 +23,6 @@ use Symfony\Component\Lock\Store\FlockStore;
 abstract class MpxCommandBase extends Command
 {
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      *
      * @return DataObjectFactory
      */
@@ -44,8 +42,6 @@ abstract class MpxCommandBase extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return \Lullabot\Mpx\AuthenticatedClient
      */

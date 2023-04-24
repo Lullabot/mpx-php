@@ -6,8 +6,8 @@ use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\CustomFieldInterface;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
-use Lullabot\Mpx\DataService\Field;
 use Lullabot\Mpx\DataService\DateTime\NullDateTime;
+use Lullabot\Mpx\DataService\Field;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use Psr\Http\Message\UriInterface;
@@ -93,7 +93,6 @@ EOD;
     }
 
     /**
-     * @param InputInterface $input
      * @param                $dof
      * @param                $field
      */
@@ -105,15 +104,15 @@ EOD;
         $mpxNamespace = (string) $field->getNamespace();
         /** @var PhpNamespace $namespace */
         /** @var ClassType $class */
-        list($namespace, $class) = $this->getClass($input, $mpxNamespace);
+        [$namespace, $class] = $this->getClass($input, $mpxNamespace);
 
         $this->addProperty($class, $field);
         $dataType = $this->getPhpDataType($field);
 
-        $get = $class->addMethod('get'.ucfirst($field->getFieldName()));
+        $get = $class->addMethod('get'.ucfirst((string) $field->getFieldName()));
         $get->setVisibility('public');
         if (!empty($field->getDescription())) {
-            $get->addComment('Returns '.lcfirst($field->getDescription()));
+            $get->addComment('Returns '.lcfirst((string) $field->getDescription()));
             $get->addComment('');
         }
         $get->addComment('@return '.$dataType);
@@ -138,10 +137,10 @@ EOD;
         $get->addBody('return $this->'.$field->getFieldName().';');
 
         // Add a set method for the property.
-        $set = $class->addMethod('set'.ucfirst($field->getFieldName()));
+        $set = $class->addMethod('set'.ucfirst((string) $field->getFieldName()));
         $set->setVisibility('public');
         if (!empty($field->getDescription())) {
-            $set->addComment('Set '.lcfirst($field->getDescription()));
+            $set->addComment('Set '.lcfirst((string) $field->getDescription()));
             $set->addComment('');
         }
         $set->addComment('@param '.$dataType);
@@ -151,12 +150,6 @@ EOD;
         $set->addBody('$this->'.$field->getFieldName().' = '.'$'.$field->getFieldName().';');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param string         $mpxNamespace
-     *
-     * @return array
-     */
     private function getClass(InputInterface $input, string $mpxNamespace): array
     {
         if (!isset($this->namespaceClasses[$mpxNamespace])) {
@@ -185,9 +178,6 @@ EOD;
 
     /**
      * Add a property to a class.
-     *
-     * @param ClassType $class
-     * @param Field     $field
      */
     private function addProperty(ClassType $class, Field $field)
     {
@@ -207,9 +197,7 @@ EOD;
     /**
      * Get the PHP data type for a field, including mapping to arrays.
      *
-     * @param Field $field
      *
-     * @return string
      */
     private function getPhpDataType(Field $field): string
     {

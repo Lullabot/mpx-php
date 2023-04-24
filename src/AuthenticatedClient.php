@@ -162,10 +162,8 @@ class AuthenticatedClient implements ClientInterface
      *
      * @param \Psr\Http\Message\RequestInterface $request The request to send.
      * @param array                              $options Request options to apply.
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
      */
-    private function sendAsyncWithRetry(RequestInterface $request, array $options)
+    private function sendAsyncWithRetry(RequestInterface $request, array $options): PromiseInterface|RequestInterface
     {
         // This is the initial API request that we expect to pass.
         $merged = $this->mergeAuth($options);
@@ -188,7 +186,7 @@ class AuthenticatedClient implements ClientInterface
             }
 
             $merged = $this->mergeAuth($options, true);
-            $func = [$this->client, 'send'];
+            $func = $this->client->send(...);
             $args = [$request, $merged];
             $this->finallyResolve($outer, $func, $args);
         });
@@ -229,10 +227,8 @@ class AuthenticatedClient implements ClientInterface
      * @param string                                $method  HTTP method
      * @param string|\Psr\Http\Message\UriInterface $uri     URI object or string.
      * @param array                                 $options Request options to apply.
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface|\Psr\Http\Message\RequestInterface
      */
-    private function requestAsyncWithRetry(string $method, $uri, array $options)
+    private function requestAsyncWithRetry(string $method, string|\Psr\Http\Message\UriInterface $uri, array $options): PromiseInterface|RequestInterface
     {
         // This is the initial API request that we expect to pass.
         $merged = $this->mergeAuth($options);
@@ -255,7 +251,7 @@ class AuthenticatedClient implements ClientInterface
             }
 
             $merged = $this->mergeAuth($options, true);
-            $func = [$this->client, 'request'];
+            $func = $this->client->request(...);
             $args = [$method, $uri, $merged];
             $this->finallyResolve($outer, $func, $args);
         });
@@ -298,7 +294,7 @@ class AuthenticatedClient implements ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface The response.
      */
-    private function requestWithRetry(string $method, $uri, array $options)
+    private function requestWithRetry(string $method, string|\Psr\Http\Message\UriInterface $uri, array $options)
     {
         try {
             $merged = $this->mergeAuth($options);
@@ -327,7 +323,7 @@ class AuthenticatedClient implements ClientInterface
             // as callers are concerned there is only one promise.
             try {
                 $inner->wait();
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 // The inner promise handles all rejections.
             }
         });

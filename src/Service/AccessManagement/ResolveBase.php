@@ -38,9 +38,6 @@ abstract class ResolveBase
         $this->cache = $cache;
     }
 
-    /**
-     * @param $resolved
-     */
     protected function saveCache($key, $resolved)
     {
         $item = new CacheItem($key);

@@ -12,17 +12,15 @@ class MpxExceptionFactory
 {
     /**
      * Create a new MPX API exception.
-     *
-     * @return \Lullabot\Mpx\Exception\ClientException|\Lullabot\Mpx\Exception\ServerException
      */
     public static function create(
         RequestInterface $request,
         ResponseInterface $response,
         \Exception $previous = null,
         array $ctx = []
-    ) {
-        $data = \GuzzleHttp\json_decode($response->getBody(), true);
-        MpxExceptionTrait::validateData($data);
+    ): ClientException|ServerException {
+        $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
+        ClientException::validateData($data);
 
         $altered = $response->withStatus($data['responseCode'], $data['title']);
 
@@ -31,13 +29,11 @@ class MpxExceptionFactory
 
     /**
      * Create a new MPX API exception from a notification.
-     *
-     * @return ClientException|ServerException
      */
-    public static function createFromNotificationException(RequestInterface $request, ResponseInterface $response, \Exception $previous = null, array $ctx = [])
+    public static function createFromNotificationException(RequestInterface $request, ResponseInterface $response, \Exception $previous = null, array $ctx = []): ClientException|ServerException
     {
-        $data = \GuzzleHttp\json_decode($response->getBody(), true);
-        MpxExceptionTrait::validateNotificationData($data);
+        $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
+        ServerException::validateNotificationData($data);
 
         $altered = $response->withStatus($data[0]['entry']['responseCode'], $data[0]['entry']['title']);
 
@@ -46,16 +42,12 @@ class MpxExceptionFactory
 
     /**
      * Create a client or server exception.
-     *
-     * @param \Exception $previous
-     *
-     * @return ClientException|ServerException
      */
     private static function createException(RequestInterface $request,
         ResponseInterface $altered,
         \Exception $previous = null,
         array $ctx = []
-    ) {
+    ): ClientException|ServerException {
         if ($altered->getStatusCode() >= 400 && $altered->getStatusCode() < 500) {
             return new ClientException($request, $altered, $previous, $ctx);
         }

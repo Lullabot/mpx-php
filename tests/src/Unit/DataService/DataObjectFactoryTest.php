@@ -18,13 +18,13 @@ use Lullabot\Mpx\DataService\ObjectListIterator;
 use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\Tests\Unit\DataService\CustomField\NeverUsedCustomField;
 use Lullabot\Mpx\Tests\Unit\DataService\CustomField\SeriesCustomField;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Lock\StoreInterface;
 
 /**
  * Tests the DataObjectFactory.
@@ -51,15 +51,17 @@ class DataObjectFactoryTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             function (\Psr\Http\Message\RequestInterface $request) {
                 $this->assertEquals('https', $request->getUri()->getScheme());
-                $this->assertEquals('/media/data/Media/2602559', $request->getUri()->getPath());
+                $this->assertEquals('/media/data/Media/2602559', $request->getUri()
+                    ->getPath());
 
                 return new JsonResponse(200, [], 'media-object.json');
             },
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
+            ->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
@@ -90,15 +92,16 @@ class DataObjectFactoryTest extends TestCase
             new JsonResponse(200, [], 'resolveDomain.json'),
             function (\Psr\Http\Message\RequestInterface $request) {
                 $this->assertEquals('https', $request->getUri()->getScheme());
-                $this->assertEquals('/media/data/Media/12345', $request->getUri()->getPath());
+                $this->assertEquals('/media/data/Media/12345', $request->getUri()
+                    ->getPath());
 
                 return new JsonResponse(200, [], 'media-object.json');
             },
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
@@ -129,8 +132,8 @@ class DataObjectFactoryTest extends TestCase
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
@@ -166,8 +169,8 @@ class DataObjectFactoryTest extends TestCase
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
@@ -192,8 +195,8 @@ class DataObjectFactoryTest extends TestCase
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
@@ -220,15 +223,15 @@ class DataObjectFactoryTest extends TestCase
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
-        $media = $factory->loadByNumericId(2602559)->wait();
+        $media = $factory->loadByNumericId(2_602_559)->wait();
         $this->assertInstanceOf(Media::class, $media);
         $this->assertEquals('http://data.media.theplatform.com/media/data/Media/2602559', $media->getId());
     }
@@ -255,8 +258,8 @@ class DataObjectFactoryTest extends TestCase
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
@@ -265,7 +268,7 @@ class DataObjectFactoryTest extends TestCase
         $factory = new DataObjectFactory($service, $authenticatedClient);
 
         /** @var Media $media */
-        $media = $factory->loadByNumericId(2602559)->wait();
+        $media = $factory->loadByNumericId(2_602_559)->wait();
         $customFields = $media->getCustomFields();
         $this->assertInstanceOf(SeriesCustomField::class, $customFields['http://www.example.com/xml']);
 

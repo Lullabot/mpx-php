@@ -15,7 +15,7 @@ abstract class ClassGeneratorBase extends MpxCommandBase
     /**
      * Maps custom mpx field types to PHP datatypes.
      */
-    public const TYPE_MAP = [
+    final public const TYPE_MAP = [
         'AvailabilityState' => 'string',
         'Boolean' => 'bool',
         'dataType[]' => 'array',

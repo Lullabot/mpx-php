@@ -42,6 +42,7 @@ class Dummy extends ParentDummy
 
     /**
      * @var \DateTime[]
+     *
      * @Groups({"a", "b"})
      */
     public $collection;
@@ -57,7 +58,9 @@ class Dummy extends ParentDummy
     public $mixedCollection;
 
     /**
-     * @var ParentDummy
+     * B.
+     *
+     * @var ParentDummy|null
      */
     public $B;
 
@@ -105,8 +108,6 @@ class Dummy extends ParentDummy
 
     /**
      * This should not be removed.
-     *
-     * @var
      */
     public $emptyVar;
 
@@ -136,8 +137,6 @@ class Dummy extends ParentDummy
 
     /**
      * B.
-     *
-     * @param ParentDummy|null $parent
      */
     public function setB(ParentDummy $parent = null)
     {
@@ -163,16 +162,10 @@ class Dummy extends ParentDummy
     {
     }
 
-    /**
-     * @param self $self
-     */
     public function setSelf(self $self)
     {
     }
 
-    /**
-     * @param parent $realParent
-     */
     public function setRealParent(parent $realParent)
     {
     }

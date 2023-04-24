@@ -118,7 +118,7 @@ class DataObjectFactory
         // there is no way to access it from within the extractor. We can't
         // alter $context in the CJsonEncoder as it is not passed by reference.
         // @todo This feels like a bit of a hack.
-        $decoded = \GuzzleHttp\json_decode($data, true);
+        $decoded = \GuzzleHttp\Utils::jsonDecode($data, true);
         if (isset($decoded['$xmlns'])) {
             $dataServiceExtractor->setNamespaceMapping($decoded['$xmlns']);
         }
@@ -186,9 +186,7 @@ class DataObjectFactory
         }
 
         $response = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
-            function (ResponseInterface $response) {
-                return $this->deserialize($response->getBody(), $this->dataService->getClass());
-            }
+            fn (ResponseInterface $response) => $this->deserialize($response->getBody(), $this->dataService->getClass())
         );
 
         return $response;
@@ -244,9 +242,7 @@ class DataObjectFactory
         $uri = $this->getBaseUri($annotation, true);
 
         $request = $this->authenticatedClient->requestAsync('GET', $uri, $options)->then(
-            function (ResponseInterface $response) use ($objectListQuery) {
-                return $this->deserializeObjectList($response, $objectListQuery);
-            }
+            fn (ResponseInterface $response) => $this->deserializeObjectList($response, $objectListQuery)
         );
 
         return $request;
@@ -268,7 +264,7 @@ class DataObjectFactory
         $list = $this->deserialize($data, ObjectList::class);
 
         // Set the json representation of each entry in the list.
-        $decoded = \GuzzleHttp\json_decode($data, true);
+        $decoded = \GuzzleHttp\Utils::jsonDecode($data, true);
         foreach ($list as $index => $item) {
             $entry = $decoded['entries'][$index];
             if (isset($decoded['$xmlns'])) {

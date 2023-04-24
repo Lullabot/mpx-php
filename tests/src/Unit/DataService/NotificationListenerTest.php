@@ -3,7 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use function GuzzleHttp\Psr7\parse_query;
+use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
@@ -12,12 +12,12 @@ use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\NotificationListener;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
-use Symfony\Component\Lock\StoreInterface;
 
 /**
  * Tests listening for notifications.
@@ -36,7 +36,7 @@ class NotificationListenerTest extends TestCase
      */
     public function testSync()
     {
-        $notification_id = rand(1, getrandmax());
+        $notification_id = random_int(1, mt_getrandmax());
 
         $account_id = 'https://www.example.com/12345';
         $account = new Account();
@@ -46,7 +46,7 @@ class NotificationListenerTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'resolveAllUrls.json'),
             function (RequestInterface $request) use ($notification_id, $account_id) {
-                $params = parse_query($request->getUri()->getQuery());
+                $params = Query::parse($request->getUri()->getQuery());
                 $this->assertArrayHasKey('account', $params);
                 $this->assertEquals($account_id, $params['account']);
 
@@ -59,8 +59,8 @@ class NotificationListenerTest extends TestCase
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
@@ -90,7 +90,7 @@ class NotificationListenerTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'resolveAllUrls.json'),
             function (RequestInterface $request) use ($account_id) {
-                $params = parse_query($request->getUri()->getQuery());
+                $params = Query::parse($request->getUri()->getQuery());
                 $this->assertArrayHasKey('account', $params);
                 $this->assertEquals($account_id, $params['account']);
 
@@ -99,8 +99,8 @@ class NotificationListenerTest extends TestCase
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
@@ -119,7 +119,7 @@ class NotificationListenerTest extends TestCase
 
             $this->assertEquals($index, $notification->getId());
 
-            (1 == $index ? $method = 'put' : $method = 'post');
+            1 == $index ? $method = 'put' : $method = 'post';
             $this->assertEquals($method, $notification->getMethod());
             $this->assertEquals('Media', $notification->getType());
 
@@ -130,7 +130,7 @@ class NotificationListenerTest extends TestCase
             $this->assertEquals('http://data.media.theplatform.com/media/data/Media/'.$index, $media->getId());
             $this->assertEquals('http://access.auth.theplatform.com/data/Account/'.$index, $media->getOwnerId());
             $this->assertEquals('https://identity.auth.theplatform.com/idm/data/User/service/'.$index, $media->getUpdatedByUserId());
-            $this->assertEquals(1521790000 + ($index - 1) * 1000, $media->getUpdated()->format('U'));
+            $this->assertEquals(1_521_790_000 + ($index - 1) * 1000, $media->getUpdated()->format('U'));
         }
     }
 }

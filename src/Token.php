@@ -7,7 +7,7 @@ namespace Lullabot\Mpx;
  *
  * @see https://docs.theplatform.com/help/wsf-signin-method
  */
-class Token
+class Token implements \Stringable
 {
     /**
      * The value of the token, as returned by the signIn() method.
@@ -141,10 +141,8 @@ class Token
 
     /**
      * Return the value of this token.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->value;
     }
