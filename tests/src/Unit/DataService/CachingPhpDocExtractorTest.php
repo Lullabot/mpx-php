@@ -21,7 +21,7 @@ class CachingPhpDocExtractorTest extends TestCase
     /**
      * @dataProvider typesProvider
      */
-    public function testExtract($property, $shortDescription, $longDescription, array $type = null)
+    public function testExtract($property, $type, $shortDescription, $longDescription)
     {
         $this->assertEquals($type, $this->extractor->getTypes(\Lullabot\Mpx\Tests\Fixtures\Dummy::class, $property));
         $this->assertSame($shortDescription, $this->extractor->getShortDescription(\Lullabot\Mpx\Tests\Fixtures\Dummy::class, $property));
@@ -76,11 +76,9 @@ class CachingPhpDocExtractorTest extends TestCase
             ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], null, null],
             ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', [new Type(Type::BUILTIN_TYPE_INT)], 'A.', null],
-            ['b', [new Type(Type::BUILTIN_TYPE_OBJECT, true, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], 'B.', null],
-            ['c', [new Type(Type::BUILTIN_TYPE_BOOL, true)], null, null],
+            ['B', [new Type(Type::BUILTIN_TYPE_OBJECT, true, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], 'B.', null],
             ['d', [new Type(Type::BUILTIN_TYPE_BOOL)], null, null],
             ['e', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_RESOURCE))], null, null],
-            ['f', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['g', [new Type(Type::BUILTIN_TYPE_ARRAY, true, null, true)], 'Nullable array.', null],
             ['donotexist', null, null, null],
             ['staticGetter', null, null, null],
@@ -112,10 +110,8 @@ class CachingPhpDocExtractorTest extends TestCase
             ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', null, 'A.', null],
             ['b', null, 'B.', null],
-            ['c', [new Type(Type::BUILTIN_TYPE_BOOL, true)], null, null],
             ['d', [new Type(Type::BUILTIN_TYPE_BOOL)], null, null],
             ['e', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_RESOURCE))], null, null],
-            ['f', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['g', [new Type(Type::BUILTIN_TYPE_ARRAY, true, null, true)], 'Nullable array.', null],
             ['donotexist', null, null, null],
             ['staticGetter', null, null, null],

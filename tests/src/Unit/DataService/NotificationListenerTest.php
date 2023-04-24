@@ -3,6 +3,7 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\DataService\Access\Account;
@@ -11,14 +12,12 @@ use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\NotificationListener;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
-use Symfony\Component\Lock\StoreInterface;
-
-use function GuzzleHttp\Psr7\parse_query;
 
 /**
  * Tests listening for notifications.
@@ -47,7 +46,7 @@ class NotificationListenerTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'resolveAllUrls.json'),
             function (RequestInterface $request) use ($notification_id, $account_id) {
-                $params = parse_query($request->getUri()->getQuery());
+                $params = Query::parse($request->getUri()->getQuery());
                 $this->assertArrayHasKey('account', $params);
                 $this->assertEquals($account_id, $params['account']);
 
@@ -60,8 +59,8 @@ class NotificationListenerTest extends TestCase
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
@@ -91,7 +90,7 @@ class NotificationListenerTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'resolveAllUrls.json'),
             function (RequestInterface $request) use ($account_id) {
-                $params = parse_query($request->getUri()->getQuery());
+                $params = Query::parse($request->getUri()->getQuery());
                 $this->assertArrayHasKey('account', $params);
                 $this->assertEquals($account_id, $params['account']);
 
@@ -100,8 +99,8 @@ class NotificationListenerTest extends TestCase
         ]);
         $user = new User('mpx/username', 'password');
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);

@@ -7,6 +7,7 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
@@ -15,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Component\Lock\Exception\LockConflictedException;
-use Symfony\Component\Lock\StoreInterface;
 
 /**
  * Tests mpx user accounts.
@@ -42,8 +42,8 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'signout.json'),
         ]);
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')
@@ -73,8 +73,8 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-fail.json'),
         ]);
 
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')
@@ -106,8 +106,8 @@ class UserSessionTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'signin-success.json'),
         ]);
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')
@@ -170,8 +170,8 @@ class UserSessionTest extends TestCase
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
         ]);
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->once())->method('waitAndSave')
             ->willThrowException(new LockConflictedException());

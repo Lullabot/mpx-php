@@ -62,7 +62,9 @@ final class CachingContextFactory
             $tokens = new \ArrayIterator(\PhpToken::tokenize($fileContents));
 
             while ($tokens->valid()) {
-                switch ($tokens->current()[0]) {
+                $token = $tokens->current();
+                \assert($token instanceof \PhpToken);
+                switch ($token->id) {
                     case \T_NAMESPACE:
                         $currentNamespace = $this->parseNamespace($tokens);
                         break;
@@ -73,16 +75,16 @@ final class CachingContextFactory
                         $braceLevel = 0;
                         $firstBraceFound = false;
                         while ($tokens->valid() && ($braceLevel > 0 || !$firstBraceFound)) {
-                            if ('{' === $tokens->current()
-                                || \T_CURLY_OPEN === $tokens->current()[0]
-                                || \T_DOLLAR_OPEN_CURLY_BRACES === $tokens->current()[0]) {
+                            if ('{' === $token
+                                || \T_CURLY_OPEN === $token->id
+                                || \T_DOLLAR_OPEN_CURLY_BRACES === $token->id) {
                                 if (!$firstBraceFound) {
                                     $firstBraceFound = true;
                                 }
                                 ++$braceLevel;
                             }
 
-                            if ('}' === $tokens->current()) {
+                            if ('}' === $token) {
                                 --$braceLevel;
                             }
                             $tokens->next();
@@ -114,9 +116,9 @@ final class CachingContextFactory
         $this->skipToNextStringOrNamespaceSeparator($tokens);
 
         $name = '';
-        while ($tokens->valid() && (\T_STRING === $tokens->current()[0] || \T_NS_SEPARATOR === $tokens->current()[0])
+        while ($tokens->valid() && (\T_STRING === $tokens->current()->id || \T_NS_SEPARATOR === $tokens->current()->id)
         ) {
-            $name .= $tokens->current()[1];
+            $name .= $tokens->current()->text;
             $tokens->next();
         }
 
@@ -138,7 +140,7 @@ final class CachingContextFactory
 
             [$alias, $fqnn] = str_split($this->extractUseStatement($tokens));
             $uses[$alias] = $fqnn;
-            if (self::T_LITERAL_END_OF_USE === $tokens->current()[0]) {
+            if (self::T_LITERAL_END_OF_USE === $tokens->current()->id) {
                 $continue = false;
             }
         }
@@ -151,7 +153,7 @@ final class CachingContextFactory
      */
     private function skipToNextStringOrNamespaceSeparator(\ArrayIterator $tokens)
     {
-        while ($tokens->valid() && (\T_STRING !== $tokens->current()[0]) && (\T_NS_SEPARATOR !== $tokens->current()[0])) {
+        while ($tokens->valid() && (\T_STRING !== $tokens->current()->id) && (\T_NS_SEPARATOR !== $tokens->current()->id)) {
             $tokens->next();
         }
     }
@@ -166,14 +168,14 @@ final class CachingContextFactory
     {
         $result = [''];
         while ($tokens->valid()
-            && (self::T_LITERAL_USE_SEPARATOR !== $tokens->current()[0])
-            && (self::T_LITERAL_END_OF_USE !== $tokens->current()[0])
+            && (self::T_LITERAL_USE_SEPARATOR !== $tokens->current()->id)
+            && (self::T_LITERAL_END_OF_USE !== $tokens->current()->id)
         ) {
-            if (\T_AS === $tokens->current()[0]) {
+            if (\T_AS === $tokens->current()->id) {
                 $result[] = '';
             }
-            if (\T_STRING === $tokens->current()[0] || \T_NS_SEPARATOR === $tokens->current()[0]) {
-                $result[\count($result) - 1] .= $tokens->current()[1];
+            if (\T_STRING === $tokens->current()->id || \T_NS_SEPARATOR === $tokens->current()->id) {
+                $result[\count($result) - 1] .= $tokens->current()->text;
             }
             $tokens->next();
         }

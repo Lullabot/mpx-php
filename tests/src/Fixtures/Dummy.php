@@ -58,7 +58,9 @@ class Dummy extends ParentDummy
     public $mixedCollection;
 
     /**
-     * @var ParentDummy
+     * B.
+     *
+     * @var ParentDummy|null
      */
     public $B;
 

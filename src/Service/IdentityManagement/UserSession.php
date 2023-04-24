@@ -9,8 +9,8 @@ use Lullabot\Mpx\Token;
 use Lullabot\Mpx\TokenCachePool;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
-use Symfony\Component\Lock\Factory;
-use Symfony\Component\Lock\StoreInterface;
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\PersistingStoreInterface;
 
 /**
  * Defines a class for authenticating a user with mpx.
@@ -40,7 +40,7 @@ class UserSession
     /**
      * The backend lock store used to store a lock when signing in to mpx.
      *
-     * @var StoreInterface
+     * @var PersistingStoreInterface
      */
     protected $store;
 
@@ -61,14 +61,14 @@ class UserSession
     /**
      * Construct a new mpx user.
      *
-     * @see \Psr\Log\NullLogger To disable logging of token requests.
+     * @param UserInterface                                         $user           The user to authenticate as.
+     * @param Client                                                $client         The client used to access mpx.
+     * @param \Symfony\Component\Lock\PersistingStoreInterface|null $store          (optional) The lock backend to store locks in.
+     * @param \Lullabot\Mpx\TokenCachePool|null                     $tokenCachePool (optional) The cache of authentication tokens.
      *
-     * @param UserInterface  $user           The user to authenticate as.
-     * @param Client         $client         The client used to access mpx.
-     * @param StoreInterface $store          (optional) The lock backend to store locks in.
-     * @param TokenCachePool $tokenCachePool (optional) The cache of authentication tokens.
+     * @see \Psr\Log\NullLogger To disable logging of token requests.
      */
-    public function __construct(UserInterface $user, Client $client, StoreInterface $store = null, TokenCachePool $tokenCachePool = null)
+    public function __construct(UserInterface $user, Client $client, PersistingStoreInterface $store = null, TokenCachePool $tokenCachePool = null)
     {
         $this->user = $user;
         $this->client = $client;
@@ -125,7 +125,7 @@ class UserSession
             $options
         );
 
-        $data = \GuzzleHttp\json_decode($response->getBody(), true);
+        $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
 
         $token = $this->tokenFromResponse($data);
         $this->logger->info(
@@ -165,12 +165,14 @@ class UserSession
     /**
      * Sign in to mpx, with a lock to prevent sign-in stampedes.
      *
-     * @param int $duration (optional) The number of seconds that the sign-in token should be valid for.
+     * @param int|null $duration (optional) The number of seconds that the sign-in token should be valid for.
+     *
+     * @return \Lullabot\Mpx\Token The token.
      */
     protected function signInWithLock(int $duration = null): Token
     {
         if ($this->store) {
-            $factory = new Factory($this->store);
+            $factory = new LockFactory($this->store);
             $factory->setLogger($this->logger);
             $lock = $factory->createLock($this->user->getMpxUsername(), 10);
 

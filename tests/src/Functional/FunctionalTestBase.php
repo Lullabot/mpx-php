@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Lock\StoreInterface;
 
 abstract class FunctionalTestBase extends TestCase
 {
@@ -76,8 +75,8 @@ abstract class FunctionalTestBase extends TestCase
 
         // Since this is a single thread within a test, we know it's impossible
         // for the lock to fail so we can stub out the entire class.
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        /** @var DummyStorageInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStorageInterface::class)->getMock();
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);

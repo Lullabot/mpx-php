@@ -13,6 +13,7 @@ use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
+use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\Token;
@@ -21,7 +22,6 @@ use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Lock\StoreInterface;
 
 /**
  * @coversDefaultClass \Lullabot\Mpx\AuthenticatedClient
@@ -62,8 +62,8 @@ class AuthenticatedClientTest extends TestCase
                 return new JsonResponse(200, [], 'getSelfId.json');
             },
         ]);
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')
@@ -107,8 +107,8 @@ class AuthenticatedClientTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(200, [], 'getSelfId.json'),
         ]);
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')
@@ -149,8 +149,8 @@ class AuthenticatedClientTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(403, [], '{}'),
         ]);
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')
@@ -189,8 +189,8 @@ class AuthenticatedClientTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             new JsonResponse(503, [], '{}'),
         ]);
-        /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
-        $store = $this->getMockBuilder(StoreInterface::class)
+        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
             ->method('exists')

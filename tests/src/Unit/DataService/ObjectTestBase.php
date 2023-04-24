@@ -71,7 +71,7 @@ abstract class ObjectTestBase extends TestCase
         $this->serializer = new Serializer($normalizers, $encoders);
 
         $data = file_get_contents(__DIR__."/../../../fixtures/$fixture");
-        $this->decoded = \GuzzleHttp\json_decode($data, true);
+        $this->decoded = \GuzzleHttp\Utils::jsonDecode($data, true);
     }
 
     protected function assertObjectClass($class, string $field, $expected)

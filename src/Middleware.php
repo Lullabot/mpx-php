@@ -37,7 +37,7 @@ $handler($request, $options)->then(
             return $response;
         }
 
-        $data = \GuzzleHttp\json_decode($response->getBody(), true);
+        $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
 
         // Notification responses have a different exception format.
         if (isset($data[0]) && isset($data[0]['type']) && 'Exception' == $data[0]['type']) {

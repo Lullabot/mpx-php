@@ -118,7 +118,7 @@ class DataObjectFactory
         // there is no way to access it from within the extractor. We can't
         // alter $context in the CJsonEncoder as it is not passed by reference.
         // @todo This feels like a bit of a hack.
-        $decoded = \GuzzleHttp\json_decode($data, true);
+        $decoded = \GuzzleHttp\Utils::jsonDecode($data, true);
         if (isset($decoded['$xmlns'])) {
             $dataServiceExtractor->setNamespaceMapping($decoded['$xmlns']);
         }
@@ -264,7 +264,7 @@ class DataObjectFactory
         $list = $this->deserialize($data, ObjectList::class);
 
         // Set the json representation of each entry in the list.
-        $decoded = \GuzzleHttp\json_decode($data, true);
+        $decoded = \GuzzleHttp\Utils::jsonDecode($data, true);
         foreach ($list as $index => $item) {
             $entry = $decoded['entries'][$index];
             if (isset($decoded['$xmlns'])) {

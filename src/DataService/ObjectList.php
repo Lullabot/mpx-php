@@ -266,7 +266,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->getEntries()[$offset];
     }
@@ -332,7 +332,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
      */
     public function setJson(string $json): void
     {
-        $this->json = \GuzzleHttp\json_decode($json, true);
+        $this->json = \GuzzleHttp\Utils::jsonDecode($json, true);
     }
 
     /**
