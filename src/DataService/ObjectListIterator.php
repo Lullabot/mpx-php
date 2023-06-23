@@ -71,6 +71,7 @@ class ObjectListIterator extends \NoRewindIterator
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->list[$this->relative];
@@ -79,6 +80,7 @@ class ObjectListIterator extends \NoRewindIterator
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         ++$this->position;
@@ -87,6 +89,7 @@ class ObjectListIterator extends \NoRewindIterator
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->position;
@@ -95,6 +98,7 @@ class ObjectListIterator extends \NoRewindIterator
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         // Initial setup if this is the first page.

@@ -258,6 +258,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->getEntries()[$offset]);
@@ -266,6 +267,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->getEntries()[$offset];
@@ -274,6 +276,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->entries[$offset] = $value;
@@ -282,6 +285,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->entries[$offset]);
@@ -290,6 +294,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->entries[$this->position];
@@ -298,6 +303,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->position;
@@ -306,6 +312,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return isset($this->entries[$this->position]);
@@ -314,6 +321,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->position = 0;
@@ -322,6 +330,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         ++$this->position;
