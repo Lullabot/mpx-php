@@ -25,7 +25,7 @@ namespace Lullabot\Mpx\DataService\DateTime;
  * The above example shows working with a DateTimeFormatInterface object,
  * demonstrating an empty return from the format method when the date is empty.
  */
-interface DateTimeFormatInterface extends \DateTimeInterface
+interface DateTimeFormatInterface
 {
     /**
      * Returns date formatted according to given format.
