@@ -22,7 +22,7 @@ class UnixMillisecondNormalizer extends DateTimeNormalizer
     /**
      * {@inheritdoc}
      */
-    public function denormalize($data, $type, $format = null, array $context = []): \DateTimeInterface
+    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): \DateTimeInterface
     {
         if (!\is_int($data)) {
             throw new NotNormalizableValueException('The data is not an integer, you should pass an integer representing the unix time in milliseconds.');
