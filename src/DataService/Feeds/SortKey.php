@@ -25,8 +25,6 @@ class SortKey
 
     /**
      * Get the name of the field on which to sort.
-     *
-     * @return string
      */
     public function getField(): ?string
     {
@@ -35,8 +33,6 @@ class SortKey
 
     /**
      * Set the name of the field on which to sort.
-     *
-     * @param string $field
      */
     public function setField(?string $field): void
     {
@@ -45,8 +41,6 @@ class SortKey
 
     /**
      * Get whether the objects are sorted in descending order.
-     *
-     * @return bool
      */
     public function getDescending(): ?bool
     {
@@ -55,8 +49,6 @@ class SortKey
 
     /**
      * Set whether the objects are sorted in descending order.
-     *
-     * @param bool $descending
      */
     public function setDescending(?bool $descending): void
     {

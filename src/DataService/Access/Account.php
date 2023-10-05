@@ -176,8 +176,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns the description of this object. The description field is represented as the summary field in Atom object representations to comply with that format's standards.
-     *
-     * @return string
      */
     public function getDescription(): ?string
     {
@@ -186,8 +184,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set the description of this object. The description field is represented as the summary field in Atom object representations to comply with that format's standards.
-     *
-     * @param string $description
      */
     public function setDescription(?string $description)
     {
@@ -197,8 +193,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Returns whether this account is disabled. If this field is set to true, the Access management service will not authorize any operations in this account.
      * Beginning with Access management service version 2.4, the Access management service will not authorize any operations in any subaccount of this account, regardless of the value of this field on the subaccount's Account object.
-     *
-     * @return bool
      */
     public function getDisabled(): ?bool
     {
@@ -208,8 +202,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set whether this account is disabled. If this field is set to true, the Access management service will not authorize any operations in this account.
      * Beginning with Access management service version 2.4, the Access management service will not authorize any operations in any subaccount of this account, regardless of the value of this field on the subaccount's Account object.
-     *
-     * @param bool $disabled
      */
     public function setDisabled(?bool $disabled)
     {
@@ -258,8 +250,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns an alternate identifier for this object that is unique within the owning account. To comply with the Atom format's standards, the guid field is serialized as the <id> element in Atom payloads. If the guid field value does not begin with the value urn:publicid:, the value urn:theplatform:guid: is prepended to the actual field value. See the Retrieving Account objects page for information about retrieving Account objects based on this field's value.
-     *
-     * @return string
      */
     public function getGuid(): ?string
     {
@@ -268,8 +258,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set an alternate identifier for this object that is unique within the owning account. To comply with the Atom format's standards, the guid field is serialized as the <id> element in Atom payloads. If the guid field value does not begin with the value urn:publicid:, the value urn:theplatform:guid: is prepended to the actual field value. See the Retrieving Account objects page for information about retrieving Account objects based on this field's value.
-     *
-     * @param string $guid
      */
     public function setGuid(?string $guid)
     {
@@ -298,8 +286,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns whether this object currently allows updates. If this field is set to true, no other fields can be updated.
-     *
-     * @return bool
      */
     public function getLocked(): ?bool
     {
@@ -308,8 +294,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set whether this object currently allows updates. If this field is set to true, no other fields can be updated.
-     *
-     * @param bool $locked
      */
     public function setLocked(?bool $locked)
     {
@@ -340,8 +324,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
      * Returns a public identifier for the account. For Account objects that represent subaccounts, this field is populated with the pid of the parent account unless you specify a different value. If you do not specify a unique value for this field in a subaccount, the inherited value is automatically updated if the owning account's pid value is modified. If you do specify a value for this field in a subaccount, you can reset the field to use the inherited value by clearing this field.
      * This field's value is not required to be unique. All of the accounts in a given account hierarchy will share a common pid value unless you explicitly set a different value for one or more of the subaccounts in that hierarchy. However, if you want to override one or more of a parent account's registry entries in a particular subaccount, you must give that subaccount a unique pid.
      * See Retrieving Account objects for information about retrieving Accountobjects based on this field's value.
-     *
-     * @return string
      */
     public function getPid(): ?string
     {
@@ -352,8 +334,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
      * Set a public identifier for the account. For Account objects that represent subaccounts, this field is populated with the pid of the parent account unless you specify a different value. If you do not specify a unique value for this field in a subaccount, the inherited value is automatically updated if the owning account's pid value is modified. If you do specify a value for this field in a subaccount, you can reset the field to use the inherited value by clearing this field.
      * This field's value is not required to be unique. All of the accounts in a given account hierarchy will share a common pid value unless you explicitly set a different value for one or more of the subaccounts in that hierarchy. However, if you want to override one or more of a parent account's registry entries in a particular subaccount, you must give that subaccount a unique pid.
      * See Retrieving Account objects for information about retrieving Accountobjects based on this field's value.
-     *
-     * @param string $pid
      */
     public function setPid(?string $pid)
     {
@@ -362,8 +342,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns the account's region. This field is only returned by queries to the http://access.auth.theplatform.com/data/Account endpoint.
-     *
-     * @return string
      */
     public function getRegion(): ?string
     {
@@ -372,8 +350,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set the account's region. This field is only returned by queries to the http://access.auth.theplatform.com/data/Account endpoint.
-     *
-     * @param string $region
      */
     public function setRegion(?string $region)
     {
@@ -382,8 +358,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns the name of this object. This field's value must be globally unique, and cannot include the pipe (|) character. See Retrieving Account objects for information about retrieving Account objects based on this field's value.
-     *
-     * @return string
      */
     public function getTitle(): ?string
     {
@@ -392,8 +366,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set the name of this object. This field's value must be globally unique, and cannot include the pipe (|) character. See Retrieving Account objects for information about retrieving Account objects based on this field's value.
-     *
-     * @param string $title
      */
     public function setTitle(?string $title)
     {
@@ -442,8 +414,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Returns this object's modification version. The data service automatically increments this field's value each time the object is modified. You can use the versionfield to enforce optimistic locking.
-     *
-     * @return int
      */
     public function getVersion(): ?int
     {
@@ -452,8 +422,6 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
 
     /**
      * Set this object's modification version. The data service automatically increments this field's value each time the object is modified. You can use the versionfield to enforce optimistic locking.
-     *
-     * @param int $version
      */
     public function setVersion(?int $version)
     {

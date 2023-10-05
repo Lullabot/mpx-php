@@ -15,9 +15,6 @@ class PlugInInstanceTest extends ObjectTestBase
 {
     protected $class = PlugInInstance::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,8 +38,6 @@ class PlugInInstanceTest extends ObjectTestBase
     }
 
     /**
-     * @param string $class
-     *
      * @return array
      */
     public function getSetMethods()

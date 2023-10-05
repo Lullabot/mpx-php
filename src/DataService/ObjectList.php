@@ -255,89 +255,56 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetExists($offset): bool
     {
         return isset($this->getEntries()[$offset]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetGet($offset): mixed
     {
         return $this->getEntries()[$offset];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetSet($offset, $value): void
     {
         $this->entries[$offset] = $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetUnset($offset): void
     {
         unset($this->entries[$offset]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function current(): mixed
     {
         return $this->entries[$this->position];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function key(): mixed
     {
         return $this->position;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function valid(): bool
     {
         return isset($this->entries[$this->position]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rewind(): void
     {
         $this->position = 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function next(): void
     {
         ++$this->position;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setJson(string $json): void
     {
         $this->json = \GuzzleHttp\Utils::jsonDecode($json, true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJson(): array
     {
         if (!$this->json) {

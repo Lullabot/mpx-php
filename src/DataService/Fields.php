@@ -30,9 +30,6 @@ class Fields implements QueryPartsInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toQueryParts(): array
     {
         $fields = [];

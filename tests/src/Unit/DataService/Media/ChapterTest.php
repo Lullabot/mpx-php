@@ -15,9 +15,6 @@ class ChapterTest extends ObjectTestBase
 {
     protected $class = Chapter::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

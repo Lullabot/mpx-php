@@ -23,9 +23,6 @@ class MediaTest extends ObjectTestBase
 {
     protected $class = Media::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -102,8 +99,6 @@ class MediaTest extends ObjectTestBase
     }
 
     /**
-     * @param string $class
-     *
      * @return array
      */
     public function getSetMethods()

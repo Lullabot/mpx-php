@@ -19,9 +19,6 @@ class UriNormalizer implements NormalizerInterface, DenormalizerInterface
         UriInterface::class => true,
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function normalize($object, $format = null, array $context = [])
     {
         if (!$object instanceof UriInterface) {
@@ -31,17 +28,11 @@ class UriNormalizer implements NormalizerInterface, DenormalizerInterface
         return (string) $object;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, $format = null)
     {
         return $data instanceof UriInterface;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         // If an empty string is normalized, we can still return a valid URI object.
@@ -58,9 +49,6 @@ class UriNormalizer implements NormalizerInterface, DenormalizerInterface
         return $object;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return isset(self::$supportedTypes[$type]);

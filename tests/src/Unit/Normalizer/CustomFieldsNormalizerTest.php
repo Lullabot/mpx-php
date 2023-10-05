@@ -148,164 +148,98 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
      */
     protected $ownerId;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAdded(): DateTimeFormatInterface
     {
         return $this->added;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAdded(DateTimeFormatInterface $added)
     {
         $this->added = $added;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAddedByUserId(): UriInterface
     {
         return $this->addedByUserId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAddedByUserId(UriInterface $addedByUserId)
     {
         $this->addedByUserId = $addedByUserId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId(): UriInterface
     {
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setId(UriInterface $id)
     {
         $this->id = $id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOwnerId(): UriInterface
     {
         return $this->ownerId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setOwnerId(UriInterface $ownerId)
     {
         $this->ownerId = $ownerId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): ?string
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setDescription(?string $description)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getGuid(): ?string
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setGuid(?string $guid)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLocked(): ?bool
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLocked(?bool $locked)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): ?string
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTitle(?string $title)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUpdated(): DateTimeFormatInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUpdated(DateTimeFormatInterface $updated)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUpdatedByUserId(): UriInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUpdatedByUserId(UriInterface $updatedByUserId)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getVersion(): ?int
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setVersion(?int $version)
     {
     }

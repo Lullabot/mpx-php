@@ -24,9 +24,6 @@ class TokenCachePoolTest extends TestCase
      */
     protected $token;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         /* @var \Lullabot\Mpx\Service\IdentityManagement\UserSession|\PHPUnit_Framework_MockObject_MockObject $user */

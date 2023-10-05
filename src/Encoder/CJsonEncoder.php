@@ -9,9 +9,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
  */
 class CJsonEncoder extends JsonEncoder
 {
-    /**
-     * {@inheritdoc}
-     */
     public function decode(string $data, string $format, array $context = []): mixed
     {
         $decoded = parent::decode($data, $format, $context);

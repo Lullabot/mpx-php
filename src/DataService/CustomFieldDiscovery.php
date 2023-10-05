@@ -40,9 +40,6 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCustomFields(): array
     {
         if (!$this->customFields) {

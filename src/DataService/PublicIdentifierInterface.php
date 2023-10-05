@@ -14,8 +14,6 @@ interface PublicIdentifierInterface
 {
     /**
      * Returns the public identifier for this mpx object.
-     *
-     * @return string
      */
     public function getPid(): ?string;
 

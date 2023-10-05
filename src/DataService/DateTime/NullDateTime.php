@@ -7,9 +7,6 @@ namespace Lullabot\Mpx\DataService\DateTime;
  */
 class NullDateTime implements DateTimeFormatInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function format(string $format): string
     {
         return '';

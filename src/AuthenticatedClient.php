@@ -64,41 +64,26 @@ class AuthenticatedClient implements ClientInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function send(RequestInterface $request, array $options = []): ResponseInterface
     {
         return $this->sendWithRetry($request, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         return $this->sendAsyncWithRetry($request, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function request($method, $uri, array $options = []): ResponseInterface
     {
         return $this->requestWithRetry($method, $uri, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function requestAsync($method, $uri, array $options = []): PromiseInterface
     {
         return $this->requestAsyncWithRetry($method, $uri, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfig($option = null)
     {
         return $this->client->getConfig($option);

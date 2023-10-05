@@ -17,9 +17,6 @@ use Symfony\Component\PropertyInfo\Type;
  */
 class ResolveDomainResponseExtractor implements PropertyTypeExtractorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getTypes($class, $property, array $context = [])
     {
         if ('resolveDomainResponse' != $property) {

@@ -9,9 +9,6 @@ use GuzzleHttp\Psr7\Response;
  */
 class JsonResponse extends Response
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __construct($status = 200, array $headers = [], $body = null, $version = '1.1', $reason = null)
     {
         if (isset($body)) {

@@ -41,9 +41,6 @@ abstract class FunctionalTestBase extends TestCase
      */
     protected $account;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

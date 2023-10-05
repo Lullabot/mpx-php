@@ -40,9 +40,6 @@ class CustomFieldsNormalizer implements DenormalizerInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         // This is the annotated custom field class defining all custom fields.
@@ -59,9 +56,6 @@ class CustomFieldsNormalizer implements DenormalizerInterface
         return $this->serializer->denormalize($data['data'], $concreteClass);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return CustomFieldInterface::class == $type;

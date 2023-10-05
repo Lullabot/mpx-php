@@ -16,9 +16,6 @@ class ReleaseTest extends ObjectTestBase
 {
     protected $class = Release::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

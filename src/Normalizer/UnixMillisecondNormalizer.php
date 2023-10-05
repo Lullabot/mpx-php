@@ -49,7 +49,8 @@ class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInte
         $this->defaultContext = array_merge($this->defaultContext, $defaultContext);
     }
 
-    public function getSupportedTypes(?string $format): array {
+    public function getSupportedTypes(?string $format): array
+    {
         return self::$supportedTypes;
     }
 
@@ -61,14 +62,11 @@ class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInte
         return '';
     }
 
-    public function supportsNormalization(mixed $data, string $format = NULL): bool
+    public function supportsNormalization(mixed $data, string $format = null): bool
     {
-        return FALSE;
+        return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function denormalize(mixed $data, string $type, string $format = null, array $context = []): ConcreteDateTime
     {
         if (!\is_int($data)) {
@@ -86,9 +84,6 @@ class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInte
         return new ConcreteDateTime($date);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
     {
         return isset(self::$supportedTypes[$type]);
@@ -97,25 +92,28 @@ class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInte
     /**
      * This is a clone of DateTimeNormalizer::denormalize().
      *
-     * @param mixed $data
-     *   Data to restore.
-     * @param string $type
-     *   The expected class to instantiate.
-     * @param null|string $format
-     *   Format the given data was extracted from.
-     * @param array $context
-     *   Options available to the denormalizer.
+     * @param mixed       $data
+     *                             Data to restore.
+     * @param string      $type
+     *                             The expected class to instantiate.
+     * @param string|null $format
+     *                             Format the given data was extracted from.
+     * @param array       $context
+     *                             Options available to the denormalizer.
      *
      * @return void
      */
-    private function dateNormalizerDenormalize(mixed $data, string $type, string $format = null, array $context = []): mixed {
+    private function dateNormalizerDenormalize(mixed $data, string $type, string $format = null, array $context = []): mixed
+    {
         $dateTimeFormat = $context[self::FORMAT_KEY] ?? null;
         $timezone = $this->getTimezone($context);
 
         if (\is_int($data) || \is_float($data)) {
             switch ($dateTimeFormat) {
-                case 'U': $data = sprintf('%d', $data); break;
-                case 'U.u': $data = sprintf('%.6F', $data); break;
+                case 'U': $data = sprintf('%d', $data);
+                    break;
+                case 'U.u': $data = sprintf('%.6F', $data);
+                    break;
             }
         }
 

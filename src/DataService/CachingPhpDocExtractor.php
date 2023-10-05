@@ -54,15 +54,12 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         $this->arrayMutatorPrefixes = $arrayMutatorPrefixes ?? ReflectionExtractor::$defaultArrayMutatorPrefixes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getShortDescription(string $class, string $property, array $context = []): ?string
     {
         /** @var $docBlock DocBlock */
         [$docBlock] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
-            return NULL;
+            return null;
         }
 
         $shortDescription = $docBlock->getSummary();
@@ -83,15 +80,12 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLongDescription(string $class, string $property, array $context = []): ?string
     {
         /** @var $docBlock DocBlock */
         [$docBlock] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
-            return NULL;
+            return null;
         }
 
         $contents = $docBlock->getDescription()->render();
@@ -99,9 +93,6 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         return '' === $contents ? null : $contents;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTypes($class, $property, array $context = [])
     {
         /** @var $docBlock DocBlock */
@@ -228,8 +219,8 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
                 }
 
                 if (
-                    (self::ACCESSOR === $type && 0 === $reflectionMethod->getNumberOfRequiredParameters()) ||
-                    (self::MUTATOR === $type && $reflectionMethod->getNumberOfParameters() >= 1)
+                    (self::ACCESSOR === $type && 0 === $reflectionMethod->getNumberOfRequiredParameters())
+                    || (self::MUTATOR === $type && $reflectionMethod->getNumberOfParameters() >= 1)
                 ) {
                     break;
                 }

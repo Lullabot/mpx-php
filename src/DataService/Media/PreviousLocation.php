@@ -34,8 +34,6 @@ class PreviousLocation
 
     /**
      * Returns the MediaFile filePath value at the time moveFile was called.
-     *
-     * @return string
      */
     public function getFilePath(): ?string
     {
@@ -44,8 +42,6 @@ class PreviousLocation
 
     /**
      * Set the MediaFile filePath value at the time moveFile was called.
-     *
-     * @param string $filePath
      */
     public function setFilePath(?string $filePath)
     {
@@ -74,8 +70,6 @@ class PreviousLocation
 
     /**
      * Returns the MediaFile version value at the time moveFile was called.
-     *
-     * @return int
      */
     public function getVersion(): ?int
     {
@@ -84,8 +78,6 @@ class PreviousLocation
 
     /**
      * Set the MediaFile version value at the time moveFile was called.
-     *
-     * @param int $version
      */
     public function setVersion(?int $version)
     {

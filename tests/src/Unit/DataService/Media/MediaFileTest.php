@@ -23,9 +23,6 @@ class MediaFileTest extends ObjectTestBase
 {
     protected $class = MediaFile::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

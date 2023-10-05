@@ -72,9 +72,6 @@ class GuidMediaFeedUrl extends MediaFeedUrl
         $this->guids = $guids;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toUri(): UriInterface
     {
         $uri = $this->uriToFeedComponent();

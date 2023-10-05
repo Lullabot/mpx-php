@@ -27,8 +27,6 @@ class Credit
 
     /**
      * Returns the role that is being credited.
-     *
-     * @return string
      */
     public function getRole(): ?string
     {
@@ -37,8 +35,6 @@ class Credit
 
     /**
      * Set the role that is being credited.
-     *
-     * @param string $role
      */
     public function setRole(?string $role)
     {
@@ -47,8 +43,6 @@ class Credit
 
     /**
      * Returns the role scheme for the credit.
-     *
-     * @return string
      */
     public function getScheme(): ?string
     {
@@ -57,8 +51,6 @@ class Credit
 
     /**
      * Set the role scheme for the credit.
-     *
-     * @param string $scheme
      */
     public function setScheme(?string $scheme)
     {
@@ -67,8 +59,6 @@ class Credit
 
     /**
      * Returns the person or entity that is being credited.
-     *
-     * @return string
      */
     public function getValue(): ?string
     {
@@ -77,8 +67,6 @@ class Credit
 
     /**
      * Set the person or entity that is being credited.
-     *
-     * @param string $value
      */
     public function setValue(?string $value)
     {

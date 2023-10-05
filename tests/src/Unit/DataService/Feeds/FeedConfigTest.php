@@ -17,9 +17,6 @@ class FeedConfigTest extends ObjectTestBase
 {
     protected $class = FeedConfig::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

@@ -137,9 +137,6 @@ class Term implements QueryPartsInterface, TermInterface, \Stringable
         return '-' == $this->plusMinus;
     }
 
-    /**
-     * @param string $exclude
-     */
     public function exclude(): self
     {
         $this->plusMinus = '-';
@@ -184,9 +181,6 @@ class Term implements QueryPartsInterface, TermInterface, \Stringable
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toQueryParts(): array
     {
         return [

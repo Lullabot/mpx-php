@@ -21,33 +21,21 @@ abstract class ObjectBase implements ObjectInterface
      */
     protected $json;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCustomFields()
     {
         return $this->customFields;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setCustomFields(array $customFields)
     {
         $this->customFields = $customFields;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setJson(string $json)
     {
         $this->json = \GuzzleHttp\Utils::jsonDecode($json, true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getJson()
     {
         if (null === $this->json) {
@@ -57,17 +45,11 @@ abstract class ObjectBase implements ObjectInterface
         return $this->json;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMpxId(): UriInterface
     {
         return $this->getId();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setMpxId(UriInterface $id)
     {
         $this->setId($id);

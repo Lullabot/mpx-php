@@ -16,9 +16,6 @@ class AvailabilityWindowTest extends ObjectTestBase
 {
     protected $class = AvailabilityWindow::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -42,8 +39,6 @@ class AvailabilityWindowTest extends ObjectTestBase
     }
 
     /**
-     * @param string $class
-     *
      * @return array
      */
     public function getSetMethods()

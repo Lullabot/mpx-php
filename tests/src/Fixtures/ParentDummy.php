@@ -38,9 +38,6 @@ class ParentDummy
      */
     public $foo4;
 
-    /**
-     * @var mixed
-     */
     public $foo5;
 
     /**
