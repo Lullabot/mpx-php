@@ -54,7 +54,8 @@ class UriNormalizer implements NormalizerInterface, DenormalizerInterface
         return isset(self::$supportedTypes[$type]);
     }
 
-    public function getSupportedTypes(?string $format):array {
-      return self::$supportedTypes;
+    public function getSupportedTypes(?string $format): array
+    {
+        return self::$supportedTypes;
     }
 }
