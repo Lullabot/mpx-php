@@ -78,6 +78,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
                 return $varDescription;
             }
         }
+        return null;
     }
 
     public function getLongDescription(string $class, string $property, array $context = []): ?string

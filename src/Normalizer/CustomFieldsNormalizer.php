@@ -60,4 +60,8 @@ class CustomFieldsNormalizer implements DenormalizerInterface
     {
         return CustomFieldInterface::class == $type;
     }
+
+  public function getSupportedTypes(?string $format): array {
+    return [CustomFieldInterface::class => false];
+  }
 }

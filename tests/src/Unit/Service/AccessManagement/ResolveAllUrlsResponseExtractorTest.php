@@ -26,9 +26,9 @@ class ResolveAllUrlsResponseExtractorTest extends TestCase
         /** @var \Symfony\Component\PropertyInfo\Type $type */
         $type = $types[0];
         $this->assertEquals(Type::BUILTIN_TYPE_ARRAY, $type->getBuiltinType());
-        $this->assertEquals(Type::BUILTIN_TYPE_STRING, $type->getCollectionKeyType()->getBuiltinType());
-        $this->assertEquals('object', $type->getCollectionValueType()->getBuiltinType());
-        $this->assertEquals(Uri::class, $type->getCollectionValueType()->getClassName());
+        $this->assertEquals(Type::BUILTIN_TYPE_STRING, $type->getCollectionKeyTypes()[0]->getBuiltinType());
+        $this->assertEquals('object', $type->getCollectionValueTypes()[0]->getBuiltinType());
+        $this->assertEquals(Uri::class, $type->getCollectionValueTypes()[0]->getClassName());
     }
 
     /**
