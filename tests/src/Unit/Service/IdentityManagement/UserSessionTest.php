@@ -11,7 +11,6 @@ use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
-use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
