@@ -5,7 +5,6 @@ namespace Lullabot\Mpx\Normalizer;
 use Lullabot\Mpx\DataService\DateTime\ConcreteDateTime;
 use Lullabot\Mpx\DataService\DateTime\ConcreteDateTimeInterface;
 use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
-use Symfony\Component\PropertyInfo\Type;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
@@ -25,7 +24,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInterface, CacheableSupportsMethodInterface
 {
-
     /**
      * @var \Symfony\Component\Serializer\Normalizer\DateTimeNormalizer
      */
@@ -94,5 +92,4 @@ class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInte
     {
         return $this->decorated->hasCacheableSupportsMethod();
     }
-
 }
