@@ -58,43 +58,31 @@ interface ObjectInterface extends IdInterface, GuidInterface, JsonInterface
 
     /**
      * Returns the description of this object.
-     *
-     * @return string
      */
     public function getDescription(): ?string;
 
     /**
      * Set the description of this object.
-     *
-     * @param string $description
      */
     public function setDescription(?string $description);
 
     /**
      * Returns whether this object currently allows updates.
-     *
-     * @return bool
      */
     public function getLocked(): ?bool;
 
     /**
      * Set whether this object currently allows updates.
-     *
-     * @param bool $locked
      */
     public function setLocked(?bool $locked);
 
     /**
      * Returns the name of this object.
-     *
-     * @return string
      */
     public function getTitle(): ?string;
 
     /**
      * Set the name of this object.
-     *
-     * @param string $title
      */
     public function setTitle(?string $title);
 
@@ -120,15 +108,11 @@ interface ObjectInterface extends IdInterface, GuidInterface, JsonInterface
 
     /**
      * Returns this object's modification version, used for optimistic locking.
-     *
-     * @return int
      */
     public function getVersion(): ?int;
 
     /**
      * Set this object's modification version, used for optimistic locking.
-     *
-     * @param int $version
      */
     public function setVersion(?int $version);
 }

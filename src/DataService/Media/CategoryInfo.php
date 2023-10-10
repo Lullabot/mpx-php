@@ -27,8 +27,6 @@ class CategoryInfo implements \Stringable
 
     /**
      * Returns the Category object's fullTitle value.
-     *
-     * @return string
      */
     public function getName(): ?string
     {
@@ -37,8 +35,6 @@ class CategoryInfo implements \Stringable
 
     /**
      * Set the Category object's fullTitle value.
-     *
-     * @param string $name
      */
     public function setName(?string $name)
     {
@@ -47,8 +43,6 @@ class CategoryInfo implements \Stringable
 
     /**
      * Returns the Category object's label value.
-     *
-     * @return string
      */
     public function getLabel(): ?string
     {
@@ -57,8 +51,6 @@ class CategoryInfo implements \Stringable
 
     /**
      * Set the Category object's label value.
-     *
-     * @param string $label
      */
     public function setLabel(?string $label)
     {
@@ -67,8 +59,6 @@ class CategoryInfo implements \Stringable
 
     /**
      * Returns the Category object's scheme value.
-     *
-     * @return string
      */
     public function getScheme(): ?string
     {
@@ -77,8 +67,6 @@ class CategoryInfo implements \Stringable
 
     /**
      * Set the Category object's scheme value.
-     *
-     * @param string $scheme
      */
     public function setScheme(?string $scheme)
     {

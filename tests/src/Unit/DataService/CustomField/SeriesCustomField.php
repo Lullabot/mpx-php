@@ -21,17 +21,11 @@ class SeriesCustomField implements CustomFieldInterface
      */
     protected $series;
 
-    /**
-     * @return string
-     */
     public function getSeries(): ?string
     {
         return $this->series;
     }
 
-    /**
-     * @param string $series
-     */
     public function setSeries(?string $series): void
     {
         $this->series = $series;

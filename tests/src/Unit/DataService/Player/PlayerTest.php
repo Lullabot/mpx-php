@@ -18,9 +18,6 @@ class PlayerTest extends ObjectTestBase
 {
     protected $class = Player::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,8 +38,6 @@ class PlayerTest extends ObjectTestBase
     }
 
     /**
-     * @param string $class
-     *
      * @return array
      */
     public function getSetMethods()

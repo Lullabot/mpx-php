@@ -25,17 +25,11 @@ class ConcreteDateTime implements ConcreteDateTimeInterface
         return new static(new \DateTime($time, $timezone));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function format(string $format): string
     {
         return $this->dateTime->format($format);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDateTime()
     {
         return $this->dateTime;

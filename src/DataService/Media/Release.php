@@ -219,8 +219,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether this object is approved; if false this object is not visible in feeds.
-     *
-     * @return bool
      */
     public function getApproved(): ?bool
     {
@@ -229,8 +227,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether this object is approved; if false this object is not visible in feeds.
-     *
-     * @param bool $approved
      */
     public function setApproved(?bool $approved)
     {
@@ -239,8 +235,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the delivery method for this object.
-     *
-     * @return string
      */
     public function getDelivery(): ?string
     {
@@ -249,8 +243,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the delivery method for this object.
-     *
-     * @param string $delivery
      */
     public function setDelivery(?string $delivery)
     {
@@ -259,8 +251,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the description of this object.
-     *
-     * @return string
      */
     public function getDescription(): ?string
     {
@@ -269,8 +259,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the description of this object.
-     *
-     * @param string $description
      */
     public function setDescription(?string $description)
     {
@@ -299,8 +287,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns an alternate identifier for this object that is unique within the owning account.
-     *
-     * @return string
      */
     public function getGuid(): ?string
     {
@@ -309,8 +295,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
-     *
-     * @param string $guid
      */
     public function setGuid(?string $guid)
     {
@@ -339,8 +323,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether this object currently allows updates.
-     *
-     * @return bool
      */
     public function getLocked(): ?bool
     {
@@ -349,8 +331,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether this object currently allows updates.
-     *
-     * @param bool $locked
      */
     public function setLocked(?bool $locked)
     {
@@ -399,8 +379,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns optional release URL parameters.
-     *
-     * @return string
      */
     public function getParameters(): ?string
     {
@@ -409,8 +387,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set optional release URL parameters.
-     *
-     * @param string $parameters
      */
     public function setParameters(?string $parameters)
     {
@@ -419,8 +395,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the globally unique public identifier for this object.
-     *
-     * @return string
      */
     public function getPid(): ?string
     {
@@ -429,8 +403,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the globally unique public identifier for this object.
-     *
-     * @param string $pid
      */
     public function setPid(?string $pid)
     {
@@ -459,8 +431,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the generic name of this object.
-     *
-     * @return string
      */
     public function getTitle(): ?string
     {
@@ -469,8 +439,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the generic name of this object.
-     *
-     * @param string $title
      */
     public function setTitle(?string $title)
     {
@@ -539,8 +507,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns this object's modification version, used for optimistic locking.
-     *
-     * @return int
      */
     public function getVersion(): ?int
     {
@@ -549,8 +515,6 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set this object's modification version, used for optimistic locking.
-     *
-     * @param int $version
      */
     public function setVersion(?int $version)
     {

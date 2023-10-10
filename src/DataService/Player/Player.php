@@ -722,8 +722,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether the player will feature sharing via email.
-     *
-     * @return bool
      */
     public function getAllowEmail(): ?bool
     {
@@ -732,8 +730,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether the player will feature sharing via email.
-     *
-     * @param bool $allowEmail
      */
     public function setAllowEmail(?bool $allowEmail)
     {
@@ -742,8 +738,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether the player will provide an embed code for sharing on other sites.
-     *
-     * @return bool
      */
     public function getAllowEmbed(): ?bool
     {
@@ -752,8 +746,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether the player will provide an embed code for sharing on other sites.
-     *
-     * @param bool $allowEmbed
      */
     public function setAllowEmbed(?bool $allowEmbed)
     {
@@ -762,8 +754,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether the player will be allowed to play video in fullscreen mode.
-     *
-     * @return bool
      */
     public function getAllowFullScreen(): ?bool
     {
@@ -772,8 +762,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether the player will be allowed to play video in fullscreen mode.
-     *
-     * @param bool $allowFullScreen
      */
     public function setAllowFullScreen(?bool $allowFullScreen)
     {
@@ -782,8 +770,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether the player will make a shareable link available to users.
-     *
-     * @return bool
      */
     public function getAllowGetLink(): ?bool
     {
@@ -792,8 +778,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether the player will make a shareable link available to users.
-     *
-     * @param bool $allowGetLink
      */
     public function setAllowGetLink(?bool $allowGetLink)
     {
@@ -802,8 +786,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether the player will make an RSS link available to users.
-     *
-     * @return bool
      */
     public function getAllowRss(): ?bool
     {
@@ -812,8 +794,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether the player will make an RSS link available to users.
-     *
-     * @param bool $allowRss
      */
     public function setAllowRss(?bool $allowRss)
     {
@@ -822,8 +802,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to include the search component.
-     *
-     * @return bool
      */
     public function getAllowSearch(): ?bool
     {
@@ -832,8 +810,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to include the search component.
-     *
-     * @param bool $allowSearch
      */
     public function setAllowSearch(?bool $allowSearch)
     {
@@ -842,8 +818,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether the player should always display the play overlay.
-     *
-     * @return bool
      */
     public function getAlwaysShowOverlay(): ?bool
     {
@@ -852,8 +826,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether the player should always display the play overlay.
-     *
-     * @param bool $alwaysShowOverlay
      */
     public function setAlwaysShowOverlay(?bool $alwaysShowOverlay)
     {
@@ -862,8 +834,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the value of the aspect ratio for the height of the media area.
-     *
-     * @return int
      */
     public function getAspectRatioHeight(): ?int
     {
@@ -872,8 +842,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the value of the aspect ratio for the height of the media area.
-     *
-     * @param int $aspectRatioHeight
      */
     public function setAspectRatioHeight(?int $aspectRatioHeight)
     {
@@ -882,8 +850,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the value of the aspect ratio for the width of the media area.
-     *
-     * @return int
      */
     public function getAspectRatioWidth(): ?int
     {
@@ -892,8 +858,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the value of the aspect ratio for the width of the media area.
-     *
-     * @param int $aspectRatioWidth
      */
     public function setAspectRatioWidth(?int $aspectRatioWidth)
     {
@@ -902,8 +866,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether the player will start playback on load.
-     *
-     * @return bool
      */
     public function getAutoPlay(): ?bool
     {
@@ -912,8 +874,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether the player will start playback on load.
-     *
-     * @param bool $autoPlay
      */
     public function setAutoPlay(?bool $autoPlay)
     {
@@ -922,8 +882,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether the player will self-initialize on load.
-     *
-     * @return bool
      */
     public function getAutoInitialize(): ?bool
     {
@@ -932,8 +890,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether the player will self-initialize on load.
-     *
-     * @param bool $autoInitialize
      */
     public function setAutoInitialize(?bool $autoInitialize)
     {
@@ -942,8 +898,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns URL for a custom background image.
-     *
-     * @return string
      */
     public function getBackgroundImageUrl(): ?string
     {
@@ -952,8 +906,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set URL for a custom background image.
-     *
-     * @param string $backgroundImageUrl
      */
     public function setBackgroundImageUrl(?string $backgroundImageUrl)
     {
@@ -982,8 +934,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the number of columns in the release list.
-     *
-     * @return int
      */
     public function getColumns(): ?int
     {
@@ -992,8 +942,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the number of columns in the release list.
-     *
-     * @param int $columns
      */
     public function setColumns(?int $columns)
     {
@@ -1002,8 +950,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns reserved for future use. The default value is false.
-     *
-     * @return bool
      */
     public function getCompatibilityMode(): ?bool
     {
@@ -1012,8 +958,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set reserved for future use. The default value is false.
-     *
-     * @param bool $compatibilityMode
      */
     public function setCompatibilityMode(?bool $compatibilityMode)
     {
@@ -1022,8 +966,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns XML layout content for the player control rack.
-     *
-     * @return string
      */
     public function getControlLayoutXml(): ?string
     {
@@ -1032,8 +974,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set XML layout content for the player control rack.
-     *
-     * @param string $controlLayoutXml
      */
     public function setControlLayoutXml(?string $controlLayoutXml)
     {
@@ -1042,8 +982,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns height of the player control rack.
-     *
-     * @return int
      */
     public function getControlRackHeight(): ?int
     {
@@ -1052,8 +990,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set height of the player control rack.
-     *
-     * @param int $controlRackHeight
      */
     public function setControlRackHeight(?int $controlRackHeight)
     {
@@ -1062,8 +998,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns custom CSS content for the player.
-     *
-     * @return string
      */
     public function getCustomCss(): ?string
     {
@@ -1072,8 +1006,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set custom CSS content for the player.
-     *
-     * @param string $customCss
      */
     public function setCustomCss(?string $customCss)
     {
@@ -1102,8 +1034,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns custom HTML content for the player (not currently used).
-     *
-     * @return string
      */
     public function getCustomHtml(): ?string
     {
@@ -1112,8 +1042,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set custom HTML content for the player (not currently used).
-     *
-     * @param string $customHtml
      */
     public function setCustomHtml(?string $customHtml)
     {
@@ -1122,8 +1050,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns custom JavaScript content for the player.
-     *
-     * @return string
      */
     public function getCustomJavaScript(): ?string
     {
@@ -1132,8 +1058,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set custom JavaScript content for the player.
-     *
-     * @param string $customJavaScript
      */
     public function setCustomJavaScript(?string $customJavaScript)
     {
@@ -1178,8 +1102,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the description of this object.
-     *
-     * @return string
      */
     public function getDescription(): ?string
     {
@@ -1188,8 +1110,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the description of this object.
-     *
-     * @param string $description
      */
     public function setDescription(?string $description)
     {
@@ -1198,8 +1118,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether is player is available for customer retrieval.
-     *
-     * @return bool
      */
     public function getDisabled(): ?bool
     {
@@ -1208,8 +1126,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether is player is available for customer retrieval.
-     *
-     * @param bool $disabled
      */
     public function setDisabled(?bool $disabled)
     {
@@ -1238,8 +1154,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether embedded players will be allowed to be viewed in fullscreen mode.
-     *
-     * @return bool
      */
     public function getEmbedAllowFullScreen(): ?bool
     {
@@ -1248,8 +1162,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether embedded players will be allowed to be viewed in fullscreen mode.
-     *
-     * @param bool $embedAllowFullScreen
      */
     public function setEmbedAllowFullScreen(?bool $embedAllowFullScreen)
     {
@@ -1258,8 +1170,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the default height of the player when embedded in another site.
-     *
-     * @return int
      */
     public function getEmbedHeight(): ?int
     {
@@ -1268,8 +1178,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the default height of the player when embedded in another site.
-     *
-     * @param int $embedHeight
      */
     public function setEmbedHeight(?int $embedHeight)
     {
@@ -1298,8 +1206,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the default width of the player when embedded in another site.
-     *
-     * @return int
      */
     public function getEmbedWidth(): ?int
     {
@@ -1308,8 +1214,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the default width of the player when embedded in another site.
-     *
-     * @param int $embedWidth
      */
     public function setEmbedWidth(?int $embedWidth)
     {
@@ -1338,8 +1242,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates if the player responds to commands from an IFrame parent element.
-     *
-     * @return bool
      */
     public function getEnableExternalController(): ?bool
     {
@@ -1348,8 +1250,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates if the player responds to commands from an IFrame parent element.
-     *
-     * @param bool $enableExternalController
      */
     public function setEnableExternalController(?bool $enableExternalController)
     {
@@ -1358,8 +1258,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the URL of the feed that will populate the related items list end card.
-     *
-     * @return string
      */
     public function getEndCardFeedUrl(): ?string
     {
@@ -1368,8 +1266,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the URL of the feed that will populate the related items list end card.
-     *
-     * @param string $endCardFeedUrl
      */
     public function setEndCardFeedUrl(?string $endCardFeedUrl)
     {
@@ -1378,8 +1274,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the custom failover HTML.
-     *
-     * @return string
      */
     public function getFailoverHtml(): ?string
     {
@@ -1388,8 +1282,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the custom failover HTML.
-     *
-     * @param string $failoverHtml
      */
     public function setFailoverHtml(?string $failoverHtml)
     {
@@ -1398,8 +1290,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns reserved for future use. The default value is null.
-     *
-     * @return string
      */
     public function getFallbackPdk(): ?string
     {
@@ -1408,8 +1298,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set reserved for future use. The default value is null.
-     *
-     * @param string $fallbackPdk
      */
     public function setFallbackPdk(?string $fallbackPdk)
     {
@@ -1418,8 +1306,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the URL of the player's default feed.
-     *
-     * @return string
      */
     public function getFeedUrl(): ?string
     {
@@ -1428,8 +1314,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the URL of the player's default feed.
-     *
-     * @param string $feedUrl
      */
     public function setFeedUrl(?string $feedUrl)
     {
@@ -1438,8 +1322,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the request parameters to include in the feed request.
-     *
-     * @return string
      */
     public function getFeedUrlParams(): ?string
     {
@@ -1448,8 +1330,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the request parameters to include in the feed request.
-     *
-     * @param string $feedUrlParams
      */
     public function setFeedUrlParams(?string $feedUrlParams)
     {
@@ -1458,8 +1338,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns an alternate identifier for this object that is unique within the owning account.
-     *
-     * @return string
      */
     public function getGuid(): ?string
     {
@@ -1468,8 +1346,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
-     *
-     * @param string $guid
      */
     public function setGuid(?string $guid)
     {
@@ -1478,8 +1354,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the height of the header image.
-     *
-     * @return int
      */
     public function getHeaderImageHeight(): ?int
     {
@@ -1488,8 +1362,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the height of the header image.
-     *
-     * @param int $headerImageHeight
      */
     public function setHeaderImageHeight(?int $headerImageHeight)
     {
@@ -1498,8 +1370,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the URL of the header image.
-     *
-     * @return string
      */
     public function getHeaderImageUrl(): ?string
     {
@@ -1508,8 +1378,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the URL of the header image.
-     *
-     * @param string $headerImageUrl
      */
     public function setHeaderImageUrl(?string $headerImageUrl)
     {
@@ -1518,8 +1386,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the height of the player.
-     *
-     * @return int
      */
     public function getHeight(): ?int
     {
@@ -1528,8 +1394,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the height of the player.
-     *
-     * @param int $height
      */
     public function setHeight(?int $height)
     {
@@ -1558,8 +1422,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether to include the default player CSS file in the player HTML page.
-     *
-     * @return bool
      */
     public function getIncludeDefaultCss(): ?bool
     {
@@ -1568,8 +1430,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether to include the default player CSS file in the player HTML page.
-     *
-     * @param bool $includeDefaultCss
      */
     public function setIncludeDefaultCss(?bool $includeDefaultCss)
     {
@@ -1578,8 +1438,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the number of items to make visible in each page of the release list.
-     *
-     * @return int
      */
     public function getItemsPerPage(): ?int
     {
@@ -1588,8 +1446,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the number of items to make visible in each page of the release list.
-     *
-     * @param int $itemsPerPage
      */
     public function setItemsPerPage(?int $itemsPerPage)
     {
@@ -1638,8 +1494,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the destination URL for when a user clicks the player video area.
-     *
-     * @return string
      */
     public function getLinkUrl(): ?string
     {
@@ -1648,8 +1502,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the destination URL for when a user clicks the player video area.
-     *
-     * @param string $linkUrl
      */
     public function setLinkUrl(?string $linkUrl)
     {
@@ -1658,8 +1510,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether this object currently allows updates.
-     *
-     * @return bool
      */
     public function getLocked(): ?bool
     {
@@ -1668,8 +1518,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether this object currently allows updates.
-     *
-     * @param bool $locked
      */
     public function setLocked(?bool $locked)
     {
@@ -1678,8 +1526,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the URL of the player overlay image.
-     *
-     * @return string
      */
     public function getOverlayImageUrl(): ?string
     {
@@ -1688,8 +1534,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the URL of the player overlay image.
-     *
-     * @param string $overlayImageUrl
      */
     public function setOverlayImageUrl(?string $overlayImageUrl)
     {
@@ -1718,8 +1562,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the amount of padding to add to the bottom of the player host page.
-     *
-     * @return int
      */
     public function getPaddingBottom(): ?int
     {
@@ -1728,8 +1570,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the amount of padding to add to the bottom of the player host page.
-     *
-     * @param int $paddingBottom
      */
     public function setPaddingBottom(?int $paddingBottom)
     {
@@ -1738,8 +1578,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the amount of padding to add to the left side of the player host page.
-     *
-     * @return int
      */
     public function getPaddingLeft(): ?int
     {
@@ -1748,8 +1586,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the amount of padding to add to the left side of the player host page.
-     *
-     * @param int $paddingLeft
      */
     public function setPaddingLeft(?int $paddingLeft)
     {
@@ -1758,8 +1594,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the amount of padding to add to the right side of the player host page.
-     *
-     * @return int
      */
     public function getPaddingRight(): ?int
     {
@@ -1768,8 +1602,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the amount of padding to add to the right side of the player host page.
-     *
-     * @param int $paddingRight
      */
     public function setPaddingRight(?int $paddingRight)
     {
@@ -1778,8 +1610,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the amount of padding to add to the top of the player host page.
-     *
-     * @return int
      */
     public function getPaddingTop(): ?int
     {
@@ -1788,8 +1618,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the amount of padding to add to the top of the player host page.
-     *
-     * @param int $paddingTop
      */
     public function setPaddingTop(?int $paddingTop)
     {
@@ -1798,8 +1626,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns reserved for future use. The default value is null.
-     *
-     * @return string
      */
     public function getPdk(): ?string
     {
@@ -1808,8 +1634,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set reserved for future use. The default value is null.
-     *
-     * @param string $pdk
      */
     public function setPdk(?string $pdk)
     {
@@ -1818,8 +1642,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the public identifier for this player when requested through the Player Service.
-     *
-     * @return string
      */
     public function getPid(): ?string
     {
@@ -1828,8 +1650,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the public identifier for this player when requested through the Player Service.
-     *
-     * @param string $pid
      */
     public function setPid(?string $pid)
     {
@@ -1838,8 +1658,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates if the player should automatically play the next release when one finishes.
-     *
-     * @return bool
      */
     public function getPlayAll(): ?bool
     {
@@ -1848,8 +1666,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates if the player should automatically play the next release when one finishes.
-     *
-     * @param bool $playAll
      */
     public function setPlayAll(?bool $playAll)
     {
@@ -1858,8 +1674,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns player URL used in the sharing features.
-     *
-     * @return string
      */
     public function getPlayerUrl(): ?string
     {
@@ -1868,8 +1682,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set player URL used in the sharing features.
-     *
-     * @param string $playerUrl
      */
     public function setPlayerUrl(?string $playerUrl)
     {
@@ -1878,8 +1690,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the default height to use for the poster image.
-     *
-     * @return int
      */
     public function getPosterImageDefaultHeight(): ?int
     {
@@ -1888,8 +1698,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the default height to use for the poster image.
-     *
-     * @param int $posterImageDefaultHeight
      */
     public function setPosterImageDefaultHeight(?int $posterImageDefaultHeight)
     {
@@ -1898,8 +1706,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the default width to use for the poster image.
-     *
-     * @return int
      */
     public function getPosterImageDefaultWidth(): ?int
     {
@@ -1908,8 +1714,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the default width to use for the poster image.
-     *
-     * @param int $posterImageDefaultWidth
      */
     public function setPosterImageDefaultWidth(?int $posterImageDefaultWidth)
     {
@@ -1918,8 +1722,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the meta asset type to use for the poster image.
-     *
-     * @return string
      */
     public function getPosterImageMetaAssetType(): ?string
     {
@@ -1928,8 +1730,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the meta asset type to use for the poster image.
-     *
-     * @param string $posterImageMetaAssetType
      */
     public function setPosterImageMetaAssetType(?string $posterImageMetaAssetType)
     {
@@ -1938,8 +1738,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the preview asset type to use for the poster image.
-     *
-     * @return string
      */
     public function getPosterImagePreviewAssetType(): ?string
     {
@@ -1948,8 +1746,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the preview asset type to use for the poster image.
-     *
-     * @param string $posterImagePreviewAssetType
      */
     public function setPosterImagePreviewAssetType(?string $posterImagePreviewAssetType)
     {
@@ -2030,8 +1826,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns URL parameters to add to Public URL requests.
-     *
-     * @return string
      */
     public function getReleaseUrlParams(): ?string
     {
@@ -2040,8 +1834,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set URL parameters to add to Public URL requests.
-     *
-     * @param string $releaseUrlParams
      */
     public function setReleaseUrlParams(?string $releaseUrlParams)
     {
@@ -2070,8 +1862,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to display the air date in the release list component.
-     *
-     * @return bool
      */
     public function getShowAirdate(): ?bool
     {
@@ -2080,8 +1870,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to display the air date in the release list component.
-     *
-     * @param bool $showAirdate
      */
     public function setShowAirdate(?bool $showAirdate)
     {
@@ -2090,8 +1878,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to include the All option in the category list component.
-     *
-     * @return bool
      */
     public function getShowAllChoice(): ?bool
     {
@@ -2100,8 +1886,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to include the All option in the category list component.
-     *
-     * @param bool $showAllChoice
      */
     public function setShowAllChoice(?bool $showAllChoice)
     {
@@ -2110,8 +1894,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to display the author in the release list and clip info components.
-     *
-     * @return bool
      */
     public function getShowAuthor(): ?bool
     {
@@ -2120,8 +1902,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to display the author in the release list and clip info components.
-     *
-     * @param bool $showAuthor
      */
     public function setShowAuthor(?bool $showAuthor)
     {
@@ -2130,8 +1910,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to display the media bitrate in the release list component.
-     *
-     * @return bool
      */
     public function getShowBitrate(): ?bool
     {
@@ -2140,8 +1918,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to display the media bitrate in the release list component.
-     *
-     * @param bool $showBitrate
      */
     public function setShowBitrate(?bool $showBitrate)
     {
@@ -2150,8 +1926,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to show the full video time in the player control rack.
-     *
-     * @return bool
      */
     public function getShowFullTime(): ?bool
     {
@@ -2160,8 +1934,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to show the full video time in the player control rack.
-     *
-     * @param bool $showFullTime
      */
     public function setShowFullTime(?bool $showFullTime)
     {
@@ -2170,8 +1942,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to show the Most Popular option in the category list component.
-     *
-     * @return bool
      */
     public function getShowMostPopularChoice(): ?bool
     {
@@ -2180,8 +1950,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to show the Most Popular option in the category list component.
-     *
-     * @param bool $showMostPopularChoice
      */
     public function setShowMostPopularChoice(?bool $showMostPopularChoice)
     {
@@ -2190,8 +1958,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to display the previous and next buttons in the player control rack.
-     *
-     * @return bool
      */
     public function getShowNav(): ?bool
     {
@@ -2200,8 +1966,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to display the previous and next buttons in the player control rack.
-     *
-     * @param bool $showNav
      */
     public function setShowNav(?bool $showNav)
     {
@@ -2210,8 +1974,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to randomize the contents of the release list.
-     *
-     * @return bool
      */
     public function getShuffle(): ?bool
     {
@@ -2220,8 +1982,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to randomize the contents of the release list.
-     *
-     * @param bool $shuffle
      */
     public function setShuffle(?bool $shuffle)
     {
@@ -2250,8 +2010,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the height of the thumbnail images in the release list.
-     *
-     * @return int
      */
     public function getThumbnailHeight(): ?int
     {
@@ -2260,8 +2018,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the height of the thumbnail images in the release list.
-     *
-     * @param int $thumbnailHeight
      */
     public function setThumbnailHeight(?int $thumbnailHeight)
     {
@@ -2270,8 +2026,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the width of the thumbnail images in the release list.
-     *
-     * @return int
      */
     public function getThumbnailWidth(): ?int
     {
@@ -2280,8 +2034,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the width of the thumbnail images in the release list.
-     *
-     * @param int $thumbnailWidth
      */
     public function setThumbnailWidth(?int $thumbnailWidth)
     {
@@ -2290,8 +2042,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the name of this object.
-     *
-     * @return string
      */
     public function getTitle(): ?string
     {
@@ -2300,8 +2050,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the name of this object.
-     *
-     * @param string $title
      */
     public function setTitle(?string $title)
     {
@@ -2350,8 +2098,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns indicates whether to float the control rack over the media area of the player.
-     *
-     * @return bool
      */
     public function getUseFloatingControls(): ?bool
     {
@@ -2360,8 +2106,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set indicates whether to float the control rack over the media area of the player.
-     *
-     * @param bool $useFloatingControls
      */
     public function setUseFloatingControls(?bool $useFloatingControls)
     {
@@ -2370,8 +2114,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns this object's modification version, used for optimistic locking.
-     *
-     * @return int
      */
     public function getVersion(): ?int
     {
@@ -2380,8 +2122,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set this object's modification version, used for optimistic locking.
-     *
-     * @param int $version
      */
     public function setVersion(?int $version)
     {
@@ -2390,8 +2130,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the width of the player.
-     *
-     * @return int
      */
     public function getWidth(): ?int
     {
@@ -2400,8 +2138,6 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the width of the player.
-     *
-     * @param int $width
      */
     public function setWidth(?int $width)
     {

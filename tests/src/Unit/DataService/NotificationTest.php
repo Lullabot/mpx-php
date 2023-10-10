@@ -15,9 +15,6 @@ class NotificationTest extends ObjectTestBase
 {
     protected $class = Notification::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

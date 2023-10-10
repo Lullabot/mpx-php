@@ -92,8 +92,6 @@ class MediaFeedUrl implements ToUriInterface, \Stringable
 
     /**
      * Get the subfeed that specifies the feed type.
-     *
-     * @return SubFeed
      */
     public function getFeedType(): ?SubFeed
     {
@@ -104,8 +102,6 @@ class MediaFeedUrl implements ToUriInterface, \Stringable
      * Specifies a subfeed of the main feed.
      *
      * This corresponds to a SubFeed.FeedType value of an item in the FeedConfig.subFeeds field.
-     *
-     * @param SubFeed $subFeed
      */
     public function setFeedType(?SubFeed $subFeed): void
     {
@@ -155,9 +151,6 @@ class MediaFeedUrl implements ToUriInterface, \Stringable
         $this->seoTerms = $seoTerms;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toUri(): UriInterface
     {
         $uri = $this->uriToFeedComponent();
@@ -166,9 +159,6 @@ class MediaFeedUrl implements ToUriInterface, \Stringable
         return $uri;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __toString(): string
     {
         return (string) $this->toUri();

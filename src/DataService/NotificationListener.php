@@ -167,6 +167,7 @@ class NotificationListener
         ];
 
         $serializer = new Serializer($normalizers, $encoders);
+
         // @todo Handle exception returns.
         return $serializer->deserialize($response->getBody(), Notification::class.'[]', 'json');
     }

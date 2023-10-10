@@ -317,8 +317,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the parameters that are passed to a custom feed adapter for processing at runtime.
-     *
-     * @return string
      */
     public function getAdapterParameters(): ?string
     {
@@ -327,8 +325,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the parameters that are passed to a custom feed adapter for processing at runtime.
-     *
-     * @param string $adapterParameters
      */
     public function setAdapterParameters(?string $adapterParameters)
     {
@@ -417,8 +413,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the author of the feed content.
-     *
-     * @return string
      */
     public function getAuthor(): ?string
     {
@@ -427,8 +421,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the author of the feed content.
-     *
-     * @param string $author
      */
     public function setAuthor(?string $author)
     {
@@ -457,8 +449,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a filter applied to any items specified in the pinnedIds field and any items selected by the segmentQueriesfield.
-     *
-     * @return string
      */
     public function getBaseQuery(): ?string
     {
@@ -467,8 +457,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a filter applied to any items specified in the pinnedIds field and any items selected by the segmentQueriesfield.
-     *
-     * @param string $baseQuery
      */
     public function setBaseQuery(?string $baseQuery)
     {
@@ -477,8 +465,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the minimum time that items in the cache are valid.
-     *
-     * @return float
      */
     public function getCacheLifetime(): ?float
     {
@@ -487,8 +473,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the minimum time that items in the cache are valid.
-     *
-     * @param float $cacheLifetime
      */
     public function setCacheLifetime(?float $cacheLifetime)
     {
@@ -497,8 +481,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the response behavior during a cache refresh.
-     *
-     * @return string
      */
     public function getCacheRefreshStrategy(): ?string
     {
@@ -507,8 +489,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the response behavior during a cache refresh.
-     *
-     * @param string $cacheRefreshStrategy
      */
     public function setCacheRefreshStrategy(?string $cacheRefreshStrategy)
     {
@@ -517,8 +497,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the identifier for the default thumbnail for each item in the feed.
-     *
-     * @return string
      */
     public function getDefaultThumbnailAssetType(): ?string
     {
@@ -527,8 +505,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the identifier for the default thumbnail for each item in the feed.
-     *
-     * @param string $defaultThumbnailAssetType
      */
     public function setDefaultThumbnailAssetType(?string $defaultThumbnailAssetType)
     {
@@ -537,8 +513,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the description of the feed.
-     *
-     * @return string
      */
     public function getDescription(): ?string
     {
@@ -547,8 +521,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the description of the feed.
-     *
-     * @param string $description
      */
     public function setDescription(?string $description)
     {
@@ -557,8 +529,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether the feed is disabled.
-     *
-     * @return bool
      */
     public function getDisabled(): ?bool
     {
@@ -567,8 +537,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether the feed is disabled.
-     *
-     * @param bool $disabled
      */
     public function setDisabled(?bool $disabled)
     {
@@ -577,8 +545,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the maximum number of items in the feed.
-     *
-     * @return int
      */
     public function getEndIndex(): ?int
     {
@@ -587,8 +553,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the maximum number of items in the feed.
-     *
-     * @param int $endIndex
      */
     public function setEndIndex(?int $endIndex)
     {
@@ -597,8 +561,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the feed items' object type.
-     *
-     * @return string
      */
     public function getFeedType(): ?string
     {
@@ -607,8 +569,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the feed items' object type.
-     *
-     * @param string $feedType
      */
     public function setFeedType(?string $feedType)
     {
@@ -617,8 +577,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the default format of the feed.
-     *
-     * @return string
      */
     public function getForm(): ?string
     {
@@ -627,8 +585,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the default format of the feed.
-     *
-     * @param string $form
      */
     public function setForm(?string $form)
     {
@@ -637,8 +593,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns an alternate identifier for this object that is unique within the owning account.
-     *
-     * @return string
      */
     public function getGuid(): ?string
     {
@@ -647,8 +601,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
-     *
-     * @param string $guid
      */
     public function setGuid(?string $guid)
     {
@@ -677,8 +629,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the URL template that is used to create the value of each feed item's link field.
-     *
-     * @return string
      */
     public function getItemLinkUrl(): ?string
     {
@@ -687,8 +637,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the URL template that is used to create the value of each feed item's link field.
-     *
-     * @param string $itemLinkUrl
      */
     public function setItemLinkUrl(?string $itemLinkUrl)
     {
@@ -697,8 +645,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether to only include items that are currently available.
-     *
-     * @return bool
      */
     public function getLimitByAvailableDate(): ?bool
     {
@@ -707,8 +653,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether to only include items that are currently available.
-     *
-     * @param bool $limitByAvailableDate
      */
     public function setLimitByAvailableDate(?bool $limitByAvailableDate)
     {
@@ -717,8 +661,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether to only include items that are approved.
-     *
-     * @return bool
      */
     public function getLimitToApproved(): ?bool
     {
@@ -727,8 +669,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether to only include items that are approved.
-     *
-     * @param bool $limitToApproved
      */
     public function setLimitToApproved(?bool $limitToApproved)
     {
@@ -737,8 +677,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the URL value of the feed's link field.
-     *
-     * @return string
      */
     public function getLinkUrl(): ?string
     {
@@ -747,8 +685,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the URL value of the feed's link field.
-     *
-     * @param string $linkUrl
      */
     public function setLinkUrl(?string $linkUrl)
     {
@@ -757,8 +693,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether this object currently allows updates.
-     *
-     * @return bool
      */
     public function getLocked(): ?bool
     {
@@ -767,8 +701,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether this object currently allows updates.
-     *
-     * @param bool $locked
      */
     public function setLocked(?bool $locked)
     {
@@ -797,8 +729,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the globally-unique public identifier that is used to request this feed.
-     *
-     * @return string
      */
     public function getPid(): ?string
     {
@@ -807,8 +737,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the globally-unique public identifier that is used to request this feed.
-     *
-     * @param string $pid
      */
     public function setPid(?string $pid)
     {
@@ -837,8 +765,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the URL template that is used to create the value of each feed item's content.player.urlfield.
-     *
-     * @return string
      */
     public function getPlayerUrl(): ?string
     {
@@ -847,8 +773,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the URL template that is used to create the value of each feed item's content.player.urlfield.
-     *
-     * @param string $playerUrl
      */
     public function setPlayerUrl(?string $playerUrl)
     {
@@ -857,8 +781,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether to use the sortKeys to sort items in the feed when a Q query is included in the FeedConfig or the feed request.
-     *
-     * @return bool
      */
     public function getPreferSortKeysOnSearch(): ?bool
     {
@@ -867,8 +789,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether to use the sortKeys to sort items in the feed when a Q query is included in the FeedConfig or the feed request.
-     *
-     * @param bool $preferSortKeysOnSearch
      */
     public function setPreferSortKeysOnSearch(?bool $preferSortKeysOnSearch)
     {
@@ -877,8 +797,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the type of query engine used to retrieve the feed items.
-     *
-     * @return string
      */
     public function getQueryEngine(): ?string
     {
@@ -887,8 +805,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the type of query engine used to retrieve the feed items.
-     *
-     * @param string $queryEngine
      */
     public function setQueryEngine(?string $queryEngine)
     {
@@ -897,8 +813,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the list of key-value URL parameters that are appended to the feed item's content.urlfield.
-     *
-     * @return string
      */
     public function getReleaseUrlParameters(): ?string
     {
@@ -907,8 +821,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the list of key-value URL parameters that are appended to the feed item's content.urlfield.
-     *
-     * @param string $releaseUrlParameters
      */
     public function setReleaseUrlParameters(?string $releaseUrlParameters)
     {
@@ -937,8 +849,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the object schema version of the feed items.
-     *
-     * @return string
      */
     public function getSchema(): ?string
     {
@@ -947,8 +857,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the object schema version of the feed items.
-     *
-     * @param string $schema
      */
     public function setSchema(?string $schema)
     {
@@ -1017,8 +925,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the query or key names used to select the thumbnail files for each item in the feed.
-     *
-     * @return string
      */
     public function getThumbnailFilter(): ?string
     {
@@ -1027,8 +933,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the query or key names used to select the thumbnail files for each item in the feed.
-     *
-     * @param string $thumbnailFilter
      */
     public function setThumbnailFilter(?string $thumbnailFilter)
     {
@@ -1037,8 +941,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the title of the feed.
-     *
-     * @return string
      */
     public function getTitle(): ?string
     {
@@ -1047,8 +949,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the title of the feed.
-     *
-     * @param string $title
      */
     public function setTitle(?string $title)
     {
@@ -1097,8 +997,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the type of URL that is returned in each feed item's content.urlfield.
-     *
-     * @return string
      */
     public function getUrlType(): ?string
     {
@@ -1107,8 +1005,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the type of URL that is returned in each feed item's content.urlfield.
-     *
-     * @param string $urlType
      */
     public function setUrlType(?string $urlType)
     {
@@ -1117,8 +1013,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether to include the feed-level elements and any feed-level custom fields in the feed header.
-     *
-     * @return bool
      */
     public function getValidFeed(): ?bool
     {
@@ -1127,8 +1021,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether to include the feed-level elements and any feed-level custom fields in the feed header.
-     *
-     * @param bool $validFeed
      */
     public function setValidFeed(?bool $validFeed)
     {
@@ -1137,8 +1029,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns this object's modification version, used for optimistic locking.
-     *
-     * @return int
      */
     public function getVersion(): ?int
     {
@@ -1147,8 +1037,6 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set this object's modification version, used for optimistic locking.
-     *
-     * @param int $version
      */
     public function setVersion(?int $version)
     {

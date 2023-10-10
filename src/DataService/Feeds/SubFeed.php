@@ -61,8 +61,6 @@ class SubFeed
 
     /**
      * Returns the parameters that are passed to a custom feed adapter for processing at runtime. For more information, see FeedConfig.adapterParameters.
-     *
-     * @return string
      */
     public function getAdapterParameters(): ?string
     {
@@ -71,8 +69,6 @@ class SubFeed
 
     /**
      * Set the parameters that are passed to a custom feed adapter for processing at runtime. For more information, see FeedConfig.adapterParameters.
-     *
-     * @param string $adapterParameters
      */
     public function setAdapterParameters(?string $adapterParameters)
     {
@@ -103,8 +99,6 @@ class SubFeed
 
     /**
      * Returns not currently used.
-     *
-     * @return string
      */
     public function getBaseQuery(): ?string
     {
@@ -113,8 +107,6 @@ class SubFeed
 
     /**
      * Set not currently used.
-     *
-     * @param string $baseQuery
      */
     public function setBaseQuery(?string $baseQuery)
     {
@@ -123,8 +115,6 @@ class SubFeed
 
     /**
      * Returns the sub feed items' object type. This value must be unique within the FeedConfig.subFeedsarray. The only currently supported value is Category.
-     *
-     * @return string
      */
     public function getFeedType(): ?string
     {
@@ -133,8 +123,6 @@ class SubFeed
 
     /**
      * Set the sub feed items' object type. This value must be unique within the FeedConfig.subFeedsarray. The only currently supported value is Category.
-     *
-     * @param string $feedType
      */
     public function setFeedType(?string $feedType)
     {
@@ -143,8 +131,6 @@ class SubFeed
 
     /**
      * Returns the default format of the sub feed. For more information, see FeedConfig.form.
-     *
-     * @return string
      */
     public function getForm(): ?string
     {
@@ -153,8 +139,6 @@ class SubFeed
 
     /**
      * Set the default format of the sub feed. For more information, see FeedConfig.form.
-     *
-     * @param string $form
      */
     public function setForm(?string $form)
     {
@@ -183,8 +167,6 @@ class SubFeed
 
     /**
      * Returns the object schema version of the sub feed items. For more information, see FeedConfig.schema.
-     *
-     * @return string
      */
     public function getSchema(): ?string
     {
@@ -193,8 +175,6 @@ class SubFeed
 
     /**
      * Set the object schema version of the sub feed items. For more information, see FeedConfig.schema.
-     *
-     * @param string $schema
      */
     public function setSchema(?string $schema)
     {

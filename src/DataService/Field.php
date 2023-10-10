@@ -52,8 +52,6 @@ class Field extends ObjectBase
 
     /**
      * The default value for this custom field.
-     *
-     * @var mixed
      */
     protected $defaultValue;
 
@@ -250,8 +248,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the data structure of this custom field.
-     *
-     * @return string
      */
     public function getDataStructure(): ?string
     {
@@ -260,8 +256,6 @@ class Field extends ObjectBase
 
     /**
      * Set the data structure of this custom field.
-     *
-     * @param string $dataStructure
      */
     public function setDataStructure(?string $dataStructure)
     {
@@ -270,8 +264,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the data type of this custom field.
-     *
-     * @return string
      */
     public function getDataType(): ?string
     {
@@ -280,8 +272,6 @@ class Field extends ObjectBase
 
     /**
      * Set the data type of this custom field.
-     *
-     * @param string $dataType
      */
     public function setDataType(?string $dataType)
     {
@@ -290,8 +280,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the default value for this custom field.
-     *
-     * @return mixed
      */
     public function getDefaultValue()
     {
@@ -308,8 +296,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the description of this object.
-     *
-     * @return string
      */
     public function getDescription(): ?string
     {
@@ -318,8 +304,6 @@ class Field extends ObjectBase
 
     /**
      * Set the description of this object.
-     *
-     * @param string $description
      */
     public function setDescription(?string $description)
     {
@@ -328,8 +312,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the node name for this custom field in XML and JSON.
-     *
-     * @return string
      */
     public function getFieldName(): ?string
     {
@@ -338,8 +320,6 @@ class Field extends ObjectBase
 
     /**
      * Set the node name for this custom field in XML and JSON.
-     *
-     * @param string $fieldName
      */
     public function setFieldName(?string $fieldName)
     {
@@ -348,8 +328,6 @@ class Field extends ObjectBase
 
     /**
      * Returns an alternate identifier for this object that is unique within the owning account.
-     *
-     * @return string
      */
     public function getGuid(): ?string
     {
@@ -358,8 +336,6 @@ class Field extends ObjectBase
 
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
-     *
-     * @param string $guid
      */
     public function setGuid(?string $guid)
     {
@@ -388,8 +364,6 @@ class Field extends ObjectBase
 
     /**
      * Returns whether this custom field is indexed for search.
-     *
-     * @return bool
      */
     public function getIncludeInTextSearch(): ?bool
     {
@@ -398,8 +372,6 @@ class Field extends ObjectBase
 
     /**
      * Set whether this custom field is indexed for search.
-     *
-     * @param bool $includeInTextSearch
      */
     public function setIncludeInTextSearch(?bool $includeInTextSearch)
     {
@@ -408,8 +380,6 @@ class Field extends ObjectBase
 
     /**
      * Returns whether this custom field stores unique values and functions as a create key.
-     *
-     * @return bool
      */
     public function getIsUnique(): ?bool
     {
@@ -418,8 +388,6 @@ class Field extends ObjectBase
 
     /**
      * Set whether this custom field stores unique values and functions as a create key.
-     *
-     * @param bool $isUnique
      */
     public function setIsUnique(?bool $isUnique)
     {
@@ -428,8 +396,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the maximum string length or the number of decimal positions allowed in this custom field's value.
-     *
-     * @return int
      */
     public function getLength(): ?int
     {
@@ -438,8 +404,6 @@ class Field extends ObjectBase
 
     /**
      * Set the maximum string length or the number of decimal positions allowed in this custom field's value.
-     *
-     * @param int $length
      */
     public function setLength(?int $length)
     {
@@ -448,8 +412,6 @@ class Field extends ObjectBase
 
     /**
      * Returns whether this object currently allows updates.
-     *
-     * @return bool
      */
     public function getLocked(): ?bool
     {
@@ -458,8 +420,6 @@ class Field extends ObjectBase
 
     /**
      * Set whether this object currently allows updates.
-     *
-     * @param bool $locked
      */
     public function setLocked(?bool $locked)
     {
@@ -486,8 +446,6 @@ class Field extends ObjectBase
 
     /**
      * Returns an XML namespace prefix for this field.
-     *
-     * @return string
      */
     public function getNamespacePrefix(): ?string
     {
@@ -496,8 +454,6 @@ class Field extends ObjectBase
 
     /**
      * Set an XML namespace prefix for this field.
-     *
-     * @param string $namespacePrefix
      */
     public function setNamespacePrefix(?string $namespacePrefix)
     {
@@ -506,8 +462,6 @@ class Field extends ObjectBase
 
     /**
      * Returns whether this custom field is always available in change notifications.
-     *
-     * @return bool
      */
     public function getNotifyAlways(): ?bool
     {
@@ -516,8 +470,6 @@ class Field extends ObjectBase
 
     /**
      * Set whether this custom field is always available in change notifications.
-     *
-     * @param bool $notifyAlways
      */
     public function setNotifyAlways(?bool $notifyAlways)
     {
@@ -526,8 +478,6 @@ class Field extends ObjectBase
 
     /**
      * Returns whether this custom field is available on change in update notifications.
-     *
-     * @return bool
      */
     public function getNotifyChanges(): ?bool
     {
@@ -536,8 +486,6 @@ class Field extends ObjectBase
 
     /**
      * Set whether this custom field is available on change in update notifications.
-     *
-     * @param bool $notifyChanges
      */
     public function setNotifyChanges(?bool $notifyChanges)
     {
@@ -546,8 +494,6 @@ class Field extends ObjectBase
 
     /**
      * Returns whether this custom field is available in delete notifications.
-     *
-     * @return bool
      */
     public function getNotifyDelete(): ?bool
     {
@@ -556,8 +502,6 @@ class Field extends ObjectBase
 
     /**
      * Set whether this custom field is available in delete notifications.
-     *
-     * @param bool $notifyDelete
      */
     public function setNotifyDelete(?bool $notifyDelete)
     {
@@ -586,8 +530,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the name that this custom field is indexed under.
-     *
-     * @return string
      */
     public function getSearchFieldName(): ?string
     {
@@ -596,8 +538,6 @@ class Field extends ObjectBase
 
     /**
      * Set the name that this custom field is indexed under.
-     *
-     * @param string $searchFieldName
      */
     public function setSearchFieldName(?string $searchFieldName)
     {
@@ -606,8 +546,6 @@ class Field extends ObjectBase
 
     /**
      * Returns the name of this object.
-     *
-     * @return string
      */
     public function getTitle(): ?string
     {
@@ -616,8 +554,6 @@ class Field extends ObjectBase
 
     /**
      * Set the name of this object.
-     *
-     * @param string $title
      */
     public function setTitle(?string $title)
     {
@@ -666,8 +602,6 @@ class Field extends ObjectBase
 
     /**
      * Returns this object's modification version, used for optimistic locking.
-     *
-     * @return int
      */
     public function getVersion(): ?int
     {
@@ -676,8 +610,6 @@ class Field extends ObjectBase
 
     /**
      * Set this object's modification version, used for optimistic locking.
-     *
-     * @param int $version
      */
     public function setVersion(?int $version)
     {

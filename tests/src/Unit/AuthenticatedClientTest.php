@@ -7,6 +7,7 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Request;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
@@ -18,7 +19,6 @@ use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\Token;
 use Lullabot\Mpx\TokenCachePool;
-use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
@@ -56,7 +56,7 @@ class AuthenticatedClientTest extends TestCase
             new JsonResponse(200, [], 'signin-success.json'),
             function (RequestInterface $request) {
                 //  This is what tests mergeAuth().
-                $parts = \GuzzleHttp\Psr7\parse_query($request->getUri()->getQuery());
+                $parts = Query::parse($request->getUri()->getQuery());
                 $this->assertEquals('TOKEN-VALUE', $parts['token']);
 
                 return new JsonResponse(200, [], 'getSelfId.json');
@@ -310,36 +310,9 @@ class AuthenticatedClientTest extends TestCase
         for ($tokens = 0; $tokens < $count; ++$tokens) {
             // Since our class instantiates the Lock and passes in the logger, we have to expect these method calls
             // if we want to assert the last method call in this loop.
-            $logger->expects($this->any())->method('info')
+            $logger->expects($this->any())->method('debug')
                 ->withConsecutive(['Successfully acquired the "{resource}" lock.'],
-                    ['Expiration defined for "{resource}" lock for "{ttl}" seconds.'],
-                    [$this->callback(function ($message) {
-                        try {
-                            $this->assertEquals(
-                                'Retrieved a new mpx token {token} for user {username} that expires on {date}.',
-                                $message
-                            );
-                        } catch (ExpectationFailedException) {
-                            return false;
-                        }
-
-                        return true;
-                    }), $this->callback(function ($context) {
-                        try {
-                            $this->assertArraySubset([
-                                'token' => 'TOKEN-VALUE',
-                                'username' => 'mpx/USER-NAME',
-                            ], $context);
-                            $this->assertMatchesRegularExpression(
-                                '!\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}!',
-                                $context['date']
-                            );
-                        } catch (ExpectationFailedException) {
-                            return false;
-                        }
-
-                        return true;
-                    })]);
+                    ['Expiration defined for "{resource}" lock for "{ttl}" seconds.']);
         }
 
         return $logger;

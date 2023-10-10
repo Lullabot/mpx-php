@@ -32,8 +32,6 @@ class Rating
 
     /**
      * Returns the content's rating.
-     *
-     * @return string
      */
     public function getRating(): ?string
     {
@@ -42,8 +40,6 @@ class Rating
 
     /**
      * Set the content's rating.
-     *
-     * @param string $rating
      */
     public function setRating(?string $rating)
     {
@@ -52,8 +48,6 @@ class Rating
 
     /**
      * Returns the URI of a rating scheme.
-     *
-     * @return string
      */
     public function getScheme(): ?string
     {
@@ -62,8 +56,6 @@ class Rating
 
     /**
      * Set the URI of a rating scheme.
-     *
-     * @param string $scheme
      */
     public function setScheme(?string $scheme)
     {

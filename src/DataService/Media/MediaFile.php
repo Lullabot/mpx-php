@@ -475,8 +475,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns whether playback is enabled for this file, and whether it can be associated with new Release objects.
-     *
-     * @return bool
      */
     public function getAllowRelease(): ?bool
     {
@@ -485,8 +483,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set whether playback is enabled for this file, and whether it can be associated with new Release objects.
-     *
-     * @param bool $allowRelease
      */
     public function setAllowRelease(?bool $allowRelease)
     {
@@ -495,8 +491,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns whether this object is approved.
-     *
-     * @return bool
      */
     public function getApproved(): ?bool
     {
@@ -505,8 +499,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set whether this object is approved.
-     *
-     * @param bool $approved
      */
     public function setApproved(?bool $approved)
     {
@@ -515,8 +507,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's calculated aspect ratio.
-     *
-     * @return float
      */
     public function getAspectRatio(): ?float
     {
@@ -525,8 +515,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's calculated aspect ratio.
-     *
-     * @param float $aspectRatio
      */
     public function setAspectRatio(?float $aspectRatio)
     {
@@ -575,8 +563,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the number of audio channels the file has.
-     *
-     * @return int
      */
     public function getAudioChannels(): ?int
     {
@@ -585,8 +571,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the number of audio channels the file has.
-     *
-     * @param int $audioChannels
      */
     public function setAudioChannels(?int $audioChannels)
     {
@@ -595,8 +579,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the name of the audio codec the file uses.
-     *
-     * @return string
      */
     public function getAudioCodec(): ?string
     {
@@ -605,8 +587,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the name of the audio codec the file uses.
-     *
-     * @param string $audioCodec
      */
     public function setAudioCodec(?string $audioCodec)
     {
@@ -615,8 +595,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's audio sample rate, in hertz (Hz).
-     *
-     * @return int
      */
     public function getAudioSampleRate(): ?int
     {
@@ -625,8 +603,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's audio sample rate, in hertz (Hz).
-     *
-     * @param int $audioSampleRate
      */
     public function setAudioSampleRate(?int $audioSampleRate)
     {
@@ -635,8 +611,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's audio sample size, in bits (b).
-     *
-     * @return int
      */
     public function getAudioSampleSize(): ?int
     {
@@ -645,8 +619,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's audio sample size, in bits (b).
-     *
-     * @param int $audioSampleSize
      */
     public function setAudioSampleSize(?int $audioSampleSize)
     {
@@ -655,8 +627,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's bitrate, in bits per second (bps).
-     *
-     * @return int
      */
     public function getBitrate(): ?int
     {
@@ -665,8 +635,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's bitrate, in bits per second (bps).
-     *
-     * @param int $bitrate
      */
     public function setBitrate(?int $bitrate)
     {
@@ -691,8 +659,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns whether the file contains text tracks.
-     *
-     * @return bool
      */
     public function getClosedCaptions(): ?bool
     {
@@ -701,8 +667,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set whether the file contains text tracks.
-     *
-     * @param bool $closedCaptions
      */
     public function setClosedCaptions(?bool $closedCaptions)
     {
@@ -711,8 +675,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's content type.
-     *
-     * @return string
      */
     public function getContentType(): ?string
     {
@@ -721,8 +683,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's content type.
-     *
-     * @param string $contentType
      */
     public function setContentType(?string $contentType)
     {
@@ -731,8 +691,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the description of this object.
-     *
-     * @return string
      */
     public function getDescription(): ?string
     {
@@ -741,8 +699,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the description of this object.
-     *
-     * @param string $description
      */
     public function setDescription(?string $description)
     {
@@ -751,8 +707,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the aspect ratio to display to users.
-     *
-     * @return string
      */
     public function getDisplayAspectRatio(): ?string
     {
@@ -761,8 +715,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the aspect ratio to display to users.
-     *
-     * @param string $displayAspectRatio
      */
     public function setDisplayAspectRatio(?string $displayAspectRatio)
     {
@@ -771,8 +723,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's download URL.
-     *
-     * @return string
      */
     public function getDownloadUrl(): ?string
     {
@@ -781,8 +731,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's download URL.
-     *
-     * @param string $downloadUrl
      */
     public function setDownloadUrl(?string $downloadUrl)
     {
@@ -791,8 +739,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the duration of the file, in seconds.
-     *
-     * @return float
      */
     public function getDuration(): ?float
     {
@@ -801,8 +747,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the duration of the file, in seconds.
-     *
-     * @param float $duration
      */
     public function setDuration(?float $duration)
     {
@@ -811,8 +755,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns whether the file exists at the specified location yet.
-     *
-     * @return bool
      */
     public function getExists(): ?bool
     {
@@ -821,8 +763,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set whether the file exists at the specified location yet.
-     *
-     * @param bool $exists
      */
     public function setExists(?bool $exists)
     {
@@ -831,8 +771,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's expression type.
-     *
-     * @return string
      */
     public function getExpression(): ?string
     {
@@ -841,8 +779,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's expression type.
-     *
-     * @param string $expression
      */
     public function setExpression(?string $expression)
     {
@@ -851,8 +787,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the secondary source URL for the original file.
-     *
-     * @return string
      */
     public function getFailoverSourceUrl(): ?string
     {
@@ -861,8 +795,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the secondary source URL for the original file.
-     *
-     * @param string $failoverSourceUrl
      */
     public function setFailoverSourceUrl(?string $failoverSourceUrl)
     {
@@ -871,8 +803,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns one or more secondary streaming URLs.
-     *
-     * @return string
      */
     public function getFailoverStreamingUrl(): ?string
     {
@@ -881,8 +811,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set one or more secondary streaming URLs.
-     *
-     * @param string $failoverStreamingUrl
      */
     public function setFailoverStreamingUrl(?string $failoverStreamingUrl)
     {
@@ -891,8 +819,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the path and filename of the file, relative to a managed storage server's root.
-     *
-     * @return string
      */
     public function getFilePath(): ?string
     {
@@ -901,8 +827,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the path and filename of the file, relative to a managed storage server's root.
-     *
-     * @param string $filePath
      */
     public function setFilePath(?string $filePath)
     {
@@ -911,8 +835,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's size, in bytes (B).
-     *
-     * @return int
      */
     public function getFileSize(): ?int
     {
@@ -921,8 +843,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's size, in bytes (B).
-     *
-     * @param int $fileSize
      */
     public function setFileSize(?int $fileSize)
     {
@@ -931,8 +851,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's format.
-     *
-     * @return string
      */
     public function getFormat(): ?string
     {
@@ -941,8 +859,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's format.
-     *
-     * @param string $format
      */
     public function setFormat(?string $format)
     {
@@ -951,8 +867,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's frame rate, in frames per second (fps).
-     *
-     * @return float
      */
     public function getFrameRate(): ?float
     {
@@ -961,8 +875,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's frame rate, in frames per second (fps).
-     *
-     * @param float $frameRate
      */
     public function setFrameRate(?float $frameRate)
     {
@@ -971,8 +883,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns an alternate identifier for this object that is unique within the owning account.
-     *
-     * @return string
      */
     public function getGuid(): ?string
     {
@@ -981,8 +891,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
-     *
-     * @param string $guid
      */
     public function setGuid(?string $guid)
     {
@@ -991,8 +899,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's frame height, in pixels.
-     *
-     * @return int
      */
     public function getHeight(): ?int
     {
@@ -1001,8 +907,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's frame height, in pixels.
-     *
-     * @param int $height
      */
     public function setHeight(?int $height)
     {
@@ -1031,8 +935,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns whether this file is the default content or thumbnail file for the associated Mediaobject.
-     *
-     * @return bool
      */
     public function getIsDefault(): ?bool
     {
@@ -1041,8 +943,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set whether this file is the default content or thumbnail file for the associated Mediaobject.
-     *
-     * @param bool $isDefault
      */
     public function setIsDefault(?bool $isDefault)
     {
@@ -1051,8 +951,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns whether this file is protected.
-     *
-     * @return bool
      */
     public function getIsProtected(): ?bool
     {
@@ -1061,8 +959,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set whether this file is protected.
-     *
-     * @param bool $isProtected
      */
     public function setIsProtected(?bool $isProtected)
     {
@@ -1071,8 +967,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns whether this file is a thumbnail.
-     *
-     * @return bool
      */
     public function getIsThumbnail(): ?bool
     {
@@ -1081,8 +975,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set whether this file is a thumbnail.
-     *
-     * @param bool $isThumbnail
      */
     public function setIsThumbnail(?bool $isThumbnail)
     {
@@ -1091,8 +983,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the ISO 639 language code for the file.
-     *
-     * @return string
      */
     public function getLanguage(): ?string
     {
@@ -1101,8 +991,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the ISO 639 language code for the file.
-     *
-     * @param string $language
      */
     public function setLanguage(?string $language)
     {
@@ -1111,8 +999,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns whether this object currently allows updates.
-     *
-     * @return bool
      */
     public function getLocked(): ?bool
     {
@@ -1121,8 +1007,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set whether this object currently allows updates.
-     *
-     * @param bool $locked
      */
     public function setLocked(?bool $locked)
     {
@@ -1211,8 +1095,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the DRM or copy protection key.
-     *
-     * @return string
      */
     public function getProtectionKey(): ?string
     {
@@ -1221,8 +1103,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the DRM or copy protection key.
-     *
-     * @param string $protectionKey
      */
     public function setProtectionKey(?string $protectionKey)
     {
@@ -1231,8 +1111,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the DRM or copy protection scheme.
-     *
-     * @return string
      */
     public function getProtectionScheme(): ?string
     {
@@ -1241,8 +1119,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the DRM or copy protection scheme.
-     *
-     * @param string $protectionScheme
      */
     public function setProtectionScheme(?string $protectionScheme)
     {
@@ -1291,8 +1167,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the format of the streaming content segments.
-     *
-     * @return string
      */
     public function getSegmentFormat(): ?string
     {
@@ -1301,8 +1175,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the format of the streaming content segments.
-     *
-     * @param string $segmentFormat
      */
     public function setSegmentFormat(?string $segmentFormat)
     {
@@ -1351,8 +1223,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the start time of this excerpt in the source file, in seconds.
-     *
-     * @return float
      */
     public function getSourceTime(): ?float
     {
@@ -1361,8 +1231,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the start time of this excerpt in the source file, in seconds.
-     *
-     * @param float $sourceTime
      */
     public function setSourceTime(?float $sourceTime)
     {
@@ -1371,8 +1239,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the original source URL for this file.
-     *
-     * @return string
      */
     public function getSourceUrl(): ?string
     {
@@ -1381,8 +1247,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the original source URL for this file.
-     *
-     * @param string $sourceUrl
      */
     public function setSourceUrl(?string $sourceUrl)
     {
@@ -1391,8 +1255,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the URL of the file's storage location.
-     *
-     * @return string
      */
     public function getStorageUrl(): ?string
     {
@@ -1401,8 +1263,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the URL of the file's storage location.
-     *
-     * @param string $storageUrl
      */
     public function setStorageUrl(?string $storageUrl)
     {
@@ -1411,8 +1271,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the file's primary streaming URL.
-     *
-     * @return string
      */
     public function getStreamingUrl(): ?string
     {
@@ -1421,8 +1279,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the file's primary streaming URL.
-     *
-     * @param string $streamingUrl
      */
     public function setStreamingUrl(?string $streamingUrl)
     {
@@ -1431,8 +1287,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the name of this object.
-     *
-     * @return string
      */
     public function getTitle(): ?string
     {
@@ -1441,8 +1295,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the name of this object.
-     *
-     * @param string $title
      */
     public function setTitle(?string $title)
     {
@@ -1527,8 +1379,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the URL of the file.
-     *
-     * @return string
      */
     public function getUrl(): ?string
     {
@@ -1537,8 +1387,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the URL of the file.
-     *
-     * @param string $url
      */
     public function setUrl(?string $url)
     {
@@ -1547,8 +1395,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns this object's modification version, used for optimistic locking.
-     *
-     * @return int
      */
     public function getVersion(): ?int
     {
@@ -1557,8 +1403,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set this object's modification version, used for optimistic locking.
-     *
-     * @param int $version
      */
     public function setVersion(?int $version)
     {
@@ -1567,8 +1411,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns the name of this file's video codec.
-     *
-     * @return string
      */
     public function getVideoCodec(): ?string
     {
@@ -1577,8 +1419,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set the name of this file's video codec.
-     *
-     * @param string $videoCodec
      */
     public function setVideoCodec(?string $videoCodec)
     {
@@ -1587,8 +1427,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Returns this file's frame width, in pixels.
-     *
-     * @return int
      */
     public function getWidth(): ?int
     {
@@ -1597,8 +1435,6 @@ class MediaFile extends ObjectBase
 
     /**
      * Set this file's frame width, in pixels.
-     *
-     * @param int $width
      */
     public function setWidth(?int $width)
     {

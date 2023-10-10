@@ -15,9 +15,6 @@ class SortKeyTest extends ObjectTestBase
 {
     protected $class = SortKey::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

@@ -21,17 +21,11 @@ class NeverUsedCustomField implements CustomFieldInterface
      */
     protected $neverUsed;
 
-    /**
-     * @return string
-     */
     public function getNeverUsed(): ?string
     {
         return $this->neverUsed;
     }
 
-    /**
-     * @param string $neverUsed
-     */
     public function setNeverUsed(?string $neverUsed): void
     {
         $this->neverUsed = $neverUsed;

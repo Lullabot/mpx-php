@@ -15,9 +15,6 @@ class FieldTest extends ObjectTestBase
 {
     protected $class = Field::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -40,8 +37,6 @@ class FieldTest extends ObjectTestBase
     }
 
     /**
-     * @param string $class
-     *
      * @return array
      */
     public function getSetMethods()

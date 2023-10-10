@@ -22,9 +22,6 @@ class ObjectListTest extends TestCase
      */
     protected $list;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

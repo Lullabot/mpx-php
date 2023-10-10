@@ -68,33 +68,21 @@ class ObjectListIterator extends \NoRewindIterator
         $this->promise = $promise;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function current(): mixed
     {
         return $this->list[$this->relative];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function next(): void
     {
         ++$this->position;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function key(): mixed
     {
         return $this->position;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function valid(): bool
     {
         // Initial setup if this is the first page.

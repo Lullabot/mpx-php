@@ -2,13 +2,12 @@
 
 namespace Lullabot\Mpx\Service\Player;
 
+use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\DataService\PublicIdentifierInterface;
 use Lullabot\Mpx\DataService\PublicIdWithGuidInterface;
 use Lullabot\Mpx\ToUriInterface;
 use Psr\Http\Message\UriInterface;
-
-use function GuzzleHttp\Psr7\build_query;
 
 /**
  * Represents a player URL, suitable for embedding with an iframe.
@@ -91,7 +90,7 @@ class Url implements ToUriInterface, \Stringable
             $query_parts['playAll'] = $this->playAll ? 'true' : 'false';
         }
 
-        $uri = $uri->withQuery(build_query($query_parts));
+        $uri = $uri->withQuery(Query::build($query_parts));
 
         return $uri;
     }

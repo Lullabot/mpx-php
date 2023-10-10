@@ -15,9 +15,6 @@ class RatingTest extends ObjectTestBase
 {
     protected $class = Rating::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

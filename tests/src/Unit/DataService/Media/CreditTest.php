@@ -15,9 +15,6 @@ class CreditTest extends ObjectTestBase
 {
     protected $class = Credit::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,8 +38,6 @@ class CreditTest extends ObjectTestBase
     }
 
     /**
-     * @param string $class
-     *
      * @return array
      */
     public function getSetMethods()

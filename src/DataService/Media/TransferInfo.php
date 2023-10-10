@@ -53,8 +53,6 @@ class TransferInfo
 
     /**
      * Returns the password portion of the credentials required to access the file on the server.
-     *
-     * @return string
      */
     public function getPassword(): ?string
     {
@@ -63,8 +61,6 @@ class TransferInfo
 
     /**
      * Set the password portion of the credentials required to access the file on the server.
-     *
-     * @param string $password
      */
     public function setPassword(?string $password)
     {
@@ -73,8 +69,6 @@ class TransferInfo
 
     /**
      * Returns the private key for accessing the file on the server.
-     *
-     * @return string
      */
     public function getPrivateKey(): ?string
     {
@@ -83,8 +77,6 @@ class TransferInfo
 
     /**
      * Set the private key for accessing the file on the server.
-     *
-     * @param string $privateKey
      */
     public function setPrivateKey(?string $privateKey)
     {
@@ -93,8 +85,6 @@ class TransferInfo
 
     /**
      * Returns whether the server supports downloads of linked files.
-     *
-     * @return bool
      */
     public function getSupportsDownload(): ?bool
     {
@@ -103,8 +93,6 @@ class TransferInfo
 
     /**
      * Set whether the server supports downloads of linked files.
-     *
-     * @param bool $supportsDownload
      */
     public function setSupportsDownload(?bool $supportsDownload)
     {
@@ -113,8 +101,6 @@ class TransferInfo
 
     /**
      * Returns whether the server supports streaming of linked files.
-     *
-     * @return bool
      */
     public function getSupportsStreaming(): ?bool
     {
@@ -123,8 +109,6 @@ class TransferInfo
 
     /**
      * Set whether the server supports streaming of linked files.
-     *
-     * @param bool $supportsStreaming
      */
     public function setSupportsStreaming(?bool $supportsStreaming)
     {
@@ -133,8 +117,6 @@ class TransferInfo
 
     /**
      * Returns the username portion of the credentials required to access the file on the server.
-     *
-     * @return string
      */
     public function getUserName(): ?string
     {
@@ -143,8 +125,6 @@ class TransferInfo
 
     /**
      * Set the username portion of the credentials required to access the file on the server.
-     *
-     * @param string $userName
      */
     public function setUserName(?string $userName)
     {

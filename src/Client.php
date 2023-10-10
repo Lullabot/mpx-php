@@ -63,9 +63,6 @@ class Client implements GuzzleClientInterface
         return $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function request($method = 'GET', $url = null, array $options = []): ResponseInterface
     {
         // MPX forces all JSON requests to return HTTP 200, even with an error.
@@ -76,33 +73,21 @@ class Client implements GuzzleClientInterface
         return $this->client->request($method, $url, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function send(RequestInterface $request, array $options = []): ResponseInterface
     {
         return $this->client->send($request, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         return $this->client->sendAsync($request, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function requestAsync($method, $uri, array $options = []): PromiseInterface
     {
         return $this->client->requestAsync($method, $uri, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfig($option = null)
     {
         return $this->client->getConfig($option);

@@ -9,10 +9,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
  */
 class CJsonEncoder extends JsonEncoder
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function decode($data, $format, array $context = [])
+    public function decode(string $data, string $format, array $context = []): mixed
     {
         $decoded = parent::decode($data, $format, $context);
         if (isset($decoded['$xmlns'])) {

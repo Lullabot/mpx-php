@@ -59,9 +59,6 @@ class IdMediaFeedUrl extends MediaFeedUrl
         $this->ids = $ids;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toUri(): UriInterface
     {
         $uri = $this->uriToFeedComponent();

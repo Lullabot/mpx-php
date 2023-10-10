@@ -483,8 +483,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether this content is approved for playback.
-     *
-     * @return bool
      */
     public function getApproved(): ?bool
     {
@@ -493,8 +491,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether this content is approved for playback.
-     *
-     * @param bool $approved
      */
     public function setApproved(?bool $approved)
     {
@@ -503,8 +499,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the creator of this content.
-     *
-     * @return string
      */
     public function getAuthor(): ?string
     {
@@ -513,8 +507,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the creator of this content.
-     *
-     * @param string $author
      */
     public function setAuthor(?string $author)
     {
@@ -539,8 +531,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the computed availability of the media for playback.
-     *
-     * @return string
      */
     public function getAvailabilityState(): ?string
     {
@@ -549,8 +539,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the computed availability of the media for playback.
-     *
-     * @param string $availabilityState
      */
     public function setAvailabilityState(?string $availabilityState)
     {
@@ -699,8 +687,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the copyright holder of this content.
-     *
-     * @return string
      */
     public function getCopyright(): ?string
     {
@@ -709,8 +695,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the copyright holder of this content.
-     *
-     * @param string $copyright
      */
     public function setCopyright(?string $copyright)
     {
@@ -735,8 +719,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the URL of a copyright statement or terms of use.
-     *
-     * @return string
      */
     public function getCopyrightUrl(): ?string
     {
@@ -745,8 +727,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the URL of a copyright statement or terms of use.
-     *
-     * @param string $copyrightUrl
      */
     public function setCopyrightUrl(?string $copyrightUrl)
     {
@@ -859,8 +839,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a description of this content.
-     *
-     * @return string
      */
     public function getDescription(): ?string
     {
@@ -869,8 +847,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a description of this content.
-     *
-     * @param string $description
      */
     public function setDescription(?string $description)
     {
@@ -895,8 +871,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether the specified countries are excluded from playing this content.
-     *
-     * @return bool
      */
     public function getExcludeCountries(): ?bool
     {
@@ -905,8 +879,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether the specified countries are excluded from playing this content.
-     *
-     * @param bool $excludeCountries
      */
     public function setExcludeCountries(?bool $excludeCountries)
     {
@@ -955,8 +927,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns an alternate identifier for this object that is unique within the owning account.
-     *
-     * @return string
      */
     public function getGuid(): ?string
     {
@@ -965,8 +935,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
-     *
-     * @param string $guid
      */
     public function setGuid(?string $guid)
     {
@@ -995,8 +963,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a list of internal keywords that describe this content.
-     *
-     * @return string
      */
     public function getKeywords(): ?string
     {
@@ -1005,8 +971,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a list of internal keywords that describe this content.
-     *
-     * @param string $keywords
      */
     public function setKeywords(?string $keywords)
     {
@@ -1031,8 +995,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns a link to additional information related to this content.
-     *
-     * @return string
      */
     public function getLink(): ?string
     {
@@ -1041,8 +1003,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set a link to additional information related to this content.
-     *
-     * @param string $link
      */
     public function setLink(?string $link)
     {
@@ -1067,8 +1027,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns whether this object currently allows updates.
-     *
-     * @return bool
      */
     public function getLocked(): ?bool
     {
@@ -1077,8 +1035,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set whether this object currently allows updates.
-     *
-     * @param bool $locked
      */
     public function setLocked(?bool $locked)
     {
@@ -1147,8 +1103,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the globally unique public identifier for this media.
-     *
-     * @return string
      */
     public function getPid(): ?string
     {
@@ -1157,8 +1111,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the globally unique public identifier for this media.
-     *
-     * @param string $pid
      */
     public function setPid(?string $pid)
     {
@@ -1187,8 +1139,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the title of the Provider that represents the account that shared this Media.
-     *
-     * @return string
      */
     public function getProvider(): ?string
     {
@@ -1197,8 +1147,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the title of the Provider that represents the account that shared this Media.
-     *
-     * @param string $provider
      */
     public function setProvider(?string $provider)
     {
@@ -1323,8 +1271,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns text associated with this content.
-     *
-     * @return string
      */
     public function getText(): ?string
     {
@@ -1333,8 +1279,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set text associated with this content.
-     *
-     * @param string $text
      */
     public function setText(?string $text)
     {
@@ -1379,8 +1323,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns the name of this object.
-     *
-     * @return string
      */
     public function getTitle(): ?string
     {
@@ -1389,8 +1331,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set the name of this object.
-     *
-     * @param string $title
      */
     public function setTitle(?string $title)
     {
@@ -1455,8 +1395,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Returns this object's modification version, used for optimistic locking.
-     *
-     * @return int
      */
     public function getVersion(): ?int
     {
@@ -1465,8 +1403,6 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
 
     /**
      * Set this object's modification version, used for optimistic locking.
-     *
-     * @param int $version
      */
     public function setVersion(?int $version)
     {

@@ -16,9 +16,6 @@ class AccountTest extends ObjectTestBase
 {
     protected $class = Account::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,8 +38,6 @@ class AccountTest extends ObjectTestBase
     }
 
     /**
-     * @param string $class
-     *
      * @return array
      */
     public function getSetMethods()

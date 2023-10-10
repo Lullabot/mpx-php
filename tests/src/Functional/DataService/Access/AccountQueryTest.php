@@ -14,9 +14,6 @@ use Psr\Http\Message\UriInterface;
  */
 class AccountQueryTest extends FunctionalTestBase
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

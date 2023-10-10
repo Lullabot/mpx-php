@@ -15,9 +15,6 @@ class SubFeedTest extends ObjectTestBase
 {
     protected $class = SubFeed::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

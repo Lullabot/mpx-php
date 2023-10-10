@@ -15,9 +15,6 @@ class CategoryInfoTest extends ObjectTestBase
 {
     protected $class = CategoryInfo::class;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
