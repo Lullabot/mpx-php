@@ -2,7 +2,6 @@
 
 namespace Lullabot\Mpx\Tests\Unit;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
@@ -10,6 +9,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Request;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\IdentityManagement\User;

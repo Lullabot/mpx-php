@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Tests\Unit;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Token;

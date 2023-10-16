@@ -2,11 +2,11 @@
 
 namespace Lullabot\Mpx\Tests\Functional;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use Concat\Http\Middleware\Logger;
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\IdentityManagement\User;

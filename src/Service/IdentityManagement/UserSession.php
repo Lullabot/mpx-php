@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Service\IdentityManagement;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\Exception\TokenNotFoundException;
 use Lullabot\Mpx\Token;

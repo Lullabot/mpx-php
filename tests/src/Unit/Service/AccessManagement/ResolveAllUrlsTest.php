@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\Tests\Unit\Service\AccessManagement;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrlsResponse;
 use Lullabot\Mpx\Service\IdentityManagement\User;
@@ -39,7 +39,7 @@ class ResolveAllUrlsTest extends TestCase
             new JsonResponse(200, [], 'resolveAllUrls.json'),
         ]);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var DummyStoreInterface|\PHPUnit_Framework_MockObject_MockObject $store */
+        /** @var DummyStoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
         $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())
@@ -49,7 +49,7 @@ class ResolveAllUrlsTest extends TestCase
         $userSession = new UserSession($user, $client, $store, $tokenCachePool);
         $session = new AuthenticatedClient($client, $userSession);
 
-        $cache = $this->getMockBuilder(CacheItemPoolInterface::class)
+        $cache = $this->getMockBuilder(ArrayCachePool::class)
             ->getMock();
         $item = $this->getMockBuilder(CacheItemInterface::class)
             ->getMock();
@@ -60,7 +60,7 @@ class ResolveAllUrlsTest extends TestCase
             ->with('6b590e46fe8d31b3d8cc0aa9c7282c4f')
             ->willReturn($item);
 
-        $cache->expects($this->once())->method('save');
+        $cache->expects($this->once())->method('set');
 
         $resolver = new ResolveAllUrls($session, $cache);
         $r = $resolver->resolve('Media Data Service');
@@ -78,7 +78,7 @@ class ResolveAllUrlsTest extends TestCase
     {
         $client = $this->getMockClient();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var StoreInterface $store */
+        /** @var \Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface $store */
         $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
 

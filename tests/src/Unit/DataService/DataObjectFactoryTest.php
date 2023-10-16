@@ -2,11 +2,11 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\CustomFieldDiscovery;
 use Lullabot\Mpx\DataService\CustomFieldManager;

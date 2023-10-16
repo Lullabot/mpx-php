@@ -2,10 +2,10 @@
 
 namespace Lullabot\Mpx\DataService;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\DataService\Annotation\DataService;
 use Lullabot\Mpx\Encoder\CJsonEncoder;
 use Lullabot\Mpx\Normalizer\CustomFieldsNormalizer;
