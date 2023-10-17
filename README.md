@@ -47,7 +47,7 @@ A runnable version of this code is in a test at
 ```php
 <?php
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;

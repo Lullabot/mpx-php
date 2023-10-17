@@ -2,9 +2,9 @@
 
 namespace Lullabot\Mpx\Tests\Functional;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;

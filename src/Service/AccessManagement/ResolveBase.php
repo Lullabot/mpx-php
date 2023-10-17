@@ -2,9 +2,8 @@
 
 namespace Lullabot\Mpx\Service\AccessManagement;
 
-use Cache\Adapter\Common\CacheItem;
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Psr\Cache\CacheItemPoolInterface;
 
 abstract class ResolveBase
@@ -40,14 +39,10 @@ abstract class ResolveBase
 
     protected function saveCache($key, $resolved)
     {
-        $item = new CacheItem($key);
-        $item->set($resolved);
-
         // thePlatform provides no guidance on how long we can cache this for.
         // Since many of their examples and other mpx clients hardcode these
         // values, we assume 30 days and that they will implement redirects or
         // domain aliases if required.
-        $item->expiresAfter(new \DateInterval('P30D'));
-        $this->cache->save($item);
+        $this->cache->set($key, $resolved, new \DateInterval('P30D'));
     }
 }

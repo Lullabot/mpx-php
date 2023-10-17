@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\DataService;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Normalizer\UnixMillisecondNormalizer;
 use Lullabot\Mpx\Normalizer\UriNormalizer;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;

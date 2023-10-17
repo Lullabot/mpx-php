@@ -2,10 +2,10 @@
 
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Media\Media;

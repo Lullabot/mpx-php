@@ -2,8 +2,8 @@
 
 namespace Lullabot\Mpx\Tests\Unit\Service\IdentityManagement;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Exception\ClientException;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;

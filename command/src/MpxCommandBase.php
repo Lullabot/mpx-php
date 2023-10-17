@@ -2,7 +2,7 @@
 
 namespace Lullabot\Mpx\Command;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
+use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Concat\Http\Middleware\Logger;
 use GuzzleHttp\MessageFormatter;
 use Lullabot\Mpx\AuthenticatedClient;
