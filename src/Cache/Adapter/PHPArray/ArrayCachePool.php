@@ -51,8 +51,7 @@ class ArrayCachePool implements LoggerAwareInterface, CacheInterface, CacheItemP
                 $item = $this->cache->getItem($key);
 
                 return $item->isHit() ? $item->get() : $default;
-            }
-        , $keys);
+            }, $keys);
     }
 
     public function setMultiple($values, $ttl = null): bool

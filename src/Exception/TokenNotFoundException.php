@@ -16,7 +16,7 @@ class TokenNotFoundException extends \RuntimeException
      * @param int                                                  $code        The exception code.
      * @param \Throwable|null                                      $previous    The previous exception, if available.
      */
-    public function __construct(UserSession $userSession, int $code = 0, \Throwable $previous = null)
+    public function __construct(UserSession $userSession, int $code = 0, ?\Throwable $previous = null)
     {
         parent::__construct(sprintf('Token not found for %s.', $userSession->getUser()->getMpxUsername()), $code, $previous);
     }

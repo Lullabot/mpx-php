@@ -138,7 +138,7 @@ class Dummy extends ParentDummy
     /**
      * B.
      */
-    public function setB(ParentDummy $parent = null)
+    public function setB(?ParentDummy $parent = null)
     {
     }
 

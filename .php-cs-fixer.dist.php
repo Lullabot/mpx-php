@@ -8,6 +8,8 @@ return (new PhpCsFixer\Config())
         'no_unreachable_default_argument_value' => false,
         'heredoc_to_nowdoc' => false,
         'phpdoc_annotation_without_dot' => false,
+        // Disabled as they are needed for the Serializer.
+        'fully_qualified_strict_types' => false,
     ))
     ->setRiskyAllowed(true)
     ->setFinder(
