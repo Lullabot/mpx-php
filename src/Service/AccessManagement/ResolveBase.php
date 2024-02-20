@@ -27,7 +27,7 @@ abstract class ResolveBase
      * @param AuthenticatedClient         $authenticatedClient The client used to access mpx.
      * @param CacheItemPoolInterface|null $cache               (optional) The cache to store responses in. Defaults to an array cache.
      */
-    public function __construct(AuthenticatedClient $authenticatedClient, CacheItemPoolInterface $cache = null)
+    public function __construct(AuthenticatedClient $authenticatedClient, ?CacheItemPoolInterface $cache = null)
     {
         $this->authenticatedClient = $authenticatedClient;
 

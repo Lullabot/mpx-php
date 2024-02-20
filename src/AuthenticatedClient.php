@@ -54,7 +54,7 @@ class AuthenticatedClient implements ClientInterface
      * @param UserSession $userSession The user associated with this client.
      * @param IdInterface $account     (optional) The account to use as the account context for requests.
      */
-    public function __construct(Client $client, UserSession $userSession, IdInterface $account = null)
+    public function __construct(Client $client, UserSession $userSession, ?IdInterface $account = null)
     {
         $this->client = $client;
         $this->userSession = $userSession;
@@ -94,7 +94,7 @@ class AuthenticatedClient implements ClientInterface
      *
      * @param int|null $duration The duration in seconds, or null to not use a specific lifetime.
      */
-    public function setTokenDuration(int $duration = null): void
+    public function setTokenDuration(?int $duration = null): void
     {
         $this->duration = $duration;
     }
