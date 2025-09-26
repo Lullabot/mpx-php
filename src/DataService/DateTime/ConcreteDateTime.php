@@ -20,7 +20,7 @@ class ConcreteDateTime implements ConcreteDateTimeInterface
      *
      * @see http://php.net/manual/en/datetime.construct.php
      */
-    public static function fromString($time = 'now', \DateTimeZone $timezone = null): self
+    public static function fromString($time = 'now', ?\DateTimeZone $timezone = null): self
     {
         return new static(new \DateTime($time, $timezone));
     }

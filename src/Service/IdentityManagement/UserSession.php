@@ -68,7 +68,7 @@ class UserSession
      *
      * @see \Psr\Log\NullLogger To disable logging of token requests.
      */
-    public function __construct(UserInterface $user, Client $client, PersistingStoreInterface $store = null, TokenCachePool $tokenCachePool = null)
+    public function __construct(UserInterface $user, Client $client, ?PersistingStoreInterface $store = null, ?TokenCachePool $tokenCachePool = null)
     {
         $this->user = $user;
         $this->client = $client;
@@ -92,7 +92,7 @@ class UserSession
      *
      * @return Token A valid mpx authentication token.
      */
-    public function acquireToken(int $duration = null, bool $reset = false): Token
+    public function acquireToken(?int $duration = null, bool $reset = false): Token
     {
         if ($reset) {
             $this->tokenCachePool->deleteToken($this);
@@ -169,7 +169,7 @@ class UserSession
      *
      * @return \Lullabot\Mpx\Token The token.
      */
-    protected function signInWithLock(int $duration = null): Token
+    protected function signInWithLock(?int $duration = null): Token
     {
         if ($this->store) {
             $factory = new LockFactory($this->store);
