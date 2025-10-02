@@ -173,7 +173,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The streamingUrl of the default thumbnail for this Media.
      *
-     * @var Uri
+     * @var \GuzzleHttp\Psr7\Uri
      */
     protected $defaultThumbnailUrl;
 
@@ -320,7 +320,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The public URL for this media.
      *
-     * @var Uri
+     * @var \GuzzleHttp\Psr7\Uri
      */
     protected $publicUrl;
 
