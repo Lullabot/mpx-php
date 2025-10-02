@@ -255,14 +255,14 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The list of fields and directions used to sort items in the feed.
      *
-     * @var SortKey[]
+     * @var \Lullabot\Mpx\DataService\Feeds\SortKey[]
      */
     protected $sortKeys = [];
 
     /**
      * The sub feeds of the feed. Sub feeds contain all items of the specified SubFeed.feedType in the feed owner's account. Currently, only a Category sub feed of a Media feed is supported.
      *
-     * @var SubFeed[]
+     * @var \Lullabot\Mpx\DataService\Feeds\SubFeed[]
      */
     protected $subFeeds = [];
 

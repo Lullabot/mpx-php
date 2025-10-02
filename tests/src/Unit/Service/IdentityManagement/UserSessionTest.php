@@ -11,7 +11,6 @@ use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
 use Lullabot\Mpx\TokenCachePool;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -79,7 +78,7 @@ class UserSessionTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        /** @var \Psr\Log\LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
+        /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
         $logger = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
 
@@ -168,7 +167,7 @@ class UserSessionTest extends TestCase
      *
      * @param int $count The number of times a token is logged.
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|LoggerInterface
      */
     private function fetchTokenLogger(int $count)
     {

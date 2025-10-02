@@ -39,21 +39,21 @@ class MediaFeedUrl implements ToUriInterface, \Stringable
     /**
      * The account the feed is associated with.
      *
-     * @var PublicIdentifierInterface
+     * @var \Lullabot\Mpx\DataService\PublicIdentifierInterface
      */
     protected $account;
 
     /**
      * The feed being rendered.
      *
-     * @var PublicIdentifierInterface
+     * @var \Lullabot\Mpx\DataService\PublicIdentifierInterface
      */
     protected $feedConfig;
 
     /**
      * A subfeed specifying the feed type.
      *
-     * @var SubFeed
+     * @var \Lullabot\Mpx\DataService\Feeds\SubFeed
      */
     protected $feedTypeSubFeed;
 

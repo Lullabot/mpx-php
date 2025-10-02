@@ -11,7 +11,7 @@ use Symfony\Component\PropertyInfo\Type;
  */
 class CachingPhpDocExtractorTest extends TestCase
 {
-    private \Lullabot\Mpx\DataService\CachingPhpDocExtractor $extractor;
+    private CachingPhpDocExtractor $extractor;
 
     protected function setUp(): void
     {

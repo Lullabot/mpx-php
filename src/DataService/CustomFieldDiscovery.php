@@ -15,7 +15,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
     /**
      * The array of discovered data services.
      *
-     * @var DiscoveredCustomField[]
+     * @var \Lullabot\Mpx\DataService\DiscoveredCustomField[]
      */
     private array $customFields = [];
 
@@ -36,7 +36,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
         /*
          * The class to use for reading annotations.
          */
-        private readonly Reader $annotationReader
+        private readonly Reader $annotationReader,
     ) {
     }
 
@@ -58,7 +58,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
         $finder = new Finder();
         $finder->files()->in($path);
 
-        /** @var SplFileInfo $file */
+        /** @var \Symfony\Component\Finder\SplFileInfo $file */
         foreach ($finder as $file) {
             $class = $this->classForFile($file);
             /* @var \Lullabot\Mpx\DataService\Annotation\CustomField $annotation */
@@ -91,13 +91,13 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
      */
     private function registerAnnotation($class)
     {
-        /** @var CustomField $annotation */
+        /** @var \Lullabot\Mpx\DataService\Annotation\CustomField $annotation */
         if ($annotation = $this->annotationReader->getClassAnnotation(
             new \ReflectionClass($class),
-            \Lullabot\Mpx\DataService\Annotation\CustomField::class
+            CustomField::class
         )) {
             if (!is_subclass_of($class, CustomFieldInterface::class)) {
-                throw new \RuntimeException(sprintf('%s must implement %s.', $class, CustomFieldInterface::class));
+                throw new \RuntimeException(\sprintf('%s must implement %s.', $class, CustomFieldInterface::class));
             }
 
             $this->customFields[$annotation->service][$annotation->objectType][$annotation->namespace] = new DiscoveredCustomField(

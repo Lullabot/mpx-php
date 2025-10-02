@@ -25,7 +25,7 @@ class NotificationListener
     /**
      * The resolver for MPX services.
      *
-     * @var ResolveDomain
+     * @var \Lullabot\Mpx\Service\AccessManagement\ResolveDomain
      */
     protected $resolveDomain;
 
@@ -46,7 +46,7 @@ class NotificationListener
     /**
      * The service to listen to notifications on, such as /data/Media from the Media Data Service.
      *
-     * @var DiscoveredDataService
+     * @var \Lullabot\Mpx\DataService\DiscoveredDataService
      */
     protected $service;
 
@@ -57,10 +57,10 @@ class NotificationListener
      *
      * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications#tp-toc2
      *
-     * @param \Lullabot\Mpx\AuthenticatedClient $session       The client to use for authenticated requests.
-     * @param DiscoveredDataService             $service       The name of the service to listen to notifications on, such as 'Media Data Service'.
-     * @param string                            $clientId      A string to identify this client in debugging.
-     * @param CacheItemPoolInterface|null       $cacheItemPool (optional) The cache for API metadata.
+     * @param AuthenticatedClient         $session       The client to use for authenticated requests.
+     * @param DiscoveredDataService       $service       The name of the service to listen to notifications on, such as 'Media Data Service'.
+     * @param string                      $clientId      A string to identify this client in debugging.
+     * @param CacheItemPoolInterface|null $cacheItemPool (optional) The cache for API metadata.
      */
     public function __construct(AuthenticatedClient $session, DiscoveredDataService $service, private readonly string $clientId, ?CacheItemPoolInterface $cacheItemPool = null)
     {
@@ -117,8 +117,8 @@ class NotificationListener
      *
      * @todo Add support for a configurable timeout?
      *
-     * @see  \Lullabot\Mpx\DataService\NotificationListener::sync
-     * @see  \Lullabot\Mpx\DataService\Notification
+     * @see  NotificationListener::sync
+     * @see  Notification
      *
      * @param int $since   The last sync ID.
      * @param int $maximum (optional) The maximum number of notifications to return. Defaults to 500.

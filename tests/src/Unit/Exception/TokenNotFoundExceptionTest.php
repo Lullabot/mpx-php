@@ -17,7 +17,7 @@ class TokenNotFoundExceptionTest extends TestCase
      */
     public function testConstruct()
     {
-        /** @var \Lullabot\Mpx\Service\IdentityManagement\UserSession|\PHPUnit_Framework_MockObject_MockObject $userSession */
+        /** @var UserSession|\PHPUnit_Framework_MockObject_MockObject $userSession */
         $userSession = $this->getMockBuilder(UserSession::class)
             ->disableOriginalConstructor()
             ->getMock();

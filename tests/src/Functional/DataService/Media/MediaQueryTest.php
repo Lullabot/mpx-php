@@ -4,8 +4,6 @@ namespace Lullabot\Mpx\Tests\Functional\DataService\Media;
 
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
-use Lullabot\Mpx\DataService\ObjectInterface;
-use Lullabot\Mpx\DataService\ObjectList;
 use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\Range;
 use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
@@ -34,7 +32,7 @@ class MediaQueryTest extends FunctionalTestBase
 
             // Loading the object by itself.
             $reload = $dof->load($result->getId());
-            /** @var ObjectInterface $item */
+            /** @var \Lullabot\Mpx\DataService\ObjectInterface $item */
             $item = $reload->wait();
 
             // We need to override the JSON strings. While the strings may be
@@ -64,7 +62,7 @@ class MediaQueryTest extends FunctionalTestBase
         $filter->getRange()
             ->setStartIndex(1)
             ->setEndIndex(2);
-        /** @var ObjectList $list */
+        /** @var \Lullabot\Mpx\DataService\ObjectList $list */
         $list = $dof->selectRequest($filter)->wait();
 
         // Determine the end of the list of ranges.

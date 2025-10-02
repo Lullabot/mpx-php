@@ -11,7 +11,7 @@ abstract class ResolveBase
     /**
      * The cache used to store resolveDomain responses.
      *
-     * @var CacheItemPoolInterface
+     * @var \Psr\Cache\CacheItemPoolInterface
      */
     protected $cache;
     /**

@@ -126,7 +126,7 @@ class TokenTest extends TestCase
     public function testInvalidResponseData($data, $key)
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
+        $this->expectExceptionMessage(\sprintf('Required key %s is missing.', $key));
         Token::fromResponseData(['signInResponse' => $data]);
     }
 

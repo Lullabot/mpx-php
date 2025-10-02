@@ -27,7 +27,7 @@ class MpxExceptionTraitTest extends TestCase
      */
     public function testGet()
     {
-        /** @var MpxExceptionTrait $trait */
+        /** @var \Lullabot\Mpx\Exception\MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             'responseCode' => 403,
@@ -53,7 +53,7 @@ class MpxExceptionTraitTest extends TestCase
      */
     public function testNoCorrelationId()
     {
-        /** @var MpxExceptionTrait $trait */
+        /** @var \Lullabot\Mpx\Exception\MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             'responseCode' => 403,
@@ -76,7 +76,7 @@ class MpxExceptionTraitTest extends TestCase
      */
     public function testNoServerStackTrace()
     {
-        /** @var MpxExceptionTrait $trait */
+        /** @var \Lullabot\Mpx\Exception\MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             'responseCode' => 403,
@@ -119,7 +119,7 @@ class MpxExceptionTraitTest extends TestCase
      */
     public function testSetNotificationData()
     {
-        /** @var MpxExceptionTrait $trait */
+        /** @var \Lullabot\Mpx\Exception\MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
         $data = [
             [
@@ -155,7 +155,7 @@ class MpxExceptionTraitTest extends TestCase
     public function testValidateInvalidData($data, $key)
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
+        $this->expectExceptionMessage(\sprintf('Required key %s is missing.', $key));
         ServerException::validateData($data);
     }
 
@@ -172,7 +172,7 @@ class MpxExceptionTraitTest extends TestCase
     public function testValidateInvalidNotificationData($data, $key)
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
+        $this->expectExceptionMessage(\sprintf('Required key %s is missing.', $key));
         ServerException::validateNotificationData($data);
     }
 

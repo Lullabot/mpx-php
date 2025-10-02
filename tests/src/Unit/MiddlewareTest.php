@@ -103,7 +103,7 @@ class MiddlewareTest extends TestCase
     /**
      * Get the response from the MPX error handler.
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
     private function getResponse(RequestInterface $request, ResponseInterface $response, callable $errorHandler)
     {

@@ -299,7 +299,7 @@ class AuthenticatedClientTest extends TestCase
      *
      * @param int $count The number of times a token is logged.
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|LoggerInterface
      */
     private function fetchTokenLogger(int $count)
     {

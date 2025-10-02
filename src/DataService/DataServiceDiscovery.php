@@ -15,7 +15,7 @@ class DataServiceDiscovery
     /**
      * The array of discovered data services.
      *
-     * @var DiscoveredDataService[]
+     * @var \Lullabot\Mpx\DataService\DiscoveredDataService[]
      */
     private array $dataServices = [];
 
@@ -40,7 +40,7 @@ class DataServiceDiscovery
         /*
          * The manager used to discover custom field implementations.
          */
-        private readonly CustomFieldManager $customFieldManager
+        private readonly CustomFieldManager $customFieldManager,
     ) {
     }
 
@@ -67,11 +67,11 @@ class DataServiceDiscovery
         $finder = new Finder();
         $finder->files()->in($path);
 
-        /** @var SplFileInfo $file */
+        /** @var \Symfony\Component\Finder\SplFileInfo $file */
         foreach ($finder as $file) {
             $class = $this->classForFile($file);
             /* @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
-            $annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), \Lullabot\Mpx\DataService\Annotation\DataService::class);
+            $annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), DataService::class);
             if (!$annotation) {
                 continue;
             }

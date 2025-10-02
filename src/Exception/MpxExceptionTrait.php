@@ -125,7 +125,7 @@ trait MpxExceptionTrait
 
         foreach ($required as $key) {
             if (empty($data[$key])) {
-                throw new \InvalidArgumentException(sprintf('Required key %s is missing.', $key));
+                throw new \InvalidArgumentException(\sprintf('Required key %s is missing.', $key));
             }
         }
     }
@@ -147,7 +147,7 @@ trait MpxExceptionTrait
         ];
         foreach ($required as $key) {
             if (empty($data[0][$key])) {
-                throw new \InvalidArgumentException(sprintf('Required key %s is missing.', $key));
+                throw new \InvalidArgumentException(\sprintf('Required key %s is missing.', $key));
             }
         }
 
@@ -157,7 +157,7 @@ trait MpxExceptionTrait
     /**
      * Parse a response into the exception.
      *
-     * @param \Psr\Http\Message\ResponseInterface $response The response exception.
+     * @param ResponseInterface $response The response exception.
      *
      * @return string The message to use for the exception.
      */
@@ -165,9 +165,9 @@ trait MpxExceptionTrait
     {
         $data = Utils::jsonDecode($response->getBody(), true);
         isset($data[0]) ? $this->setNotificationData($data) : $this->setData($data);
-        $message = sprintf('HTTP %s Error %s', $response->getStatusCode(), $this->data['title']);
+        $message = \sprintf('HTTP %s Error %s', $response->getStatusCode(), $this->data['title']);
         if (isset($this->data['description'])) {
-            $message .= sprintf(': %s', $this->getDescription());
+            $message .= \sprintf(': %s', $this->getDescription());
         }
 
         return $message;

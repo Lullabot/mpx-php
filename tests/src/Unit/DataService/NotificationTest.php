@@ -32,7 +32,7 @@ class NotificationTest extends ObjectTestBase
      */
     public function testGetSet(string $field)
     {
-        /** @var Notification[] $notifications */
+        /** @var \Lullabot\Mpx\DataService\Notification[] $notifications */
         $notifications = $this->serializer->deserialize(json_encode($this->decoded, \JSON_THROW_ON_ERROR), Notification::class.'[]', 'json');
         $method = 'get'.ucfirst($field);
         foreach ($notifications as $index => $notification) {
@@ -47,7 +47,7 @@ class NotificationTest extends ObjectTestBase
 
     public function testIsSyncResponse()
     {
-        /** @var Notification[] $notifications */
+        /** @var \Lullabot\Mpx\DataService\Notification[] $notifications */
         $notifications = $this->serializer->deserialize('[{"id": 12345 }]', Notification::class.'[]', 'json');
         $this->assertCount(1, $notifications);
         $this->assertTrue($notifications[0]->isSyncResponse());
@@ -55,7 +55,7 @@ class NotificationTest extends ObjectTestBase
 
     public function testIsNotSyncResponse()
     {
-        /** @var Notification[] $notifications */
+        /** @var \Lullabot\Mpx\DataService\Notification[] $notifications */
         $notifications = $this->serializer->deserialize('[{"id": 12345, "method": "get" }]', Notification::class.'[]', 'json');
         $this->assertCount(1, $notifications);
         $this->assertFalse($notifications[0]->isSyncResponse());

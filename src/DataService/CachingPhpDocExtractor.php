@@ -24,13 +24,13 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
     final public const MUTATOR = 2;
 
     /**
-     * @var DocBlock[]
+     * @var \phpDocumentor\Reflection\DocBlock[]
      */
     private array $docBlocks = [];
 
-    private readonly \phpDocumentor\Reflection\DocBlockFactoryInterface|\phpDocumentor\Reflection\DocBlockFactory $docBlockFactory;
-    private readonly \Lullabot\Mpx\DataService\CachingContextFactory $contextFactory;
-    private readonly \Symfony\Component\PropertyInfo\Util\PhpDocTypeHelper $phpDocTypeHelper;
+    private readonly \phpDocumentor\Reflection\DocBlockFactoryInterface|DocBlockFactory $docBlockFactory;
+    private readonly CachingContextFactory $contextFactory;
+    private readonly PhpDocTypeHelper $phpDocTypeHelper;
     private $mutatorPrefixes;
     private $accessorPrefixes;
     private $arrayMutatorPrefixes;
@@ -43,7 +43,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
     public function __construct(?DocBlockFactoryInterface $docBlockFactory = null, ?array $mutatorPrefixes = null, ?array $accessorPrefixes = null, ?array $arrayMutatorPrefixes = null)
     {
         if (!class_exists(DocBlockFactory::class)) {
-            throw new \RuntimeException(sprintf('Unable to use the "%s" class as the "phpdocumentor/reflection-docblock" package is not installed.', self::class));
+            throw new \RuntimeException(\sprintf('Unable to use the "%s" class as the "phpdocumentor/reflection-docblock" package is not installed.', self::class));
         }
 
         $this->docBlockFactory = $docBlockFactory ?: DocBlockFactory::createInstance();
@@ -56,7 +56,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
 
     public function getShortDescription(string $class, string $property, array $context = []): ?string
     {
-        /** @var $docBlock DocBlock */
+        /** @var \phpDocumentor\Reflection\DocBlock $docBlock */
         [$docBlock] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
             return null;
@@ -70,7 +70,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
 
         foreach ($docBlock->getTagsByName('var') as $var) {
             if (is_a($var, InvalidTag::class)) {
-                throw new \InvalidArgumentException(sprintf('Failed to get the description of the @var tag "%s" for class "%s". Please check that the @var tag is correctly defined.', $property, $class));
+                throw new \InvalidArgumentException(\sprintf('Failed to get the description of the @var tag "%s" for class "%s". Please check that the @var tag is correctly defined.', $property, $class));
             }
             $varDescription = $var->getDescription()->render();
 
@@ -84,7 +84,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
 
     public function getLongDescription(string $class, string $property, array $context = []): ?string
     {
-        /** @var $docBlock DocBlock */
+        /** @var \phpDocumentor\Reflection\DocBlock $docBlock */
         [$docBlock] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
             return null;
@@ -97,7 +97,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
 
     public function getTypes($class, $property, array $context = [])
     {
-        /** @var $docBlock DocBlock */
+        /** @var \phpDocumentor\Reflection\DocBlock $docBlock */
         [$docBlock, $source, $prefix] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
             return;
@@ -149,7 +149,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
      */
     private function getDocBlock($class, $property)
     {
-        $propertyHash = sprintf('%s::%s', $class, $property);
+        $propertyHash = \sprintf('%s::%s', $class, $property);
 
         if (isset($this->docBlocks[$propertyHash])) {
             return $this->docBlocks[$propertyHash];

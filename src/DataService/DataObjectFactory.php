@@ -40,7 +40,7 @@ class DataObjectFactory
     /**
      * The class and annotation to load data objects into.
      *
-     * @var DiscoveredDataService
+     * @var \Lullabot\Mpx\DataService\DiscoveredDataService
      */
     protected $dataService;
 
@@ -54,16 +54,16 @@ class DataObjectFactory
     /**
      * Cache to store reflection metadata from implementing classes.
      *
-     * @var CacheItemPoolInterface
+     * @var \Psr\Cache\CacheItemPoolInterface
      */
     protected $cacheItemPool;
 
     /**
      * DataObjectFactory constructor.
      *
-     * @param DiscoveredDataService             $dataService         The service to load data from.
-     * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
-     * @param CacheItemPoolInterface|null       $cacheItemPool       (optional) Cache to store API metadata.
+     * @param DiscoveredDataService       $dataService         The service to load data from.
+     * @param AuthenticatedClient         $authenticatedClient A client to make authenticated MPX calls.
+     * @param CacheItemPoolInterface|null $cacheItemPool       (optional) Cache to store API metadata.
      */
     public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient, ?CacheItemPoolInterface $cacheItemPool = null)
     {
@@ -139,7 +139,7 @@ class DataObjectFactory
             $remaining = array_diff_key($this->dataService->getCustomFields(), $customFields);
 
             /** @var string $namespace */
-            /** @var DiscoveredCustomField $field */
+            /** @var \Lullabot\Mpx\DataService\DiscoveredCustomField $field */
             foreach ($remaining as $namespace => $field) {
                 $namespaceClass = $field->getClass();
                 $customFields[$namespace] = new $namespaceClass();
@@ -158,15 +158,15 @@ class DataObjectFactory
     /**
      * Load an object from mpx.
      *
-     * @param \Psr\Http\Message\UriInterface $uri     The URI to load from. This URI will always be converted to https,
-     *                                                making it safe to use directly from the ID of an mpx object.
-     * @param array                          $options (optional) An array of HTTP client options.
+     * @param UriInterface $uri     The URI to load from. This URI will always be converted to https,
+     *                              making it safe to use directly from the ID of an mpx object.
+     * @param array        $options (optional) An array of HTTP client options.
      *
      * @return PromiseInterface A promise to return a \Lullabot\Mpx\DataService\ObjectInterface.
      */
     public function load(UriInterface $uri, array $options = []): PromiseInterface
     {
-        /** @var DataService $annotation */
+        /** @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
         $annotation = $this->dataService->getAnnotation();
 
         if (!isset($options['query'])) {
@@ -209,7 +209,7 @@ class DataObjectFactory
     /**
      * Return a promise to an object list.
      *
-     * @see \Lullabot\Mpx\DataService\DataObjectFactory::select
+     * @see DataObjectFactory::select
      *
      * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact
      *                                         matches.
@@ -260,7 +260,7 @@ class DataObjectFactory
     {
         $data = $response->getBody();
 
-        /** @var ObjectList $list */
+        /** @var \Lullabot\Mpx\DataService\ObjectList $list */
         $list = $this->deserialize($data, ObjectList::class);
 
         // Set the json representation of each entry in the list.

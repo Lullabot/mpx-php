@@ -282,7 +282,7 @@ class MediaFile extends ObjectBase
     /**
      * Information about the file's location used by the FMS moveFile method.
      *
-     * @var PreviousLocation[]
+     * @var \Lullabot\Mpx\DataService\Media\PreviousLocation[]
      */
     protected $previousLocations = [];
 
@@ -310,7 +310,7 @@ class MediaFile extends ObjectBase
     /**
      * The Release objects associated with this file.
      *
-     * @var Release[]
+     * @var \Lullabot\Mpx\DataService\Media\Release[]
      */
     protected $releases = [];
 

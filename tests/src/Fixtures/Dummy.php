@@ -36,7 +36,7 @@ class Dummy extends ParentDummy
     public $bal;
 
     /**
-     * @var ParentDummy
+     * @var \Lullabot\Mpx\Tests\Fixtures\ParentDummy
      */
     public $parent;
 
@@ -60,7 +60,7 @@ class Dummy extends ParentDummy
     /**
      * B.
      *
-     * @var ParentDummy|null
+     * @var \Lullabot\Mpx\Tests\Fixtures\ParentDummy|null
      */
     public $B;
 
