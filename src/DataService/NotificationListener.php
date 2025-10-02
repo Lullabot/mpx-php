@@ -62,7 +62,7 @@ class NotificationListener
      * @param string                            $clientId      A string to identify this client in debugging.
      * @param CacheItemPoolInterface|null       $cacheItemPool (optional) The cache for API metadata.
      */
-    public function __construct(AuthenticatedClient $session, DiscoveredDataService $service, private readonly string $clientId, CacheItemPoolInterface $cacheItemPool = null)
+    public function __construct(AuthenticatedClient $session, DiscoveredDataService $service, private readonly string $clientId, ?CacheItemPoolInterface $cacheItemPool = null)
     {
         $this->authenticatedClient = $session;
         $this->service = $service;

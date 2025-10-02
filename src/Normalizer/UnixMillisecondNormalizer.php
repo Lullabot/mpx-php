@@ -53,17 +53,17 @@ class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInte
     /**
      * @throws InvalidArgumentException
      */
-    public function normalize(mixed $object, string $format = null, array $context = []): string
+    public function normalize(mixed $object, ?string $format = null, array $context = []): string
     {
         return $this->decorated->normalize($object, $format, $context);
     }
 
-    public function supportsNormalization(mixed $data, string $format = null): bool
+    public function supportsNormalization(mixed $data, ?string $format = null): bool
     {
         return $this->decorated->supportsNormalization($data, $format);
     }
 
-    public function denormalize(mixed $data, string $type, string $format = null, array $context = []): ConcreteDateTime
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): ConcreteDateTime
     {
         if (!\is_int($data)) {
             throw new NotNormalizableValueException('The data is not an integer, you should pass an integer representing the unix time in milliseconds.');
@@ -80,7 +80,7 @@ class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInte
         return new ConcreteDateTime($date);
     }
 
-    public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null): bool
     {
         return isset(self::$supportedTypes[$type]);
     }

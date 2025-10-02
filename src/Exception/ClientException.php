@@ -21,7 +21,7 @@ class ClientException extends GuzzleClientException implements MpxExceptionInter
      * @param \Exception|null                          $previous       (optional) The previous exception.
      * @param array                                    $handlerContext (optional) Custom HTTP handler context, if available.
      */
-    public function __construct(RequestInterface $request, ResponseInterface $response, \Exception $previous = null, array $handlerContext = [])
+    public function __construct(RequestInterface $request, ResponseInterface $response, ?\Exception $previous = null, array $handlerContext = [])
     {
         $message = $this->parseResponse($response);
         parent::__construct($message, $request, $response, $previous, $handlerContext);

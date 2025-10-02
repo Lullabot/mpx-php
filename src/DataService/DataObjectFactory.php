@@ -65,7 +65,7 @@ class DataObjectFactory
      * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
      * @param CacheItemPoolInterface|null       $cacheItemPool       (optional) Cache to store API metadata.
      */
-    public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient, CacheItemPoolInterface $cacheItemPool = null)
+    public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient, ?CacheItemPoolInterface $cacheItemPool = null)
     {
         $this->authenticatedClient = $authenticatedClient;
         $this->dataService = $dataService;
@@ -201,7 +201,7 @@ class DataObjectFactory
      *
      * @return ObjectListIterator An iterator over the full result set.
      */
-    public function select(ObjectListQuery $objectListQuery = null, array $options = []): ObjectListIterator
+    public function select(?ObjectListQuery $objectListQuery = null, array $options = []): ObjectListIterator
     {
         return new ObjectListIterator($this->selectRequest($objectListQuery, $options));
     }
@@ -217,7 +217,7 @@ class DataObjectFactory
      *
      * @return PromiseInterface A promise to return an ObjectList.
      */
-    public function selectRequest(ObjectListQuery $objectListQuery = null, array $options = []): PromiseInterface
+    public function selectRequest(?ObjectListQuery $objectListQuery = null, array $options = []): PromiseInterface
     {
         if (!$objectListQuery) {
             $objectListQuery = new ObjectListQuery();
