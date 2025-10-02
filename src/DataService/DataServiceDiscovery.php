@@ -67,7 +67,7 @@ class DataServiceDiscovery
         $finder = new Finder();
         $finder->files()->in($path);
 
-        /** @var SplFileInfo $file */
+        /** @var \Symfony\Component\Finder\SplFileInfo $file */
         foreach ($finder as $file) {
             $class = $this->classForFile($file);
             /* @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */

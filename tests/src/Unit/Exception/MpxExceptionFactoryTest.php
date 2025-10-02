@@ -20,7 +20,7 @@ class MpxExceptionFactoryTest extends TestCase
      */
     public function testCreateClientException()
     {
-        /** @var RequestInterface $request */
+        /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $data = [
@@ -43,7 +43,7 @@ class MpxExceptionFactoryTest extends TestCase
      */
     public function testCreateServerException()
     {
-        /** @var RequestInterface $request */
+        /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $data = [
@@ -68,7 +68,7 @@ class MpxExceptionFactoryTest extends TestCase
      */
     public function testCreateFromNotificationException()
     {
-        /** @var RequestInterface $request */
+        /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $data = [

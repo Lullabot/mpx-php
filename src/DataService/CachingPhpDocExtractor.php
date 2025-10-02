@@ -56,7 +56,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
 
     public function getShortDescription(string $class, string $property, array $context = []): ?string
     {
-        /** @var DocBlock $docBlock */
+        /** @var \phpDocumentor\Reflection\DocBlock $docBlock */
         [$docBlock] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
             return null;
@@ -84,7 +84,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
 
     public function getLongDescription(string $class, string $property, array $context = []): ?string
     {
-        /** @var DocBlock $docBlock */
+        /** @var \phpDocumentor\Reflection\DocBlock $docBlock */
         [$docBlock] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
             return null;
@@ -97,7 +97,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
 
     public function getTypes($class, $property, array $context = [])
     {
-        /** @var DocBlock $docBlock */
+        /** @var \phpDocumentor\Reflection\DocBlock $docBlock */
         [$docBlock, $source, $prefix] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
             return;

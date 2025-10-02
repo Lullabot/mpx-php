@@ -22,7 +22,7 @@ class MiddlewareTest extends TestCase
      */
     public function testMpxEmptyContentType()
     {
-        /** @var RequestInterface $request */
+        /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $response = new Response(200);
@@ -38,7 +38,7 @@ class MiddlewareTest extends TestCase
      */
     public function testNoResponseData()
     {
-        /** @var RequestInterface $request */
+        /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $response = new Response(200, ['Content-Type' => 'application/json'], '{}');
@@ -58,7 +58,7 @@ class MiddlewareTest extends TestCase
      */
     public function testExceptionThrown()
     {
-        /** @var RequestInterface $request */
+        /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $body = json_encode([
@@ -80,7 +80,7 @@ class MiddlewareTest extends TestCase
      */
     public function testNotificationException()
     {
-        /** @var RequestInterface $request */
+        /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $body = json_encode([
@@ -110,7 +110,7 @@ class MiddlewareTest extends TestCase
         $handler = fn (RequestInterface $request, array $options) => new FulfilledPromise($response);
         $fn = $errorHandler($handler);
 
-        /** @var FulfilledPromise $promise */
+        /** @var \GuzzleHttp\Promise\FulfilledPromise $promise */
         $promise = $fn($request, []);
         $processedResponse = $promise->wait();
 

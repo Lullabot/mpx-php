@@ -58,7 +58,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
         $finder = new Finder();
         $finder->files()->in($path);
 
-        /** @var SplFileInfo $file */
+        /** @var \Symfony\Component\Finder\SplFileInfo $file */
         foreach ($finder as $file) {
             $class = $this->classForFile($file);
             /* @var \Lullabot\Mpx\DataService\Annotation\CustomField $annotation */
@@ -91,7 +91,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
      */
     private function registerAnnotation($class)
     {
-        /** @var CustomField $annotation */
+        /** @var \Lullabot\Mpx\DataService\Annotation\CustomField $annotation */
         if ($annotation = $this->annotationReader->getClassAnnotation(
             new \ReflectionClass($class),
             CustomField::class

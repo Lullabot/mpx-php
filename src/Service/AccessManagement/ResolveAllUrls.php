@@ -59,7 +59,7 @@ class ResolveAllUrls extends ResolveBase
         $normalizers = [new UriNormalizer(), new ObjectNormalizer(null, null, null, new PhpDocExtractor()), new ArrayDenormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
 
-        /** @var ResolveAllUrlsResponse $resolved */
+        /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrlsResponse $resolved */
         $resolved = $serializer->deserialize($response->getBody(), ResolveAllUrlsResponse::class, 'json');
         $resolved->setService($service);
         $this->saveCache($key, $resolved);

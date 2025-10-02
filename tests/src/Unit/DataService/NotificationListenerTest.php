@@ -123,7 +123,7 @@ class NotificationListenerTest extends TestCase
             $this->assertEquals($method, $notification->getMethod());
             $this->assertEquals('Media', $notification->getType());
 
-            /** @var Media $media */
+            /** @var \Lullabot\Mpx\DataService\Media\Media $media */
             $media = $notification->getEntry();
             $this->assertInstanceOf(Media::class, $media);
 

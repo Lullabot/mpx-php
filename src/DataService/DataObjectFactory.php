@@ -139,7 +139,7 @@ class DataObjectFactory
             $remaining = array_diff_key($this->dataService->getCustomFields(), $customFields);
 
             /** @var string $namespace */
-            /** @var DiscoveredCustomField $field */
+            /** @var \Lullabot\Mpx\DataService\DiscoveredCustomField $field */
             foreach ($remaining as $namespace => $field) {
                 $namespaceClass = $field->getClass();
                 $customFields[$namespace] = new $namespaceClass();
@@ -166,7 +166,7 @@ class DataObjectFactory
      */
     public function load(UriInterface $uri, array $options = []): PromiseInterface
     {
-        /** @var DataService $annotation */
+        /** @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
         $annotation = $this->dataService->getAnnotation();
 
         if (!isset($options['query'])) {
@@ -260,7 +260,7 @@ class DataObjectFactory
     {
         $data = $response->getBody();
 
-        /** @var ObjectList $list */
+        /** @var \Lullabot\Mpx\DataService\ObjectList $list */
         $list = $this->deserialize($data, ObjectList::class);
 
         // Set the json representation of each entry in the list.

@@ -15,7 +15,7 @@ class ResolveAllUrlsTest extends FunctionalTestBase
      */
     public function testResolve()
     {
-        /** @var ResolveAllUrls $resolved */
+        /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls $resolved */
         $resolver = new ResolveAllUrls($this->authenticatedClient);
         $resolved = $resolver->resolve('Media Data Service');
         $this->assertIsString($resolved->getService());
