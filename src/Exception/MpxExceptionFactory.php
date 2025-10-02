@@ -17,7 +17,7 @@ class MpxExceptionFactory
         RequestInterface $request,
         ResponseInterface $response,
         ?\Exception $previous = null,
-        array $ctx = []
+        array $ctx = [],
     ): ClientException|ServerException {
         $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
         ClientException::validateData($data);
@@ -46,7 +46,7 @@ class MpxExceptionFactory
     private static function createException(RequestInterface $request,
         ResponseInterface $altered,
         ?\Exception $previous = null,
-        array $ctx = []
+        array $ctx = [],
     ): ClientException|ServerException {
         if ($altered->getStatusCode() >= 400 && $altered->getStatusCode() < 500) {
             return new ClientException($request, $altered, $previous, $ctx);

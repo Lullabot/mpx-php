@@ -130,21 +130,21 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * The id of the user that created this object.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @var UriInterface
      */
     protected $addedByUserId;
 
     /**
      * The globally unique URI of this object.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @var UriInterface
      */
     protected $id;
 
     /**
      * The id of the account that owns this object.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @var UriInterface
      */
     protected $ownerId;
 

@@ -380,7 +380,7 @@ class MediaFile extends ObjectBase
     /**
      * The server information required to transfer the file.
      *
-     * @var \Lullabot\Mpx\DataService\Media\TransferInfo
+     * @var TransferInfo
      */
     protected $transferInfo;
 

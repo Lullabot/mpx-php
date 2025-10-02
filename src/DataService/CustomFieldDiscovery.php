@@ -36,7 +36,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
         /*
          * The class to use for reading annotations.
          */
-        private readonly Reader $annotationReader
+        private readonly Reader $annotationReader,
     ) {
     }
 
@@ -94,10 +94,10 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
         /** @var CustomField $annotation */
         if ($annotation = $this->annotationReader->getClassAnnotation(
             new \ReflectionClass($class),
-            \Lullabot\Mpx\DataService\Annotation\CustomField::class
+            CustomField::class
         )) {
             if (!is_subclass_of($class, CustomFieldInterface::class)) {
-                throw new \RuntimeException(sprintf('%s must implement %s.', $class, CustomFieldInterface::class));
+                throw new \RuntimeException(\sprintf('%s must implement %s.', $class, CustomFieldInterface::class));
             }
 
             $this->customFields[$annotation->service][$annotation->objectType][$annotation->namespace] = new DiscoveredCustomField(

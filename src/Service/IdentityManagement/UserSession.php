@@ -61,12 +61,12 @@ class UserSession
     /**
      * Construct a new mpx user.
      *
-     * @param UserInterface                                         $user           The user to authenticate as.
-     * @param Client                                                $client         The client used to access mpx.
-     * @param \Symfony\Component\Lock\PersistingStoreInterface|null $store          (optional) The lock backend to store locks in.
-     * @param \Lullabot\Mpx\TokenCachePool|null                     $tokenCachePool (optional) The cache of authentication tokens.
+     * @param UserInterface                 $user           The user to authenticate as.
+     * @param Client                        $client         The client used to access mpx.
+     * @param PersistingStoreInterface|null $store          (optional) The lock backend to store locks in.
+     * @param TokenCachePool|null           $tokenCachePool (optional) The cache of authentication tokens.
      *
-     * @see \Psr\Log\NullLogger To disable logging of token requests.
+     * @see NullLogger To disable logging of token requests.
      */
     public function __construct(UserInterface $user, Client $client, ?PersistingStoreInterface $store = null, ?TokenCachePool $tokenCachePool = null)
     {
@@ -167,7 +167,7 @@ class UserSession
      *
      * @param int|null $duration (optional) The number of seconds that the sign-in token should be valid for.
      *
-     * @return \Lullabot\Mpx\Token The token.
+     * @return Token The token.
      */
     protected function signInWithLock(?int $duration = null): Token
     {

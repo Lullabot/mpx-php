@@ -36,7 +36,7 @@ class CustomFieldsNormalizer implements DenormalizerInterface
         /*
          * The array of discovered custom field classes, indexed by namespace.
          */
-        private array $customFields
+        private array $customFields,
     ) {
     }
 
@@ -50,7 +50,7 @@ class CustomFieldsNormalizer implements DenormalizerInterface
         $concreteClass = $this->customFields[$data['namespace']]->getClass();
 
         if (!$this->serializer instanceof DenormalizerInterface) {
-            throw new LogicException(sprintf('Cannot denormalize class "%s" because injected serializer is not a denormalizer', $class));
+            throw new LogicException(\sprintf('Cannot denormalize class "%s" because injected serializer is not a denormalizer', $class));
         }
 
         return $this->serializer->denormalize($data['data'], $concreteClass);

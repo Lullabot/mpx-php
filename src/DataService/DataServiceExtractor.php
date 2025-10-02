@@ -99,7 +99,7 @@ class DataServiceExtractor extends CachingPhpDocExtractor
         $ns = $this->xmlns[$prefix];
 
         if (!$discoveredCustomField = $this->customFields[$ns]) {
-            throw new LogicException(sprintf('No custom field class was found for %s. setCustomFields() must be called before using this extractor.', $ns));
+            throw new LogicException(\sprintf('No custom field class was found for %s. setCustomFields() must be called before using this extractor.', $ns));
         }
 
         return [new Type('object', false, $discoveredCustomField->getClass())];

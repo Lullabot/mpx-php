@@ -40,7 +40,7 @@ class DataServiceDiscovery
         /*
          * The manager used to discover custom field implementations.
          */
-        private readonly CustomFieldManager $customFieldManager
+        private readonly CustomFieldManager $customFieldManager,
     ) {
     }
 
@@ -71,7 +71,7 @@ class DataServiceDiscovery
         foreach ($finder as $file) {
             $class = $this->classForFile($file);
             /* @var \Lullabot\Mpx\DataService\Annotation\DataService $annotation */
-            $annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), \Lullabot\Mpx\DataService\Annotation\DataService::class);
+            $annotation = $this->annotationReader->getClassAnnotation(new \ReflectionClass($class), DataService::class);
             if (!$annotation) {
                 continue;
             }

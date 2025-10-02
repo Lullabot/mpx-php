@@ -25,12 +25,12 @@ abstract class FunctionalTestBase extends TestCase
     protected $client;
 
     /**
-     * @var \Lullabot\Mpx\Service\IdentityManagement\UserSession
+     * @var UserSession
      */
     protected $userSession;
 
     /**
-     * @var \Lullabot\Mpx\AuthenticatedClient
+     * @var AuthenticatedClient
      */
     protected $authenticatedClient;
 
@@ -63,7 +63,7 @@ abstract class FunctionalTestBase extends TestCase
             $responseLogger = new Logger(new ConsoleLogger($output));
             $responseLogger->setLogLevel(LogLevel::DEBUG);
             $responseLogger->setFormatter(new MessageFormatter(MessageFormatter::DEBUG));
-            /** @var $handler \GuzzleHttp\HandlerStack */
+            /** @var \GuzzleHttp\HandlerStack $handler */
             $handler = $config['handler'];
             $handler->after('cookies', $responseLogger);
         }

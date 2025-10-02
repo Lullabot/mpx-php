@@ -22,7 +22,7 @@ class MiddlewareTest extends TestCase
      */
     public function testMpxEmptyContentType()
     {
-        /** @var \Psr\Http\Message\RequestInterface $request */
+        /** @var RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $response = new Response(200);
@@ -38,7 +38,7 @@ class MiddlewareTest extends TestCase
      */
     public function testNoResponseData()
     {
-        /** @var \Psr\Http\Message\RequestInterface $request */
+        /** @var RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $response = new Response(200, ['Content-Type' => 'application/json'], '{}');
@@ -58,7 +58,7 @@ class MiddlewareTest extends TestCase
      */
     public function testExceptionThrown()
     {
-        /** @var \Psr\Http\Message\RequestInterface $request */
+        /** @var RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $body = json_encode([
@@ -80,7 +80,7 @@ class MiddlewareTest extends TestCase
      */
     public function testNotificationException()
     {
-        /** @var \Psr\Http\Message\RequestInterface $request */
+        /** @var RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock();
         $body = json_encode([
@@ -103,14 +103,14 @@ class MiddlewareTest extends TestCase
     /**
      * Get the response from the MPX error handler.
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
     private function getResponse(RequestInterface $request, ResponseInterface $response, callable $errorHandler)
     {
         $handler = fn (RequestInterface $request, array $options) => new FulfilledPromise($response);
         $fn = $errorHandler($handler);
 
-        /** @var \GuzzleHttp\Promise\FulfilledPromise $promise */
+        /** @var FulfilledPromise $promise */
         $promise = $fn($request, []);
         $processedResponse = $promise->wait();
 

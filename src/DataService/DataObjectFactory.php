@@ -33,7 +33,7 @@ class DataObjectFactory
     /**
      * The resolver for MPX services.
      *
-     * @var \Lullabot\Mpx\Service\AccessManagement\ResolveDomain
+     * @var ResolveDomain
      */
     protected $resolveDomain;
 
@@ -47,7 +47,7 @@ class DataObjectFactory
     /**
      * The client to make authenticated API calls.
      *
-     * @var \Lullabot\Mpx\AuthenticatedClient
+     * @var AuthenticatedClient
      */
     protected $authenticatedClient;
 
@@ -61,9 +61,9 @@ class DataObjectFactory
     /**
      * DataObjectFactory constructor.
      *
-     * @param DiscoveredDataService             $dataService         The service to load data from.
-     * @param \Lullabot\Mpx\AuthenticatedClient $authenticatedClient A client to make authenticated MPX calls.
-     * @param CacheItemPoolInterface|null       $cacheItemPool       (optional) Cache to store API metadata.
+     * @param DiscoveredDataService       $dataService         The service to load data from.
+     * @param AuthenticatedClient         $authenticatedClient A client to make authenticated MPX calls.
+     * @param CacheItemPoolInterface|null $cacheItemPool       (optional) Cache to store API metadata.
      */
     public function __construct(DiscoveredDataService $dataService, AuthenticatedClient $authenticatedClient, ?CacheItemPoolInterface $cacheItemPool = null)
     {
@@ -158,9 +158,9 @@ class DataObjectFactory
     /**
      * Load an object from mpx.
      *
-     * @param \Psr\Http\Message\UriInterface $uri     The URI to load from. This URI will always be converted to https,
-     *                                                making it safe to use directly from the ID of an mpx object.
-     * @param array                          $options (optional) An array of HTTP client options.
+     * @param UriInterface $uri     The URI to load from. This URI will always be converted to https,
+     *                              making it safe to use directly from the ID of an mpx object.
+     * @param array        $options (optional) An array of HTTP client options.
      *
      * @return PromiseInterface A promise to return a \Lullabot\Mpx\DataService\ObjectInterface.
      */
@@ -209,7 +209,7 @@ class DataObjectFactory
     /**
      * Return a promise to an object list.
      *
-     * @see \Lullabot\Mpx\DataService\DataObjectFactory::select
+     * @see DataObjectFactory::select
      *
      * @param ObjectListQuery $objectListQuery (optional) The fields and values to filter by. Note these are exact
      *                                         matches.

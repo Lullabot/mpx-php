@@ -23,7 +23,7 @@ class ResolveAllUrlsResponseExtractorTest extends TestCase
         $extractor = new ResolveAllUrlsResponseExtractor();
         $types = $extractor->getTypes(ResolveAllUrlsResponse::class, 'resolveAllUrlsResponse');
         $this->assertCount(1, $types);
-        /** @var \Symfony\Component\PropertyInfo\Type $type */
+        /** @var Type $type */
         $type = $types[0];
         $this->assertEquals(Type::BUILTIN_TYPE_ARRAY, $type->getBuiltinType());
         $this->assertEquals(Type::BUILTIN_TYPE_STRING, $type->getCollectionKeyTypes()[0]->getBuiltinType());

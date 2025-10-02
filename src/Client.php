@@ -16,7 +16,7 @@ class Client implements GuzzleClientInterface
     /**
      * The underlying HTTP client.
      *
-     * @var \GuzzleHttp\ClientInterface
+     * @var GuzzleClientInterface
      */
     protected $client;
 
@@ -26,10 +26,10 @@ class Client implements GuzzleClientInterface
      * Custom client implementations should include the Middleware
      * handler, otherwise MPX errors may not be exposed correctly.
      *
-     * @see \Lullabot\Mpx\Client::getDefaultConfiguration
-     * @see \Lullabot\Mpx\Middleware
+     * @see Client::getDefaultConfiguration
+     * @see Middleware
      *
-     * @param \GuzzleHttp\ClientInterface $client The underlying HTTP client to use for requests.
+     * @param GuzzleClientInterface $client The underlying HTTP client to use for requests.
      */
     public function __construct(GuzzleClientInterface $client)
     {

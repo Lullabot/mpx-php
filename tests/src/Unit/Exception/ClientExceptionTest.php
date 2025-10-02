@@ -17,7 +17,7 @@ class ClientExceptionTest extends TestCase
      */
     public function testConstruct()
     {
-        /** @var \GuzzleHttp\Psr7\Request $request */
+        /** @var Request $request */
         $request = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
             ->getMock();

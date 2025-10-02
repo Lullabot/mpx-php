@@ -17,7 +17,7 @@ abstract class ResolveBase
     /**
      * The client used to access mpx.
      *
-     * @var \Lullabot\Mpx\AuthenticatedClient
+     * @var AuthenticatedClient
      */
     protected $authenticatedClient;
 

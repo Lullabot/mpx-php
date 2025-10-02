@@ -202,7 +202,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * Return the next object list request, if one exists.
      *
-     * @see \Lullabot\Mpx\DataService\ObjectList::setDataObjectFactory
+     * @see ObjectList::setDataObjectFactory
      *
      * @return PromiseInterface|bool A promise to the next ObjectList, or false if no list exists.
      */

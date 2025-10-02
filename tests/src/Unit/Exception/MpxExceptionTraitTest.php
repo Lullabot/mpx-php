@@ -155,7 +155,7 @@ class MpxExceptionTraitTest extends TestCase
     public function testValidateInvalidData($data, $key)
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
+        $this->expectExceptionMessage(\sprintf('Required key %s is missing.', $key));
         ServerException::validateData($data);
     }
 
@@ -172,7 +172,7 @@ class MpxExceptionTraitTest extends TestCase
     public function testValidateInvalidNotificationData($data, $key)
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Required key %s is missing.', $key));
+        $this->expectExceptionMessage(\sprintf('Required key %s is missing.', $key));
         ServerException::validateNotificationData($data);
     }
 

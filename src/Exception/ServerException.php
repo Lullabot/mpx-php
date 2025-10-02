@@ -13,10 +13,10 @@ class ServerException extends GuzzleServerException implements MpxExceptionInter
     /**
      * Construct a new ClientException.
      *
-     * @param \Psr\Http\Message\RequestInterface       $request        The request that generated the error.
-     * @param \Psr\Http\Message\ResponseInterface|null $response       The error response.
-     * @param \Exception|null                          $previous       (optional) The previous exception.
-     * @param array                                    $handlerContext (optional) Custom HTTP handler context, if available.
+     * @param RequestInterface       $request        The request that generated the error.
+     * @param ResponseInterface|null $response       The error response.
+     * @param \Exception|null        $previous       (optional) The previous exception.
+     * @param array                  $handlerContext (optional) Custom HTTP handler context, if available.
      */
     public function __construct(RequestInterface $request, ResponseInterface $response, ?\Exception $previous = null, array $handlerContext = [])
     {

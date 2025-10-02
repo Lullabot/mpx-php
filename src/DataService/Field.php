@@ -18,14 +18,14 @@ class Field extends ObjectBase
      * The date and time that this object was created
      *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
      *
-     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+     * @var DateTimeFormatInterface
      */
     protected $added;
 
     /**
      * The id of the user that created this object.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @var UriInterface
      */
     protected $addedByUserId;
 
@@ -79,7 +79,7 @@ class Field extends ObjectBase
     /**
      * The globally unique URI of this object.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @var UriInterface
      */
     protected $id;
 
@@ -114,7 +114,7 @@ class Field extends ObjectBase
     /**
      * The namespace this custom field belongs to.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @var UriInterface
      */
     protected $namespace;
 
@@ -149,7 +149,7 @@ class Field extends ObjectBase
     /**
      * The id of the account that owns this object.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @var UriInterface
      */
     protected $ownerId;
 
@@ -170,14 +170,14 @@ class Field extends ObjectBase
     /**
      * The date and time this object was last modified.
      *
-     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
+     * @var DateTimeFormatInterface
      */
     protected $updated;
 
     /**
      * The id of the user that last modified this object.
      *
-     * @var \Psr\Http\Message\UriInterface
+     * @var UriInterface
      */
     protected $updatedByUserId;
 

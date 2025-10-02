@@ -14,7 +14,7 @@ use Psr\Http\Message\UriInterface;
  *
  * In general, use resolveDomain instead as it is more efficient.
  *
- * @see \Lullabot\Mpx\Service\AccessManagement\ResolveDomain
+ * @see ResolveDomain
  * @see https://docs.theplatform.com/help/wsf-resolveallurls-method
  */
 class ResolveAllUrlsResponse

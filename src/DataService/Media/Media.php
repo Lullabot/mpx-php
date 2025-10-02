@@ -173,7 +173,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The streamingUrl of the default thumbnail for this Media.
      *
-     * @var \GuzzleHttp\Psr7\Uri
+     * @var Uri
      */
     protected $defaultThumbnailUrl;
 
@@ -320,7 +320,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The public URL for this media.
      *
-     * @var \GuzzleHttp\Psr7\Uri
+     * @var Uri
      */
     protected $publicUrl;
 
@@ -824,8 +824,8 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
      *
      * @param bool $ssl TRUE for SSL substitution, otherwise FALSE.
      *
-     * @return \GuzzleHttp\Psr7\Uri A Uri object for the default thumbnail url
-     *                              with known dynamic URL substitution done.
+     * @return Uri A Uri object for the default thumbnail url
+     *             with known dynamic URL substitution done.
      *
      * @see https://docs.theplatform.com/help/media-delivery-urls#tp-toc38
      */

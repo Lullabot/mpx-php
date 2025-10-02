@@ -78,7 +78,7 @@ class ResolveAllUrlsTest extends TestCase
     {
         $client = $this->getMockClient();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var \Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface $store */
+        /** @var DummyStoreInterface $store */
         $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
 
