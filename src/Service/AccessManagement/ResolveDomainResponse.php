@@ -12,7 +12,7 @@ class ResolveDomainResponse
     /**
      * The array of resolveDomainResponse domains, indexed by their service name.
      *
-     * @var Uri[]
+     * @var \GuzzleHttp\Psr7\Uri[]
      */
     protected $resolveDomainResponse;
 

@@ -25,7 +25,7 @@ class NotificationListener
     /**
      * The resolver for MPX services.
      *
-     * @var ResolveDomain
+     * @var \Lullabot\Mpx\Service\AccessManagement\ResolveDomain
      */
     protected $resolveDomain;
 
@@ -39,14 +39,14 @@ class NotificationListener
     /**
      * The client for authenticated requests.
      *
-     * @var AuthenticatedClient
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
     protected $authenticatedClient;
 
     /**
      * The service to listen to notifications on, such as /data/Media from the Media Data Service.
      *
-     * @var DiscoveredDataService
+     * @var \Lullabot\Mpx\DataService\DiscoveredDataService
      */
     protected $service;
 

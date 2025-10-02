@@ -11,13 +11,13 @@ abstract class ResolveBase
     /**
      * The cache used to store resolveDomain responses.
      *
-     * @var CacheItemPoolInterface
+     * @var \Psr\Cache\CacheItemPoolInterface
      */
     protected $cache;
     /**
      * The client used to access mpx.
      *
-     * @var AuthenticatedClient
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
     protected $authenticatedClient;
 

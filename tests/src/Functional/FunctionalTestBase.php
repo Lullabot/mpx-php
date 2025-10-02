@@ -20,24 +20,24 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 abstract class FunctionalTestBase extends TestCase
 {
     /**
-     * @var Client
+     * @var \Lullabot\Mpx\Client
      */
     protected $client;
 
     /**
-     * @var UserSession
+     * @var \Lullabot\Mpx\Service\IdentityManagement\UserSession
      */
     protected $userSession;
 
     /**
-     * @var AuthenticatedClient
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
     protected $authenticatedClient;
 
     /**
      * The MPX account.
      *
-     * @var Account
+     * @var \Lullabot\Mpx\DataService\Access\Account
      */
     protected $account;
 

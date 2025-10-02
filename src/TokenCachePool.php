@@ -19,7 +19,7 @@ class TokenCachePool
     /**
      * The underlying cache backend.
      *
-     * @var CacheItemPoolInterface
+     * @var \Psr\Cache\CacheItemPoolInterface
      */
     protected $cacheItemPool;
 

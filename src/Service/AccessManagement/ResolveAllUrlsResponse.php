@@ -22,7 +22,7 @@ class ResolveAllUrlsResponse
     /**
      * An array of resolvedUrls URLs for the service.
      *
-     * @var UriInterface[]
+     * @var \Psr\Http\Message\UriInterface[]
      */
     protected $resolveAllUrlsResponse = [];
 

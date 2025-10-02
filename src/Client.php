@@ -16,7 +16,7 @@ class Client implements GuzzleClientInterface
     /**
      * The underlying HTTP client.
      *
-     * @var GuzzleClientInterface
+     * @var \GuzzleHttp\ClientInterface
      */
     protected $client;
 

@@ -30,7 +30,7 @@ class DataServiceExtractor extends CachingPhpDocExtractor
     /**
      * The array of custom field namespaces to use for extracting property info.
      *
-     * @var DiscoveredCustomField[]
+     * @var \Lullabot\Mpx\DataService\DiscoveredCustomField[]
      */
     protected $customFields = [];
 

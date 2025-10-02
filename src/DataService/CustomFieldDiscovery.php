@@ -15,7 +15,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
     /**
      * The array of discovered data services.
      *
-     * @var DiscoveredCustomField[]
+     * @var \Lullabot\Mpx\DataService\DiscoveredCustomField[]
      */
     private array $customFields = [];
 

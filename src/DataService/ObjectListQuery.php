@@ -20,19 +20,19 @@ class ObjectListQuery implements QueryPartsInterface
     /**
      * The sort to apply to this filter.
      *
-     * @var Sort
+     * @var \Lullabot\Mpx\DataService\Sort
      */
     protected $sort;
 
     /**
      * The range of objects to filter by.
      *
-     * @var Range
+     * @var \Lullabot\Mpx\DataService\Range
      */
     protected $range;
 
     /**
-     * @var QueryPartsInterface[]
+     * @var \Lullabot\Mpx\DataService\QueryPartsInterface[]
      */
     private array $fields = [];
 

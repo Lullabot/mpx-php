@@ -16,14 +16,14 @@ class AuthenticatedClient implements ClientInterface
     /**
      * The user to establish a client for.
      *
-     * @var UserSession
+     * @var \Lullabot\Mpx\Service\IdentityManagement\UserSession
      */
     protected $userSession;
 
     /**
      * The client used to access MPX.
      *
-     * @var Client
+     * @var \Lullabot\Mpx\Client
      */
     protected $client;
 
@@ -32,7 +32,7 @@ class AuthenticatedClient implements ClientInterface
      *
      * @see https://docs.theplatform.com/help/wsf-introduction-to-theplatforms-web-services#IntroductiontothePlatform%27sWebservices-Accountcontext
      *
-     * @var IdInterface
+     * @var \Lullabot\Mpx\DataService\IdInterface
      */
     protected $account;
 

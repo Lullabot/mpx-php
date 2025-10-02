@@ -24,7 +24,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
     final public const MUTATOR = 2;
 
     /**
-     * @var DocBlock[]
+     * @var \phpDocumentor\Reflection\DocBlock[]
      */
     private array $docBlocks = [];
 

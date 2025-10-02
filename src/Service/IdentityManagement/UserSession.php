@@ -33,28 +33,28 @@ class UserSession
     final public const SIGN_OUT_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut';
 
     /**
-     * @var Client
+     * @var \Lullabot\Mpx\Client
      */
     protected $client;
 
     /**
      * The backend lock store used to store a lock when signing in to mpx.
      *
-     * @var PersistingStoreInterface
+     * @var \Symfony\Component\Lock\PersistingStoreInterface
      */
     protected $store;
 
     /**
      * The cache of authentication tokens.
      *
-     * @var TokenCachePool
+     * @var \Lullabot\Mpx\TokenCachePool
      */
     protected $tokenCachePool;
 
     /**
      * The user to authenticate as.
      *
-     * @var UserInterface
+     * @var \Lullabot\Mpx\Service\IdentityManagement\UserInterface
      */
     protected $user;
 
@@ -241,8 +241,6 @@ class UserSession
 
     /**
      * Return the user associated with this session.
-     *
-     * @return User
      */
     public function getUser(): UserInterface
     {

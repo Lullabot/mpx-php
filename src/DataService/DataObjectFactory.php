@@ -33,28 +33,28 @@ class DataObjectFactory
     /**
      * The resolver for MPX services.
      *
-     * @var ResolveDomain
+     * @var \Lullabot\Mpx\Service\AccessManagement\ResolveDomain
      */
     protected $resolveDomain;
 
     /**
      * The class and annotation to load data objects into.
      *
-     * @var DiscoveredDataService
+     * @var \Lullabot\Mpx\DataService\DiscoveredDataService
      */
     protected $dataService;
 
     /**
      * The client to make authenticated API calls.
      *
-     * @var AuthenticatedClient
+     * @var \Lullabot\Mpx\AuthenticatedClient
      */
     protected $authenticatedClient;
 
     /**
      * Cache to store reflection metadata from implementing classes.
      *
-     * @var CacheItemPoolInterface
+     * @var \Psr\Cache\CacheItemPoolInterface
      */
     protected $cacheItemPool;
 

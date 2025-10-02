@@ -258,7 +258,7 @@ class Player extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The set of plug-ins for this player.
      *
-     * @var PlugInInstance[]
+     * @var \Lullabot\Mpx\DataService\Player\PlugInInstance[]
      */
     protected $enabledPlugIns = [];
 

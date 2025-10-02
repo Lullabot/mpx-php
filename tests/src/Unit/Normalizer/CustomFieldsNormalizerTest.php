@@ -120,28 +120,28 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * The date and time that this object was created.
      *
-     * @var DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $added;
 
     /**
      * The id of the user that created this object.
      *
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $addedByUserId;
 
     /**
      * The globally unique URI of this object.
      *
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $id;
 
     /**
      * The id of the account that owns this object.
      *
-     * @var UriInterface
+     * @var \Psr\Http\Message\UriInterface
      */
     protected $ownerId;
 

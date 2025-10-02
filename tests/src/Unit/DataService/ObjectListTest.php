@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 class ObjectListTest extends TestCase
 {
     /**
-     * @var ObjectList
+     * @var \Lullabot\Mpx\DataService\ObjectList
      */
     protected $list;
 

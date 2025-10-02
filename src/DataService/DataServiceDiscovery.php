@@ -15,7 +15,7 @@ class DataServiceDiscovery
     /**
      * The array of discovered data services.
      *
-     * @var DiscoveredDataService[]
+     * @var \Lullabot\Mpx\DataService\DiscoveredDataService[]
      */
     private array $dataServices = [];
 

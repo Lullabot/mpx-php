@@ -89,7 +89,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * An array of distinct time frames that identify the playback availability for this media.
      *
-     * @var AvailabilityWindow[]
+     * @var \Lullabot\Mpx\DataService\Media\AvailabilityWindow[]
      */
     protected $availabilityWindows = [];
 
@@ -103,7 +103,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The Category objects that this object is associated with, represented as CategoryInfo objects.
      *
-     * @var CategoryInfo[]
+     * @var \Lullabot\Mpx\DataService\Media\CategoryInfo[]
      */
     protected $categories = [];
 
@@ -117,14 +117,14 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Chapter information for this content.
      *
-     * @var Chapter[]
+     * @var \Lullabot\Mpx\DataService\Media\Chapter[]
      */
     protected $chapters = [];
 
     /**
      * The content MediaFile objects that this object is associated with.
      *
-     * @var MediaFile[]
+     * @var \Lullabot\Mpx\DataService\Media\MediaFile[]
      */
     protected $content = [];
 
@@ -166,7 +166,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The creative credits for this content.
      *
-     * @var Credit[]
+     * @var \Lullabot\Mpx\DataService\Media\Credit[]
      */
     protected $credits = [];
 
@@ -327,7 +327,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The advisory ratings associated with this content.
      *
-     * @var Rating[]
+     * @var \Lullabot\Mpx\DataService\Media\Rating[]
      */
     protected $ratings = [];
 
@@ -362,7 +362,7 @@ class Media extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * The thumbnail MediaFile objects that this object is associated with.
      *
-     * @var MediaFile[]
+     * @var \Lullabot\Mpx\DataService\Media\MediaFile[]
      */
     protected $thumbnails = [];
 

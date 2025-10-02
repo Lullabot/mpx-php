@@ -15,12 +15,12 @@ use PHPUnit\Framework\TestCase;
 class TokenCachePoolTest extends TestCase
 {
     /**
-     * @var UserSession|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Lullabot\Mpx\Service\IdentityManagement\UserSession|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $user;
 
     /**
-     * @var Token
+     * @var \Lullabot\Mpx\Token
      */
     protected $token;
 

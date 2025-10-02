@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\StreamOutput;
 class CreateCustomFieldClassCommand extends ClassGeneratorBase
 {
     /**
-     * @var PhpNamespace[]
+     * @var \Nette\PhpGenerator\PhpNamespace[]
      */
     protected $namespaceClasses = [];
 
@@ -73,7 +73,7 @@ EOD;
         }
 
         $dof = $this->getDataObjectFactory($input, $output);
-        /** @var Field[] $results */
+        /** @var \Lullabot\Mpx\DataService\Field[] $results */
         $results = $dof->select();
 
         $output->writeln('Generating classes for all custom fields:');
@@ -102,8 +102,8 @@ EOD;
         $field = $dof->load($field->getId())->wait();
 
         $mpxNamespace = (string) $field->getNamespace();
-        /** @var PhpNamespace $namespace */
-        /** @var ClassType $class */
+        /** @var \Nette\PhpGenerator\PhpNamespace $namespace */
+        /** @var \Nette\PhpGenerator\ClassType $class */
         [$namespace, $class] = $this->getClass($input, $mpxNamespace);
 
         $this->addProperty($class, $field);

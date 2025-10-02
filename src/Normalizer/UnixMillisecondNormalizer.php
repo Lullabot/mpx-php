@@ -25,7 +25,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInterface, CacheableSupportsMethodInterface
 {
     /**
-     * @var DateTimeNormalizer
+     * @var \Symfony\Component\Serializer\Normalizer\DateTimeNormalizer
      */
     private $decorated;
 
