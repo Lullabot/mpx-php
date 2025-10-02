@@ -5,6 +5,7 @@ namespace Lullabot\Mpx\Service\AccessManagement;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 abstract class ResolveBase
 {
@@ -43,6 +44,15 @@ abstract class ResolveBase
         // Since many of their examples and other mpx clients hardcode these
         // values, we assume 30 days and that they will implement redirects or
         // domain aliases if required.
-        $this->cache->set($key, $resolved, new \DateInterval('P30D'));
+        $expiration_time = new \DateInterval('P30D');
+        if ($this->cache instanceof AdapterInterface) {
+            $item = $this->cache->getItem($key);
+            $item->set($resolved);
+            $item->expiresAfter($expiration_time);
+            $this->cache->save($item);
+        } else {
+            $this->cache->set($key, $resolved, $expiration_time);
+        }
     }
 }
+
