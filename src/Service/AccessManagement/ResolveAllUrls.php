@@ -53,6 +53,10 @@ class ResolveAllUrls extends ResolveBase
             ],
         ];
 
+        if ($this->authenticatedClient->hasAccount()) {
+            $options['query']['account'] = (string) $this->authenticatedClient->getAccount()->getMpxId();
+        }
+
         $response = $this->authenticatedClient->request('GET', static::RESOLVE_ALL_URLS_URL, $options);
 
         $encoders = [new JsonEncoder()];
