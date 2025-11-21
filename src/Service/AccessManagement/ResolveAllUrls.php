@@ -50,6 +50,7 @@ class ResolveAllUrls extends ResolveBase
             'query' => [
                 'schema' => self::SCHEMA_VERSION,
                 '_service' => $service,
+                'account' => (string) $this->authenticatedClient->getAccount()->getMpxId(),
             ],
         ];
 
