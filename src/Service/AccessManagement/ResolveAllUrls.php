@@ -50,9 +50,12 @@ class ResolveAllUrls extends ResolveBase
             'query' => [
                 'schema' => self::SCHEMA_VERSION,
                 '_service' => $service,
-                'account' => (string) $this->authenticatedClient->getAccount()->getMpxId(),
             ],
         ];
+
+        if ($this->authenticatedClient->hasAccount()) {
+            $options['query']['account'] = (string) $this->authenticatedClient->getAccount()->getMpxId();
+        }
 
         $response = $this->authenticatedClient->request('GET', static::RESOLVE_ALL_URLS_URL, $options);
 
