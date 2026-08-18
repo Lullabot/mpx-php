@@ -26,7 +26,7 @@ class Image extends Link
         return $this->anchorHref;
     }
 
-    public function setAnchorHref(UriInterface $anchorHref)
+    public function setAnchorHref(UriInterface $anchorHref): void
     {
         $this->anchorHref = $anchorHref;
     }

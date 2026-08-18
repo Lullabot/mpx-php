@@ -90,7 +90,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * @param string[] $xmlNs
      */
-    public function setXmlNs(array $xmlNs)
+    public function setXmlNs(array $xmlNs): void
     {
         $this->xmlNs = $xmlNs;
     }
@@ -100,7 +100,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
         return $this->startIndex;
     }
 
-    public function setStartIndex(int $startIndex)
+    public function setStartIndex(int $startIndex): void
     {
         $this->startIndex = $startIndex;
     }
@@ -110,7 +110,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
         return $this->itemsPerPage;
     }
 
-    public function setItemsPerPage(int $itemsPerPage)
+    public function setItemsPerPage(int $itemsPerPage): void
     {
         $this->itemsPerPage = $itemsPerPage;
     }
@@ -123,7 +123,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * Set the number of entries in the current list.
      */
-    public function setEntryCount(int $entryCount)
+    public function setEntryCount(int $entryCount): void
     {
         $this->entryCount = $entryCount;
     }
@@ -139,7 +139,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * @param ObjectInterface[] $entries
      */
-    public function setEntries(array $entries)
+    public function setEntries(array $entries): void
     {
         $this->entries = $entries;
         $this->rewind();
@@ -160,7 +160,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
      *
      * @param int The total number of results.
      */
-    public function setTotalResults(int $totalResults)
+    public function setTotalResults(int $totalResults): void
     {
         $this->totalResults = $totalResults;
     }
@@ -174,7 +174,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
         return $this->objectListQuery;
     }
 
-    public function setObjectListQuery(ObjectListQuery $byFields)
+    public function setObjectListQuery(ObjectListQuery $byFields): void
     {
         $this->objectListQuery = $byFields;
     }
@@ -184,7 +184,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
      *
      * @param DataObjectFactory $dataObjectFactory The factory used to load the next ObjectList.
      */
-    public function setDataObjectFactory(DataObjectFactory $dataObjectFactory)
+    public function setDataObjectFactory(DataObjectFactory $dataObjectFactory): void
     {
         $this->dataObjectFactory = $dataObjectFactory;
     }
@@ -302,7 +302,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
 
     public function setJson(string $json): void
     {
-        $this->json = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        $this->json = json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
     }
 
     public function getJson(): array

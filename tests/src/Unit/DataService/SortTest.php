@@ -14,7 +14,7 @@ class SortTest extends TestCase
      * @covers ::addSort
      * @covers ::toQueryParts
      */
-    public function testAddSort()
+    public function testAddSort(): void
     {
         $sort = new Sort();
         $sort->addSort('id', true);
@@ -25,7 +25,7 @@ class SortTest extends TestCase
     /**
      * @covers ::toQueryParts
      */
-    public function testEmptySort()
+    public function testEmptySort(): void
     {
         $sort = new Sort();
         $this->assertEquals([], $sort->toQueryParts());

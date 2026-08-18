@@ -149,7 +149,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set the date and time that this object was created.
      */
-    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
+    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added): void
     {
         $this->added = $added;
     }
@@ -169,7 +169,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set the id of the user that created this object.
      */
-    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
+    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId): void
     {
         $this->addedByUserId = $addedByUserId;
     }
@@ -185,7 +185,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set the description of this object. The description field is represented as the summary field in Atom object representations to comply with that format's standards.
      */
-    public function setDescription(?string $description)
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -203,7 +203,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
      * Set whether this account is disabled. If this field is set to true, the Access management service will not authorize any operations in this account.
      * Beginning with Access management service version 2.4, the Access management service will not authorize any operations in any subaccount of this account, regardless of the value of this field on the subaccount's Account object.
      */
-    public function setDisabled(?bool $disabled)
+    public function setDisabled(?bool $disabled): void
     {
         $this->disabled = $disabled;
     }
@@ -223,7 +223,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
      *
      * @param \Psr\Http\Message\UriInterface[] $domainRoleIds
      */
-    public function setDomainRoleIds(array $domainRoleIds)
+    public function setDomainRoleIds(array $domainRoleIds): void
     {
         $this->domainRoleIds = $domainRoleIds;
     }
@@ -243,7 +243,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
      *
      * @param \Psr\Http\Message\UriInterface[] $featureRoleIds
      */
-    public function setFeatureRoleIds(array $featureRoleIds)
+    public function setFeatureRoleIds(array $featureRoleIds): void
     {
         $this->featureRoleIds = $featureRoleIds;
     }
@@ -259,7 +259,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set an alternate identifier for this object that is unique within the owning account. To comply with the Atom format's standards, the guid field is serialized as the <id> element in Atom payloads. If the guid field value does not begin with the value urn:publicid:, the value urn:theplatform:guid: is prepended to the actual field value. See the Retrieving Account objects page for information about retrieving Account objects based on this field's value.
      */
-    public function setGuid(?string $guid)
+    public function setGuid(?string $guid): void
     {
         $this->guid = $guid;
     }
@@ -279,7 +279,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set the globally unique URI of this object. See the Retrieving Account objectspage for information about retrieving Account objects based on this field's value.Beginning with Access management service version 2.3, some data services return ownerId field values that use the host name access.auth.theplatform.com instead of the host name mps.theplatform.com. When working with these data services, URI values with the mps.theplatform.com host name are still valid values for the byOwnerId query, and for setting the account context for an operation.
      */
-    public function setId(\Psr\Http\Message\UriInterface $id)
+    public function setId(\Psr\Http\Message\UriInterface $id): void
     {
         $this->id = $id;
     }
@@ -295,7 +295,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set whether this object currently allows updates. If this field is set to true, no other fields can be updated.
      */
-    public function setLocked(?bool $locked)
+    public function setLocked(?bool $locked): void
     {
         $this->locked = $locked;
     }
@@ -315,7 +315,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set the id of the account that owns this account. An ownerId field value must be specified on create, unless an account context of exactly one account is set. Customer root accounts always have the ownerId value of urn:theplatform:auth:root. See Retrieving Account objects for information about retrieving Account objects based on this field's value.
      */
-    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
+    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId): void
     {
         $this->ownerId = $ownerId;
     }
@@ -335,7 +335,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
      * This field's value is not required to be unique. All of the accounts in a given account hierarchy will share a common pid value unless you explicitly set a different value for one or more of the subaccounts in that hierarchy. However, if you want to override one or more of a parent account's registry entries in a particular subaccount, you must give that subaccount a unique pid.
      * See Retrieving Account objects for information about retrieving Accountobjects based on this field's value.
      */
-    public function setPid(?string $pid)
+    public function setPid(?string $pid): void
     {
         $this->pid = $pid;
     }
@@ -351,7 +351,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set the account's region. This field is only returned by queries to the http://access.auth.theplatform.com/data/Account endpoint.
      */
-    public function setRegion(?string $region)
+    public function setRegion(?string $region): void
     {
         $this->region = $region;
     }
@@ -367,7 +367,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set the name of this object. This field's value must be globally unique, and cannot include the pipe (|) character. See Retrieving Account objects for information about retrieving Account objects based on this field's value.
      */
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -387,7 +387,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set the date and time this object was last modified. The data service populates this field with a current timestamp each time the object is updated. See Retrieving Account objects for information about retrieving Account objects based on this field's value.
      */
-    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated): void
     {
         $this->updated = $updated;
     }
@@ -407,7 +407,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set the id of the user that last modified this object. The data service updates this field with the id of the calling user each time the object is modified.
      */
-    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId): void
     {
         $this->updatedByUserId = $updatedByUserId;
     }
@@ -423,7 +423,7 @@ class Account extends ObjectBase implements PublicIdWithGuidInterface, IdInterfa
     /**
      * Set this object's modification version. The data service automatically increments this field's value each time the object is modified. You can use the versionfield to enforce optimistic locking.
      */
-    public function setVersion(?int $version)
+    public function setVersion(?int $version): void
     {
         $this->version = $version;
     }

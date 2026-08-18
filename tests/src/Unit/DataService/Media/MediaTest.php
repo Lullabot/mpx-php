@@ -39,7 +39,7 @@ class MediaTest extends ObjectTestBase
      *
      * @dataProvider getSetMethods
      */
-    public function testGetSet(string $field, mixed $expected = null)
+    public function testGetSet(string $field, mixed $expected = null): void
     {
         $this->assertObjectClass($this->class, $field, $expected);
     }
@@ -52,7 +52,7 @@ class MediaTest extends ObjectTestBase
      *
      * @dataProvider instanceOfDataProvider
      */
-    public function testInstanceOf($field, $class)
+    public function testInstanceOf($field, $class): void
     {
         $object = $this->deserialize($this->class, $field);
         $method = 'get'.ucfirst($field);
@@ -67,7 +67,7 @@ class MediaTest extends ObjectTestBase
      * The getNormalizedDefaultThumbnailUrl method is unlike the others in that
      * it does not have a direct property mapping in the MPX data.
      */
-    public function testGetNormalizedDefaultThumbnailUrl()
+    public function testGetNormalizedDefaultThumbnailUrl(): void
     {
         // Test against the default media fixture loaded in the setup method.
         $object = $this->deserialize($this->class, 'defaultThumbnailUrl');

@@ -22,7 +22,7 @@ class ObjectListIteratorTest extends TestCase
      * @covers ::valid
      * @covers ::getTotalResults
      */
-    public function testCurrent()
+    public function testCurrent(): void
     {
         // Create a single page of results with two entries.
         $list = new ObjectList();
@@ -55,7 +55,7 @@ class ObjectListIteratorTest extends TestCase
      *
      * @covers ::valid
      */
-    public function testNext()
+    public function testNext(): void
     {
         /** @var ObjectList|\PHPUnit_Framework_MockObject_MockObject $list */
         $list = $this->getMockBuilder(ObjectList::class)
@@ -92,7 +92,7 @@ class ObjectListIteratorTest extends TestCase
      *
      * @covers ::valid
      */
-    public function testNextPartialPage()
+    public function testNextPartialPage(): void
     {
         /** @var ObjectList|\PHPUnit_Framework_MockObject_MockObject $list */
         $list = $this->getMockBuilder(ObjectList::class)

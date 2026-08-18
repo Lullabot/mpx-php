@@ -19,7 +19,7 @@ class ResolveDomainResponseTest extends TestCase
      * @covers ::setResolveDomainResponse
      * @covers ::getServices
      */
-    public function testGetServices()
+    public function testGetServices(): void
     {
         $response = new ResolveDomainResponse();
         $services = [
@@ -36,7 +36,7 @@ class ResolveDomainResponseTest extends TestCase
      *
      * @covers ::getUrl
      */
-    public function testGetUrl()
+    public function testGetUrl(): void
     {
         $response = new ResolveDomainResponse();
         $first = new Uri('http://example.com/1');

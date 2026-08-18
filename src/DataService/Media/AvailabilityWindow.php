@@ -45,7 +45,7 @@ class AvailabilityWindow
     /**
      * Set the DateTime when this playback availability window begins.
      */
-    public function setTargetAvailableDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $targetAvailableDate)
+    public function setTargetAvailableDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $targetAvailableDate): void
     {
         $this->targetAvailableDate = $targetAvailableDate;
     }
@@ -65,7 +65,7 @@ class AvailabilityWindow
     /**
      * Set the DateTime when this playback availability window ends.
      */
-    public function setTargetExpirationDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $targetExpirationDate)
+    public function setTargetExpirationDate(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $targetExpirationDate): void
     {
         $this->targetExpirationDate = $targetExpirationDate;
     }
@@ -85,7 +85,7 @@ class AvailabilityWindow
      *
      * @param string[] $targetAvailabilityTags
      */
-    public function setTargetAvailabilityTags(array $targetAvailabilityTags)
+    public function setTargetAvailabilityTags(array $targetAvailabilityTags): void
     {
         $this->targetAvailabilityTags = $targetAvailabilityTags;
     }

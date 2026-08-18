@@ -20,7 +20,7 @@ class CustomFieldManagerTest extends TestCase
      * @covers ::getCustomField
      * @covers ::__construct
      */
-    public function testGetCustomField()
+    public function testGetCustomField(): void
     {
         $expected = [
             'Media Data Service' => [
@@ -41,7 +41,7 @@ class CustomFieldManagerTest extends TestCase
     /**
      * @covers ::getCustomField
      */
-    public function testGetCustomFieldDoesNotExist()
+    public function testGetCustomFieldDoesNotExist(): void
     {
         $expected = [];
         /** @var \PHPUnit_Framework_MockObject_MockObject|CustomFieldDiscoveryInterface $discovery */
@@ -60,7 +60,7 @@ class CustomFieldManagerTest extends TestCase
      *
      * @covers ::getCustomFields
      */
-    public function testGetCustomFields()
+    public function testGetCustomFields(): void
     {
         $expected = [
             'Media Data Service' => [
@@ -81,7 +81,7 @@ class CustomFieldManagerTest extends TestCase
     /**
      * @covers ::basicDiscovery()
      */
-    public function testBasicDiscovery()
+    public function testBasicDiscovery(): void
     {
         DataServiceManager::basicDiscovery();
         $discovery = CustomFieldManager::basicDiscovery();

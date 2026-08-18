@@ -15,6 +15,7 @@ use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\ObjectListIterator;
 use Lullabot\Mpx\DataService\ObjectListQuery;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
@@ -42,7 +43,7 @@ class DataObjectFactoryTest extends TestCase
      * @covers ::getObjectSerializer
      * @covers ::deserialize
      */
-    public function testLoad()
+    public function testLoad(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
@@ -64,7 +65,7 @@ class DataObjectFactoryTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
 
@@ -82,7 +83,7 @@ class DataObjectFactoryTest extends TestCase
      * @covers ::loadByNumericId
      * @covers ::getBaseUri
      */
-    public function testLoadByNumericId()
+    public function testLoadByNumericId(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
@@ -104,7 +105,7 @@ class DataObjectFactoryTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $account = new Account();
         $account->setId(new Uri('http://example.com/1'));
         $authenticatedClient = new AuthenticatedClient($client, $session, $account);
@@ -121,7 +122,7 @@ class DataObjectFactoryTest extends TestCase
      * @covers ::getBaseUri
      * @covers ::deserializeObjectList
      */
-    public function testSelectRequest()
+    public function testSelectRequest(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Access Data Service', 'Account', '1.0');
@@ -136,7 +137,7 @@ class DataObjectFactoryTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
         /** @var \Lullabot\Mpx\DataService\ObjectList $objectList */
@@ -157,7 +158,7 @@ class DataObjectFactoryTest extends TestCase
      * @covers ::getBaseUri
      * @covers ::deserializeObjectList
      */
-    public function testSelectRequestNS()
+    public function testSelectRequestNS(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
@@ -173,7 +174,7 @@ class DataObjectFactoryTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
         /** @var \Lullabot\Mpx\DataService\ObjectList $objectList */
@@ -184,7 +185,7 @@ class DataObjectFactoryTest extends TestCase
     /**
      * @covers ::select
      */
-    public function testSelect()
+    public function testSelect(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Access Data Service', 'Account', '1.0');
@@ -199,7 +200,7 @@ class DataObjectFactoryTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
         $iterator = $factory->select(new ObjectListQuery());
@@ -211,7 +212,7 @@ class DataObjectFactoryTest extends TestCase
      *
      * @covers ::getBaseUri
      */
-    public function testNullAccount()
+    public function testNullAccount(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
@@ -227,7 +228,7 @@ class DataObjectFactoryTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
         $media = $factory->loadByNumericId(2_602_559)->wait();
@@ -240,7 +241,7 @@ class DataObjectFactoryTest extends TestCase
      *
      * @covers ::deserialize
      */
-    public function testAlwaysCreateCustomFieldClass()
+    public function testAlwaysCreateCustomFieldClass(): void
     {
         // Register the mock custom fields used for this test.
         AnnotationReader::addGlobalIgnoredName('class');
@@ -262,7 +263,7 @@ class DataObjectFactoryTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
 

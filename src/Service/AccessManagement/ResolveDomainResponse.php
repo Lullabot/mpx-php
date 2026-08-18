@@ -57,7 +57,7 @@ class ResolveDomainResponse
     /**
      * @param Uri[] $resolveDomainResponse
      */
-    public function setResolveDomainResponse(array $resolveDomainResponse)
+    public function setResolveDomainResponse(array $resolveDomainResponse): void
     {
         $this->resolveDomainResponse = $resolveDomainResponse;
     }

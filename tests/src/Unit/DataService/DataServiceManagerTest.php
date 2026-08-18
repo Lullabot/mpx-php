@@ -19,7 +19,7 @@ class DataServiceManagerTest extends TestCase
      * @covers ::getDataService
      * @covers ::__construct
      */
-    public function testGetDataService()
+    public function testGetDataService(): void
     {
         $expected = [
             'Media Data Service' => [
@@ -40,7 +40,7 @@ class DataServiceManagerTest extends TestCase
     /**
      * @covers ::getDataService()
      */
-    public function testGetDataServiceDoesNotExist()
+    public function testGetDataServiceDoesNotExist(): void
     {
         $expected = [];
         /** @var \PHPUnit_Framework_MockObject_MockObject|DataServiceDiscovery $discovery */
@@ -59,7 +59,7 @@ class DataServiceManagerTest extends TestCase
      *
      * @covers ::getDataServices()
      */
-    public function testGetDataServices()
+    public function testGetDataServices(): void
     {
         $expected = [
             'Media Data Service' => [
@@ -80,7 +80,7 @@ class DataServiceManagerTest extends TestCase
     /**
      * @covers ::basicDiscovery()
      */
-    public function testBasicDiscovery()
+    public function testBasicDiscovery(): void
     {
         $discovery = DataServiceManager::basicDiscovery();
         $services = $discovery->getDataServices();

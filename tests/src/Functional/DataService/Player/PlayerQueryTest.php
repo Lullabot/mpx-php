@@ -16,7 +16,7 @@ class PlayerQueryTest extends FunctionalTestBase
     /**
      * Test loading two player objects.
      */
-    public function testQueryPlayer()
+    public function testQueryPlayer(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $dof = new DataObjectFactory($manager->getDataService('Player Data Service', 'Player', '1.6'), $this->authenticatedClient);

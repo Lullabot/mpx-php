@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AvailabilityCalculatorTest extends TestCase
 {
-    public function testIsAvailable()
+    public function testIsAvailable(): void
     {
         $calculator = new AvailabilityCalculator();
         $media = new Media();
@@ -24,7 +24,7 @@ class AvailabilityCalculatorTest extends TestCase
         $this->assertFalse($calculator->isExpired($media, new \DateTime()));
     }
 
-    public function testIsExpired()
+    public function testIsExpired(): void
     {
         $calculator = new AvailabilityCalculator();
         $media = new Media();
@@ -34,14 +34,14 @@ class AvailabilityCalculatorTest extends TestCase
         $this->assertFalse($calculator->isAvailable($media, new \DateTime()));
     }
 
-    public function testNullIsAvailable()
+    public function testNullIsAvailable(): void
     {
         $calculator = new AvailabilityCalculator();
         $media = new Media();
         $this->assertTrue($calculator->isAvailable($media, new \DateTime()));
     }
 
-    public function testEpochAvailable()
+    public function testEpochAvailable(): void
     {
         $calculator = new AvailabilityCalculator();
         $media = new Media();
@@ -51,7 +51,7 @@ class AvailabilityCalculatorTest extends TestCase
         $this->assertFalse($calculator->isExpired($media, new \DateTime()));
     }
 
-    public function testEpochExpired()
+    public function testEpochExpired(): void
     {
         $calculator = new AvailabilityCalculator();
         $media = new Media();

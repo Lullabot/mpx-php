@@ -53,7 +53,7 @@ class ObjectListQuery implements QueryPartsInterface
      *
      * @param Range $range The range object to add.
      */
-    public function setRange(Range $range)
+    public function setRange(Range $range): void
     {
         $this->range = $range;
     }
@@ -63,7 +63,7 @@ class ObjectListQuery implements QueryPartsInterface
      *
      * @param Sort $sort The sort object to add.
      */
-    public function setSort(Sort $sort)
+    public function setSort(Sort $sort): void
     {
         $this->sort = $sort;
     }
@@ -89,7 +89,7 @@ class ObjectListQuery implements QueryPartsInterface
      *
      * @param QueryPartsInterface $queryParts The query components to add to the request.
      */
-    public function add(QueryPartsInterface $queryParts)
+    public function add(QueryPartsInterface $queryParts): void
     {
         $this->fields[] = $queryParts;
     }

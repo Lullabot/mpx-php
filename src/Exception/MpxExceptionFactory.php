@@ -19,7 +19,7 @@ class MpxExceptionFactory
         ?\Exception $previous = null,
         array $ctx = [],
     ): ClientException|ServerException {
-        $data = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        $data = json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR);
         ClientException::validateData($data);
 
         $altered = $response->withStatus($data['responseCode'], $data['title']);
@@ -32,7 +32,7 @@ class MpxExceptionFactory
      */
     public static function createFromNotificationException(RequestInterface $request, ResponseInterface $response, ?\Exception $previous = null, array $ctx = []): ClientException|ServerException
     {
-        $data = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        $data = json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR);
         ServerException::validateNotificationData($data);
 
         $altered = $response->withStatus($data[0]['entry']['responseCode'], $data[0]['entry']['title']);

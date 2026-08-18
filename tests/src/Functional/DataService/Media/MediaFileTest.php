@@ -16,7 +16,7 @@ class MediaFileTest extends FunctionalTestBase
     /**
      * Tests querying for the first two media files.
      */
-    public function testQueryMediaFile()
+    public function testQueryMediaFile(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'MediaFile', '1.10');

@@ -27,7 +27,7 @@ class ObjectListQueryTest extends TestCase
      * @covers ::getSort
      * @covers ::toQueryParts
      */
-    public function testToQueryParts()
+    public function testToQueryParts(): void
     {
         $query = new ObjectListQuery();
         $byFields = new ByFields();
@@ -56,7 +56,7 @@ class ObjectListQueryTest extends TestCase
      *
      * @covers ::toQueryParts
      */
-    public function testNoValues()
+    public function testNoValues(): void
     {
         $byFields = new ObjectListQuery();
         $this->assertEquals(['sort' => 'id', 'range' => '1-100'], $byFields->toQueryParts());

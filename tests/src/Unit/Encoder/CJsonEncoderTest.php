@@ -17,7 +17,7 @@ class CJsonEncoderTest extends TestCase
      * @covers ::decodeCustomFields
      * @covers ::decodeObject
      */
-    public function testDecodeCustomFields()
+    public function testDecodeCustomFields(): void
     {
         $data = [
             '$xmlns' => [
@@ -47,7 +47,7 @@ class CJsonEncoderTest extends TestCase
             ], $decoded['customFields']);
     }
 
-    public function testDecodeEntries()
+    public function testDecodeEntries(): void
     {
         $data = [
             '$xmlns' => [

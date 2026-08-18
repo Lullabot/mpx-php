@@ -58,21 +58,22 @@ class UserSession
     /**
      * Construct a new mpx user.
      *
-     * @param UserInterface                    $user           The user to authenticate as.
-     * @param Client                           $client         The client used to access mpx.
-     * @param PersistingStoreInterface|null    $store          (optional) The lock backend to store locks in.
-     * @param TokenCachePool|null              $tokenCachePool (optional) The cache of authentication tokens.
-     * @param AuthenticationFlowInterface|null $flow           (optional) The authentication flow to use. Defaults to
-     *                                                         signing in against the identity management service.
+     * @param UserInterface                 $user           The user to authenticate as.
+     * @param Client                        $client         The client used to access mpx.
+     * @param AuthenticationFlowInterface   $flow           How this user authenticates. Pass a SignInFlow for the
+     *                                                      identity management service, or a ServiceTokenFlow for
+     *                                                      CTS/CVP service credentials.
+     * @param PersistingStoreInterface|null $store          (optional) The lock backend to store locks in.
+     * @param TokenCachePool|null           $tokenCachePool (optional) The cache of authentication tokens.
      *
      * @see NullLogger To disable logging of token requests.
      */
-    public function __construct(UserInterface $user, Client $client, ?PersistingStoreInterface $store = null, ?TokenCachePool $tokenCachePool = null, ?AuthenticationFlowInterface $flow = null)
+    public function __construct(UserInterface $user, Client $client, AuthenticationFlowInterface $flow, ?PersistingStoreInterface $store = null, ?TokenCachePool $tokenCachePool = null)
     {
         $this->user = $user;
         $this->client = $client;
         $this->store = $store;
-        $this->flow = $flow ?? new SignInFlow();
+        $this->flow = $flow;
         if (!$tokenCachePool) {
             $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         }
@@ -137,7 +138,7 @@ class UserSession
     /**
      * Sign out the user.
      */
-    public function signOut()
+    public function signOut(): void
     {
         $this->flow->revoke($this->tokenCachePool->getToken($this), $this->client);
 

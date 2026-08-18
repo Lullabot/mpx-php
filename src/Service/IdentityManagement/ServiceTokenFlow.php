@@ -44,7 +44,7 @@ class ServiceTokenFlow implements AuthenticationFlowInterface
             ]
         );
 
-        return Token::fromResponseData(json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR));
+        return Token::fromResponseData(json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR));
     }
 
     public function apply(Token $token, array $options, ?IdInterface $account = null): array

@@ -17,7 +17,7 @@ class ServiceUserTest extends TestCase
      * @covers ::getMpxClientId
      * @covers ::getMpxClientSecret
      */
-    public function testCredentials()
+    public function testCredentials(): void
     {
         $user = new ServiceUser('CLIENT-ID', 'CLIENT-SECRET');
 
@@ -33,7 +33,7 @@ class ServiceUserTest extends TestCase
      * @covers ::getMpxUsername
      * @covers ::getMpxPassword
      */
-    public function testUserInterfaceAliases()
+    public function testUserInterfaceAliases(): void
     {
         $user = new ServiceUser('CLIENT-ID', 'CLIENT-SECRET');
 
@@ -46,7 +46,7 @@ class ServiceUserTest extends TestCase
      *
      * @covers ::__construct
      */
-    public function testClientIdNeedsNoDirectory()
+    public function testClientIdNeedsNoDirectory(): void
     {
         $user = new ServiceUser('0oazmvvnwr8dxUG9J417', 'CLIENT-SECRET');
         $this->assertEquals('0oazmvvnwr8dxUG9J417', $user->getMpxClientId());
@@ -55,7 +55,7 @@ class ServiceUserTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testEmptyClientId()
+    public function testEmptyClientId(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The mpx service client ID must not be empty.');

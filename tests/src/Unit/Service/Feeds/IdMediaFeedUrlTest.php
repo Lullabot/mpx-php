@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class IdMediaFeedUrlTest extends TestCase
 {
-    public function testEmptyIds()
+    public function testEmptyIds(): void
     {
         $account = new Account();
         $account->setPid('account-pid');
@@ -23,7 +23,7 @@ class IdMediaFeedUrlTest extends TestCase
         new IdMediaFeedUrl($account, $feedConfig, []);
     }
 
-    public function testInvalidIds()
+    public function testInvalidIds(): void
     {
         $account = new Account();
         $account->setPid('account-pid');
@@ -34,7 +34,7 @@ class IdMediaFeedUrlTest extends TestCase
         new IdMediaFeedUrl($account, $feedConfig, [34, '45']);
     }
 
-    public function testToUri()
+    public function testToUri(): void
     {
         $account = new Account();
         $account->setPid('account-pid');

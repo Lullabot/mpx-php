@@ -13,7 +13,7 @@ class ResolveAllUrlsTest extends FunctionalTestBase
     /**
      * Execute a resolveAllUrls() call.
      */
-    public function testResolve()
+    public function testResolve(): void
     {
         /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls $resolved */
         $resolver = new ResolveAllUrls($this->authenticatedClient);

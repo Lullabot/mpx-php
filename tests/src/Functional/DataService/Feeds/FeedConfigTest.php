@@ -16,7 +16,7 @@ class FeedConfigTest extends FunctionalTestBase
     /**
      * Tests loading two FeedConfig objects.
      */
-    public function testQueryFeeds()
+    public function testQueryFeeds(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Feeds Data Service', 'FeedConfig', '2.2');

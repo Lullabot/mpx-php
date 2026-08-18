@@ -28,7 +28,7 @@ class UrlTest extends TestCase
      * @covers ::withMediaByPublicId
      * @covers ::__toString
      */
-    public function testToUri()
+    public function testToUri(): void
     {
         $account = new Account();
         $account->setPid('account-pid');

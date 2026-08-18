@@ -37,7 +37,7 @@ $handler($request, $options)->then(
             return $response;
         }
 
-        $data = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        $data = json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR);
 
         // Notification responses have a different exception format.
         if (isset($data[0]) && isset($data[0]['type']) && 'Exception' == $data[0]['type']) {

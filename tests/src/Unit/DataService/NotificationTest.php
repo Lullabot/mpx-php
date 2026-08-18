@@ -30,7 +30,7 @@ class NotificationTest extends ObjectTestBase
      *
      * @dataProvider getSetMethods
      */
-    public function testGetSet(string $field)
+    public function testGetSet(string $field): void
     {
         /** @var \Lullabot\Mpx\DataService\Notification[] $notifications */
         $notifications = $this->serializer->deserialize(json_encode($this->decoded, \JSON_THROW_ON_ERROR), Notification::class.'[]', 'json');
@@ -45,7 +45,7 @@ class NotificationTest extends ObjectTestBase
         }
     }
 
-    public function testIsSyncResponse()
+    public function testIsSyncResponse(): void
     {
         /** @var \Lullabot\Mpx\DataService\Notification[] $notifications */
         $notifications = $this->serializer->deserialize('[{"id": 12345 }]', Notification::class.'[]', 'json');
@@ -53,7 +53,7 @@ class NotificationTest extends ObjectTestBase
         $this->assertTrue($notifications[0]->isSyncResponse());
     }
 
-    public function testIsNotSyncResponse()
+    public function testIsNotSyncResponse(): void
     {
         /** @var \Lullabot\Mpx\DataService\Notification[] $notifications */
         $notifications = $this->serializer->deserialize('[{"id": 12345, "method": "get" }]', Notification::class.'[]', 'json');

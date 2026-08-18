@@ -28,7 +28,7 @@ class ServiceTokenFlowTest extends TestCase
      * @covers ::clientId
      * @covers ::clientSecret
      */
-    public function testAcquire()
+    public function testAcquire(): void
     {
         $client = $this->getMockClient([
             function (RequestInterface $request) {
@@ -58,7 +58,7 @@ class ServiceTokenFlowTest extends TestCase
      *
      * @covers ::acquire
      */
-    public function testAcquireIgnoresDuration()
+    public function testAcquireIgnoresDuration(): void
     {
         $client = $this->getMockClient([
             function (RequestInterface $request) {
@@ -79,7 +79,7 @@ class ServiceTokenFlowTest extends TestCase
      * @covers ::clientId
      * @covers ::clientSecret
      */
-    public function testAcquireWithPlainUser()
+    public function testAcquireWithPlainUser(): void
     {
         $client = $this->getMockClient([
             function (RequestInterface $request) {
@@ -97,7 +97,7 @@ class ServiceTokenFlowTest extends TestCase
      *
      * @covers ::apply
      */
-    public function testApplyWithAccount()
+    public function testApplyWithAccount(): void
     {
         $account = new Account();
         $account->setMpxId(new Uri('http://access.auth.theplatform.com/data/Account/1'));
@@ -118,7 +118,7 @@ class ServiceTokenFlowTest extends TestCase
      *
      * @covers ::apply
      */
-    public function testApplyWithoutAccount()
+    public function testApplyWithoutAccount(): void
     {
         $token = new Token('http://example.com/User/1', 'SERVICE-TOKEN-VALUE', 7200);
         $options = (new ServiceTokenFlow())->apply($token, [], null);
@@ -131,7 +131,7 @@ class ServiceTokenFlowTest extends TestCase
      *
      * @covers ::apply
      */
-    public function testApplyPreservesOptions()
+    public function testApplyPreservesOptions(): void
     {
         $token = new Token('http://example.com/User/1', 'SERVICE-TOKEN-VALUE', 7200);
         $options = (new ServiceTokenFlow())->apply($token, [
@@ -148,7 +148,7 @@ class ServiceTokenFlowTest extends TestCase
      *
      * @covers ::identifier
      */
-    public function testIdentifierIsNamespaced()
+    public function testIdentifierIsNamespaced(): void
     {
         $user = new ServiceUser('CLIENT-ID', 'CLIENT-SECRET');
         $identifier = (new ServiceTokenFlow())->identifier($user);
@@ -160,7 +160,7 @@ class ServiceTokenFlowTest extends TestCase
     /**
      * @covers ::revoke
      */
-    public function testRevokeIssuesNoRequest()
+    public function testRevokeIssuesNoRequest(): void
     {
         // An empty queue means the mock handler throws if a request is made.
         $client = $this->getMockClient([]);

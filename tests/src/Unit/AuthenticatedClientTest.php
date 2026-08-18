@@ -12,6 +12,7 @@ use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
@@ -50,7 +51,7 @@ class AuthenticatedClientTest extends TestCase
      * @covers ::requestWithRetry
      * @covers ::sendWithRetry
      */
-    public function testAuthenticatedRequest(string $method, array $args)
+    public function testAuthenticatedRequest(string $method, array $args): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -73,7 +74,7 @@ class AuthenticatedClientTest extends TestCase
         $logger = $this->fetchTokenLogger(1);
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $response = \call_user_func_array([$authenticatedClient, $method], $args);
@@ -99,7 +100,7 @@ class AuthenticatedClientTest extends TestCase
      * @covers ::finallyResolve
      * @covers ::isTokenAuthError
      */
-    public function testRetriedAuthenticatedRequest(string $method, array $args)
+    public function testRetriedAuthenticatedRequest(string $method, array $args): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -118,7 +119,7 @@ class AuthenticatedClientTest extends TestCase
         $logger = $this->fetchTokenLogger(2);
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $response = \call_user_func_array([$authenticatedClient, $method], $args);
@@ -143,7 +144,7 @@ class AuthenticatedClientTest extends TestCase
      * @covers ::outerPromise
      * @covers ::isTokenAuthError
      */
-    public function testNotRetriedAuthenticatedRequest(string $method, array $args)
+    public function testNotRetriedAuthenticatedRequest(string $method, array $args): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -160,7 +161,7 @@ class AuthenticatedClientTest extends TestCase
         $logger = $this->fetchTokenLogger(1);
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $this->expectException(ClientException::class);
@@ -183,7 +184,7 @@ class AuthenticatedClientTest extends TestCase
      * @covers ::sendWithRetry
      * @covers ::sendAsyncWithRetry
      */
-    public function testServerExceptionAuthenticatedRequest(string $method, array $args)
+    public function testServerExceptionAuthenticatedRequest(string $method, array $args): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -200,7 +201,7 @@ class AuthenticatedClientTest extends TestCase
         $logger = $this->fetchTokenLogger(1);
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $this->expectException(ServerException::class);
@@ -213,7 +214,7 @@ class AuthenticatedClientTest extends TestCase
     /**
      * @covers ::getConfig
      */
-    public function testGetConfig()
+    public function testGetConfig(): void
     {
         /** @var Client|\PHPUnit\Framework\MockObject\MockObject $client */
         $client = $this->getMockBuilder(Client::class)
@@ -236,7 +237,7 @@ class AuthenticatedClientTest extends TestCase
      * @covers ::setTokenDuration
      * @covers ::mergeAuth
      */
-    public function testTokenDuration()
+    public function testTokenDuration(): void
     {
         /** @var Client|\PHPUnit\Framework\MockObject\MockObject $client */
         $client = $this->getMockBuilder(Client::class)
@@ -260,7 +261,7 @@ class AuthenticatedClientTest extends TestCase
      * @covers ::hasAccount
      * @covers ::getAccount
      */
-    public function testGetAccount()
+    public function testGetAccount(): void
     {
         /** @var Client|\PHPUnit\Framework\MockObject\MockObject $client */
         $client = $this->getMockBuilder(Client::class)

@@ -40,7 +40,7 @@ class Notification
     /**
      * @param ObjectInterface $entry
      */
-    public function setEntry($entry)
+    public function setEntry($entry): void
     {
         $this->entry = $entry;
     }
@@ -50,7 +50,7 @@ class Notification
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -60,7 +60,7 @@ class Notification
         return $this->method;
     }
 
-    public function setMethod(string $method)
+    public function setMethod(string $method): void
     {
         $this->method = $method;
     }
@@ -70,7 +70,7 @@ class Notification
         return $this->type;
     }
 
-    public function setType(string $type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }

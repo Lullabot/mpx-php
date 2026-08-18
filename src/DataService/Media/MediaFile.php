@@ -448,7 +448,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the date and time that this object was created.
      */
-    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
+    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added): void
     {
         $this->added = $added;
     }
@@ -468,7 +468,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the id of the user that created this object.
      */
-    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
+    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId): void
     {
         $this->addedByUserId = $addedByUserId;
     }
@@ -484,7 +484,7 @@ class MediaFile extends ObjectBase
     /**
      * Set whether playback is enabled for this file, and whether it can be associated with new Release objects.
      */
-    public function setAllowRelease(?bool $allowRelease)
+    public function setAllowRelease(?bool $allowRelease): void
     {
         $this->allowRelease = $allowRelease;
     }
@@ -500,7 +500,7 @@ class MediaFile extends ObjectBase
     /**
      * Set whether this object is approved.
      */
-    public function setApproved(?bool $approved)
+    public function setApproved(?bool $approved): void
     {
         $this->approved = $approved;
     }
@@ -516,7 +516,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's calculated aspect ratio.
      */
-    public function setAspectRatio(?float $aspectRatio)
+    public function setAspectRatio(?float $aspectRatio): void
     {
         $this->aspectRatio = $aspectRatio;
     }
@@ -536,7 +536,7 @@ class MediaFile extends ObjectBase
      *
      * @param \Psr\Http\Message\UriInterface[] $assetTypeIds
      */
-    public function setAssetTypeIds(array $assetTypeIds)
+    public function setAssetTypeIds(array $assetTypeIds): void
     {
         $this->assetTypeIds = $assetTypeIds;
     }
@@ -556,7 +556,7 @@ class MediaFile extends ObjectBase
      *
      * @param string[] $assetTypes
      */
-    public function setAssetTypes(array $assetTypes)
+    public function setAssetTypes(array $assetTypes): void
     {
         $this->assetTypes = $assetTypes;
     }
@@ -572,7 +572,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the number of audio channels the file has.
      */
-    public function setAudioChannels(?int $audioChannels)
+    public function setAudioChannels(?int $audioChannels): void
     {
         $this->audioChannels = $audioChannels;
     }
@@ -588,7 +588,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the name of the audio codec the file uses.
      */
-    public function setAudioCodec(?string $audioCodec)
+    public function setAudioCodec(?string $audioCodec): void
     {
         $this->audioCodec = $audioCodec;
     }
@@ -604,7 +604,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's audio sample rate, in hertz (Hz).
      */
-    public function setAudioSampleRate(?int $audioSampleRate)
+    public function setAudioSampleRate(?int $audioSampleRate): void
     {
         $this->audioSampleRate = $audioSampleRate;
     }
@@ -620,7 +620,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's audio sample size, in bits (b).
      */
-    public function setAudioSampleSize(?int $audioSampleSize)
+    public function setAudioSampleSize(?int $audioSampleSize): void
     {
         $this->audioSampleSize = $audioSampleSize;
     }
@@ -636,7 +636,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's bitrate, in bits per second (bps).
      */
-    public function setBitrate(?int $bitrate)
+    public function setBitrate(?int $bitrate): void
     {
         $this->bitrate = $bitrate;
     }
@@ -652,7 +652,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's checksum values.
      */
-    public function setChecksums(array $checksums)
+    public function setChecksums(array $checksums): void
     {
         $this->checksums = $checksums;
     }
@@ -668,7 +668,7 @@ class MediaFile extends ObjectBase
     /**
      * Set whether the file contains text tracks.
      */
-    public function setClosedCaptions(?bool $closedCaptions)
+    public function setClosedCaptions(?bool $closedCaptions): void
     {
         $this->closedCaptions = $closedCaptions;
     }
@@ -684,7 +684,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's content type.
      */
-    public function setContentType(?string $contentType)
+    public function setContentType(?string $contentType): void
     {
         $this->contentType = $contentType;
     }
@@ -700,7 +700,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the description of this object.
      */
-    public function setDescription(?string $description)
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -716,7 +716,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the aspect ratio to display to users.
      */
-    public function setDisplayAspectRatio(?string $displayAspectRatio)
+    public function setDisplayAspectRatio(?string $displayAspectRatio): void
     {
         $this->displayAspectRatio = $displayAspectRatio;
     }
@@ -732,7 +732,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's download URL.
      */
-    public function setDownloadUrl(?string $downloadUrl)
+    public function setDownloadUrl(?string $downloadUrl): void
     {
         $this->downloadUrl = $downloadUrl;
     }
@@ -748,7 +748,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the duration of the file, in seconds.
      */
-    public function setDuration(?float $duration)
+    public function setDuration(?float $duration): void
     {
         $this->duration = $duration;
     }
@@ -764,7 +764,7 @@ class MediaFile extends ObjectBase
     /**
      * Set whether the file exists at the specified location yet.
      */
-    public function setExists(?bool $exists)
+    public function setExists(?bool $exists): void
     {
         $this->exists = $exists;
     }
@@ -780,7 +780,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's expression type.
      */
-    public function setExpression(?string $expression)
+    public function setExpression(?string $expression): void
     {
         $this->expression = $expression;
     }
@@ -796,7 +796,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the secondary source URL for the original file.
      */
-    public function setFailoverSourceUrl(?string $failoverSourceUrl)
+    public function setFailoverSourceUrl(?string $failoverSourceUrl): void
     {
         $this->failoverSourceUrl = $failoverSourceUrl;
     }
@@ -812,7 +812,7 @@ class MediaFile extends ObjectBase
     /**
      * Set one or more secondary streaming URLs.
      */
-    public function setFailoverStreamingUrl(?string $failoverStreamingUrl)
+    public function setFailoverStreamingUrl(?string $failoverStreamingUrl): void
     {
         $this->failoverStreamingUrl = $failoverStreamingUrl;
     }
@@ -828,7 +828,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the path and filename of the file, relative to a managed storage server's root.
      */
-    public function setFilePath(?string $filePath)
+    public function setFilePath(?string $filePath): void
     {
         $this->filePath = $filePath;
     }
@@ -844,7 +844,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's size, in bytes (B).
      */
-    public function setFileSize(?int $fileSize)
+    public function setFileSize(?int $fileSize): void
     {
         $this->fileSize = $fileSize;
     }
@@ -860,7 +860,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's format.
      */
-    public function setFormat(?string $format)
+    public function setFormat(?string $format): void
     {
         $this->format = $format;
     }
@@ -876,7 +876,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's frame rate, in frames per second (fps).
      */
-    public function setFrameRate(?float $frameRate)
+    public function setFrameRate(?float $frameRate): void
     {
         $this->frameRate = $frameRate;
     }
@@ -892,7 +892,7 @@ class MediaFile extends ObjectBase
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
      */
-    public function setGuid(?string $guid)
+    public function setGuid(?string $guid): void
     {
         $this->guid = $guid;
     }
@@ -908,7 +908,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's frame height, in pixels.
      */
-    public function setHeight(?int $height)
+    public function setHeight(?int $height): void
     {
         $this->height = $height;
     }
@@ -928,7 +928,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the globally unique URI of this object.
      */
-    public function setId(\Psr\Http\Message\UriInterface $id)
+    public function setId(\Psr\Http\Message\UriInterface $id): void
     {
         $this->id = $id;
     }
@@ -944,7 +944,7 @@ class MediaFile extends ObjectBase
     /**
      * Set whether this file is the default content or thumbnail file for the associated Mediaobject.
      */
-    public function setIsDefault(?bool $isDefault)
+    public function setIsDefault(?bool $isDefault): void
     {
         $this->isDefault = $isDefault;
     }
@@ -960,7 +960,7 @@ class MediaFile extends ObjectBase
     /**
      * Set whether this file is protected.
      */
-    public function setIsProtected(?bool $isProtected)
+    public function setIsProtected(?bool $isProtected): void
     {
         $this->isProtected = $isProtected;
     }
@@ -976,7 +976,7 @@ class MediaFile extends ObjectBase
     /**
      * Set whether this file is a thumbnail.
      */
-    public function setIsThumbnail(?bool $isThumbnail)
+    public function setIsThumbnail(?bool $isThumbnail): void
     {
         $this->isThumbnail = $isThumbnail;
     }
@@ -992,7 +992,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the ISO 639 language code for the file.
      */
-    public function setLanguage(?string $language)
+    public function setLanguage(?string $language): void
     {
         $this->language = $language;
     }
@@ -1008,7 +1008,7 @@ class MediaFile extends ObjectBase
     /**
      * Set whether this object currently allows updates.
      */
-    public function setLocked(?bool $locked)
+    public function setLocked(?bool $locked): void
     {
         $this->locked = $locked;
     }
@@ -1028,7 +1028,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the id of the Media object this object is associated with.
      */
-    public function setMediaId(\Psr\Http\Message\UriInterface $mediaId)
+    public function setMediaId(\Psr\Http\Message\UriInterface $mediaId): void
     {
         $this->mediaId = $mediaId;
     }
@@ -1048,7 +1048,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the id of the account that owns this object.
      */
-    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
+    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId): void
     {
         $this->ownerId = $ownerId;
     }
@@ -1068,7 +1068,7 @@ class MediaFile extends ObjectBase
      *
      * @param PreviousLocation[] $previousLocations
      */
-    public function setPreviousLocations(array $previousLocations)
+    public function setPreviousLocations(array $previousLocations): void
     {
         $this->previousLocations = $previousLocations;
     }
@@ -1088,7 +1088,7 @@ class MediaFile extends ObjectBase
      *
      * @param string[] $protectionHeaders
      */
-    public function setProtectionHeaders(array $protectionHeaders)
+    public function setProtectionHeaders(array $protectionHeaders): void
     {
         $this->protectionHeaders = $protectionHeaders;
     }
@@ -1104,7 +1104,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the DRM or copy protection key.
      */
-    public function setProtectionKey(?string $protectionKey)
+    public function setProtectionKey(?string $protectionKey): void
     {
         $this->protectionKey = $protectionKey;
     }
@@ -1120,7 +1120,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the DRM or copy protection scheme.
      */
-    public function setProtectionScheme(?string $protectionScheme)
+    public function setProtectionScheme(?string $protectionScheme): void
     {
         $this->protectionScheme = $protectionScheme;
     }
@@ -1140,7 +1140,7 @@ class MediaFile extends ObjectBase
      *
      * @param Release[] $releases
      */
-    public function setReleases(array $releases)
+    public function setReleases(array $releases): void
     {
         $this->releases = $releases;
     }
@@ -1160,7 +1160,7 @@ class MediaFile extends ObjectBase
      *
      * @param string[] $secondaryAudio
      */
-    public function setSecondaryAudio(array $secondaryAudio)
+    public function setSecondaryAudio(array $secondaryAudio): void
     {
         $this->secondaryAudio = $secondaryAudio;
     }
@@ -1176,7 +1176,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the format of the streaming content segments.
      */
-    public function setSegmentFormat(?string $segmentFormat)
+    public function setSegmentFormat(?string $segmentFormat): void
     {
         $this->segmentFormat = $segmentFormat;
     }
@@ -1196,7 +1196,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the id of the Server object representing the storage server that this file is on.
      */
-    public function setServerId(\Psr\Http\Message\UriInterface $serverId)
+    public function setServerId(\Psr\Http\Message\UriInterface $serverId): void
     {
         $this->serverId = $serverId;
     }
@@ -1216,7 +1216,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the id of the source MediaFile object that this file was generated from.
      */
-    public function setSourceMediaFileId(\Psr\Http\Message\UriInterface $sourceMediaFileId)
+    public function setSourceMediaFileId(\Psr\Http\Message\UriInterface $sourceMediaFileId): void
     {
         $this->sourceMediaFileId = $sourceMediaFileId;
     }
@@ -1232,7 +1232,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the start time of this excerpt in the source file, in seconds.
      */
-    public function setSourceTime(?float $sourceTime)
+    public function setSourceTime(?float $sourceTime): void
     {
         $this->sourceTime = $sourceTime;
     }
@@ -1248,7 +1248,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the original source URL for this file.
      */
-    public function setSourceUrl(?string $sourceUrl)
+    public function setSourceUrl(?string $sourceUrl): void
     {
         $this->sourceUrl = $sourceUrl;
     }
@@ -1264,7 +1264,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the URL of the file's storage location.
      */
-    public function setStorageUrl(?string $storageUrl)
+    public function setStorageUrl(?string $storageUrl): void
     {
         $this->storageUrl = $storageUrl;
     }
@@ -1280,7 +1280,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the file's primary streaming URL.
      */
-    public function setStreamingUrl(?string $streamingUrl)
+    public function setStreamingUrl(?string $streamingUrl): void
     {
         $this->streamingUrl = $streamingUrl;
     }
@@ -1296,7 +1296,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the name of this object.
      */
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -1312,7 +1312,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the server information required to transfer the file.
      */
-    public function setTransferInfo(TransferInfo $transferInfo)
+    public function setTransferInfo(TransferInfo $transferInfo): void
     {
         $this->transferInfo = $transferInfo;
     }
@@ -1332,7 +1332,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the id of the encoding template used to generate the file.
      */
-    public function setTransformId(\Psr\Http\Message\UriInterface $transformId)
+    public function setTransformId(\Psr\Http\Message\UriInterface $transformId): void
     {
         $this->transformId = $transformId;
     }
@@ -1352,7 +1352,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the date and time this object was last modified.
      */
-    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated): void
     {
         $this->updated = $updated;
     }
@@ -1372,7 +1372,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the id of the user that last modified this object.
      */
-    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId): void
     {
         $this->updatedByUserId = $updatedByUserId;
     }
@@ -1388,7 +1388,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the URL of the file.
      */
-    public function setUrl(?string $url)
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
     }
@@ -1404,7 +1404,7 @@ class MediaFile extends ObjectBase
     /**
      * Set this object's modification version, used for optimistic locking.
      */
-    public function setVersion(?int $version)
+    public function setVersion(?int $version): void
     {
         $this->version = $version;
     }
@@ -1420,7 +1420,7 @@ class MediaFile extends ObjectBase
     /**
      * Set the name of this file's video codec.
      */
-    public function setVideoCodec(?string $videoCodec)
+    public function setVideoCodec(?string $videoCodec): void
     {
         $this->videoCodec = $videoCodec;
     }
@@ -1436,7 +1436,7 @@ class MediaFile extends ObjectBase
     /**
      * Set this file's frame width, in pixels.
      */
-    public function setWidth(?int $width)
+    public function setWidth(?int $width): void
     {
         $this->width = $width;
     }

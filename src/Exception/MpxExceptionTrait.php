@@ -78,7 +78,7 @@ trait MpxExceptionTrait
      *
      * @param array $data The MPX error data.
      */
-    public function setData(array $data)
+    public function setData(array $data): void
     {
         static::validateData($data);
         $this->data = $data;
@@ -89,7 +89,7 @@ trait MpxExceptionTrait
      *
      * @param array $data The notification exception data.
      */
-    public function setNotificationData(array $data)
+    public function setNotificationData(array $data): void
     {
         static::validateNotificationData($data);
         $this->data = $data[0]['entry'];
@@ -104,7 +104,7 @@ trait MpxExceptionTrait
      *
      * @see https://docs.theplatform.com/help/wsf-handling-data-service-exceptions#tp-toc4
      */
-    public static function validateData($data)
+    public static function validateData($data): void
     {
         // @todo Prior code also checked for $data being an array, but the docs
         // at https://docs.theplatform.com/help/wsf-handling-data-service-exceptions#tp-toc4
@@ -138,7 +138,7 @@ trait MpxExceptionTrait
      *
      * @see https://docs.theplatform.com/help/wsf-subscribing-to-change-notifications#tp-toc25
      */
-    public static function validateNotificationData($data)
+    public static function validateNotificationData($data): void
     {
         $required = [
             'type',
@@ -162,7 +162,7 @@ trait MpxExceptionTrait
      */
     protected function parseResponse(ResponseInterface $response): string
     {
-        $data = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        $data = json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR);
         isset($data[0]) ? $this->setNotificationData($data) : $this->setData($data);
         $message = \sprintf('HTTP %s Error %s', $response->getStatusCode(), $this->data['title']);
         if (isset($this->data['description'])) {

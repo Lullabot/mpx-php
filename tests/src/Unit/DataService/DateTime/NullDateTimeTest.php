@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class NullDateTimeTest extends TestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $date = new NullDateTime();
         $this->assertEmpty($date->format('Y'));

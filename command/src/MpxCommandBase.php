@@ -19,6 +19,7 @@ use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Lock\Store\FlockStore;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 
 abstract class MpxCommandBase extends Command
 {
@@ -71,7 +72,7 @@ abstract class MpxCommandBase extends Command
 
         $store = new FlockStore();
         $user = new User($username, $password);
-        $userSession = new UserSession($user, $client, $store, new TokenCachePool(new ArrayCachePool()));
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, new TokenCachePool(new ArrayCachePool()));
         $authenticatedClient = new AuthenticatedClient(
             $client,
             $userSession

@@ -18,7 +18,7 @@ class UriNormalizerTest extends TestCase
      *
      * @covers ::normalize
      */
-    public function testNormalize()
+    public function testNormalize(): void
     {
         $normalizer = new UriNormalizer();
         $expected = $normalizer->normalize(new Uri('http://example.com'));
@@ -26,7 +26,7 @@ class UriNormalizerTest extends TestCase
         $this->assertEquals('http://example.com', $expected);
     }
 
-    public function testNotUri()
+    public function testNotUri(): void
     {
         $normalizer = new UriNormalizer();
         $this->expectException(InvalidArgumentException::class);
@@ -39,7 +39,7 @@ class UriNormalizerTest extends TestCase
      *
      * @covers ::supportsNormalization
      */
-    public function testSupportsNormalization()
+    public function testSupportsNormalization(): void
     {
         $normalizer = new UriNormalizer();
         $this->assertTrue($normalizer->supportsNormalization($this->getMockBuilder(UriInterface::class)->getMock()));
@@ -50,7 +50,7 @@ class UriNormalizerTest extends TestCase
      *
      * @covers ::denormalize
      */
-    public function testDenormalize()
+    public function testDenormalize(): void
     {
         $normalizer = new UriNormalizer();
         $uri = $normalizer->denormalize('http://example.com', UriInterface::class);
@@ -61,7 +61,7 @@ class UriNormalizerTest extends TestCase
     /**
      * @covers ::denormalize
      */
-    public function testEmptyString()
+    public function testEmptyString(): void
     {
         $normalizer = new UriNormalizer();
         $this->assertInstanceOf(UriInterface::class, $normalizer->denormalize('', UriInterface::class));
@@ -73,7 +73,7 @@ class UriNormalizerTest extends TestCase
      *
      * @covers ::denormalize
      */
-    public function testParseError()
+    public function testParseError(): void
     {
         $normalizer = new UriNormalizer();
         $this->expectException(\Symfony\Component\Serializer\Exception\NotNormalizableValueException::class);
@@ -86,7 +86,7 @@ class UriNormalizerTest extends TestCase
      *
      * @covers ::supportsDenormalization
      */
-    public function testSupportsDenormalization()
+    public function testSupportsDenormalization(): void
     {
         $normalizer = new UriNormalizer();
         $this->assertTrue($normalizer->supportsDenormalization('', Uri::class));

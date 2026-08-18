@@ -101,7 +101,7 @@ class NotificationListener
         return $this->authenticatedClient->requestAsync('GET', $this->uri, [
             'query' => $query,
         ])->then(static function (ResponseInterface $response) {
-            $data = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            $data = json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR);
 
             return $data[0]['id'];
         });

@@ -61,7 +61,7 @@ class DataServiceDiscovery
     /**
      * Discovers data services.
      */
-    private function discoverDataServices()
+    private function discoverDataServices(): void
     {
         $path = $this->rootDir.'/'.$this->directory;
         $finder = new Finder();

@@ -251,7 +251,7 @@ class AuthenticatedClient implements ClientInterface
     /**
      * Resolve or reject a promise by invoking a callable.
      */
-    private function finallyResolve(PromiseInterface $promise, callable $callable, $args)
+    private function finallyResolve(PromiseInterface $promise, callable $callable, $args): void
     {
         try {
             // Since we must have blocked to get to this point, we now use

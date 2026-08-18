@@ -45,7 +45,7 @@ class Chapter
     /**
      * Set the time when this chapter ends.
      */
-    public function setEndTime(?float $endTime)
+    public function setEndTime(?float $endTime): void
     {
         $this->endTime = $endTime;
     }
@@ -61,7 +61,7 @@ class Chapter
     /**
      * Set the time when this chapter starts.
      */
-    public function setStartTime(?float $startTime)
+    public function setStartTime(?float $startTime): void
     {
         $this->startTime = $startTime;
     }
@@ -79,7 +79,7 @@ class Chapter
      *
      * @param Uri $thumbnailUrl The URL of the thumbnail.
      */
-    public function setThumbnailUrl(Uri $thumbnailUrl)
+    public function setThumbnailUrl(Uri $thumbnailUrl): void
     {
         $this->thumbnailUrl = $thumbnailUrl;
     }
@@ -95,7 +95,7 @@ class Chapter
     /**
      * Set the title of the chapter.
      */
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }

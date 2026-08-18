@@ -18,7 +18,7 @@ class ResolveAllUrlsResponseExtractorTest extends TestCase
     /**
      * @covers ::getTypes
      */
-    public function testGetTypes()
+    public function testGetTypes(): void
     {
         $extractor = new ResolveAllUrlsResponseExtractor();
         $types = $extractor->getTypes(ResolveAllUrlsResponse::class, 'resolveAllUrlsResponse');
@@ -34,7 +34,7 @@ class ResolveAllUrlsResponseExtractorTest extends TestCase
     /**
      * @covers ::getTypes
      */
-    public function testInvalidProperty()
+    public function testInvalidProperty(): void
     {
         $extractor = new ResolveAllUrlsResponseExtractor();
         $this->expectException(\InvalidArgumentException::class);

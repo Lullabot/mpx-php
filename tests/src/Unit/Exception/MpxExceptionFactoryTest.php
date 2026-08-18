@@ -18,7 +18,7 @@ class MpxExceptionFactoryTest extends TestCase
      * @covers ::create
      * @covers ::createException
      */
-    public function testCreateClientException()
+    public function testCreateClientException(): void
     {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
@@ -41,7 +41,7 @@ class MpxExceptionFactoryTest extends TestCase
      * @covers ::create
      * @covers ::createException
      */
-    public function testCreateServerException()
+    public function testCreateServerException(): void
     {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
@@ -66,7 +66,7 @@ class MpxExceptionFactoryTest extends TestCase
      * @covers ::createFromNotificationException
      * @covers ::createException
      */
-    public function testCreateFromNotificationException()
+    public function testCreateFromNotificationException(): void
     {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)

@@ -172,7 +172,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the date and time that this object was created.
      */
-    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
+    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added): void
     {
         $this->added = $added;
     }
@@ -192,7 +192,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the user that created this object.
      */
-    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
+    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId): void
     {
         $this->addedByUserId = $addedByUserId;
     }
@@ -212,7 +212,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the AdPolicy object this object is associated with.
      */
-    public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId)
+    public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId): void
     {
         $this->adPolicyId = $adPolicyId;
     }
@@ -228,7 +228,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set whether this object is approved; if false this object is not visible in feeds.
      */
-    public function setApproved(?bool $approved)
+    public function setApproved(?bool $approved): void
     {
         $this->approved = $approved;
     }
@@ -244,7 +244,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the delivery method for this object.
      */
-    public function setDelivery(?string $delivery)
+    public function setDelivery(?string $delivery): void
     {
         $this->delivery = $delivery;
     }
@@ -260,7 +260,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the description of this object.
      */
-    public function setDescription(?string $description)
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -280,7 +280,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the MediaFile object this object is associated with.
      */
-    public function setFileId(\Psr\Http\Message\UriInterface $fileId)
+    public function setFileId(\Psr\Http\Message\UriInterface $fileId): void
     {
         $this->fileId = $fileId;
     }
@@ -296,7 +296,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
      */
-    public function setGuid(?string $guid)
+    public function setGuid(?string $guid): void
     {
         $this->guid = $guid;
     }
@@ -316,7 +316,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the globally unique URI of this object.
      */
-    public function setId(\Psr\Http\Message\UriInterface $id)
+    public function setId(\Psr\Http\Message\UriInterface $id): void
     {
         $this->id = $id;
     }
@@ -332,7 +332,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set whether this object currently allows updates.
      */
-    public function setLocked(?bool $locked)
+    public function setLocked(?bool $locked): void
     {
         $this->locked = $locked;
     }
@@ -352,7 +352,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the Media object this object is associated with.
      */
-    public function setMediaId(\Psr\Http\Message\UriInterface $mediaId)
+    public function setMediaId(\Psr\Http\Message\UriInterface $mediaId): void
     {
         $this->mediaId = $mediaId;
     }
@@ -372,7 +372,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the account that owns this object.
      */
-    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
+    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId): void
     {
         $this->ownerId = $ownerId;
     }
@@ -388,7 +388,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set optional release URL parameters.
      */
-    public function setParameters(?string $parameters)
+    public function setParameters(?string $parameters): void
     {
         $this->parameters = $parameters;
     }
@@ -404,7 +404,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the globally unique public identifier for this object.
      */
-    public function setPid(?string $pid)
+    public function setPid(?string $pid): void
     {
         $this->pid = $pid;
     }
@@ -424,7 +424,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the Restriction object this object is associated with.
      */
-    public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId)
+    public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId): void
     {
         $this->restrictionId = $restrictionId;
     }
@@ -440,7 +440,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the generic name of this object.
      */
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -460,7 +460,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the date and time this object was last modified.
      */
-    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated): void
     {
         $this->updated = $updated;
     }
@@ -480,7 +480,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the user that last modified this object.
      */
-    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId): void
     {
         $this->updatedByUserId = $updatedByUserId;
     }
@@ -500,7 +500,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the public URL for this object.
      */
-    public function setUrl(\Psr\Http\Message\UriInterface $url)
+    public function setUrl(\Psr\Http\Message\UriInterface $url): void
     {
         $this->url = $url;
     }
@@ -516,7 +516,7 @@ class Release extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set this object's modification version, used for optimistic locking.
      */
-    public function setVersion(?int $version)
+    public function setVersion(?int $version): void
     {
         $this->version = $version;
     }

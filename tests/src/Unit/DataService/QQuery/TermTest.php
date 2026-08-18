@@ -12,54 +12,54 @@ use PHPUnit\Framework\TestCase;
  */
 class TermTest extends TestCase
 {
-    public function testGetNamespace()
+    public function testGetNamespace(): void
     {
         $term = new Term('value');
         $this->assertEquals('namespace', $term->setNamespace('namespace')
             ->getNamespace());
     }
 
-    public function testIsExclude()
+    public function testIsExclude(): void
     {
         $term = new Term('value');
         $this->assertTrue($term->exclude()->isExclude());
         $this->assertFalse($term->require()->isExclude());
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $term = new Term('value');
         $this->assertEquals('value', $term->getValue());
         $this->assertEquals('value2', $term->setValue('value2')->getValue());
     }
 
-    public function testGetField()
+    public function testGetField(): void
     {
         $term = new Term('value', 'field');
         $this->assertEquals('field', $term->getField());
         $this->assertEquals('field2', $term->setField('field2')->getField());
     }
 
-    public function testOptional()
+    public function testOptional(): void
     {
         $term = new Term('value');
         $this->assertFalse($term->optional()->isExclude());
         $this->assertFalse($term->optional()->isRequired());
     }
 
-    public function testGetBoost()
+    public function testGetBoost(): void
     {
         $term = new Term('value');
         $this->assertEquals(5, $term->setBoost(5)->getBoost());
     }
 
-    public function testGetMatchType()
+    public function testGetMatchType(): void
     {
         $term = new Term('value', 'field');
         $this->assertEquals('exact', $term->setMatchType('exact')->getMatchType());
     }
 
-    public function testToQueryParts()
+    public function testToQueryParts(): void
     {
         $term = new Term('value', 'field');
         $this->assertEquals([
@@ -67,20 +67,20 @@ class TermTest extends TestCase
         ], $term->toQueryParts());
     }
 
-    public function testSetValue()
+    public function testSetValue(): void
     {
         $term = new Term('value');
         $this->assertEquals('value2', $term->setValue('value2')->getValue());
     }
 
-    public function testIsRequired()
+    public function testIsRequired(): void
     {
         $term = new Term('value');
         $this->assertFalse($term->require()->isExclude());
         $this->assertTrue($term->isRequired());
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $term = new Term('value');
         $this->assertEquals('"value"', (string) $term);
@@ -108,7 +108,7 @@ class TermTest extends TestCase
     /**
      * @dataProvider escapeDataProvider
      */
-    public function testEscape($value, $escaped)
+    public function testEscape($value, $escaped): void
     {
         $term = new Term($value);
         $this->assertEquals($escaped, (string) $term);
@@ -126,14 +126,14 @@ class TermTest extends TestCase
         return $cases;
     }
 
-    public function testWrap()
+    public function testWrap(): void
     {
         $term = new Term('value');
         $term->wrapParenthesis();
         $this->assertEquals('("value")', (string) $term);
     }
 
-    public function testSetNamespace()
+    public function testSetNamespace(): void
     {
         $term = new Term('value', 'field', 'namespace');
         $this->assertEquals('namespace', $term->getNamespace());

@@ -10,6 +10,7 @@ use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Media\Media;
 use Lullabot\Mpx\DataService\NotificationListener;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
@@ -34,7 +35,7 @@ class NotificationListenerTest extends TestCase
      * @covers ::__construct
      * @covers ::sync
      */
-    public function testSync()
+    public function testSync(): void
     {
         $notification_id = random_int(1, mt_getrandmax());
 
@@ -64,7 +65,7 @@ class NotificationListenerTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session, $account);
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');
@@ -80,7 +81,7 @@ class NotificationListenerTest extends TestCase
      * @covers ::listen
      * @covers ::deserializeResponse
      */
-    public function testListen()
+    public function testListen(): void
     {
         $account_id = 'https://www.example.com/12345';
         $account = new Account();
@@ -104,7 +105,7 @@ class NotificationListenerTest extends TestCase
         $store->expects($this->any())
             ->method('exists')
             ->willReturn(false);
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session, $account);
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');

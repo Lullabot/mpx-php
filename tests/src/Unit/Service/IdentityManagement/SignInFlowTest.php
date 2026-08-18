@@ -23,7 +23,7 @@ class SignInFlowTest extends TestCase
     /**
      * @covers ::acquire
      */
-    public function testAcquire()
+    public function testAcquire(): void
     {
         $client = $this->getMockClient([
             function (RequestInterface $request) {
@@ -47,7 +47,7 @@ class SignInFlowTest extends TestCase
      *
      * @covers ::acquire
      */
-    public function testAcquireWithDuration()
+    public function testAcquireWithDuration(): void
     {
         $client = $this->getMockClient([
             function (RequestInterface $request) {
@@ -65,7 +65,7 @@ class SignInFlowTest extends TestCase
     /**
      * @covers ::apply
      */
-    public function testApplySetsQueryParameter()
+    public function testApplySetsQueryParameter(): void
     {
         $token = new Token('http://example.com/User/1', 'TOKEN-VALUE', 3600);
         $options = (new SignInFlow())->apply($token, ['query' => ['schema' => '1.0']]);
@@ -79,7 +79,7 @@ class SignInFlowTest extends TestCase
      *
      * @covers ::apply
      */
-    public function testApplyIgnoresAccount()
+    public function testApplyIgnoresAccount(): void
     {
         $account = new Account();
         $account->setMpxId($this->accountUri());
@@ -94,7 +94,7 @@ class SignInFlowTest extends TestCase
     /**
      * @covers ::identifier
      */
-    public function testIdentifier()
+    public function testIdentifier(): void
     {
         $this->assertEquals('mpx/USER-NAME', (new SignInFlow())->identifier(new User('mpx/USER-NAME', 'password')));
     }
@@ -102,7 +102,7 @@ class SignInFlowTest extends TestCase
     /**
      * @covers ::revoke
      */
-    public function testRevoke()
+    public function testRevoke(): void
     {
         $client = $this->getMockClient([
             function (RequestInterface $request) {

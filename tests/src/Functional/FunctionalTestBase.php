@@ -9,6 +9,7 @@ use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\Access\Account;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
@@ -79,7 +80,7 @@ abstract class FunctionalTestBase extends TestCase
             ->willReturn(false);
 
         $user = new User($username, $password);
-        $this->userSession = new UserSession($user, $this->client, $store, new TokenCachePool(new ArrayCachePool()));
+        $this->userSession = new UserSession($user, $this->client, new SignInFlow(), $store, new TokenCachePool(new ArrayCachePool()));
 
         $this->account = new Account();
         $this->account->setId(new Uri($account_id));

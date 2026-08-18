@@ -26,14 +26,14 @@ abstract class ObjectBase implements ObjectInterface
         return $this->customFields;
     }
 
-    public function setCustomFields(array $customFields)
+    public function setCustomFields(array $customFields): void
     {
         $this->customFields = $customFields;
     }
 
-    public function setJson(string $json)
+    public function setJson(string $json): void
     {
-        $this->json = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        $this->json = json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
     }
 
     public function getJson()
@@ -50,7 +50,7 @@ abstract class ObjectBase implements ObjectInterface
         return $this->getId();
     }
 
-    public function setMpxId(UriInterface $id)
+    public function setMpxId(UriInterface $id): void
     {
         $this->setId($id);
     }
