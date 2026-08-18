@@ -37,7 +37,7 @@ class MediaFileTest extends ObjectTestBase
      *
      * @dataProvider getSetMethods
      */
-    public function testGetSet(string $field, mixed $expected = null)
+    public function testGetSet(string $field, mixed $expected = null): void
     {
         $this->assertObjectClass($this->class, $field, $expected);
     }
@@ -50,7 +50,7 @@ class MediaFileTest extends ObjectTestBase
      *
      * @dataProvider instanceOfDataProvider
      */
-    public function testInstanceOf($field, $class)
+    public function testInstanceOf($field, $class): void
     {
         $object = $this->deserialize($this->class, $field);
         $method = 'get'.ucfirst($field);

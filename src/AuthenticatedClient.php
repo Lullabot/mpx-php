@@ -131,15 +131,11 @@ class AuthenticatedClient implements ClientInterface
      */
     private function mergeAuth(array $options, bool $reset = false): array
     {
-        if (!isset($options['query'])) {
-            $options['query'] = [];
-        }
         $token = $this->userSession->acquireToken($this->duration, $reset);
-        $options['query'] += [
-            'token' => $token->getValue(),
-        ];
 
-        return $options;
+        // How the token is sent depends on the flow the session authenticates
+        // with, so the session's flow owns building the request options.
+        return $this->userSession->getFlow()->apply($token, $options, $this->account);
     }
 
     /**
@@ -159,7 +155,7 @@ class AuthenticatedClient implements ClientInterface
         // need a new invocation of mergeAuth() that resets the token.
         $outer = $this->outerPromise($inner);
 
-        $inner->then(function ($value) use ($outer) {
+        $inner->then(static function ($value) use ($outer) {
             // The very first request worked, so resolve the outer promise.
             $outer->resolve($value);
         }, function ($e) use ($request, $options, $outer) {
@@ -224,7 +220,7 @@ class AuthenticatedClient implements ClientInterface
         // need a new invocation of mergeAuth() that resets the token.
         $outer = $this->outerPromise($inner);
 
-        $inner->then(function ($value) use ($outer) {
+        $inner->then(static function ($value) use ($outer) {
             // The very first request worked, so resolve the outer promise.
             $outer->resolve($value);
         }, function ($e) use ($method, $uri, $options, $outer) {
@@ -255,7 +251,7 @@ class AuthenticatedClient implements ClientInterface
     /**
      * Resolve or reject a promise by invoking a callable.
      */
-    private function finallyResolve(PromiseInterface $promise, callable $callable, $args)
+    private function finallyResolve(PromiseInterface $promise, callable $callable, $args): void
     {
         try {
             // Since we must have blocked to get to this point, we now use
@@ -303,7 +299,7 @@ class AuthenticatedClient implements ClientInterface
      */
     private function outerPromise(PromiseInterface $inner): Promise
     {
-        $outer = new Promise(function () use ($inner) {
+        $outer = new Promise(static function () use ($inner) {
             // Our wait function invokes the inner's wait function, as as far
             // as callers are concerned there is only one promise.
             try {

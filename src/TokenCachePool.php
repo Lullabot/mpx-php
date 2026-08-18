@@ -39,7 +39,7 @@ class TokenCachePool
      * @param UserSession $user  The user the token is associated with.
      * @param Token       $token The authentication token for the user.
      */
-    public function setToken(UserSession $user, Token $token)
+    public function setToken(UserSession $user, Token $token): void
     {
         $item = $this->cacheItemPool->getItem($this->cacheKey($user));
         $item->set($token);
@@ -73,7 +73,7 @@ class TokenCachePool
      *
      * @param UserSession $user The user to delete the token for.
      */
-    public function deleteToken(UserSession $user)
+    public function deleteToken(UserSession $user): void
     {
         $this->cacheItemPool->deleteItem($this->cacheKey($user));
     }
@@ -87,6 +87,6 @@ class TokenCachePool
      */
     private function cacheKey(UserSession $userSession): string
     {
-        return md5($userSession->getUser()->getMpxUsername());
+        return md5($userSession->getFlow()->identifier($userSession->getUser()));
     }
 }

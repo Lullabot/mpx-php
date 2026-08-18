@@ -111,7 +111,7 @@ class Dummy extends ParentDummy
      */
     public $emptyVar;
 
-    public static function getStatic()
+    public static function getStatic(): void
     {
     }
 
@@ -122,7 +122,7 @@ class Dummy extends ParentDummy
     {
     }
 
-    public static function staticSetter(\DateTime $d)
+    public static function staticSetter(\DateTime $d): void
     {
     }
 
@@ -138,7 +138,7 @@ class Dummy extends ParentDummy
     /**
      * B.
      */
-    public function setB(?ParentDummy $parent = null)
+    public function setB(?ParentDummy $parent = null): void
     {
     }
 
@@ -158,15 +158,15 @@ class Dummy extends ParentDummy
     {
     }
 
-    public function get123()
+    public function get123(): void
     {
     }
 
-    public function setSelf(self $self)
+    public function setSelf(self $self): void
     {
     }
 
-    public function setRealParent(parent $realParent)
+    public function setRealParent(parent $realParent): void
     {
     }
 
@@ -184,11 +184,11 @@ class Dummy extends ParentDummy
     {
     }
 
-    public function setDate(\DateTime $date)
+    public function setDate(\DateTime $date): void
     {
     }
 
-    public function addDate(\DateTime $date)
+    public function addDate(\DateTime $date): void
     {
     }
 }

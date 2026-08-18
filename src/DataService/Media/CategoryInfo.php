@@ -36,7 +36,7 @@ class CategoryInfo implements \Stringable
     /**
      * Set the Category object's fullTitle value.
      */
-    public function setName(?string $name)
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -52,7 +52,7 @@ class CategoryInfo implements \Stringable
     /**
      * Set the Category object's label value.
      */
-    public function setLabel(?string $label)
+    public function setLabel(?string $label): void
     {
         $this->label = $label;
     }
@@ -68,7 +68,7 @@ class CategoryInfo implements \Stringable
     /**
      * Set the Category object's scheme value.
      */
-    public function setScheme(?string $scheme)
+    public function setScheme(?string $scheme): void
     {
         $this->scheme = $scheme;
     }

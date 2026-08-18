@@ -29,7 +29,7 @@ class CustomFieldsNormalizerTest extends TestCase
      * @covers ::__construct
      * @covers ::denormalize
      */
-    public function testDenormalize()
+    public function testDenormalize(): void
     {
         $data = [
             'namespace' => 'http://example.com/ns1',
@@ -64,7 +64,7 @@ class CustomFieldsNormalizerTest extends TestCase
      *
      * @covers ::denormalize
      */
-    public function testNotDeormalizable()
+    public function testNotDeormalizable(): void
     {
         $annotation = new CustomField();
         $annotation->namespace = 'http://example.com/ns1';
@@ -89,7 +89,7 @@ class CustomFieldsNormalizerTest extends TestCase
      *
      * @covers ::denormalize
      */
-    public function testMissingCustomFieldsClass()
+    public function testMissingCustomFieldsClass(): void
     {
         $normalizer = new CustomFieldsNormalizer([]);
         $data = [
@@ -107,7 +107,7 @@ class CustomFieldsNormalizerTest extends TestCase
      *
      * @covers ::supportsDenormalization
      */
-    public function testSupportsDenormalization()
+    public function testSupportsDenormalization(): void
     {
         $normalizer = new CustomFieldsNormalizer([]);
         $this->assertTrue($normalizer->supportsDenormalization([], CustomFieldInterface::class));
@@ -150,7 +150,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
         return $this->added;
     }
 
-    public function setAdded(DateTimeFormatInterface $added)
+    public function setAdded(DateTimeFormatInterface $added): void
     {
         $this->added = $added;
     }
@@ -160,7 +160,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
         return $this->addedByUserId;
     }
 
-    public function setAddedByUserId(UriInterface $addedByUserId)
+    public function setAddedByUserId(UriInterface $addedByUserId): void
     {
         $this->addedByUserId = $addedByUserId;
     }
@@ -170,7 +170,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
         return $this->id;
     }
 
-    public function setId(UriInterface $id)
+    public function setId(UriInterface $id): void
     {
         $this->id = $id;
     }
@@ -180,7 +180,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
         return $this->ownerId;
     }
 
-    public function setOwnerId(UriInterface $ownerId)
+    public function setOwnerId(UriInterface $ownerId): void
     {
         $this->ownerId = $ownerId;
     }
@@ -189,7 +189,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     {
     }
 
-    public function setDescription(?string $description)
+    public function setDescription(?string $description): void
     {
     }
 
@@ -197,7 +197,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     {
     }
 
-    public function setGuid(?string $guid)
+    public function setGuid(?string $guid): void
     {
     }
 
@@ -205,7 +205,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     {
     }
 
-    public function setLocked(?bool $locked)
+    public function setLocked(?bool $locked): void
     {
     }
 
@@ -213,7 +213,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     {
     }
 
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): void
     {
     }
 
@@ -221,7 +221,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     {
     }
 
-    public function setUpdated(DateTimeFormatInterface $updated)
+    public function setUpdated(DateTimeFormatInterface $updated): void
     {
     }
 
@@ -229,7 +229,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     {
     }
 
-    public function setUpdatedByUserId(UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(UriInterface $updatedByUserId): void
     {
     }
 
@@ -237,7 +237,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     {
     }
 
-    public function setVersion(?int $version)
+    public function setVersion(?int $version): void
     {
     }
 }

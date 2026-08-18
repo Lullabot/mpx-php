@@ -11,6 +11,7 @@ use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\DataService\QQuery\Term;
 use Lullabot\Mpx\DataService\QQuery\TermGroup;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
@@ -25,14 +26,14 @@ class ReadmeTest extends FunctionalTestBase
     /**
      * This test mirrors the first example in the README.
      */
-    public function testExample()
+    public function testExample(): void
     {
         // Create a new MPX client with the default configuration.
         $defaults = Client::getDefaultConfiguration();
         $client = new Client(new \GuzzleHttp\Client($defaults));
 
         $user = new User(getenv('MPX_USERNAME'), getenv('MPX_PASSWORD'));
-        $session = new UserSession($user, $client);
+        $session = new UserSession($user, $client, new SignInFlow());
         $authenticatedClient = new AuthenticatedClient($client, $session);
 
         // This registers the annotation loader.
@@ -64,7 +65,7 @@ class ReadmeTest extends FunctionalTestBase
     /**
      * This test mirrors the query example from the README.
      */
-    public function testQueryExample()
+    public function testQueryExample(): void
     {
         // Create a new MPX client with the default configuration.
         $defaults = Client::getDefaultConfiguration();
@@ -73,7 +74,7 @@ class ReadmeTest extends FunctionalTestBase
         $user = new User(getenv('MPX_USERNAME'), getenv('MPX_PASSWORD'));
         $store = new FlockStore();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        $session = new UserSession($user, $client, $store, $tokenCachePool);
+        $session = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
 
         // This registers the annotation loader.

@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GuidMediaFeedUrlTest extends TestCase
 {
-    public function testToUri()
+    public function testToUri(): void
     {
         $account = new Account();
         $account->setPid('account-pid');

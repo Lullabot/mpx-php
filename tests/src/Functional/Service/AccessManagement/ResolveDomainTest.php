@@ -18,7 +18,7 @@ class ResolveDomainTest extends FunctionalTestBase
      *
      * @covers \Lullabot\Mpx\Service\AccessManagement\ResolveBase
      */
-    public function testResolve()
+    public function testResolve(): void
     {
         $resolveDomain = new ResolveDomain($this->authenticatedClient);
         $resolved = $resolveDomain->resolve($this->account);

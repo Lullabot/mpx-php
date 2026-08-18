@@ -17,7 +17,7 @@ class MediaQueryTest extends FunctionalTestBase
     /**
      * Test loading two media objects.
      */
-    public function testQueryMedia()
+    public function testQueryMedia(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $dof = new DataObjectFactory($manager->getDataService('Media Data Service', 'Media', '1.10'), $this->authenticatedClient);
@@ -54,7 +54,7 @@ class MediaQueryTest extends FunctionalTestBase
      * However, a bug was found in our range calculation when test code worked
      * this way, which while not optimal should still work.
      */
-    public function testLoadRecentContent()
+    public function testLoadRecentContent(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $dof = new DataObjectFactory($manager->getDataService('Media Data Service', 'Media', '1.10'), $this->authenticatedClient);

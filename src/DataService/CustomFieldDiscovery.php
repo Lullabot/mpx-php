@@ -52,7 +52,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
     /**
      * Discovers custom fields.
      */
-    private function discoverCustomFields()
+    private function discoverCustomFields(): void
     {
         $path = $this->rootDir.'/'.$this->directory;
         $finder = new Finder();
@@ -89,7 +89,7 @@ class CustomFieldDiscovery implements CustomFieldDiscoveryInterface
      *
      * @param string $class The class to inspect for a CustomField annotation.
      */
-    private function registerAnnotation($class)
+    private function registerAnnotation($class): void
     {
         /** @var \Lullabot\Mpx\DataService\Annotation\CustomField $annotation */
         if ($annotation = $this->annotationReader->getClassAnnotation(

@@ -18,7 +18,7 @@ class NotificationTypeExtractorTest extends TestCase
      * @covers ::setClass
      * @covers ::getTypes
      */
-    public function testGetTypes()
+    public function testGetTypes(): void
     {
         $extractor = NotificationTypeExtractor::create();
         $extractor->setClass(static::class);
@@ -31,7 +31,7 @@ class NotificationTypeExtractorTest extends TestCase
      *
      * @covers ::getTypes
      */
-    public function testNotEntry()
+    public function testNotEntry(): void
     {
         $extractor = NotificationTypeExtractor::create();
         $extractor->setClass(static::class);
@@ -43,7 +43,7 @@ class NotificationTypeExtractorTest extends TestCase
      *
      * @covers ::getTypes
      */
-    public function testClassNotSet()
+    public function testClassNotSet(): void
     {
         $extractor = NotificationTypeExtractor::create();
         $this->expectException(\LogicException::class);

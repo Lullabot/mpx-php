@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Lullabot\Mpx\Tests\Unit\DataService {
     // Added imports on purpose as mock for the unit tests, please do not remove.
     use Lullabot\Mpx\DataService\CachingContextFactory;
@@ -24,7 +22,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
          *
          * @uses \phpDocumentor\Reflection\Types\Context
          */
-        public function testReadsNamespaceFromClassReflection()
+        public function testReadsNamespaceFromClassReflection(): void
         {
             $fixture = new CachingContextFactory();
             $context = $fixture->createFromReflector(new ReflectionClass($this));
@@ -38,7 +36,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
          *
          * @uses \phpDocumentor\Reflection\Types\Context
          */
-        public function testReadsAliasesFromClassReflection()
+        public function testReadsAliasesFromClassReflection(): void
         {
             $fixture = new CachingContextFactory();
             $expected = [
@@ -62,7 +60,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
          *
          * @uses \phpDocumentor\Reflection\Types\Context
          */
-        public function testReadsNamespaceFromProvidedNamespaceAndContent()
+        public function testReadsNamespaceFromProvidedNamespaceAndContent(): void
         {
             $fixture = new CachingContextFactory();
             $context = $fixture->createForNamespace(__NAMESPACE__, file_get_contents(__FILE__));
@@ -75,7 +73,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
          *
          * @uses \phpDocumentor\Reflection\Types\Context
          */
-        public function testReadsAliasesFromProvidedNamespaceAndContent()
+        public function testReadsAliasesFromProvidedNamespaceAndContent(): void
         {
             $fixture = new CachingContextFactory();
             $expected = [
@@ -99,7 +97,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
          *
          * @uses \phpDocumentor\Reflection\Types\Context
          */
-        public function testTraitUseIsNotDetectedAsNamespaceUse()
+        public function testTraitUseIsNotDetectedAsNamespaceUse(): void
         {
             $php = '<?php declare(strict_types=1);
                 namespace Foo;
@@ -122,7 +120,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
          *
          * @uses \phpDocumentor\Reflection\Types\Context
          */
-        public function testAllOpeningBracesAreCheckedWhenSearchingForEndOfClass()
+        public function testAllOpeningBracesAreCheckedWhenSearchingForEndOfClass(): void
         {
             $php = '<?php declare(strict_types=1);
                 namespace Foo;
@@ -160,7 +158,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
         /**
          * @covers ::createFromReflector
          */
-        public function testEmptyFileName()
+        public function testEmptyFileName(): void
         {
             $fixture = new CachingContextFactory();
             $context = $fixture->createFromReflector(new ReflectionClass(\stdClass::class));
@@ -171,7 +169,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
         /**
          * @covers ::createFromReflector
          */
-        public function testEvalDClass()
+        public function testEvalDClass(): void
         {
             eval(<<<PHP
 namespace Foo;

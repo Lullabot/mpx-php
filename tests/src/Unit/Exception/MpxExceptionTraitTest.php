@@ -25,7 +25,7 @@ class MpxExceptionTraitTest extends TestCase
      * @covers ::getData
      * @covers ::validateData
      */
-    public function testGet()
+    public function testGet(): void
     {
         /** @var \Lullabot\Mpx\Exception\MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
@@ -51,7 +51,7 @@ class MpxExceptionTraitTest extends TestCase
      *
      * @covers ::getCorrelationId
      */
-    public function testNoCorrelationId()
+    public function testNoCorrelationId(): void
     {
         /** @var \Lullabot\Mpx\Exception\MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
@@ -74,7 +74,7 @@ class MpxExceptionTraitTest extends TestCase
      *
      * @covers ::getServerStackTrace
      */
-    public function testNoServerStackTrace()
+    public function testNoServerStackTrace(): void
     {
         /** @var \Lullabot\Mpx\Exception\MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
@@ -100,7 +100,7 @@ class MpxExceptionTraitTest extends TestCase
      *
      * @doesNotPerformAssertions
      */
-    public function testValidateData()
+    public function testValidateData(): void
     {
         $data = [
             'responseCode' => 503,
@@ -117,7 +117,7 @@ class MpxExceptionTraitTest extends TestCase
      * @covers ::setNotificationData
      * @covers ::validateNotificationData
      */
-    public function testSetNotificationData()
+    public function testSetNotificationData(): void
     {
         /** @var \Lullabot\Mpx\Exception\MpxExceptionTrait $trait */
         $trait = $this->getMockForTrait(MpxExceptionTrait::class);
@@ -152,7 +152,7 @@ class MpxExceptionTraitTest extends TestCase
      *
      * @covers ::validateData
      */
-    public function testValidateInvalidData($data, $key)
+    public function testValidateInvalidData($data, $key): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(\sprintf('Required key %s is missing.', $key));
@@ -169,7 +169,7 @@ class MpxExceptionTraitTest extends TestCase
      *
      * @covers ::validateNotificationData
      */
-    public function testValidateInvalidNotificationData($data, $key)
+    public function testValidateInvalidNotificationData($data, $key): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(\sprintf('Required key %s is missing.', $key));
@@ -188,7 +188,7 @@ class MpxExceptionTraitTest extends TestCase
             'isException' => 1,
             'title' => 'the title',
         ];
-        $data = array_map(function ($value) use (&$required) {
+        $data = array_map(static function ($value) use (&$required) {
             $key = array_key_last($required);
             array_pop($required);
 
@@ -214,7 +214,7 @@ class MpxExceptionTraitTest extends TestCase
                 'description' => 'the description',
             ],
         ];
-        $data = array_map(function ($value) use (&$required) {
+        $data = array_map(static function ($value) use (&$required) {
             $key = array_key_last($required);
             array_pop($required);
 

@@ -16,7 +16,7 @@ class MediaFeedUrlTest extends TestCase
     /**
      * @dataProvider getSetDataProvider
      */
-    public function testGetSet($get, $set, mixed $value)
+    public function testGetSet($get, $set, mixed $value): void
     {
         $account = new Account();
         $account->setPid('account-pid');
@@ -41,7 +41,7 @@ class MediaFeedUrlTest extends TestCase
         ];
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $account = new Account();
         $account->setPid('account-pid');
@@ -52,7 +52,7 @@ class MediaFeedUrlTest extends TestCase
         $this->assertEquals('https://feed.media.theplatform.com/f/account-pid/feed-pid', (string) $url);
     }
 
-    public function testToUri()
+    public function testToUri(): void
     {
         $account = new Account();
         $account->setPid('account-pid');

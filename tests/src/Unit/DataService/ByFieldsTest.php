@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ByFieldsTest extends TestCase
 {
-    public function testToQueryParts()
+    public function testToQueryParts(): void
     {
         $fields = new ByFields();
         $fields->addField('title', 'value');

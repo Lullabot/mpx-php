@@ -38,7 +38,7 @@ abstract class ResolveBase
         $this->cache = $cache;
     }
 
-    protected function saveCache($key, $resolved)
+    protected function saveCache($key, $resolved): void
     {
         // thePlatform provides no guidance on how long we can cache this for.
         // Since many of their examples and other mpx clients hardcode these
@@ -55,4 +55,3 @@ abstract class ResolveBase
         }
     }
 }
-

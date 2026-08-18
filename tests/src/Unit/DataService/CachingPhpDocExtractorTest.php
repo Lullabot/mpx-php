@@ -21,14 +21,14 @@ class CachingPhpDocExtractorTest extends TestCase
     /**
      * @dataProvider typesProvider
      */
-    public function testExtract($property, $type, $shortDescription, $longDescription)
+    public function testExtract($property, $type, $shortDescription, $longDescription): void
     {
         $this->assertEquals($type, $this->extractor->getTypes(\Lullabot\Mpx\Tests\Fixtures\Dummy::class, $property));
         $this->assertSame($shortDescription, $this->extractor->getShortDescription(\Lullabot\Mpx\Tests\Fixtures\Dummy::class, $property));
         $this->assertSame($longDescription, $this->extractor->getLongDescription(\Lullabot\Mpx\Tests\Fixtures\Dummy::class, $property));
     }
 
-    public function testParamTagTypeIsOmitted()
+    public function testParamTagTypeIsOmitted(): void
     {
         $this->assertNull($this->extractor->getTypes(OmittedParamTagTypeDocBlock::class, 'omittedType'));
     }
@@ -36,7 +36,7 @@ class CachingPhpDocExtractorTest extends TestCase
     /**
      * @dataProvider typesWithCustomPrefixesProvider
      */
-    public function testExtractTypesWithCustomPrefixes($property, ?array $type = null)
+    public function testExtractTypesWithCustomPrefixes($property, ?array $type = null): void
     {
         $customExtractor = new CachingPhpDocExtractor(null, ['add', 'remove'], ['is', 'can']);
 
@@ -46,7 +46,7 @@ class CachingPhpDocExtractorTest extends TestCase
     /**
      * @dataProvider typesWithNoPrefixesProvider
      */
-    public function testExtractTypesWithNoPrefixes($property, ?array $type = null)
+    public function testExtractTypesWithNoPrefixes($property, ?array $type = null): void
     {
         $noPrefixExtractor = new CachingPhpDocExtractor(null, [], [], []);
 
@@ -66,7 +66,7 @@ class CachingPhpDocExtractorTest extends TestCase
             [
                 'files',
                 [
-                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
+                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
                     new Type(Type::BUILTIN_TYPE_RESOURCE),
                 ],
                 null,
@@ -74,7 +74,7 @@ class CachingPhpDocExtractorTest extends TestCase
             ],
             ['bal', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime')], null, null],
             ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], null, null],
-            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
+            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', [new Type(Type::BUILTIN_TYPE_INT)], 'A.', null],
             ['B', [new Type(Type::BUILTIN_TYPE_OBJECT, true, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], 'B.', null],
             ['d', [new Type(Type::BUILTIN_TYPE_BOOL)], null, null],
@@ -99,7 +99,7 @@ class CachingPhpDocExtractorTest extends TestCase
             [
                 'files',
                 [
-                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
+                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
                     new Type(Type::BUILTIN_TYPE_RESOURCE),
                 ],
                 null,
@@ -107,7 +107,7 @@ class CachingPhpDocExtractorTest extends TestCase
             ],
             ['bal', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime')], null, null],
             ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], null, null],
-            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
+            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', null, 'A.', null],
             ['b', null, 'B.', null],
             ['d', [new Type(Type::BUILTIN_TYPE_BOOL)], null, null],
@@ -132,7 +132,7 @@ class CachingPhpDocExtractorTest extends TestCase
             [
                 'files',
                 [
-                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
+                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
                     new Type(Type::BUILTIN_TYPE_RESOURCE),
                 ],
                 null,
@@ -140,7 +140,7 @@ class CachingPhpDocExtractorTest extends TestCase
             ],
             ['bal', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime')], null, null],
             ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], null, null],
-            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
+            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', null, 'A.', null],
             ['b', null, 'B.', null],
             ['c', null, null, null],
@@ -154,7 +154,7 @@ class CachingPhpDocExtractorTest extends TestCase
         ];
     }
 
-    public function testReturnNullOnEmptyDocBlock()
+    public function testReturnNullOnEmptyDocBlock(): void
     {
         $this->assertNull($this->extractor->getShortDescription(EmptyDocBlock::class, 'foo'));
     }
@@ -170,7 +170,7 @@ class OmittedParamTagTypeDocBlock
     /**
      * The type is omitted here to ensure that the extractor doesn't choke on missing types.
      */
-    public function setOmittedType(array $omittedTagType)
+    public function setOmittedType(array $omittedTagType): void
     {
     }
 }

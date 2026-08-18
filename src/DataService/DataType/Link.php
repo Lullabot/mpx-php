@@ -41,7 +41,7 @@ class Link
         return $this->href;
     }
 
-    public function setHref(UriInterface $href)
+    public function setHref(UriInterface $href): void
     {
         $this->href = $href;
     }
@@ -51,7 +51,7 @@ class Link
         return $this->target;
     }
 
-    public function setTarget(?string $target)
+    public function setTarget(?string $target): void
     {
         $this->target = $target;
     }
@@ -61,7 +61,7 @@ class Link
         return $this->title;
     }
 
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -71,7 +71,7 @@ class Link
         return $this->type;
     }
 
-    public function setType(?string $type)
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }

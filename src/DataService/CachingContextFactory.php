@@ -151,7 +151,7 @@ final class CachingContextFactory
     /**
      * Fast-forwards the iterator as longs as we don't encounter a T_STRING or T_NS_SEPARATOR token.
      */
-    private function skipToNextStringOrNamespaceSeparator(\ArrayIterator $tokens)
+    private function skipToNextStringOrNamespaceSeparator(\ArrayIterator $tokens): void
     {
         while ($tokens->valid() && (\T_STRING !== $tokens->current()->id) && (\T_NS_SEPARATOR !== $tokens->current()->id)) {
             $tokens->next();

@@ -11,7 +11,7 @@ use Lullabot\Mpx\Tests\Functional\FunctionalTestBase;
 
 class FieldsTest extends FunctionalTestBase
 {
-    public function testLimitFields()
+    public function testLimitFields(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $mediaDataService = $manager->getDataService('Media Data Service', 'Media', '1.10');

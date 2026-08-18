@@ -12,7 +12,7 @@ class NotificationListenerTest extends FunctionalTestBase
     /**
      * Tests listening for two Media notifications.
      */
-    public function testListen()
+    public function testListen(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $service = $manager->getDataService('Media Data Service', 'Media', '1.10');

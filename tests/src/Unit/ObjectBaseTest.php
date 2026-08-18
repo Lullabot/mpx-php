@@ -18,7 +18,7 @@ class ObjectBaseTest extends TestCase
      * @covers ::setCustomFields
      * @covers ::getCustomFields
      */
-    public function testGetCustomFields()
+    public function testGetCustomFields(): void
     {
         $o = new DummyObjectBase();
         $customFields = [
@@ -32,7 +32,7 @@ class ObjectBaseTest extends TestCase
      * @covers ::setJson
      * @covers ::getJson
      */
-    public function testGetJson()
+    public function testGetJson(): void
     {
         $o = new DummyObjectBase();
         $o->setJson('{}');
@@ -42,7 +42,7 @@ class ObjectBaseTest extends TestCase
     /**
      * @covers ::getJson
      */
-    public function testGetJsonMissing()
+    public function testGetJsonMissing(): void
     {
         $o = new DummyObjectBase();
         $this->expectException(\LogicException::class);
@@ -54,7 +54,7 @@ class ObjectBaseTest extends TestCase
      * @covers ::setMpxId
      * @covers ::getMpxId
      */
-    public function testGetMpxId()
+    public function testGetMpxId(): void
     {
         $o = new DummyObjectBase();
         $id = new Uri('http://www.example.com/1');
@@ -76,7 +76,7 @@ class DummyObjectBase extends ObjectBase
         return $this->id;
     }
 
-    public function setId(UriInterface $id)
+    public function setId(UriInterface $id): void
     {
         $this->id = $id;
     }
@@ -86,7 +86,7 @@ class DummyObjectBase extends ObjectBase
         return $this->added;
     }
 
-    public function setAdded(DateTimeFormatInterface $added)
+    public function setAdded(DateTimeFormatInterface $added): void
     {
         $this->added = $added;
     }
@@ -96,7 +96,7 @@ class DummyObjectBase extends ObjectBase
         return $this->addedByUserId;
     }
 
-    public function setAddedByUserId(UriInterface $addedByUserId)
+    public function setAddedByUserId(UriInterface $addedByUserId): void
     {
         $this->addedByUserId = $addedByUserId;
     }
@@ -109,7 +109,7 @@ class DummyObjectBase extends ObjectBase
         return $this->ownerId;
     }
 
-    public function setOwnerId(UriInterface $ownerId)
+    public function setOwnerId(UriInterface $ownerId): void
     {
         $this->ownerId = $ownerId;
     }
@@ -118,7 +118,7 @@ class DummyObjectBase extends ObjectBase
     {
     }
 
-    public function setDescription(?string $description)
+    public function setDescription(?string $description): void
     {
     }
 
@@ -126,7 +126,7 @@ class DummyObjectBase extends ObjectBase
     {
     }
 
-    public function setGuid(?string $guid)
+    public function setGuid(?string $guid): void
     {
     }
 
@@ -134,7 +134,7 @@ class DummyObjectBase extends ObjectBase
     {
     }
 
-    public function setLocked(?bool $locked)
+    public function setLocked(?bool $locked): void
     {
     }
 
@@ -142,7 +142,7 @@ class DummyObjectBase extends ObjectBase
     {
     }
 
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): void
     {
     }
 
@@ -150,7 +150,7 @@ class DummyObjectBase extends ObjectBase
     {
     }
 
-    public function setUpdated(DateTimeFormatInterface $updated)
+    public function setUpdated(DateTimeFormatInterface $updated): void
     {
     }
 
@@ -158,7 +158,7 @@ class DummyObjectBase extends ObjectBase
     {
     }
 
-    public function setUpdatedByUserId(UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(UriInterface $updatedByUserId): void
     {
     }
 
@@ -166,7 +166,7 @@ class DummyObjectBase extends ObjectBase
     {
     }
 
-    public function setVersion(?int $version)
+    public function setVersion(?int $version): void
     {
     }
 }

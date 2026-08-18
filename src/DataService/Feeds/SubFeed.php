@@ -70,7 +70,7 @@ class SubFeed
     /**
      * Set the parameters that are passed to a custom feed adapter for processing at runtime. For more information, see FeedConfig.adapterParameters.
      */
-    public function setAdapterParameters(?string $adapterParameters)
+    public function setAdapterParameters(?string $adapterParameters): void
     {
         $this->adapterParameters = $adapterParameters;
     }
@@ -92,7 +92,7 @@ class SubFeed
      *
      * @param string[] $availableFields
      */
-    public function setAvailableFields(array $availableFields)
+    public function setAvailableFields(array $availableFields): void
     {
         $this->availableFields = $availableFields;
     }
@@ -108,7 +108,7 @@ class SubFeed
     /**
      * Set not currently used.
      */
-    public function setBaseQuery(?string $baseQuery)
+    public function setBaseQuery(?string $baseQuery): void
     {
         $this->baseQuery = $baseQuery;
     }
@@ -124,7 +124,7 @@ class SubFeed
     /**
      * Set the sub feed items' object type. This value must be unique within the FeedConfig.subFeedsarray. The only currently supported value is Category.
      */
-    public function setFeedType(?string $feedType)
+    public function setFeedType(?string $feedType): void
     {
         $this->feedType = $feedType;
     }
@@ -140,7 +140,7 @@ class SubFeed
     /**
      * Set the default format of the sub feed. For more information, see FeedConfig.form.
      */
-    public function setForm(?string $form)
+    public function setForm(?string $form): void
     {
         $this->form = $form;
     }
@@ -160,7 +160,7 @@ class SubFeed
      *
      * @param string[] $limitByTitles
      */
-    public function setLimitByTitles(array $limitByTitles)
+    public function setLimitByTitles(array $limitByTitles): void
     {
         $this->limitByTitles = $limitByTitles;
     }
@@ -176,7 +176,7 @@ class SubFeed
     /**
      * Set the object schema version of the sub feed items. For more information, see FeedConfig.schema.
      */
-    public function setSchema(?string $schema)
+    public function setSchema(?string $schema): void
     {
         $this->schema = $schema;
     }

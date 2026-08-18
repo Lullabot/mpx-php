@@ -8,6 +8,7 @@ use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\DataService\Access\Account;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomain;
 use Lullabot\Mpx\Service\AccessManagement\ResolveDomainResponse;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
@@ -33,7 +34,7 @@ class ResolveDomainTest extends TestCase
      * @covers ::__construct
      * @covers ::resolve
      */
-    public function testResolve()
+    public function testResolve(): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -48,7 +49,7 @@ class ResolveDomainTest extends TestCase
             ->willReturn(false);
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $account = new Account();
         $account->setId(new Uri('http://example.com/1'));
@@ -65,7 +66,7 @@ class ResolveDomainTest extends TestCase
      * @covers ::__construct
      * @covers ::resolve
      */
-    public function testResolveCache()
+    public function testResolveCache(): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -80,7 +81,7 @@ class ResolveDomainTest extends TestCase
             ->willReturn(false);
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $userSession);
         $account = new Account();
         $account->setId(new Uri('http://example.com/1'));

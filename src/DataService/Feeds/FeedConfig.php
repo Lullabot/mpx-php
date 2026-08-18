@@ -326,7 +326,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the parameters that are passed to a custom feed adapter for processing at runtime.
      */
-    public function setAdapterParameters(?string $adapterParameters)
+    public function setAdapterParameters(?string $adapterParameters): void
     {
         $this->adapterParameters = $adapterParameters;
     }
@@ -346,7 +346,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the date and time that this object was created.
      */
-    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added)
+    public function setAdded(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $added): void
     {
         $this->added = $added;
     }
@@ -366,7 +366,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the user that created this object.
      */
-    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId)
+    public function setAddedByUserId(\Psr\Http\Message\UriInterface $addedByUserId): void
     {
         $this->addedByUserId = $addedByUserId;
     }
@@ -386,7 +386,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
      *
      * @param string[] $adminTags
      */
-    public function setAdminTags(array $adminTags)
+    public function setAdminTags(array $adminTags): void
     {
         $this->adminTags = $adminTags;
     }
@@ -406,7 +406,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the AdPolicy that is applied to the feed.
      */
-    public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId)
+    public function setAdPolicyId(\Psr\Http\Message\UriInterface $adPolicyId): void
     {
         $this->adPolicyId = $adPolicyId;
     }
@@ -422,7 +422,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the author of the feed content.
      */
-    public function setAuthor(?string $author)
+    public function setAuthor(?string $author): void
     {
         $this->author = $author;
     }
@@ -442,7 +442,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
      *
      * @param string[] $availableFields
      */
-    public function setAvailableFields(array $availableFields)
+    public function setAvailableFields(array $availableFields): void
     {
         $this->availableFields = $availableFields;
     }
@@ -458,7 +458,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set a filter applied to any items specified in the pinnedIds field and any items selected by the segmentQueriesfield.
      */
-    public function setBaseQuery(?string $baseQuery)
+    public function setBaseQuery(?string $baseQuery): void
     {
         $this->baseQuery = $baseQuery;
     }
@@ -474,7 +474,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the minimum time that items in the cache are valid.
      */
-    public function setCacheLifetime(?float $cacheLifetime)
+    public function setCacheLifetime(?float $cacheLifetime): void
     {
         $this->cacheLifetime = $cacheLifetime;
     }
@@ -490,7 +490,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the response behavior during a cache refresh.
      */
-    public function setCacheRefreshStrategy(?string $cacheRefreshStrategy)
+    public function setCacheRefreshStrategy(?string $cacheRefreshStrategy): void
     {
         $this->cacheRefreshStrategy = $cacheRefreshStrategy;
     }
@@ -506,7 +506,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the identifier for the default thumbnail for each item in the feed.
      */
-    public function setDefaultThumbnailAssetType(?string $defaultThumbnailAssetType)
+    public function setDefaultThumbnailAssetType(?string $defaultThumbnailAssetType): void
     {
         $this->defaultThumbnailAssetType = $defaultThumbnailAssetType;
     }
@@ -522,7 +522,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the description of the feed.
      */
-    public function setDescription(?string $description)
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -538,7 +538,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set whether the feed is disabled.
      */
-    public function setDisabled(?bool $disabled)
+    public function setDisabled(?bool $disabled): void
     {
         $this->disabled = $disabled;
     }
@@ -554,7 +554,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the maximum number of items in the feed.
      */
-    public function setEndIndex(?int $endIndex)
+    public function setEndIndex(?int $endIndex): void
     {
         $this->endIndex = $endIndex;
     }
@@ -570,7 +570,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the feed items' object type.
      */
-    public function setFeedType(?string $feedType)
+    public function setFeedType(?string $feedType): void
     {
         $this->feedType = $feedType;
     }
@@ -586,7 +586,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the default format of the feed.
      */
-    public function setForm(?string $form)
+    public function setForm(?string $form): void
     {
         $this->form = $form;
     }
@@ -602,7 +602,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
      */
-    public function setGuid(?string $guid)
+    public function setGuid(?string $guid): void
     {
         $this->guid = $guid;
     }
@@ -622,7 +622,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the globally unique URI of this object.
      */
-    public function setId(\Psr\Http\Message\UriInterface $id)
+    public function setId(\Psr\Http\Message\UriInterface $id): void
     {
         $this->id = $id;
     }
@@ -638,7 +638,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the URL template that is used to create the value of each feed item's link field.
      */
-    public function setItemLinkUrl(?string $itemLinkUrl)
+    public function setItemLinkUrl(?string $itemLinkUrl): void
     {
         $this->itemLinkUrl = $itemLinkUrl;
     }
@@ -654,7 +654,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set whether to only include items that are currently available.
      */
-    public function setLimitByAvailableDate(?bool $limitByAvailableDate)
+    public function setLimitByAvailableDate(?bool $limitByAvailableDate): void
     {
         $this->limitByAvailableDate = $limitByAvailableDate;
     }
@@ -670,7 +670,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set whether to only include items that are approved.
      */
-    public function setLimitToApproved(?bool $limitToApproved)
+    public function setLimitToApproved(?bool $limitToApproved): void
     {
         $this->limitToApproved = $limitToApproved;
     }
@@ -686,7 +686,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the URL value of the feed's link field.
      */
-    public function setLinkUrl(?string $linkUrl)
+    public function setLinkUrl(?string $linkUrl): void
     {
         $this->linkUrl = $linkUrl;
     }
@@ -702,7 +702,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set whether this object currently allows updates.
      */
-    public function setLocked(?bool $locked)
+    public function setLocked(?bool $locked): void
     {
         $this->locked = $locked;
     }
@@ -722,7 +722,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the account that owns this object.
      */
-    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId)
+    public function setOwnerId(\Psr\Http\Message\UriInterface $ownerId): void
     {
         $this->ownerId = $ownerId;
     }
@@ -738,7 +738,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the globally-unique public identifier that is used to request this feed.
      */
-    public function setPid(?string $pid)
+    public function setPid(?string $pid): void
     {
         $this->pid = $pid;
     }
@@ -758,7 +758,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
      *
      * @param int[] $pinnedIds
      */
-    public function setPinnedIds(array $pinnedIds)
+    public function setPinnedIds(array $pinnedIds): void
     {
         $this->pinnedIds = $pinnedIds;
     }
@@ -774,7 +774,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the URL template that is used to create the value of each feed item's content.player.urlfield.
      */
-    public function setPlayerUrl(?string $playerUrl)
+    public function setPlayerUrl(?string $playerUrl): void
     {
         $this->playerUrl = $playerUrl;
     }
@@ -790,7 +790,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set whether to use the sortKeys to sort items in the feed when a Q query is included in the FeedConfig or the feed request.
      */
-    public function setPreferSortKeysOnSearch(?bool $preferSortKeysOnSearch)
+    public function setPreferSortKeysOnSearch(?bool $preferSortKeysOnSearch): void
     {
         $this->preferSortKeysOnSearch = $preferSortKeysOnSearch;
     }
@@ -806,7 +806,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the type of query engine used to retrieve the feed items.
      */
-    public function setQueryEngine(?string $queryEngine)
+    public function setQueryEngine(?string $queryEngine): void
     {
         $this->queryEngine = $queryEngine;
     }
@@ -822,7 +822,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the list of key-value URL parameters that are appended to the feed item's content.urlfield.
      */
-    public function setReleaseUrlParameters(?string $releaseUrlParameters)
+    public function setReleaseUrlParameters(?string $releaseUrlParameters): void
     {
         $this->releaseUrlParameters = $releaseUrlParameters;
     }
@@ -842,7 +842,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the Restriction that is applied to the feed.
      */
-    public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId)
+    public function setRestrictionId(\Psr\Http\Message\UriInterface $restrictionId): void
     {
         $this->restrictionId = $restrictionId;
     }
@@ -858,7 +858,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the object schema version of the feed items.
      */
-    public function setSchema(?string $schema)
+    public function setSchema(?string $schema): void
     {
         $this->schema = $schema;
     }
@@ -878,7 +878,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
      *
      * @param string[] $segmentQueries
      */
-    public function setSegmentQueries(array $segmentQueries)
+    public function setSegmentQueries(array $segmentQueries): void
     {
         $this->segmentQueries = $segmentQueries;
     }
@@ -898,7 +898,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
      *
      * @param SortKey[] $sortKeys
      */
-    public function setSortKeys(array $sortKeys)
+    public function setSortKeys(array $sortKeys): void
     {
         $this->sortKeys = $sortKeys;
     }
@@ -918,7 +918,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
      *
      * @param SubFeed[] $subFeeds
      */
-    public function setSubFeeds(array $subFeeds)
+    public function setSubFeeds(array $subFeeds): void
     {
         $this->subFeeds = $subFeeds;
     }
@@ -934,7 +934,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the query or key names used to select the thumbnail files for each item in the feed.
      */
-    public function setThumbnailFilter(?string $thumbnailFilter)
+    public function setThumbnailFilter(?string $thumbnailFilter): void
     {
         $this->thumbnailFilter = $thumbnailFilter;
     }
@@ -950,7 +950,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the title of the feed.
      */
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -970,7 +970,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the date and time this object was last modified.
      */
-    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated)
+    public function setUpdated(\Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface $updated): void
     {
         $this->updated = $updated;
     }
@@ -990,7 +990,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the id of the user that last modified this object.
      */
-    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(\Psr\Http\Message\UriInterface $updatedByUserId): void
     {
         $this->updatedByUserId = $updatedByUserId;
     }
@@ -1006,7 +1006,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set the type of URL that is returned in each feed item's content.urlfield.
      */
-    public function setUrlType(?string $urlType)
+    public function setUrlType(?string $urlType): void
     {
         $this->urlType = $urlType;
     }
@@ -1022,7 +1022,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set whether to include the feed-level elements and any feed-level custom fields in the feed header.
      */
-    public function setValidFeed(?bool $validFeed)
+    public function setValidFeed(?bool $validFeed): void
     {
         $this->validFeed = $validFeed;
     }
@@ -1038,7 +1038,7 @@ class FeedConfig extends ObjectBase implements PublicIdWithGuidInterface
     /**
      * Set this object's modification version, used for optimistic locking.
      */
-    public function setVersion(?int $version)
+    public function setVersion(?int $version): void
     {
         $this->version = $version;
     }

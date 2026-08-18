@@ -15,7 +15,7 @@ class TokenNotFoundExceptionTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         /** @var UserSession|\PHPUnit_Framework_MockObject_MockObject $userSession */
         $userSession = $this->getMockBuilder(UserSession::class)

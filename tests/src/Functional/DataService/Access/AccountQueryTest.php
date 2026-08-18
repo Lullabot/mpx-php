@@ -29,7 +29,7 @@ class AccountQueryTest extends FunctionalTestBase
     /**
      * Test loading two Account objects.
      */
-    public function testQueryAccount()
+    public function testQueryAccount(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $dof = new DataObjectFactory($manager->getDataService('Access Data Service', 'Account', '1.0'), $this->authenticatedClient);

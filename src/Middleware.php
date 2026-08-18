@@ -23,9 +23,9 @@ class Middleware
         // Guzzle's built-in middlewares also have this level of nested
         // functions, so we follow the same pattern even though it's difficult
         // to read.
-        return fn (callable $handler) => fn (RequestInterface $request, array $options) => // We only need to process after the request has been sent.
+        return static fn (callable $handler) => static fn (RequestInterface $request, array $options) => // We only need to process after the request has been sent.
 $handler($request, $options)->then(
-    function (ResponseInterface $response) use ($request) {
+    static function (ResponseInterface $response) use ($request) {
         // While it's not documented, we want to be sure that
         // any 4XX or 5XX errors that break through suppression
         // are still parsed. In other words, this handler should
@@ -37,7 +37,7 @@ $handler($request, $options)->then(
             return $response;
         }
 
-        $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
+        $data = json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR);
 
         // Notification responses have a different exception format.
         if (isset($data[0]) && isset($data[0]['type']) && 'Exception' == $data[0]['type']) {

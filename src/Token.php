@@ -86,7 +86,7 @@ class Token implements \Stringable
      *
      * @throws \InvalidArgumentException Thrown when $data is missing required data.
      */
-    private static function validateData(array $data)
+    private static function validateData(array $data): void
     {
         if (!isset($data['signInResponse'])) {
             throw new \InvalidArgumentException('signInResponse key is missing.');

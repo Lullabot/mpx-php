@@ -36,12 +36,12 @@ class ResolveAllUrlsResponse
     /**
      * @param UriInterface[] $resolvedAllUrls
      */
-    public function setResolveAllUrlsResponse(array $resolvedAllUrls)
+    public function setResolveAllUrlsResponse(array $resolvedAllUrls): void
     {
         $this->resolveAllUrlsResponse = $resolvedAllUrls;
     }
 
-    public function setService(string $service)
+    public function setService(string $service): void
     {
         $this->service = $service;
     }

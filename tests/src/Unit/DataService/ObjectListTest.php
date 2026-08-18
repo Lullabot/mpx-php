@@ -36,7 +36,7 @@ class ObjectListTest extends TestCase
      *
      * @dataProvider getSetData
      */
-    public function testGetSet($method, mixed $value)
+    public function testGetSet($method, mixed $value): void
     {
         $get = 'get'.ucfirst($method);
         $set = 'set'.ucfirst($method);
@@ -63,7 +63,7 @@ class ObjectListTest extends TestCase
     /**
      * Test calling getByFields when nothing is set.
      */
-    public function testGetByFieldsMissing()
+    public function testGetByFieldsMissing(): void
     {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('This object list does not have an ObjectListQuery set.');
@@ -73,7 +73,7 @@ class ObjectListTest extends TestCase
     /**
      * Test if a list has a next list.
      */
-    public function testHasNext()
+    public function testHasNext(): void
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(1);
@@ -93,7 +93,7 @@ class ObjectListTest extends TestCase
     /**
      * Test that a promise to a next list is returned.
      */
-    public function testNextList()
+    public function testNextList(): void
     {
         $this->assertFalse($this->list->nextList());
 
@@ -115,7 +115,7 @@ class ObjectListTest extends TestCase
     /**
      * Test that a single item list has no next list.
      */
-    public function testSingleItemList()
+    public function testSingleItemList(): void
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(1);
@@ -133,7 +133,7 @@ class ObjectListTest extends TestCase
     /**
      * Test that an exception is thrown if a DataObjectFactory is not set.
      */
-    public function testNextListNoDof()
+    public function testNextListNoDof(): void
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(30);
@@ -148,7 +148,7 @@ class ObjectListTest extends TestCase
     /**
      * Test an exception is thrown if the previous fields are not set.
      */
-    public function testNextListNoByFields()
+    public function testNextListNoByFields(): void
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(30);
@@ -168,7 +168,7 @@ class ObjectListTest extends TestCase
     /**
      * Test array access exists.
      */
-    public function testOffsetExists()
+    public function testOffsetExists(): void
     {
         $this->list->setEntries([new \stdClass()]);
         $this->assertTrue($this->list->offsetExists(0));
@@ -178,7 +178,7 @@ class ObjectListTest extends TestCase
     /**
      * Test fetching via array access.
      */
-    public function testOffsetGet()
+    public function testOffsetGet(): void
     {
         $class = new \stdClass();
         $this->list->setEntries([$class]);
@@ -188,7 +188,7 @@ class ObjectListTest extends TestCase
     /**
      * Test setting via array access.
      */
-    public function testOffsetSet()
+    public function testOffsetSet(): void
     {
         $class = new \stdClass();
         $this->list->offsetSet(1, $class);
@@ -198,7 +198,7 @@ class ObjectListTest extends TestCase
     /**
      * Test unsetting via array access.
      */
-    public function testOffsetUnset()
+    public function testOffsetUnset(): void
     {
         $class = new \stdClass();
         $this->list->offsetSet(1, $class);
@@ -209,7 +209,7 @@ class ObjectListTest extends TestCase
     /**
      * Test iterator implementations.
      */
-    public function testIterator()
+    public function testIterator(): void
     {
         $first = new \stdClass();
         $second = new \stdClass();
@@ -233,7 +233,7 @@ class ObjectListTest extends TestCase
     /**
      * Tests yielding lists.
      */
-    public function testYieldLists()
+    public function testYieldLists(): void
     {
         $this->list->setEntries([new \stdClass()]);
         $this->list->setStartIndex(30);
@@ -258,7 +258,7 @@ class ObjectListTest extends TestCase
     /**
      * Tests when no data object factory is set.
      */
-    public function testNoDataObjectFactory()
+    public function testNoDataObjectFactory(): void
     {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('setDataObjectFactory must be called before calling nextList.');
@@ -268,7 +268,7 @@ class ObjectListTest extends TestCase
     /**
      * Tests when no ObjectListQuery object is set.
      */
-    public function testNoByFields()
+    public function testNoByFields(): void
     {
         /** @var \Lullabot\Mpx\DataService\DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
@@ -282,7 +282,7 @@ class ObjectListTest extends TestCase
     /**
      * Test setting the JSON representation.
      */
-    public function testGetJson()
+    public function testGetJson(): void
     {
         $json = ['key' => 'value'];
         $this->list->setJson(json_encode($json));
@@ -292,7 +292,7 @@ class ObjectListTest extends TestCase
     /**
      * Test an exception is thrown when no JSON is available.
      */
-    public function testNoJson()
+    public function testNoJson(): void
     {
         $this->expectException(\LogicException::class);
         $this->list->getJson();

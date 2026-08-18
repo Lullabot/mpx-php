@@ -205,7 +205,7 @@ class Field extends ObjectBase
      * Set the date and time that this object was created
      *  This field is queryable on the following endpoints only:AssetType/Field Category/Field Media/Field MediaFile/Field Release/Field Server/Field.
      */
-    public function setAdded(DateTimeFormatInterface $added)
+    public function setAdded(DateTimeFormatInterface $added): void
     {
         $this->added = $added;
     }
@@ -225,7 +225,7 @@ class Field extends ObjectBase
     /**
      * Set the id of the user that created this object.
      */
-    public function setAddedByUserId(UriInterface $addedByUserId)
+    public function setAddedByUserId(UriInterface $addedByUserId): void
     {
         $this->addedByUserId = $addedByUserId;
     }
@@ -241,7 +241,7 @@ class Field extends ObjectBase
     /**
      * Set the allowed values for this custom field.
      */
-    public function setAllowedValues(array $allowedValues)
+    public function setAllowedValues(array $allowedValues): void
     {
         $this->allowedValues = $allowedValues;
     }
@@ -257,7 +257,7 @@ class Field extends ObjectBase
     /**
      * Set the data structure of this custom field.
      */
-    public function setDataStructure(?string $dataStructure)
+    public function setDataStructure(?string $dataStructure): void
     {
         $this->dataStructure = $dataStructure;
     }
@@ -273,7 +273,7 @@ class Field extends ObjectBase
     /**
      * Set the data type of this custom field.
      */
-    public function setDataType(?string $dataType)
+    public function setDataType(?string $dataType): void
     {
         $this->dataType = $dataType;
     }
@@ -289,7 +289,7 @@ class Field extends ObjectBase
     /**
      * Set the default value for this custom field.
      */
-    public function setDefaultValue(mixed $defaultValue)
+    public function setDefaultValue(mixed $defaultValue): void
     {
         $this->defaultValue = $defaultValue;
     }
@@ -305,7 +305,7 @@ class Field extends ObjectBase
     /**
      * Set the description of this object.
      */
-    public function setDescription(?string $description)
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -321,7 +321,7 @@ class Field extends ObjectBase
     /**
      * Set the node name for this custom field in XML and JSON.
      */
-    public function setFieldName(?string $fieldName)
+    public function setFieldName(?string $fieldName): void
     {
         $this->fieldName = $fieldName;
     }
@@ -337,7 +337,7 @@ class Field extends ObjectBase
     /**
      * Set an alternate identifier for this object that is unique within the owning account.
      */
-    public function setGuid(?string $guid)
+    public function setGuid(?string $guid): void
     {
         $this->guid = $guid;
     }
@@ -357,7 +357,7 @@ class Field extends ObjectBase
     /**
      * Set the globally unique URI of this object.
      */
-    public function setId(UriInterface $id)
+    public function setId(UriInterface $id): void
     {
         $this->id = $id;
     }
@@ -373,7 +373,7 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field is indexed for search.
      */
-    public function setIncludeInTextSearch(?bool $includeInTextSearch)
+    public function setIncludeInTextSearch(?bool $includeInTextSearch): void
     {
         $this->includeInTextSearch = $includeInTextSearch;
     }
@@ -389,7 +389,7 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field stores unique values and functions as a create key.
      */
-    public function setIsUnique(?bool $isUnique)
+    public function setIsUnique(?bool $isUnique): void
     {
         $this->isUnique = $isUnique;
     }
@@ -405,7 +405,7 @@ class Field extends ObjectBase
     /**
      * Set the maximum string length or the number of decimal positions allowed in this custom field's value.
      */
-    public function setLength(?int $length)
+    public function setLength(?int $length): void
     {
         $this->length = $length;
     }
@@ -421,7 +421,7 @@ class Field extends ObjectBase
     /**
      * Set whether this object currently allows updates.
      */
-    public function setLocked(?bool $locked)
+    public function setLocked(?bool $locked): void
     {
         $this->locked = $locked;
     }
@@ -439,7 +439,7 @@ class Field extends ObjectBase
      *
      * @param UriInterface
      */
-    public function setNamespace(UriInterface $namespace)
+    public function setNamespace(UriInterface $namespace): void
     {
         $this->namespace = $namespace;
     }
@@ -455,7 +455,7 @@ class Field extends ObjectBase
     /**
      * Set an XML namespace prefix for this field.
      */
-    public function setNamespacePrefix(?string $namespacePrefix)
+    public function setNamespacePrefix(?string $namespacePrefix): void
     {
         $this->namespacePrefix = $namespacePrefix;
     }
@@ -471,7 +471,7 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field is always available in change notifications.
      */
-    public function setNotifyAlways(?bool $notifyAlways)
+    public function setNotifyAlways(?bool $notifyAlways): void
     {
         $this->notifyAlways = $notifyAlways;
     }
@@ -487,7 +487,7 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field is available on change in update notifications.
      */
-    public function setNotifyChanges(?bool $notifyChanges)
+    public function setNotifyChanges(?bool $notifyChanges): void
     {
         $this->notifyChanges = $notifyChanges;
     }
@@ -503,7 +503,7 @@ class Field extends ObjectBase
     /**
      * Set whether this custom field is available in delete notifications.
      */
-    public function setNotifyDelete(?bool $notifyDelete)
+    public function setNotifyDelete(?bool $notifyDelete): void
     {
         $this->notifyDelete = $notifyDelete;
     }
@@ -523,7 +523,7 @@ class Field extends ObjectBase
     /**
      * Set the id of the account that owns this object.
      */
-    public function setOwnerId(UriInterface $ownerId)
+    public function setOwnerId(UriInterface $ownerId): void
     {
         $this->ownerId = $ownerId;
     }
@@ -539,7 +539,7 @@ class Field extends ObjectBase
     /**
      * Set the name that this custom field is indexed under.
      */
-    public function setSearchFieldName(?string $searchFieldName)
+    public function setSearchFieldName(?string $searchFieldName): void
     {
         $this->searchFieldName = $searchFieldName;
     }
@@ -555,7 +555,7 @@ class Field extends ObjectBase
     /**
      * Set the name of this object.
      */
-    public function setTitle(?string $title)
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -575,7 +575,7 @@ class Field extends ObjectBase
     /**
      * Set the date and time this object was last modified.
      */
-    public function setUpdated(DateTimeFormatInterface $updated)
+    public function setUpdated(DateTimeFormatInterface $updated): void
     {
         $this->updated = $updated;
     }
@@ -595,7 +595,7 @@ class Field extends ObjectBase
     /**
      * Set the id of the user that last modified this object.
      */
-    public function setUpdatedByUserId(UriInterface $updatedByUserId)
+    public function setUpdatedByUserId(UriInterface $updatedByUserId): void
     {
         $this->updatedByUserId = $updatedByUserId;
     }
@@ -611,7 +611,7 @@ class Field extends ObjectBase
     /**
      * Set this object's modification version, used for optimistic locking.
      */
-    public function setVersion(?int $version)
+    public function setVersion(?int $version): void
     {
         $this->version = $version;
     }

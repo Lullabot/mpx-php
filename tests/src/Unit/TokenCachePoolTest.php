@@ -42,7 +42,7 @@ class TokenCachePoolTest extends TestCase
      * @covers ::getToken
      * @covers ::cacheKey
      */
-    public function testGetSetToken()
+    public function testGetSetToken(): void
     {
         $cache = new TokenCachePool(new ArrayCachePool());
         $cache->setToken($this->user, $this->token);
@@ -55,7 +55,7 @@ class TokenCachePoolTest extends TestCase
      * @covers ::setToken
      * @covers ::getToken
      */
-    public function testExpiresToken()
+    public function testExpiresToken(): void
     {
         $token = new Token('https://example.com/idm/data/User/mpx/123456', 'value', 1);
         $cache = new TokenCachePool(new ArrayCachePool());
@@ -72,7 +72,7 @@ class TokenCachePoolTest extends TestCase
      * @covers ::getToken
      * @covers ::cacheKey
      */
-    public function testDeleteToken()
+    public function testDeleteToken(): void
     {
         $cache = new TokenCachePool(new ArrayCachePool());
         $cache->setToken($this->user, $this->token);

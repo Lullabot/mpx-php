@@ -5,11 +5,16 @@ namespace Lullabot\Mpx\Tests\Unit\Service\IdentityManagement;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Exception\ClientException;
+use Lullabot\Mpx\Exception\TokenNotFoundException;
+use Lullabot\Mpx\Service\IdentityManagement\ServiceTokenFlow;
+use Lullabot\Mpx\Service\IdentityManagement\ServiceUser;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
+use Lullabot\Mpx\Token;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -30,12 +35,11 @@ class UserSessionTest extends TestCase
      * @covers ::__construct
      * @covers ::acquireToken
      * @covers ::signIn
-     * @covers ::signInOptions
      * @covers ::signInWithLock
-     * @covers ::tokenFromResponse
      * @covers ::signOut
+     * @covers ::getFlow
      */
-    public function testAcquireToken()
+    public function testAcquireToken(): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -52,7 +56,7 @@ class UserSessionTest extends TestCase
         $logger = $this->fetchTokenLogger(1);
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $token = $userSession->acquireToken();
         $this->assertEquals($token, $tokenCachePool->getToken($userSession));
@@ -66,7 +70,7 @@ class UserSessionTest extends TestCase
      * @covers ::signIn
      * @covers ::signInWithLock
      */
-    public function testAcquireTokenFailure()
+    public function testAcquireTokenFailure(): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-fail.json'),
@@ -86,7 +90,7 @@ class UserSessionTest extends TestCase
             ->withConsecutive(['Successfully acquired the "{resource}" lock.']);
 
         $user = new User('mpx/USER-NAME', 'incorrect-password');
-        $userSession = new UserSession($user, $client, $store, new TokenCachePool(new ArrayCachePool()));
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, new TokenCachePool(new ArrayCachePool()));
         $userSession->setLogger($logger);
         $this->expectException(ClientException::class);
         $this->expectExceptionMessage("Error com.theplatform.authentication.api.exception.AuthenticationException: Either 'mpx/USER-NAME' does not have an account with this site, or the password was incorrect.");
@@ -99,7 +103,7 @@ class UserSessionTest extends TestCase
      *
      * @covers ::acquireToken
      */
-    public function testAcquireReset()
+    public function testAcquireReset(): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -126,7 +130,7 @@ class UserSessionTest extends TestCase
                 ['Retrieved a new mpx token {token} for user {username} that expires on {date}.']);
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $first_token = $userSession->acquireToken();
         $this->assertEquals($first_token, $tokenCachePool->getToken($userSession));
@@ -140,7 +144,7 @@ class UserSessionTest extends TestCase
      *
      * @covers ::signInWithLock
      */
-    public function testConcurrentSignInFails()
+    public function testConcurrentSignInFails(): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -156,10 +160,57 @@ class UserSessionTest extends TestCase
         $logger = new NullLogger();
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $userSession->setLogger($logger);
         $this->expectException(LockConflictedException::class);
         $userSession->acquireToken();
+    }
+
+    /**
+     * Test that sessions sign in against the identity management service by default.
+     *
+     * @covers ::__construct
+     * @covers ::getFlow
+     */
+    public function testDefaultFlow(): void
+    {
+        $session = new UserSession(new User('mpx/USER-NAME', 'correct-password'), $this->getMockClient(), new SignInFlow());
+
+        $this->assertInstanceOf(SignInFlow::class, $session->getFlow());
+    }
+
+    /**
+     * Test that an explicit flow overrides the default.
+     *
+     * @covers ::__construct
+     * @covers ::getFlow
+     */
+    public function testExplicitFlow(): void
+    {
+        $flow = new ServiceTokenFlow();
+        $session = new UserSession(new ServiceUser('CLIENT-ID', 'CLIENT-SECRET'), $this->getMockClient(), $flow);
+
+        $this->assertSame($flow, $session->getFlow());
+    }
+
+    /**
+     * Test that the two flows never share a cached token.
+     *
+     * @covers ::__construct
+     */
+    public function testFlowsDoNotShareCachedTokens(): void
+    {
+        $client = $this->getMockClient();
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+
+        // Identical credentials, but authenticated two different ways.
+        $signIn = new UserSession(new User('mpx/USER-NAME', 'password'), $client, new SignInFlow(), null, $tokenCachePool);
+        $service = new UserSession(new ServiceUser('mpx/USER-NAME', 'password'), $client, new ServiceTokenFlow(), null, $tokenCachePool);
+
+        $tokenCachePool->setToken($signIn, new Token('http://example.com/User/1', 'TOKEN-VALUE', 3600));
+
+        $this->expectException(TokenNotFoundException::class);
+        $tokenCachePool->getToken($service);
     }
 
     /**

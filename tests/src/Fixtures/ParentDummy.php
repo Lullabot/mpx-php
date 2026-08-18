@@ -59,11 +59,11 @@ class ParentDummy
     /**
      * @param resource $e
      */
-    public function addE($e)
+    public function addE($e): void
     {
     }
 
-    public function removeF(\DateTime $f)
+    public function removeF(\DateTime $f): void
     {
     }
 }

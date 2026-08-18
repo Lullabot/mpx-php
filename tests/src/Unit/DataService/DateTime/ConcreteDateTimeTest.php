@@ -13,7 +13,7 @@ class ConcreteDateTimeTest extends TestCase
     /**
      * @covers ::fromString
      */
-    public function testFromString()
+    public function testFromString(): void
     {
         $date = ConcreteDateTime::fromString('now');
         $this->assertInstanceOf(\DateTime::class, $date->getDateTime());
@@ -23,7 +23,7 @@ class ConcreteDateTimeTest extends TestCase
      * @covers ::__construct
      * @covers ::format
      */
-    public function testFormat()
+    public function testFormat(): void
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|\DateTime $dateTime */
         $dateTime = $this->createMock(\DateTime::class);
@@ -37,7 +37,7 @@ class ConcreteDateTimeTest extends TestCase
     /**
      * @covers ::getDateTime
      */
-    public function testGetDateTime()
+    public function testGetDateTime(): void
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|\DateTime $dateTime */
         $dateTime = new \DateTime();

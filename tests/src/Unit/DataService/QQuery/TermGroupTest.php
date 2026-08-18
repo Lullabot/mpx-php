@@ -13,14 +13,14 @@ use PHPUnit\Framework\TestCase;
  */
 class TermGroupTest extends TestCase
 {
-    public function testToString()
+    public function testToString(): void
     {
         $term = new Term('value');
         $group = new TermGroup($term);
         $this->assertEquals('"value"', (string) $group);
     }
 
-    public function testAndTerm()
+    public function testAndTerm(): void
     {
         $term = new Term('value');
         $group = new TermGroup($term);
@@ -28,7 +28,7 @@ class TermGroupTest extends TestCase
         $this->assertEquals('"value" AND "value2"', (string) $group);
     }
 
-    public function testOrTerm()
+    public function testOrTerm(): void
     {
         $term = new Term('value');
         $group = new TermGroup($term);
@@ -36,7 +36,7 @@ class TermGroupTest extends TestCase
         $this->assertEquals('"value" OR "value2"', (string) $group);
     }
 
-    public function testWrap()
+    public function testWrap(): void
     {
         $term = new Term('value');
         $group = new TermGroup($term);
@@ -45,7 +45,7 @@ class TermGroupTest extends TestCase
         $this->assertEquals('("value" OR "value2")', (string) $group);
     }
 
-    public function testSubWrap()
+    public function testSubWrap(): void
     {
         $andGroup = new TermGroup(new Term('value2'));
         $andGroup->and(new Term('value3'))

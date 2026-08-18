@@ -46,7 +46,7 @@ class DataServiceExtractor extends CachingPhpDocExtractor
      *
      * @param string $class The class being extracted.
      */
-    public function setClass(string $class)
+    public function setClass(string $class): void
     {
         $this->class = $class;
     }
@@ -56,7 +56,7 @@ class DataServiceExtractor extends CachingPhpDocExtractor
      *
      * @param DiscoveredCustomField[] $customFields The array of custom field namespaces to use for extracting property info.
      */
-    public function setCustomFields(array $customFields)
+    public function setCustomFields(array $customFields): void
     {
         $this->customFields = $customFields;
     }
@@ -64,7 +64,7 @@ class DataServiceExtractor extends CachingPhpDocExtractor
     /**
      * Set the array of namespace mappings.
      */
-    public function setNamespaceMapping(array $xmlns)
+    public function setNamespaceMapping(array $xmlns): void
     {
         $this->xmlns = $xmlns;
     }

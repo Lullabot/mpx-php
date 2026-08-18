@@ -11,14 +11,14 @@ use PHPUnit\Framework\TestCase;
  */
 class ResolveAllUrlsResponseTest extends TestCase
 {
-    public function testGetService()
+    public function testGetService(): void
     {
         $response = new ResolveAllUrlsResponse();
         $response->setService('Kitten Data Service');
         $this->assertEquals('Kitten Data Service', $response->getService());
     }
 
-    public function testResolve()
+    public function testResolve(): void
     {
         $response = new ResolveAllUrlsResponse();
         $response->setResolveAllUrlsResponse([

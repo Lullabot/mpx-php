@@ -16,7 +16,7 @@ class RangeTest extends TestCase
      *
      * @covers ::nextRange
      */
-    public function testNextRange()
+    public function testNextRange(): void
     {
         $list = new ObjectList();
         $start = random_int(1, mt_getrandmax());
@@ -36,7 +36,7 @@ class RangeTest extends TestCase
      * @covers ::setEndIndex
      * @covers ::toQueryParts
      */
-    public function testToQueryParts()
+    public function testToQueryParts(): void
     {
         $range = new Range();
         $start = random_int(1, mt_getrandmax());
@@ -50,7 +50,7 @@ class RangeTest extends TestCase
     /**
      * @covers ::toQueryParts
      */
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $range = new Range();
         $this->assertEquals([], $range->toQueryParts());
@@ -59,7 +59,7 @@ class RangeTest extends TestCase
     /**
      * @covers ::setStartIndex
      */
-    public function testBadStartIndex()
+    public function testBadStartIndex(): void
     {
         $range = new Range();
         $this->expectException(\RangeException::class);
@@ -70,7 +70,7 @@ class RangeTest extends TestCase
     /**
      * @covers ::setEndIndex
      */
-    public function testBadEndIndex()
+    public function testBadEndIndex(): void
     {
         $range = new Range();
         $this->expectException(\RangeException::class);
@@ -83,7 +83,7 @@ class RangeTest extends TestCase
      *
      * @covers ::nextRanges
      */
-    public function testNextRanges()
+    public function testNextRanges(): void
     {
         $list = new ObjectList();
         $start = random_int(1, mt_getrandmax());
@@ -109,7 +109,7 @@ class RangeTest extends TestCase
      *
      * @covers ::nextRanges
      */
-    public function testPartialEndRange()
+    public function testPartialEndRange(): void
     {
         $list = new ObjectList();
         $list->setStartIndex(1);
@@ -127,7 +127,7 @@ class RangeTest extends TestCase
      *
      * @covers ::nextRanges
      */
-    public function testNextOnLastRange()
+    public function testNextOnLastRange(): void
     {
         $list = new ObjectList();
         $list->setStartIndex(11);

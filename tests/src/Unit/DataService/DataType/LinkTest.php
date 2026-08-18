@@ -19,7 +19,7 @@ class LinkTest extends TestCase
      *
      * @dataProvider getSetMethodDataProvider
      */
-    public function testGetSet($property, $value)
+    public function testGetSet($property, $value): void
     {
         $get = 'get'.ucfirst($property);
         $set = 'set'.ucfirst($property);
@@ -28,7 +28,7 @@ class LinkTest extends TestCase
         $this->assertSame($value, $link->$get());
     }
 
-    public function testOptionalAnchorHref()
+    public function testOptionalAnchorHref(): void
     {
         $link = new Link();
         $this->assertEmpty((string) $link->getHref());

@@ -18,7 +18,7 @@ class UnixMillisecondNormalizerTest extends TestCase
      *
      * @covers ::denormalize
      */
-    public function testDenormalize()
+    public function testDenormalize(): void
     {
         $normalizer = new UnixMillisecondNormalizer();
         $normalized = $normalizer->denormalize(0, \DateTime::class);
@@ -32,7 +32,7 @@ class UnixMillisecondNormalizerTest extends TestCase
      *
      * @covers ::denormalize
      */
-    public function testInvalidData()
+    public function testInvalidData(): void
     {
         $normalizer = new UnixMillisecondNormalizer();
         $this->expectException(NotNormalizableValueException::class);

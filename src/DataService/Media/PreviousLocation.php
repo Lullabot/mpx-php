@@ -43,7 +43,7 @@ class PreviousLocation
     /**
      * Set the MediaFile filePath value at the time moveFile was called.
      */
-    public function setFilePath(?string $filePath)
+    public function setFilePath(?string $filePath): void
     {
         $this->filePath = $filePath;
     }
@@ -63,7 +63,7 @@ class PreviousLocation
     /**
      * Set the MediaFile serverId value at the time moveFile was called.
      */
-    public function setServerId(\Psr\Http\Message\UriInterface $serverId)
+    public function setServerId(\Psr\Http\Message\UriInterface $serverId): void
     {
         $this->serverId = $serverId;
     }
@@ -79,7 +79,7 @@ class PreviousLocation
     /**
      * Set the MediaFile version value at the time moveFile was called.
      */
-    public function setVersion(?int $version)
+    public function setVersion(?int $version): void
     {
         $this->version = $version;
     }

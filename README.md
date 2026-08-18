@@ -53,6 +53,7 @@ use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Client;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\TokenCachePool;
@@ -67,9 +68,11 @@ $client = new Client(new \GuzzleHttp\Client($defaults));
 
 // Replace your username and password here. The username must begin with `mpx/`.
 $user = new User('mpx/YOU@EXAMPLE.COM', 'secret');
+// SignInFlow authenticates against the identity management service. Use
+// ServiceTokenFlow with a ServiceUser for CTS/CVP service credentials.
 // The optional lock and cache storage parameters are highly recommended for
 // applications with multiple threads or requests.
-$session = new UserSession($user, $client);
+$session = new UserSession($user, $client, new SignInFlow());
 
 // This registers the annotation loader.
 $dataServiceManager = DataServiceManager::basicDiscovery();

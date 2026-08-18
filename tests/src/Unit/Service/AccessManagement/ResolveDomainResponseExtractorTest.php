@@ -18,7 +18,7 @@ class ResolveDomainResponseExtractorTest extends TestCase
     /**
      * @covers ::getTypes
      */
-    public function testGetTypes()
+    public function testGetTypes(): void
     {
         $extractor = new ResolveDomainResponseExtractor();
         $types = $extractor->getTypes(ResolveDomainResponse::class, 'resolveDomainResponse');
@@ -34,7 +34,7 @@ class ResolveDomainResponseExtractorTest extends TestCase
     /**
      * @covers ::getTypes
      */
-    public function testInvalidProperty()
+    public function testInvalidProperty(): void
     {
         $extractor = new ResolveDomainResponseExtractor();
         $this->expectException(\InvalidArgumentException::class);

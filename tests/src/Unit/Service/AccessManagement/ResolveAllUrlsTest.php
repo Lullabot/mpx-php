@@ -6,6 +6,7 @@ use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrls;
 use Lullabot\Mpx\Service\AccessManagement\ResolveAllUrlsResponse;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
@@ -32,7 +33,7 @@ class ResolveAllUrlsTest extends TestCase
      * @covers ::cacheKey
      * @covers \Lullabot\Mpx\Service\AccessManagement\ResolveBase::saveCache
      */
-    public function testLoad()
+    public function testLoad(): void
     {
         $client = $this->getMockClient([
             new JsonResponse(200, [], 'signin-success.json'),
@@ -46,7 +47,7 @@ class ResolveAllUrlsTest extends TestCase
             ->method('exists')
             ->willReturn(false);
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $session = new AuthenticatedClient($client, $userSession);
 
         $cache = $this->getMockBuilder(ArrayCachePool::class)
@@ -74,7 +75,7 @@ class ResolveAllUrlsTest extends TestCase
      * @covers ::resolve
      * @covers ::cacheKey
      */
-    public function testLoadCached()
+    public function testLoadCached(): void
     {
         $client = $this->getMockClient();
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
@@ -83,7 +84,7 @@ class ResolveAllUrlsTest extends TestCase
             ->getMock();
 
         $user = new User('mpx/USER-NAME', 'correct-password');
-        $userSession = new UserSession($user, $client, $store, $tokenCachePool);
+        $userSession = new UserSession($user, $client, new SignInFlow(), $store, $tokenCachePool);
         $session = new AuthenticatedClient($client, $userSession);
 
         $cache = $this->getMockBuilder(CacheItemPoolInterface::class)

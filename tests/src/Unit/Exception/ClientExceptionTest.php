@@ -15,7 +15,7 @@ class ClientExceptionTest extends TestCase
      * @covers \Lullabot\Mpx\Exception\ClientException::__construct
      * @covers \Lullabot\Mpx\Exception\MpxExceptionTrait::parseResponse
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         /** @var \GuzzleHttp\Psr7\Request $request */
         $request = $this->getMockBuilder(Request::class)

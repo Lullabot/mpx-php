@@ -17,7 +17,7 @@ class TokenTest extends TestCase
      * @covers ::getLifetime
      * @covers ::getExpiration
      */
-    public function testToken()
+    public function testToken(): void
     {
         $time = time();
         $token = new Token('https://example.com/idm/data/User/mpx/123456', 'value', 30);
@@ -31,7 +31,7 @@ class TokenTest extends TestCase
      * @covers ::__construct
      * @covers ::isValid
      */
-    public function testTokenExpiration()
+    public function testTokenExpiration(): void
     {
         // We use a serialized token as a fixture as we don't allow constructing
         // of expired tokens.
@@ -57,7 +57,7 @@ class TokenTest extends TestCase
      *
      * @covers ::__construct
      */
-    public function testInvalidExpiration()
+    public function testInvalidExpiration(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('$lifetime must be greater than zero.');
@@ -70,7 +70,7 @@ class TokenTest extends TestCase
      * @covers ::__construct
      * @covers ::getUserId
      */
-    public function testGetUserId()
+    public function testGetUserId(): void
     {
         $userId = 'https://identity.auth.theplatform.com/idm/data/User/mpx/2685072';
         $token = new Token($userId, 'value', 59);
@@ -82,7 +82,7 @@ class TokenTest extends TestCase
      *
      * @covers ::getCreated
      */
-    public function testCreated()
+    public function testCreated(): void
     {
         $token = new Token('https://identity.auth.theplatform.com/idm/data/User/mpx/2685072', 'value', 59);
         $this->assertIsInt($token->getCreated());
@@ -94,7 +94,7 @@ class TokenTest extends TestCase
      * @covers ::fromResponseData
      * @covers ::validateData
      */
-    public function testFromResponseData()
+    public function testFromResponseData(): void
     {
         $data = json_decode(file_get_contents(__DIR__.'/../../fixtures/signin-success.json'), true, 512, \JSON_THROW_ON_ERROR);
         $token = Token::fromResponseData($data);
@@ -109,7 +109,7 @@ class TokenTest extends TestCase
      * @covers ::fromResponseData
      * @covers ::validateData
      */
-    public function testValidateDataNoRoot()
+    public function testValidateDataNoRoot(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('signInResponse key is missing.');
@@ -123,7 +123,7 @@ class TokenTest extends TestCase
      *
      * @covers ::validateData
      */
-    public function testInvalidResponseData($data, $key)
+    public function testInvalidResponseData($data, $key): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(\sprintf('Required key %s is missing.', $key));
@@ -142,7 +142,7 @@ class TokenTest extends TestCase
             'idleTimeout' => 456,
             'token' => 'token-value',
         ];
-        $data = array_map(function ($value) use (&$required) {
+        $data = array_map(static function ($value) use (&$required) {
             $key = array_key_last($required);
             array_pop($required);
 

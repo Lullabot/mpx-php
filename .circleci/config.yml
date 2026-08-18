@@ -78,13 +78,13 @@ test_and_cover: &test_and_cover
       - run: composer update -n --prefer-dist
 
       - run: |
-          [ -f /usr/local/lib/php/extensions/no-debug-non-zts-20170718/xdebug.so ] || sudo pecl install xdebug
+          [ -f /usr/local/lib/php/extensions/no-debug-non-zts-20230831/xdebug.so ] || sudo pecl install xdebug
           echo 'xdebug.mode=coverage' | sudo tee --append /etc/php.d/circleci.ini
 
       - save_cache:
           paths:
             - $HOME/.composer/cache/files
-            - /usr/local/lib/php/extensions/no-debug-non-zts-20170718
+            - /usr/local/lib/php/extensions/no-debug-non-zts-20230831
             - /usr/local/etc/php/conf.d/xdebug.ini
 
           key: v2-test-cover-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "composer.json" }}-{{ checksum ".circleci/config.yml" }}
@@ -141,9 +141,9 @@ code_fixer: &code_fixer
       - run: vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --using-cache=no --path-mode=intersection -- src tests
 
 jobs:
-  build_php81:
+  build_php83:
     docker:
-      - image: cimg/php:8.1
+      - image: cimg/php:8.3
 
     working_directory: ~/repo
 
@@ -151,7 +151,7 @@ jobs:
 
   code_fixer:
     docker:
-      - image: cimg/php:8.1
+      - image: cimg/php:8.3
 
     working_directory: ~/repo
 
@@ -163,7 +163,7 @@ workflows:
   # Declare a workflow that runs all of our jobs in parallel.
   test_cover_workflow:
     jobs:
-      - build_php81
+      - build_php83
       - code_fixer
 
   nightly:
@@ -176,5 +176,5 @@ workflows:
               only:
                 - main
     jobs:
-      - build_php81
+      - build_php83
       - code_fixer

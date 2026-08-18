@@ -45,7 +45,7 @@ class PlugInInstance
      *
      * @param string[] $params
      */
-    public function setParams(array $params)
+    public function setParams(array $params): void
     {
         $this->params = $params;
     }
@@ -61,7 +61,7 @@ class PlugInInstance
     /**
      * Set the unique identifier for the plug-in.
      */
-    public function setPlugInId(\Psr\Http\Message\UriInterface $plugInId)
+    public function setPlugInId(\Psr\Http\Message\UriInterface $plugInId): void
     {
         $this->plugInId = $plugInId;
     }
@@ -77,7 +77,7 @@ class PlugInInstance
     /**
      * Set the identifier for the region that hosts the component that will load the plug-in.
      */
-    public function setRegionName(string $regionName)
+    public function setRegionName(string $regionName): void
     {
         $this->regionName = $regionName;
     }

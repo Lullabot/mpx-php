@@ -14,7 +14,7 @@ class DataServiceTest extends TestCase
     /**
      * @dataProvider getSetDataProvider
      */
-    public function testGetSet($property, $get, $value, $return)
+    public function testGetSet($property, $get, $value, $return): void
     {
         $annotation = new DataService();
         $annotation->$property = $value;
@@ -34,7 +34,7 @@ class DataServiceTest extends TestCase
         ];
     }
 
-    public function testGetFieldDataService()
+    public function testGetFieldDataService(): void
     {
         $annotation = new DataService();
         $annotation->service = 'Access Data Service';

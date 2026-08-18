@@ -23,16 +23,6 @@ class UserSession
     use LoggerAwareTrait;
 
     /**
-     * The URL to sign in a user.
-     */
-    final public const SIGN_IN_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signIn';
-
-    /**
-     * The URL to sign out a given token for a user.
-     */
-    final public const SIGN_OUT_URL = 'https://identity.auth.theplatform.com/idm/web/Authentication/signOut';
-
-    /**
      * @var \Lullabot\Mpx\Client
      */
     protected $client;
@@ -59,20 +49,31 @@ class UserSession
     protected $user;
 
     /**
+     * The flow used to acquire and send authentication tokens.
+     *
+     * @var \Lullabot\Mpx\Service\IdentityManagement\AuthenticationFlowInterface
+     */
+    protected $flow;
+
+    /**
      * Construct a new mpx user.
      *
      * @param UserInterface                 $user           The user to authenticate as.
      * @param Client                        $client         The client used to access mpx.
+     * @param AuthenticationFlowInterface   $flow           How this user authenticates. Pass a SignInFlow for the
+     *                                                      identity management service, or a ServiceTokenFlow for
+     *                                                      CTS/CVP service credentials.
      * @param PersistingStoreInterface|null $store          (optional) The lock backend to store locks in.
      * @param TokenCachePool|null           $tokenCachePool (optional) The cache of authentication tokens.
      *
      * @see NullLogger To disable logging of token requests.
      */
-    public function __construct(UserInterface $user, Client $client, ?PersistingStoreInterface $store = null, ?TokenCachePool $tokenCachePool = null)
+    public function __construct(UserInterface $user, Client $client, AuthenticationFlowInterface $flow, ?PersistingStoreInterface $store = null, ?TokenCachePool $tokenCachePool = null)
     {
         $this->user = $user;
         $this->client = $client;
         $this->store = $store;
+        $this->flow = $flow;
         if (!$tokenCachePool) {
             $tokenCachePool = new TokenCachePool(new ArrayCachePool());
         }
@@ -117,22 +118,16 @@ class UserSession
      */
     protected function signIn($duration = null): Token
     {
-        $options = $this->signInOptions($duration);
+        $token = $this->flow->acquire($this->user, $this->client, $duration);
 
-        $response = $this->client->request(
-            'GET',
-            self::SIGN_IN_URL,
-            $options
-        );
+        // Save the token to the cache before returning it.
+        $this->tokenCachePool->setToken($this, $token);
 
-        $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
-
-        $token = $this->tokenFromResponse($data);
         $this->logger->info(
             'Retrieved a new mpx token {token} for user {username} that expires on {date}.',
             [
                 'token' => $token->getValue(),
-                'username' => $this->user->getMpxUsername(),
+                'username' => $this->flow->identifier($this->user),
                 'date' => date(\DATE_ISO8601, $token->getExpiration()),
             ]
         );
@@ -143,21 +138,9 @@ class UserSession
     /**
      * Sign out the user.
      */
-    public function signOut()
+    public function signOut(): void
     {
-        // @todo Handle that the token may be expired.
-        // @todo Handle and log that mpx may error on the signout.
-        $this->client->request(
-            'GET',
-            self::SIGN_OUT_URL,
-            [
-                'query' => [
-                    'schema' => '1.0',
-                    'form' => 'json',
-                    '_token' => (string) $this->tokenCachePool->getToken($this),
-                ],
-            ]
-        );
+        $this->flow->revoke($this->tokenCachePool->getToken($this), $this->client);
 
         $this->tokenCachePool->deleteToken($this);
     }
@@ -174,7 +157,7 @@ class UserSession
         if ($this->store) {
             $factory = new LockFactory($this->store);
             $factory->setLogger($this->logger);
-            $lock = $factory->createLock($this->user->getMpxUsername(), 10);
+            $lock = $factory->createLock($this->flow->identifier($this->user), 10);
 
             // Blocking means this will throw an exception on failure.
             $lock->acquire(true);
@@ -192,58 +175,18 @@ class UserSession
     }
 
     /**
-     * Instantiate and cache a token.
-     *
-     * @param array $data The mpx signIn() response data.
-     *
-     * @return Token The new token.
-     */
-    private function tokenFromResponse(array $data): Token
-    {
-        $token = Token::fromResponseData($data);
-        // Save the token to the cache and return it.
-        $this->tokenCachePool->setToken($this, $token);
-
-        return $token;
-    }
-
-    /**
-     * Return the query parameters for signing in.
-     *
-     * @param int $duration The duration to sign in for.
-     *
-     * @return array An array of query parameters.
-     */
-    private function signInOptions($duration = null): array
-    {
-        $options = [];
-        $options['auth'] = [
-            $this->user->getMpxUsername(),
-            $this->user->getMpxPassword(),
-        ];
-
-        // @todo Make this a class constant.
-        $options['query'] = [
-            'schema' => '1.0',
-            'form' => 'json',
-        ];
-
-        // @todo move these to POST.
-        // https://docs.theplatform.com/help/wsf-signin-method#signInmethod-JSONPOSTexample
-        if (!empty($duration)) {
-            // API expects this value in milliseconds, not seconds.
-            $options['query']['_duration'] = $duration * 1000;
-            $options['query']['_idleTimeout'] = $duration * 1000;
-        }
-
-        return $options;
-    }
-
-    /**
      * Return the user associated with this session.
      */
     public function getUser(): UserInterface
     {
         return $this->user;
+    }
+
+    /**
+     * Return the authentication flow associated with this session.
+     */
+    public function getFlow(): AuthenticationFlowInterface
+    {
+        return $this->flow;
     }
 }

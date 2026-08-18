@@ -41,7 +41,7 @@ class Rating
     /**
      * Set the content's rating.
      */
-    public function setRating(?string $rating)
+    public function setRating(?string $rating): void
     {
         $this->rating = $rating;
     }
@@ -57,7 +57,7 @@ class Rating
     /**
      * Set the URI of a rating scheme.
      */
-    public function setScheme(?string $scheme)
+    public function setScheme(?string $scheme): void
     {
         $this->scheme = $scheme;
     }
@@ -77,7 +77,7 @@ class Rating
      *
      * @param string[] $subRatings
      */
-    public function setSubRatings(array $subRatings)
+    public function setSubRatings(array $subRatings): void
     {
         $this->subRatings = $subRatings;
     }

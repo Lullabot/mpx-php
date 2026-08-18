@@ -20,7 +20,7 @@ class MiddlewareTest extends TestCase
      *
      * @covers ::mpxErrors
      */
-    public function testMpxEmptyContentType()
+    public function testMpxEmptyContentType(): void
     {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
@@ -36,7 +36,7 @@ class MiddlewareTest extends TestCase
      *
      * @covers ::mpxErrors
      */
-    public function testNoResponseData()
+    public function testNoResponseData(): void
     {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
@@ -56,7 +56,7 @@ class MiddlewareTest extends TestCase
      *
      * @covers ::mpxErrors
      */
-    public function testExceptionThrown()
+    public function testExceptionThrown(): void
     {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
@@ -78,7 +78,7 @@ class MiddlewareTest extends TestCase
      *
      * @covers ::mpxErrors
      */
-    public function testNotificationException()
+    public function testNotificationException(): void
     {
         /** @var \Psr\Http\Message\RequestInterface $request */
         $request = $this->getMockBuilder(RequestInterface::class)
@@ -107,7 +107,7 @@ class MiddlewareTest extends TestCase
      */
     private function getResponse(RequestInterface $request, ResponseInterface $response, callable $errorHandler)
     {
-        $handler = fn (RequestInterface $request, array $options) => new FulfilledPromise($response);
+        $handler = static fn (RequestInterface $request, array $options) => new FulfilledPromise($response);
         $fn = $errorHandler($handler);
 
         /** @var \GuzzleHttp\Promise\FulfilledPromise $promise */

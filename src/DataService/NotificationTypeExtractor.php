@@ -46,7 +46,7 @@ class NotificationTypeExtractor implements PropertyTypeExtractorInterface
      *
      * @param string $class The class being extracted.
      */
-    public function setClass(string $class)
+    public function setClass(string $class): void
     {
         $this->class = $class;
     }

@@ -62,7 +62,7 @@ class TransferInfo
     /**
      * Set the password portion of the credentials required to access the file on the server.
      */
-    public function setPassword(?string $password)
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
     }
@@ -78,7 +78,7 @@ class TransferInfo
     /**
      * Set the private key for accessing the file on the server.
      */
-    public function setPrivateKey(?string $privateKey)
+    public function setPrivateKey(?string $privateKey): void
     {
         $this->privateKey = $privateKey;
     }
@@ -94,7 +94,7 @@ class TransferInfo
     /**
      * Set whether the server supports downloads of linked files.
      */
-    public function setSupportsDownload(?bool $supportsDownload)
+    public function setSupportsDownload(?bool $supportsDownload): void
     {
         $this->supportsDownload = $supportsDownload;
     }
@@ -110,7 +110,7 @@ class TransferInfo
     /**
      * Set whether the server supports streaming of linked files.
      */
-    public function setSupportsStreaming(?bool $supportsStreaming)
+    public function setSupportsStreaming(?bool $supportsStreaming): void
     {
         $this->supportsStreaming = $supportsStreaming;
     }
@@ -126,7 +126,7 @@ class TransferInfo
     /**
      * Set the username portion of the credentials required to access the file on the server.
      */
-    public function setUserName(?string $userName)
+    public function setUserName(?string $userName): void
     {
         $this->userName = $userName;
     }
@@ -146,7 +146,7 @@ class TransferInfo
      *
      * @param string[] $zones
      */
-    public function setZones(array $zones)
+    public function setZones(array $zones): void
     {
         $this->zones = $zones;
     }

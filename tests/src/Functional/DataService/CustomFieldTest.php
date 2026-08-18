@@ -17,7 +17,7 @@ class CustomFieldTest extends FunctionalTestBase
     /**
      * Tests loading custom field definitions.
      */
-    public function testCustomFields()
+    public function testCustomFields(): void
     {
         $manager = DataServiceManager::basicDiscovery();
         $mediaDataService = $manager->getDataService('Media Data Service', 'Media', '1.10');
