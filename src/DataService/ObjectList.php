@@ -302,7 +302,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
 
     public function setJson(string $json): void
     {
-        $this->json = \GuzzleHttp\Utils::jsonDecode($json, true);
+        $this->json = \Lullabot\Mpx\Json::decode($json, true);
     }
 
     public function getJson(): array

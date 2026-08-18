@@ -44,7 +44,7 @@ class ServiceTokenFlow implements AuthenticationFlowInterface
             ]
         );
 
-        return Token::fromResponseData(\GuzzleHttp\Utils::jsonDecode($response->getBody(), true));
+        return Token::fromResponseData(\Lullabot\Mpx\Json::decode($response->getBody(), true));
     }
 
     public function apply(Token $token, array $options, ?IdInterface $account = null): array

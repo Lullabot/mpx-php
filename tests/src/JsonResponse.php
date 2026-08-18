@@ -17,7 +17,7 @@ class JsonResponse extends Response
             } elseif (\is_string($body) && is_file(__DIR__.'/../fixtures/'.$body)) {
                 $body = fopen(__DIR__.'/../fixtures/'.$body, 'r');
             } elseif (\is_array($body)) {
-                $body = \GuzzleHttp\json_encode($body);
+                $body = \Lullabot\Mpx\Json::encode($body);
             }
         }
         $headers += [

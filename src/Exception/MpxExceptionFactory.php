@@ -19,7 +19,7 @@ class MpxExceptionFactory
         ?\Exception $previous = null,
         array $ctx = [],
     ): ClientException|ServerException {
-        $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
+        $data = \Lullabot\Mpx\Json::decode($response->getBody(), true);
         ClientException::validateData($data);
 
         $altered = $response->withStatus($data['responseCode'], $data['title']);
@@ -32,7 +32,7 @@ class MpxExceptionFactory
      */
     public static function createFromNotificationException(RequestInterface $request, ResponseInterface $response, ?\Exception $previous = null, array $ctx = []): ClientException|ServerException
     {
-        $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
+        $data = \Lullabot\Mpx\Json::decode($response->getBody(), true);
         ServerException::validateNotificationData($data);
 
         $altered = $response->withStatus($data[0]['entry']['responseCode'], $data[0]['entry']['title']);

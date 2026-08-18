@@ -2,7 +2,6 @@
 
 namespace Lullabot\Mpx\Exception;
 
-use GuzzleHttp\Utils;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -163,7 +162,7 @@ trait MpxExceptionTrait
      */
     protected function parseResponse(ResponseInterface $response): string
     {
-        $data = Utils::jsonDecode($response->getBody(), true);
+        $data = \Lullabot\Mpx\Json::decode($response->getBody(), true);
         isset($data[0]) ? $this->setNotificationData($data) : $this->setData($data);
         $message = \sprintf('HTTP %s Error %s', $response->getStatusCode(), $this->data['title']);
         if (isset($this->data['description'])) {

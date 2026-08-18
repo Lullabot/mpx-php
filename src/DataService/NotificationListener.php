@@ -101,7 +101,7 @@ class NotificationListener
         return $this->authenticatedClient->requestAsync('GET', $this->uri, [
             'query' => $query,
         ])->then(static function (ResponseInterface $response) {
-            $data = \GuzzleHttp\Utils::jsonDecode($response->getBody(), true);
+            $data = \Lullabot\Mpx\Json::decode($response->getBody(), true);
 
             return $data[0]['id'];
         });
