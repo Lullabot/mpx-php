@@ -131,15 +131,11 @@ class AuthenticatedClient implements ClientInterface
      */
     private function mergeAuth(array $options, bool $reset = false): array
     {
-        if (!isset($options['query'])) {
-            $options['query'] = [];
-        }
         $token = $this->userSession->acquireToken($this->duration, $reset);
-        $options['query'] += [
-            'token' => $token->getValue(),
-        ];
 
-        return $options;
+        // How the token is sent depends on the flow the session authenticates
+        // with, so the session's flow owns building the request options.
+        return $this->userSession->getFlow()->apply($token, $options, $this->account);
     }
 
     /**

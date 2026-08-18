@@ -5,6 +5,7 @@ namespace Lullabot\Mpx\Tests\Unit\Service\IdentityManagement;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Exception\ClientException;
+use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
@@ -30,10 +31,9 @@ class UserSessionTest extends TestCase
      * @covers ::__construct
      * @covers ::acquireToken
      * @covers ::signIn
-     * @covers ::signInOptions
      * @covers ::signInWithLock
-     * @covers ::tokenFromResponse
      * @covers ::signOut
+     * @covers ::getFlow
      */
     public function testAcquireToken()
     {
@@ -160,6 +160,19 @@ class UserSessionTest extends TestCase
         $userSession->setLogger($logger);
         $this->expectException(LockConflictedException::class);
         $userSession->acquireToken();
+    }
+
+    /**
+     * Test that sessions sign in against the identity management service by default.
+     *
+     * @covers ::__construct
+     * @covers ::getFlow
+     */
+    public function testDefaultFlow()
+    {
+        $session = new UserSession(new User('mpx/USER-NAME', 'correct-password'), $this->getMockClient());
+
+        $this->assertInstanceOf(SignInFlow::class, $session->getFlow());
     }
 
     /**
