@@ -40,7 +40,7 @@ class CustomFieldsNormalizer implements DenormalizerInterface
     ) {
     }
 
-    public function denormalize($data, $class, $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         // This is the annotated custom field class defining all custom fields.
         if (!isset($this->customFields[$data['namespace']])) {
@@ -50,13 +50,13 @@ class CustomFieldsNormalizer implements DenormalizerInterface
         $concreteClass = $this->customFields[$data['namespace']]->getClass();
 
         if (!$this->serializer instanceof DenormalizerInterface) {
-            throw new LogicException(\sprintf('Cannot denormalize class "%s" because injected serializer is not a denormalizer', $class));
+            throw new LogicException(\sprintf('Cannot denormalize class "%s" because injected serializer is not a denormalizer', $type));
         }
 
         return $this->serializer->denormalize($data['data'], $concreteClass);
     }
 
-    public function supportsDenormalization($data, $type, $format = null)
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return CustomFieldInterface::class == $type;
     }

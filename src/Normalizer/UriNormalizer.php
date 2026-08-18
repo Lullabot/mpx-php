@@ -19,21 +19,21 @@ class UriNormalizer implements NormalizerInterface, DenormalizerInterface
         UriInterface::class => true,
     ];
 
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize(mixed $data, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
-        if (!$object instanceof UriInterface) {
+        if (!$data instanceof UriInterface) {
             throw new InvalidArgumentException('The object must implement "\\Psr\\Http\\Message\\UriInterface".');
         }
 
-        return (string) $object;
+        return (string) $data;
     }
 
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof UriInterface;
     }
 
-    public function denormalize($data, $class, $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         // If an empty string is normalized, we can still return a valid URI object.
         if ('' === $data || null === $data) {
@@ -49,7 +49,7 @@ class UriNormalizer implements NormalizerInterface, DenormalizerInterface
         return $object;
     }
 
-    public function supportsDenormalization($data, $type, $format = null)
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return isset(self::$supportedTypes[$type]);
     }

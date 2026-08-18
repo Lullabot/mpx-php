@@ -17,7 +17,7 @@ use Symfony\Component\PropertyInfo\Type;
  */
 class ResolveAllUrlsResponseExtractor implements PropertyTypeExtractorInterface
 {
-    public function getTypes($class, $property, array $context = [])
+    public function getTypes(string $class, string $property, array $context = []): ?array
     {
         if ('resolveAllUrlsResponse' != $property) {
             throw new \InvalidArgumentException('This extractor only supports resolveAllUrlsResponse properties.');
