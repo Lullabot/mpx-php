@@ -162,7 +162,7 @@ trait MpxExceptionTrait
      */
     protected function parseResponse(ResponseInterface $response): string
     {
-        $data = \Lullabot\Mpx\Json::decode($response->getBody(), true);
+        $data = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         isset($data[0]) ? $this->setNotificationData($data) : $this->setData($data);
         $message = \sprintf('HTTP %s Error %s', $response->getStatusCode(), $this->data['title']);
         if (isset($this->data['description'])) {

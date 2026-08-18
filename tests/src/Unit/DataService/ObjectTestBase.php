@@ -71,7 +71,7 @@ abstract class ObjectTestBase extends TestCase
         $this->serializer = new Serializer($normalizers, $encoders);
 
         $data = file_get_contents(__DIR__."/../../../fixtures/$fixture");
-        $this->decoded = \Lullabot\Mpx\Json::decode($data, true);
+        $this->decoded = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
     }
 
     protected function assertObjectClass($class, string $field, $expected)

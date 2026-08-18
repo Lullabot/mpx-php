@@ -34,7 +34,7 @@ class SignInFlow implements AuthenticationFlowInterface
     {
         $response = $client->request('GET', self::SIGN_IN_URL, $this->signInOptions($user, $duration));
 
-        return Token::fromResponseData(\Lullabot\Mpx\Json::decode($response->getBody(), true));
+        return Token::fromResponseData(json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR));
     }
 
     public function apply(Token $token, array $options, ?IdInterface $account = null): array

@@ -118,7 +118,7 @@ class DataObjectFactory
         // there is no way to access it from within the extractor. We can't
         // alter $context in the CJsonEncoder as it is not passed by reference.
         // @todo This feels like a bit of a hack.
-        $decoded = \Lullabot\Mpx\Json::decode($data, true);
+        $decoded = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
         if (isset($decoded['$xmlns'])) {
             $dataServiceExtractor->setNamespaceMapping($decoded['$xmlns']);
         }
@@ -264,13 +264,13 @@ class DataObjectFactory
         $list = $this->deserialize($data, ObjectList::class);
 
         // Set the json representation of each entry in the list.
-        $decoded = \Lullabot\Mpx\Json::decode($data, true);
+        $decoded = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
         foreach ($list as $index => $item) {
             $entry = $decoded['entries'][$index];
             if (isset($decoded['$xmlns'])) {
                 $entry['$xmlns'] = $decoded['$xmlns'];
             }
-            $item->setJson(\Lullabot\Mpx\Json::encode($entry));
+            $item->setJson(json_encode($entry, JSON_THROW_ON_ERROR));
         }
         $list->setObjectListQuery($byFields);
         $list->setDataObjectFactory($this);

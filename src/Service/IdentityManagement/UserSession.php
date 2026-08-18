@@ -23,20 +23,6 @@ class UserSession
     use LoggerAwareTrait;
 
     /**
-     * The URL to sign in a user.
-     *
-     * @deprecated Use \Lullabot\Mpx\Service\IdentityManagement\SignInFlow::SIGN_IN_URL instead.
-     */
-    final public const SIGN_IN_URL = SignInFlow::SIGN_IN_URL;
-
-    /**
-     * The URL to sign out a given token for a user.
-     *
-     * @deprecated Use \Lullabot\Mpx\Service\IdentityManagement\SignInFlow::SIGN_OUT_URL instead.
-     */
-    final public const SIGN_OUT_URL = SignInFlow::SIGN_OUT_URL;
-
-    /**
      * @var \Lullabot\Mpx\Client
      */
     protected $client;

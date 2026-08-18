@@ -33,7 +33,7 @@ abstract class ObjectBase implements ObjectInterface
 
     public function setJson(string $json)
     {
-        $this->json = \Lullabot\Mpx\Json::decode($json, true);
+        $this->json = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
     }
 
     public function getJson()
