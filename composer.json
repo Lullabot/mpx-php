@@ -21,7 +21,7 @@
     "symfony/lock": "^6",
     "symfony/finder": "^6",
     "phpdocumentor/reflection-docblock": "^5.2",
-    "psr/http-message": "^1.0",
+    "psr/http-message": "^2.0",
     "psr/simple-cache": "^3.0"
   },
   "require-dev": {

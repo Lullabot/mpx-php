@@ -9,9 +9,9 @@ class DiscoveredDataService
     /**
      * DiscoveredDataService constructor.
      *
-     * @param string                                            $class        The class of the discovered data service.
-     * @param DataService                                       $annotation   The annotation of the discovered class.
-     * @param \Lullabot\Mpx\DataService\DiscoveredCustomField[] $customFields (optional) The array of custom field classes.
+     * @param string                  $class        The class of the discovered data service.
+     * @param DataService             $annotation   The annotation of the discovered class.
+     * @param DiscoveredCustomField[] $customFields (optional) The array of custom field classes.
      */
     public function __construct(
         private readonly string $class,
@@ -19,7 +19,7 @@ class DiscoveredDataService
         /*
          * The array of custom field objects found for this data service.
          */
-        private readonly array $customFields = []
+        private readonly array $customFields = [],
     ) {
     }
 

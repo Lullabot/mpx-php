@@ -66,7 +66,7 @@ class Token implements \Stringable
      *
      * @param array $data The MPX response data.
      *
-     * @return \Lullabot\Mpx\Token A new MPX token.
+     * @return Token A new MPX token.
      */
     public static function fromResponseData(array $data): self
     {
@@ -99,7 +99,7 @@ class Token implements \Stringable
         ];
         foreach ($required as $key) {
             if (empty($data['signInResponse'][$key])) {
-                throw new \InvalidArgumentException(sprintf('Required key %s is missing.', $key));
+                throw new \InvalidArgumentException(\sprintf('Required key %s is missing.', $key));
             }
         }
     }

@@ -18,7 +18,7 @@ class DataServiceManager
      *
      * @return static
      */
-    public static function basicDiscovery(CustomFieldManager $customFieldManager = null)
+    public static function basicDiscovery(?CustomFieldManager $customFieldManager = null)
     {
         if (!$customFieldManager) {
             $customFieldManager = CustomFieldManager::basicDiscovery();

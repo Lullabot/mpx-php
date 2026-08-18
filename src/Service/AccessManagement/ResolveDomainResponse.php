@@ -12,7 +12,7 @@ class ResolveDomainResponse
     /**
      * The array of resolveDomainResponse domains, indexed by their service name.
      *
-     * @var Uri[]
+     * @var \GuzzleHttp\Psr7\Uri[]
      */
     protected $resolveDomainResponse;
 
@@ -43,7 +43,7 @@ class ResolveDomainResponse
     public function getUrl(string $service, bool $insecure = false): Uri
     {
         if (!isset($this->resolveDomainResponse[$service])) {
-            throw new \RuntimeException(sprintf('%s service was not found.', $service));
+            throw new \RuntimeException(\sprintf('%s service was not found.', $service));
         }
 
         $url = $this->resolveDomainResponse[$service];

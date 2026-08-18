@@ -17,7 +17,7 @@ trait MockClientTrait
      *                             \GuzzleHttp\Handler\MockHandler object an added as $options['handler'].
      * @param array $options       An optional array of client configuration.
      *
-     * @return \Lullabot\Mpx\Client A configured Lullabot\Mpx client.
+     * @return Client A configured Lullabot\Mpx client.
      */
     protected function getMockClient(array $handler_queue = [], array $options = [])
     {

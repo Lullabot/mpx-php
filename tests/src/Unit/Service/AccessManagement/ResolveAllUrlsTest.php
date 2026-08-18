@@ -39,7 +39,7 @@ class ResolveAllUrlsTest extends TestCase
             new JsonResponse(200, [], 'resolveAllUrls.json'),
         ]);
         $tokenCachePool = new TokenCachePool(new ArrayCachePool());
-        /** @var DummyStoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
+        /** @var \Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface|\PHPUnit\Framework\MockObject\MockObject $store */
         $store = $this->getMockBuilder(DummyStoreInterface::class)
             ->getMock();
         $store->expects($this->any())

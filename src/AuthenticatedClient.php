@@ -16,14 +16,14 @@ class AuthenticatedClient implements ClientInterface
     /**
      * The user to establish a client for.
      *
-     * @var UserSession
+     * @var \Lullabot\Mpx\Service\IdentityManagement\UserSession
      */
     protected $userSession;
 
     /**
      * The client used to access MPX.
      *
-     * @var Client
+     * @var \Lullabot\Mpx\Client
      */
     protected $client;
 
@@ -54,7 +54,7 @@ class AuthenticatedClient implements ClientInterface
      * @param UserSession $userSession The user associated with this client.
      * @param IdInterface $account     (optional) The account to use as the account context for requests.
      */
-    public function __construct(Client $client, UserSession $userSession, IdInterface $account = null)
+    public function __construct(Client $client, UserSession $userSession, ?IdInterface $account = null)
     {
         $this->client = $client;
         $this->userSession = $userSession;
@@ -94,7 +94,7 @@ class AuthenticatedClient implements ClientInterface
      *
      * @param int|null $duration The duration in seconds, or null to not use a specific lifetime.
      */
-    public function setTokenDuration(int $duration = null): void
+    public function setTokenDuration(?int $duration = null): void
     {
         $this->duration = $duration;
     }
@@ -145,8 +145,8 @@ class AuthenticatedClient implements ClientInterface
     /**
      * Send a request, retrying once if the authentication token is invalid.
      *
-     * @param \Psr\Http\Message\RequestInterface $request The request to send.
-     * @param array                              $options Request options to apply.
+     * @param RequestInterface $request The request to send.
+     * @param array            $options Request options to apply.
      */
     private function sendAsyncWithRetry(RequestInterface $request, array $options): PromiseInterface|RequestInterface
     {
@@ -182,10 +182,10 @@ class AuthenticatedClient implements ClientInterface
     /**
      * Send a request, retrying once if the authentication token is invalid.
      *
-     * @param \Psr\Http\Message\RequestInterface $request The request to send.
-     * @param array                              $options An array of request options.
+     * @param RequestInterface $request The request to send.
+     * @param array            $options An array of request options.
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
     private function sendWithRetry(RequestInterface $request, array $options)
     {
@@ -277,7 +277,7 @@ class AuthenticatedClient implements ClientInterface
      * @param string|\Psr\Http\Message\UriInterface $uri     URI object or string.
      * @param array                                 $options Request options to apply.
      *
-     * @return \Psr\Http\Message\ResponseInterface The response.
+     * @return ResponseInterface The response.
      */
     private function requestWithRetry(string $method, string|\Psr\Http\Message\UriInterface $uri, array $options)
     {

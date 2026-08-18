@@ -6,7 +6,7 @@ namespace Lullabot\Mpx\Exception;
  * Interface for both client (4XX) and server (5XX) MPX exceptions.
  *
  * @see https://docs.theplatform.com/help/wsf-handling-data-service-exceptions
- * @see \Lullabot\Mpx\Exception\MpxExceptionTrait
+ * @see MpxExceptionTrait
  */
 interface MpxExceptionInterface
 {

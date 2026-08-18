@@ -26,7 +26,7 @@ class TokenCachePool
     /**
      * Construct a new cache of user authentication tokens.
      *
-     * @param \Psr\Cache\CacheItemPoolInterface $cacheItemPool The underlying cache backend.
+     * @param CacheItemPoolInterface $cacheItemPool The underlying cache backend.
      */
     public function __construct(CacheItemPoolInterface $cacheItemPool)
     {
@@ -36,8 +36,8 @@ class TokenCachePool
     /**
      * Set an authentication token for a user.
      *
-     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $user  The user the token is associated with.
-     * @param \Lullabot\Mpx\Token                                  $token The authentication token for the user.
+     * @param UserSession $user  The user the token is associated with.
+     * @param Token       $token The authentication token for the user.
      */
     public function setToken(UserSession $user, Token $token)
     {
@@ -51,9 +51,9 @@ class TokenCachePool
     /**
      * Get the cached token for a user.
      *
-     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $user The user to look up tokens for.
+     * @param UserSession $user The user to look up tokens for.
      *
-     * @return \Lullabot\Mpx\Token The cached token.
+     * @return Token The cached token.
      */
     public function getToken(UserSession $user): Token
     {
@@ -71,7 +71,7 @@ class TokenCachePool
     /**
      * Delete a cached token for a user.
      *
-     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $user The user to delete the token for.
+     * @param UserSession $user The user to delete the token for.
      */
     public function deleteToken(UserSession $user)
     {
@@ -81,7 +81,7 @@ class TokenCachePool
     /**
      * Generate a cache key for a token, limiting key length.
      *
-     * @param \Lullabot\Mpx\Service\IdentityManagement\UserSession $userSession The user to generate the cache key for.
+     * @param UserSession $userSession The user to generate the cache key for.
      *
      * @return string The cache key for the user.
      */

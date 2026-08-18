@@ -43,7 +43,7 @@ class UriNormalizer implements NormalizerInterface, DenormalizerInterface
         try {
             $object = new Uri($data);
         } catch (\InvalidArgumentException $e) {
-            throw new NotNormalizableValueException(sprintf('Parsing URI string "%s" resulted in error: %s', $data, $e->getMessage()), $e->getCode(), $e);
+            throw new NotNormalizableValueException(\sprintf('Parsing URI string "%s" resulted in error: %s', $data, $e->getMessage()), $e->getCode(), $e);
         }
 
         return $object;

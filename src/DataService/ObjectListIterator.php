@@ -40,14 +40,14 @@ class ObjectListIterator extends \NoRewindIterator
     /**
      * The current object list page.
      *
-     * @var ObjectList
+     * @var \Lullabot\Mpx\DataService\ObjectList
      */
     protected $list;
 
     /**
      * The initial promise to return an object list.
      *
-     * @var PromiseInterface
+     * @var \GuzzleHttp\Promise\PromiseInterface
      */
     protected $promise;
 

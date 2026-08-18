@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 abstract class FunctionalTestBase extends TestCase
 {
     /**
-     * @var Client
+     * @var \Lullabot\Mpx\Client
      */
     protected $client;
 
@@ -37,7 +37,7 @@ abstract class FunctionalTestBase extends TestCase
     /**
      * The MPX account.
      *
-     * @var Account
+     * @var \Lullabot\Mpx\DataService\Access\Account
      */
     protected $account;
 
@@ -63,7 +63,7 @@ abstract class FunctionalTestBase extends TestCase
             $responseLogger = new Logger(new ConsoleLogger($output));
             $responseLogger->setLogLevel(LogLevel::DEBUG);
             $responseLogger->setFormatter(new MessageFormatter(MessageFormatter::DEBUG));
-            /** @var $handler \GuzzleHttp\HandlerStack */
+            /** @var \GuzzleHttp\HandlerStack $handler */
             $handler = $config['handler'];
             $handler->after('cookies', $responseLogger);
         }

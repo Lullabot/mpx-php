@@ -25,7 +25,7 @@ class Notification
     protected $type;
 
     /**
-     * @var ObjectInterface
+     * @var \Lullabot\Mpx\DataService\ObjectInterface
      */
     protected $entry;
 

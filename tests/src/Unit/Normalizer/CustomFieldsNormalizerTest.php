@@ -11,13 +11,10 @@ use Lullabot\Mpx\DataService\ObjectBase;
 use Lullabot\Mpx\Normalizer\CustomFieldsNormalizer;
 use Lullabot\Mpx\Normalizer\MissingCustomFieldsClass;
 use Lullabot\Mpx\Tests\SerializerDenormalizerInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UriInterface;
 use Symfony\Component\Serializer\Exception\LogicException;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Tests denormalizing custom fields.
@@ -50,7 +47,7 @@ class CustomFieldsNormalizerTest extends TestCase
             $annotation->namespace => new DiscoveredCustomField(DummyCustomFields::class, $annotation),
         ]);
 
-        /** @var SerializerInterface|MockObject|DenormalizerInterface $serializer */
+        /** @var \Symfony\Component\Serializer\SerializerInterface|\PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Serializer\Normalizer\DenormalizerInterface $serializer */
         $serializer = $this->getMockBuilder(SerializerDenormalizerInterface::class)
             ->getMock();
         $serializer->expects($this->once())->method('denormalize')
@@ -123,7 +120,7 @@ class DummyCustomFields extends ObjectBase implements CustomFieldInterface
     /**
      * The date and time that this object was created.
      *
-     * @var DateTimeFormatInterface
+     * @var \Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface
      */
     protected $added;
 

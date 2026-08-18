@@ -163,7 +163,7 @@ namespace Lullabot\Mpx\Tests\Unit\DataService {
         public function testEmptyFileName()
         {
             $fixture = new CachingContextFactory();
-            $context = $fixture->createFromReflector(new \ReflectionClass(\stdClass::class));
+            $context = $fixture->createFromReflector(new ReflectionClass(\stdClass::class));
 
             $this->assertSame([], $context->getNamespaceAliases());
         }
@@ -182,14 +182,14 @@ class Bar
 PHP
             );
             $fixture = new CachingContextFactory();
-            $context = $fixture->createFromReflector(new \ReflectionClass('Foo\Bar'));
+            $context = $fixture->createFromReflector(new ReflectionClass('Foo\Bar'));
 
             $this->assertSame([], $context->getNamespaceAliases());
         }
 
         protected function tearDown(): void
         {
-            \Mockery::close();
+            m::close();
         }
     }
 }

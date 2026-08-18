@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 class ObjectListTest extends TestCase
 {
     /**
-     * @var ObjectList
+     * @var \Lullabot\Mpx\DataService\ObjectList
      */
     protected $list;
 
@@ -103,7 +103,7 @@ class ObjectListTest extends TestCase
         $this->list->setItemsPerPage(10);
         $this->list->setTotalResults(50);
 
-        /** @var DataObjectFactory $dof */
+        /** @var \Lullabot\Mpx\DataService\DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof);
@@ -122,7 +122,7 @@ class ObjectListTest extends TestCase
         $this->list->setEntryCount(1);
         $this->list->setItemsPerPage(1);
 
-        /** @var DataObjectFactory $dof */
+        /** @var \Lullabot\Mpx\DataService\DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof);
@@ -156,7 +156,7 @@ class ObjectListTest extends TestCase
         $this->list->setItemsPerPage(10);
         $this->list->setTotalResults(50);
 
-        /** @var DataObjectFactory $dof */
+        /** @var \Lullabot\Mpx\DataService\DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof);
@@ -240,7 +240,7 @@ class ObjectListTest extends TestCase
         $this->list->setEntryCount(10);
         $this->list->setItemsPerPage(10);
         $this->list->setTotalResults(50);
-        /** @var DataObjectFactory $dof */
+        /** @var \Lullabot\Mpx\DataService\DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof);
@@ -270,7 +270,7 @@ class ObjectListTest extends TestCase
      */
     public function testNoByFields()
     {
-        /** @var DataObjectFactory $dof */
+        /** @var \Lullabot\Mpx\DataService\DataObjectFactory $dof */
         $dof = $this->getMockBuilder(DataObjectFactory::class)->disableOriginalConstructor()->getMock();
         $account = new Account();
         $this->list->setDataObjectFactory($dof);

@@ -10,7 +10,7 @@ use Psr\Http\Message\UriInterface;
 abstract class ObjectBase implements ObjectInterface
 {
     /**
-     * @var CustomFieldInterface[]
+     * @var \Lullabot\Mpx\DataService\CustomFieldInterface[]
      */
     protected $customFields = [];
 

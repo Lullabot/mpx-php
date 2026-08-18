@@ -13,7 +13,6 @@ use Lullabot\Mpx\DataService\CustomFieldManager;
 use Lullabot\Mpx\DataService\DataObjectFactory;
 use Lullabot\Mpx\DataService\DataServiceManager;
 use Lullabot\Mpx\DataService\Media\Media;
-use Lullabot\Mpx\DataService\ObjectList;
 use Lullabot\Mpx\DataService\ObjectListIterator;
 use Lullabot\Mpx\DataService\ObjectListQuery;
 use Lullabot\Mpx\Service\IdentityManagement\User;
@@ -140,7 +139,7 @@ class DataObjectFactoryTest extends TestCase
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
-        /** @var ObjectList $objectList */
+        /** @var \Lullabot\Mpx\DataService\ObjectList $objectList */
         $objectList = $factory->selectRequest()->wait();
         $this->assertEquals(1, $objectList->getEntryCount());
         $this->assertEquals(1, $objectList->getItemsPerPage());
@@ -177,7 +176,7 @@ class DataObjectFactoryTest extends TestCase
         $session = new UserSession($user, $client, $store, $tokenCachePool);
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
-        /** @var ObjectList $objectList */
+        /** @var \Lullabot\Mpx\DataService\ObjectList $objectList */
         $objectList = $factory->selectRequest()->wait();
         $this->assertEquals(['prefix1' => 'http://www.example.com/xml'], $objectList[0]->getJson()['$xmlns']);
     }
@@ -267,13 +266,13 @@ class DataObjectFactoryTest extends TestCase
         $authenticatedClient = new AuthenticatedClient($client, $session);
         $factory = new DataObjectFactory($service, $authenticatedClient);
 
-        /** @var Media $media */
+        /** @var \Lullabot\Mpx\DataService\Media\Media $media */
         $media = $factory->loadByNumericId(2_602_559)->wait();
         $customFields = $media->getCustomFields();
         $this->assertInstanceOf(SeriesCustomField::class, $customFields['http://www.example.com/xml']);
 
         // This namespace must not be present in media-object.json.
-        /** @var NeverUsedCustomField $neverUsed */
+        /** @var \Lullabot\Mpx\Tests\Unit\DataService\CustomField\NeverUsedCustomField $neverUsed */
         $neverUsed = $customFields['http://www.example.com/never-used'];
         $this->assertInstanceOf(NeverUsedCustomField::class, $neverUsed);
         $this->assertEmpty($neverUsed->getNeverUsed());

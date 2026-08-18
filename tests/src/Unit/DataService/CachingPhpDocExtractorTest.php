@@ -11,7 +11,7 @@ use Symfony\Component\PropertyInfo\Type;
  */
 class CachingPhpDocExtractorTest extends TestCase
 {
-    private \Lullabot\Mpx\DataService\CachingPhpDocExtractor $extractor;
+    private CachingPhpDocExtractor $extractor;
 
     protected function setUp(): void
     {
@@ -36,7 +36,7 @@ class CachingPhpDocExtractorTest extends TestCase
     /**
      * @dataProvider typesWithCustomPrefixesProvider
      */
-    public function testExtractTypesWithCustomPrefixes($property, array $type = null)
+    public function testExtractTypesWithCustomPrefixes($property, ?array $type = null)
     {
         $customExtractor = new CachingPhpDocExtractor(null, ['add', 'remove'], ['is', 'can']);
 
@@ -46,7 +46,7 @@ class CachingPhpDocExtractorTest extends TestCase
     /**
      * @dataProvider typesWithNoPrefixesProvider
      */
-    public function testExtractTypesWithNoPrefixes($property, array $type = null)
+    public function testExtractTypesWithNoPrefixes($property, ?array $type = null)
     {
         $noPrefixExtractor = new CachingPhpDocExtractor(null, [], [], []);
 

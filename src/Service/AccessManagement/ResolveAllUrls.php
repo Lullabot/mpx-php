@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Serializer;
  * services at once. However, it requires an Account context, so if you do not
  * have one available use this instead.
  *
- * @see \Lullabot\Mpx\Service\AccessManagement\ResolveDomain
+ * @see ResolveDomain
  * @see https://docs.theplatform.com/help/wsf-resolveallurls-method
  */
 class ResolveAllUrls extends ResolveBase
@@ -53,13 +53,17 @@ class ResolveAllUrls extends ResolveBase
             ],
         ];
 
+        if ($this->authenticatedClient->hasAccount()) {
+            $options['query']['account'] = (string) $this->authenticatedClient->getAccount()->getMpxId();
+        }
+
         $response = $this->authenticatedClient->request('GET', static::RESOLVE_ALL_URLS_URL, $options);
 
         $encoders = [new JsonEncoder()];
         $normalizers = [new UriNormalizer(), new ObjectNormalizer(null, null, null, new PhpDocExtractor()), new ArrayDenormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
 
-        /** @var ResolveAllUrlsResponse $resolved */
+        /** @var \Lullabot\Mpx\Service\AccessManagement\ResolveAllUrlsResponse $resolved */
         $resolved = $serializer->deserialize($response->getBody(), ResolveAllUrlsResponse::class, 'json');
         $resolved->setService($service);
         $this->saveCache($key, $resolved);

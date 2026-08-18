@@ -8,7 +8,7 @@ namespace Lullabot\Mpx\DataService;
  * All classes implementing the CustomField annotation must implement this
  * interface.
  *
- * @see \Lullabot\Mpx\DataService\Annotation\CustomField
+ * @see Annotation\CustomField
  */
 interface CustomFieldInterface
 {

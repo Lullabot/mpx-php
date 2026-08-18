@@ -8,6 +8,9 @@ return (new PhpCsFixer\Config())
         'no_unreachable_default_argument_value' => false,
         'heredoc_to_nowdoc' => false,
         'phpdoc_annotation_without_dot' => false,
+        'fully_qualified_strict_types' => array(
+            'phpdoc_tags' => array('param', 'return', 'throws', 'see'),
+        ),
     ))
     ->setRiskyAllowed(true)
     ->setFinder(

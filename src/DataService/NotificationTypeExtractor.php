@@ -21,13 +21,13 @@ class NotificationTypeExtractor implements PropertyTypeExtractorInterface
     /**
      * NotificationTypeReflectionExtractorDecorator constructor.
      *
-     * @param \Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface $reflectionExtractor Reflection extractor instance to decorate.
+     * @param PropertyTypeExtractorInterface $reflectionExtractor Reflection extractor instance to decorate.
      */
     public function __construct(
         /*
          * Decorated ReflectionExtractor instance.
          */
-        protected PropertyTypeExtractorInterface $reflectionExtractor
+        protected PropertyTypeExtractorInterface $reflectionExtractor,
     ) {
     }
 

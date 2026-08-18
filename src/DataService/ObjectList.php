@@ -42,7 +42,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     protected $entryCount;
 
     /**
-     * @var ObjectInterface[]
+     * @var \Lullabot\Mpx\DataService\ObjectInterface[]
      */
     protected $entries = [];
 
@@ -54,7 +54,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     protected $totalResults = 0;
 
     /**
-     * @var ObjectListQuery
+     * @var \Lullabot\Mpx\DataService\ObjectListQuery
      */
     protected $objectListQuery;
 
@@ -68,7 +68,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * The factory used to generate the next object list request.
      *
-     * @var DataObjectFactory
+     * @var \Lullabot\Mpx\DataService\DataObjectFactory
      */
     protected $dataObjectFactory;
 
@@ -202,7 +202,7 @@ class ObjectList implements \ArrayAccess, \Iterator, JsonInterface
     /**
      * Return the next object list request, if one exists.
      *
-     * @see \Lullabot\Mpx\DataService\ObjectList::setDataObjectFactory
+     * @see ObjectList::setDataObjectFactory
      *
      * @return PromiseInterface|bool A promise to the next ObjectList, or false if no list exists.
      */
