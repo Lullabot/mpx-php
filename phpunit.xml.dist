@@ -21,7 +21,7 @@
     <env name="MPX_LOGGER" value="false"/>
     <!-- Watch for deprecations, but only fail on direct deprecations,
              not indirect ones. -->
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[direct]=0"/>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[direct]=0&amp;ignoreFile=./.symfony-deprecations-ignore.txt"/>
   </php>
   <testsuites>
     <testsuite name="Unit">
