@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Lullabot\Mpx\Tests\Unit\DataService {
     // Added imports on purpose as mock for the unit tests, please do not remove.
     use Lullabot\Mpx\DataService\CachingContextFactory;

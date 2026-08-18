@@ -142,7 +142,7 @@ class TokenTest extends TestCase
             'idleTimeout' => 456,
             'token' => 'token-value',
         ];
-        $data = array_map(function ($value) use (&$required) {
+        $data = array_map(static function ($value) use (&$required) {
             $key = array_key_last($required);
             array_pop($required);
 

@@ -159,7 +159,7 @@ class AuthenticatedClient implements ClientInterface
         // need a new invocation of mergeAuth() that resets the token.
         $outer = $this->outerPromise($inner);
 
-        $inner->then(function ($value) use ($outer) {
+        $inner->then(static function ($value) use ($outer) {
             // The very first request worked, so resolve the outer promise.
             $outer->resolve($value);
         }, function ($e) use ($request, $options, $outer) {
@@ -224,7 +224,7 @@ class AuthenticatedClient implements ClientInterface
         // need a new invocation of mergeAuth() that resets the token.
         $outer = $this->outerPromise($inner);
 
-        $inner->then(function ($value) use ($outer) {
+        $inner->then(static function ($value) use ($outer) {
             // The very first request worked, so resolve the outer promise.
             $outer->resolve($value);
         }, function ($e) use ($method, $uri, $options, $outer) {
@@ -303,7 +303,7 @@ class AuthenticatedClient implements ClientInterface
      */
     private function outerPromise(PromiseInterface $inner): Promise
     {
-        $outer = new Promise(function () use ($inner) {
+        $outer = new Promise(static function () use ($inner) {
             // Our wait function invokes the inner's wait function, as as far
             // as callers are concerned there is only one promise.
             try {

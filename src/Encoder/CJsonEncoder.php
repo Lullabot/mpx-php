@@ -34,7 +34,7 @@ class CJsonEncoder extends JsonEncoder
             }
         }
 
-        $data = array_filter($data, fn ($value) => null !== $value);
+        $data = array_filter($data, static fn ($value) => null !== $value);
     }
 
     /**
