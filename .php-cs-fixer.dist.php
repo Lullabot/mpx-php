@@ -11,7 +11,6 @@ return (new PhpCsFixer\Config())
         'fully_qualified_strict_types' => array(
             'phpdoc_tags' => array('param', 'return', 'throws', 'see'),
         ),
-        'void_return' => false,
     ))
     ->setRiskyAllowed(true)
     ->setFinder(
