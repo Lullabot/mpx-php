@@ -51,7 +51,7 @@ class NotificationTypeExtractor implements PropertyTypeExtractorInterface
         $this->class = $class;
     }
 
-    public function getTypes($class, $property, array $context = []): ?array
+    public function getTypes(string $class, string $property, array $context = []): ?array
     {
         if ('entry' !== $property) {
             return $this->reflectionExtractor->getTypes($class, $property, $context);

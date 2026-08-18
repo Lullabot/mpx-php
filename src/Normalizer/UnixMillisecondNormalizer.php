@@ -7,7 +7,6 @@ use Lullabot\Mpx\DataService\DateTime\ConcreteDateTimeInterface;
 use Lullabot\Mpx\DataService\DateTime\DateTimeFormatInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -22,7 +21,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  * Because of this, we decorate here a DateTimeNormalizer object and delegate
  * all methods but ::denormalize().
  */
-class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInterface, CacheableSupportsMethodInterface
+class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInterface
 {
     /**
      * @var \Symfony\Component\Serializer\Normalizer\DateTimeNormalizer
@@ -53,12 +52,12 @@ class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInte
     /**
      * @throws InvalidArgumentException
      */
-    public function normalize(mixed $object, ?string $format = null, array $context = []): string
+    public function normalize(mixed $data, ?string $format = null, array $context = []): string
     {
-        return $this->decorated->normalize($object, $format, $context);
+        return $this->decorated->normalize($data, $format, $context);
     }
 
-    public function supportsNormalization(mixed $data, ?string $format = null): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $this->decorated->supportsNormalization($data, $format);
     }
@@ -80,16 +79,8 @@ class UnixMillisecondNormalizer implements NormalizerInterface, DenormalizerInte
         return new ConcreteDateTime($date);
     }
 
-    public function supportsDenormalization(mixed $data, string $type, ?string $format = null): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return isset(self::$supportedTypes[$type]);
-    }
-
-    /**
-     * @deprecated since Symfony 6.3, use "getSupportedTypes()" instead
-     */
-    public function hasCacheableSupportsMethod(): bool
-    {
-        return $this->decorated->hasCacheableSupportsMethod();
     }
 }

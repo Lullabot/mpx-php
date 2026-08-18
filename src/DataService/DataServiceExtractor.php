@@ -69,7 +69,7 @@ class DataServiceExtractor extends CachingPhpDocExtractor
         $this->xmlns = $xmlns;
     }
 
-    public function getTypes($class, $property, array $context = [])
+    public function getTypes(string $class, string $property, array $context = []): ?array
     {
         // First, check to see if this object is a custom field.
         if (isset($this->xmlns[$property])) {

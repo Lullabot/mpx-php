@@ -95,12 +95,12 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         return '' === $contents ? null : $contents;
     }
 
-    public function getTypes($class, $property, array $context = [])
+    public function getTypes(string $class, string $property, array $context = []): ?array
     {
         /** @var \phpDocumentor\Reflection\DocBlock $docBlock */
         [$docBlock, $source, $prefix] = $this->getDocBlock($class, $property);
         if (!$docBlock) {
-            return;
+            return null;
         }
 
         switch ($source) {
@@ -129,7 +129,7 @@ class CachingPhpDocExtractor implements PropertyDescriptionExtractorInterface, P
         }
 
         if (!isset($types[0])) {
-            return;
+            return null;
         }
 
         if (!\in_array($prefix, $this->arrayMutatorPrefixes)) {

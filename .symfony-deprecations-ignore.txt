@@ -1,0 +1,18 @@
+# Symfony 7.3 deprecated the legacy PropertyInfo\Type API in favour of the
+# symfony/type-info component.
+#
+# Migrating to it means implementing PropertyTypeExtractorInterface::getType(),
+# whose return type lives in symfony/type-info. That package is required by
+# symfony/property-info 7.4 but not by 6.4, so the migration would force this
+# library to require ^7.3 and drop Symfony 6 -- and with it, any consumer
+# running on Drupal 10.
+#
+# Keeping the legacy API is therefore deliberate: it is what lets a single
+# release support both Symfony 6 and 7. Symfony converts the legacy types
+# transparently via LegacyTypeConverter, and the API is not removed until
+# Symfony 8.
+#
+# Delete this file and migrate to getType() when Symfony 6 support is dropped.
+%Since symfony/property\-info 7\.3: The "Symfony\\Component\\PropertyInfo\\Util\\PhpDocTypeHelper::getTypes\(\)" method is deprecated%
+%Since symfony/property\-info 7\.3: The "Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor::getTypes\(\)" method is deprecated%
+%Since symfony/property\-info 7\.3: The "Symfony\\Component\\PropertyInfo\\Type" class is deprecated%

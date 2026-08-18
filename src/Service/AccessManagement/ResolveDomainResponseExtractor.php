@@ -17,7 +17,7 @@ use Symfony\Component\PropertyInfo\Type;
  */
 class ResolveDomainResponseExtractor implements PropertyTypeExtractorInterface
 {
-    public function getTypes($class, $property, array $context = [])
+    public function getTypes(string $class, string $property, array $context = []): ?array
     {
         if ('resolveDomainResponse' != $property) {
             throw new \InvalidArgumentException('This extractor only supports resolveDomainResponse properties.');
