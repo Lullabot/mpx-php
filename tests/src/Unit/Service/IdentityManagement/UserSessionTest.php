@@ -5,12 +5,16 @@ namespace Lullabot\Mpx\Tests\Unit\Service\IdentityManagement;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
 use Lullabot\Mpx\Exception\ClientException;
+use Lullabot\Mpx\Exception\TokenNotFoundException;
+use Lullabot\Mpx\Service\IdentityManagement\ServiceTokenFlow;
+use Lullabot\Mpx\Service\IdentityManagement\ServiceUser;
 use Lullabot\Mpx\Service\IdentityManagement\SignInFlow;
 use Lullabot\Mpx\Service\IdentityManagement\User;
 use Lullabot\Mpx\Service\IdentityManagement\UserSession;
 use Lullabot\Mpx\Tests\Fixtures\DummyStoreInterface;
 use Lullabot\Mpx\Tests\JsonResponse;
 use Lullabot\Mpx\Tests\MockClientTrait;
+use Lullabot\Mpx\Token;
 use Lullabot\Mpx\TokenCachePool;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -173,6 +177,40 @@ class UserSessionTest extends TestCase
         $session = new UserSession(new User('mpx/USER-NAME', 'correct-password'), $this->getMockClient());
 
         $this->assertInstanceOf(SignInFlow::class, $session->getFlow());
+    }
+
+    /**
+     * Test that an explicit flow overrides the default.
+     *
+     * @covers ::__construct
+     * @covers ::getFlow
+     */
+    public function testExplicitFlow()
+    {
+        $flow = new ServiceTokenFlow();
+        $session = new UserSession(new ServiceUser('CLIENT-ID', 'CLIENT-SECRET'), $this->getMockClient(), null, null, $flow);
+
+        $this->assertSame($flow, $session->getFlow());
+    }
+
+    /**
+     * Test that the two flows never share a cached token.
+     *
+     * @covers ::__construct
+     */
+    public function testFlowsDoNotShareCachedTokens()
+    {
+        $client = $this->getMockClient();
+        $tokenCachePool = new TokenCachePool(new ArrayCachePool());
+
+        // Identical credentials, but authenticated two different ways.
+        $signIn = new UserSession(new User('mpx/USER-NAME', 'password'), $client, null, $tokenCachePool);
+        $service = new UserSession(new ServiceUser('mpx/USER-NAME', 'password'), $client, null, $tokenCachePool, new ServiceTokenFlow());
+
+        $tokenCachePool->setToken($signIn, new Token('http://example.com/User/1', 'TOKEN-VALUE', 3600));
+
+        $this->expectException(TokenNotFoundException::class);
+        $tokenCachePool->getToken($service);
     }
 
     /**
