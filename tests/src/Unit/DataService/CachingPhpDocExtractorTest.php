@@ -66,7 +66,7 @@ class CachingPhpDocExtractorTest extends TestCase
             [
                 'files',
                 [
-                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
+                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
                     new Type(Type::BUILTIN_TYPE_RESOURCE),
                 ],
                 null,
@@ -74,7 +74,7 @@ class CachingPhpDocExtractorTest extends TestCase
             ],
             ['bal', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime')], null, null],
             ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], null, null],
-            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
+            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', [new Type(Type::BUILTIN_TYPE_INT)], 'A.', null],
             ['B', [new Type(Type::BUILTIN_TYPE_OBJECT, true, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], 'B.', null],
             ['d', [new Type(Type::BUILTIN_TYPE_BOOL)], null, null],
@@ -99,7 +99,7 @@ class CachingPhpDocExtractorTest extends TestCase
             [
                 'files',
                 [
-                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
+                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
                     new Type(Type::BUILTIN_TYPE_RESOURCE),
                 ],
                 null,
@@ -107,7 +107,7 @@ class CachingPhpDocExtractorTest extends TestCase
             ],
             ['bal', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime')], null, null],
             ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], null, null],
-            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
+            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', null, 'A.', null],
             ['b', null, 'B.', null],
             ['d', [new Type(Type::BUILTIN_TYPE_BOOL)], null, null],
@@ -132,7 +132,7 @@ class CachingPhpDocExtractorTest extends TestCase
             [
                 'files',
                 [
-                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
+                    new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'SplFileInfo')),
                     new Type(Type::BUILTIN_TYPE_RESOURCE),
                 ],
                 null,
@@ -140,7 +140,7 @@ class CachingPhpDocExtractorTest extends TestCase
             ],
             ['bal', [new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime')], null, null],
             ['parent', [new Type(Type::BUILTIN_TYPE_OBJECT, false, \Lullabot\Mpx\Tests\Fixtures\ParentDummy::class)], null, null],
-            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
+            ['collection', [new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, 'DateTime'))], null, null],
             ['a', null, 'A.', null],
             ['b', null, 'B.', null],
             ['c', null, null, null],
