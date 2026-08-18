@@ -16,7 +16,7 @@
     "symfony/cache": "^6 || ^7",
     "symfony/serializer": "^6 || ^7",
     "symfony/property-access": "^6 || ^7",
-    "doctrine/annotations": "^1.2",
+    "doctrine/annotations": "^1.2 || ^2.0",
     "symfony/property-info": "^6 || ^7",
     "symfony/lock": "^6 || ^7",
     "symfony/finder": "^6 || ^7",

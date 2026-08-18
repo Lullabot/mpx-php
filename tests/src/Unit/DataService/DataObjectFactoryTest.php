@@ -3,7 +3,6 @@
 namespace Lullabot\Mpx\Tests\Unit\DataService;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use GuzzleHttp\Psr7\Uri;
 use Lullabot\Mpx\AuthenticatedClient;
 use Lullabot\Mpx\Cache\Adapter\PHPArray\ArrayCachePool;
@@ -245,7 +244,6 @@ class DataObjectFactoryTest extends TestCase
     {
         // Register the mock custom fields used for this test.
         AnnotationReader::addGlobalIgnoredName('class');
-        AnnotationRegistry::registerFile(__DIR__.'/../../../../src/DataService/Annotation/CustomField.php');
         $discovery = new CustomFieldDiscovery('\\Lullabot\\Mpx\\Tests\\Unit\\DataService\\CustomField', 'Unit/DataService/CustomField', __DIR__.'/../..', new AnnotationReader());
         $fieldManager = new CustomFieldManager($discovery);
         $manager = DataServiceManager::basicDiscovery($fieldManager);
