@@ -3,7 +3,6 @@
 namespace Lullabot\Mpx\DataService;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 
 class CustomFieldManager
 {
@@ -25,7 +24,6 @@ class CustomFieldManager
     {
         // @todo Check Drupal core for other tags to ignore?
         AnnotationReader::addGlobalIgnoredName('class');
-        AnnotationRegistry::registerFile(__DIR__.'/Annotation/CustomField.php');
         $discovery = new CustomFieldDiscovery('\\Lullabot\\Mpx', 'src', __DIR__.'/../..', new AnnotationReader());
 
         return new static($discovery);

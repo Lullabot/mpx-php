@@ -3,7 +3,6 @@
 namespace Lullabot\Mpx\DataService;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 
 class DataServiceManager
 {
@@ -26,7 +25,6 @@ class DataServiceManager
 
         // @todo Check Drupal core for other tags to ignore?
         AnnotationReader::addGlobalIgnoredName('class');
-        AnnotationRegistry::registerFile(__DIR__.'/Annotation/DataService.php');
         $discovery = new DataServiceDiscovery('\\Lullabot\\Mpx', 'src', __DIR__.'/../..', new AnnotationReader(), $customFieldManager);
 
         return new static($discovery);
