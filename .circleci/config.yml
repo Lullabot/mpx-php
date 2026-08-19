@@ -141,6 +141,28 @@ code_fixer: &code_fixer
       - run: vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --using-cache=no --path-mode=intersection -- src tests
 
 jobs:
+  # Lowest supported PHP with lowest dependencies, so the declared floor is
+  # exercised rather than just asserted. Resolves Symfony 6, since Symfony 7
+  # requires PHP 8.2.
+  build_php81:
+    docker:
+      - image: cimg/php:8.1
+
+    working_directory: ~/repo
+
+    environment:
+      - COMPOSER_FLAGS: --prefer-lowest
+
+    <<: *test
+
+  build_php82:
+    docker:
+      - image: cimg/php:8.2
+
+    working_directory: ~/repo
+
+    <<: *test
+
   build_php83:
     docker:
       - image: cimg/php:8.3
@@ -163,6 +185,8 @@ workflows:
   # Declare a workflow that runs all of our jobs in parallel.
   test_cover_workflow:
     jobs:
+      - build_php81
+      - build_php82
       - build_php83
       - code_fixer
 
